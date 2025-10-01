@@ -1,0 +1,12 @@
+# Ignore artifacts:
+.next
+node_modules
+public
+.gitignore
+.nvmrc
+pnpm-lock.yaml
+yarn.lock
+package-lock.json
+.DS_Store
+.vscode
+coverage
