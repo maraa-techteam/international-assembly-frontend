@@ -4,25 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-### Added
-
-- Initial changelog setup.
-
-### Changed
-
-- _No changes yet._
-
-### Fixed
-
-- _No fixes yet._
-
----
-
-## [0.1.0] - YYYY-MM-DD
+## [0.1.0] - 2025-10-02
 
 ### Added
 
-- Project initialization.
+- Project initialization: added eslint, prettier, tests, commithooks - commitlint and lint-staged, CI set up,
 
 ---
 
