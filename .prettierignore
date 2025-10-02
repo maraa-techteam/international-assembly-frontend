@@ -9,4 +9,6 @@ yarn.lock
 package-lock.json
 .DS_Store
 .vscode
+.lintstagedrc
+.husky
 coverage
