@@ -7,13 +7,15 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "npx eslint",
-    "lint:fix": "npx eslint --fix",
-    "format": "npx prettier --check .",
-    "format:fix": "npx prettier --write .",
+    "lint": "pnpm eslint",
+    "lint:fix": "pnpm eslint --fix",
+    "format": "pnpm prettier --check .",
+    "format:fix": "pnpm prettier --write .",
     "prepare": "husky"
   },
   "dependencies": {
+    "@directus/sdk": "^20.1.0",
+    "@tailwindcss/cli": "^4.1.14",
     "next": "15.5.4",
     "react": "19.1.0",
     "react-dom": "19.1.0"
@@ -31,6 +33,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@vitejs/plugin-react": "^5.0.4",
+    "clsx": "^2.1.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.8",
@@ -39,7 +42,8 @@
     "lint-staged": "^16.2.3",
     "prettier": "3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "tailwindcss": "^4",
+    "tailwind-merge": "^3.3.1",
+    "tailwindcss": "4",
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
