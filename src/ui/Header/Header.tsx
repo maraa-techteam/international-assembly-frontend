@@ -49,7 +49,7 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
   return (
     <header
       className={cn(
-        'relative flex w-full flex-row items-center justify-between gap-3 bg-white p-4 lg:gap-8 lg:px-18',
+        'relative flex w-full flex-row items-center justify-between gap-3 overflow-x-clip bg-white p-4 lg:gap-8 lg:px-18',
         isSearchActive && 'flex-col items-stretch lg:flex-row',
       )}
     >

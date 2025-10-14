@@ -1,4 +1,5 @@
 import { getHeaderData } from '@/lib/api/fetchHeader'
+import { cn } from '@/lib/utils/cn'
 import Header from '@/ui/Header/Header'
 import type { Metadata } from 'next'
 import { Roboto_Mono, Roboto_Slab } from 'next/font/google'
@@ -29,7 +30,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`${robotoSlab.variable} ${robotoMono.variable} antialiased`}
+        className={cn(robotoSlab.variable, robotoMono.variable, 'antialiased')}
       >
         <Header headerData={headerData} />
         {children}
