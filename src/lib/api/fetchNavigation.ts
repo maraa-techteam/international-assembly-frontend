@@ -2,12 +2,14 @@ import { readItems } from '@directus/sdk'
 
 import directus from '../utils/directus'
 
-export async function getHeaderData() {
+export async function getNavigationData() {
   const raw = await directus.request(
-    readItems('header_menu', {
+    readItems('navigation', {
       fields: [
         'name',
         'href',
+        'showInHeader',
+        'showInFooter',
         'subNav.name',
         'subNav.href',
         'subNav.description',
@@ -18,6 +20,8 @@ export async function getHeaderData() {
     return {
       name: item.name,
       href: item.href,
+      showInHeader: item.showInHeader,
+      showInFooter: item.showInFooter,
       subNav: item.subNav || [],
     }
   })

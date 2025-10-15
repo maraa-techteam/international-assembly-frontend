@@ -1,7 +1,10 @@
 'use client'
 
 import { cn } from '@/lib/utils/cn'
-import { NavigationDataType } from '@/types/Header'
+import {
+  NavigationDataType,
+  TransformedNavigationDataType,
+} from '@/types/Navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useState } from 'react'
@@ -10,19 +13,17 @@ import Icon from '../Icon/Icon'
 import NavItem from '../NavItem/NavItem'
 import SearchBar from '../SearchBar/SearchBar'
 
-type TransformedNavigationDataType = NavigationDataType & {
-  isActive: boolean
-}
-
 type HeaderProps = { headerData: NavigationDataType[] }
 
 const Header: FC<HeaderProps> = ({ headerData }) => {
-  const transformedNavigationData = headerData.map((item) => {
-    return {
-      ...item,
-      isActive: false,
-    }
-  })
+  const transformedNavigationData = headerData
+    .map((item) => {
+      return {
+        ...item,
+        isActive: false,
+      }
+    })
+    .filter((item) => item.showInHeader)
 
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false)
   const [isMobileMenuActive, setIsMobileMenuActive] = useState<boolean>(false)
@@ -76,9 +77,9 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
         <Link className='flex content-center items-center' href={'/'}>
           <div className='flex w-fit flex-row content-center items-center gap-2'>
             <Image
-              src={'/logo.svg'}
-              width={194}
-              height={50}
+              src={'/logo_colorized.svg'}
+              width={230}
+              height={54}
               className='shrink-0'
               alt={'logo'}
             />

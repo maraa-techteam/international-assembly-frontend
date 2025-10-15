@@ -1,5 +1,7 @@
-import { getHeaderData } from '@/lib/api/fetchHeader'
+import { getNavigationData } from '@/lib/api/fetchNavigation'
+import { getSocials } from '@/lib/api/fetchSocials'
 import { cn } from '@/lib/utils/cn'
+import Footer from '@/ui/Footer/Footer'
 import Header from '@/ui/Header/Header'
 import type { Metadata } from 'next'
 import { Roboto_Mono, Roboto_Slab } from 'next/font/google'
@@ -26,14 +28,16 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const headerData = await getHeaderData()
+  const navigationData = await getNavigationData()
+  const socials = await getSocials()
   return (
     <html lang='en'>
       <body
         className={cn(robotoSlab.variable, robotoMono.variable, 'antialiased')}
       >
-        <Header headerData={headerData} />
+        <Header headerData={navigationData} />
         {children}
+        <Footer navigationData={navigationData} socials={socials} />
       </body>
     </html>
   )
