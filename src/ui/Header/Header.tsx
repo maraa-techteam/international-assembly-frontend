@@ -84,14 +84,21 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
             />
           </div>
         </Link>
-        <button
-          onClick={() => {
-            setIsMobileMenuActive((prev) => !prev)
-          }}
-          className={cn('hidden', isSearchActive && 'block lg:hidden')}
-        >
-          <Icon icon={'close'} className='text-foreground' size={'md'} />
-        </button>
+
+        {(!isMobileMenuActive || !isSearchActive) && (
+          <button
+            onClick={() => {
+              if (!isMobileMenuActive) {
+                setIsSearchActive(false)
+              } else {
+                setIsMobileMenuActive((prev) => !prev)
+              }
+            }}
+            className={cn('hidden', isSearchActive && 'block lg:hidden')}
+          >
+            <Icon icon='close' className='text-foreground' size='md' />
+          </button>
+        )}
       </div>
 
       {!isSearchActive && (
@@ -110,9 +117,15 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
           })}
         </ul>
       )}
-      <div className='flex flex-row items-center justify-center gap-2'>
+      <div
+        className={cn(
+          'flex flex-row items-center justify-end gap-2',
+          isSearchActive ? 'w-full' : 'w-fit',
+        )}
+      >
         <SearchBar
           className={cn(isMobileMenuActive && 'hidden')}
+          isExpanded={isSearchActive}
           onToggle={setIsSearchActive}
         />
         {isMobileMenuActive ? (
