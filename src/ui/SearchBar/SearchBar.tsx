@@ -6,6 +6,7 @@ import Icon from '../Icon/Icon'
 type SearchBarProps = {
   onSearch?: (value: string) => void
   onToggle: (isActive: boolean) => void
+  isExpanded: boolean
   className?: string
   placeholder?: string
 }
@@ -13,17 +14,16 @@ type SearchBarProps = {
 const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   onToggle,
+  isExpanded,
   className,
   placeholder = 'Поиск на сайте',
 }) => {
-  const [isExpanded, setIsExpanded] = useState(false)
   const [searchValue, setSearchValue] = useState('')
 
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleToggle = () => {
     onToggle(!isExpanded)
-    setIsExpanded(!isExpanded)
     if (!isExpanded) {
       setTimeout(() => {
         inputRef.current?.focus()
@@ -54,7 +54,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
       <div
         className={cn(
           'relative flex w-full items-center justify-end',
-          isExpanded ? 'w-full lg:max-w-96' : 'max-w-fit',
+          isExpanded ? 'lg:max-w-[500px]' : 'max-w-fit',
           className,
         )}
       >
@@ -75,31 +75,25 @@ const SearchBar: React.FC<SearchBarProps> = ({
             </button>
           )}
 
-          {/* TODO: Add input text color from figma - think about color system */}
           {isExpanded && (
             <form onSubmit={handleSubmit} className='relative'>
               <input
                 ref={inputRef}
-                onBlur={handleToggle}
                 type='text'
                 value={searchValue}
                 onChange={handleInputChange}
                 placeholder={placeholder}
-                className='z-0 h-12 w-full rounded-full border-none bg-gray-100 px-4 font-mono text-base transition-all duration-700 ease-in-out outline-none lg:rounded-none'
+                className='z-0 h-12 w-full rounded-full border-none bg-gray-100 px-4 font-mono text-base transition-all duration-700 ease-in-out outline-none lg:rounded-xl'
               />
 
               <button
                 type='button'
                 onClick={handleToggle}
                 className={cn(
-                  'absolute top-1/2 right-3 flex h-6 w-6 -translate-y-1/2 transform items-center justify-center text-gray-600 transition-colors duration-200',
+                  'absolute top-1/2 right-3 hidden h-6 w-6 -translate-y-1/2 transform items-center justify-center text-gray-600 transition-colors duration-200 lg:flex',
                 )}
               >
-                <Icon
-                  icon={'close'}
-                  className='text-foreground hidden lg:flex'
-                  size={'md'}
-                />
+                <Icon icon={'close'} className='text-foreground' size={'md'} />
               </button>
             </form>
           )}
