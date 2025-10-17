@@ -1,0 +1,84 @@
+'use client'
+
+import {
+  SecondTierNavigationType,
+  TransformedSecondTierNavigationType,
+} from '@/types/Navigation'
+import { FC, useState } from 'react'
+
+import Button from '../Button/Button'
+import LinkComponent from '../LinkComponent/LinkComponent'
+import Typography from '../Typography/Typography'
+
+type ContentGuideProps = {
+  data: SecondTierNavigationType[]
+  color?: 'primary' | 'white' | 'secondary'
+}
+
+const ContentGuide: FC<ContentGuideProps> = ({ data }) => {
+  const transformedSubNav: TransformedSecondTierNavigationType = data.map(
+    (item, i) => ({
+      ...item,
+      isActive: i === 0 ? true : false,
+    }),
+  )
+
+  const [activeItems, setActiveItems] =
+    useState<TransformedSecondTierNavigationType>(transformedSubNav)
+
+  const handleClick = (index: number) => {
+    setActiveItems((prev) => {
+      return prev.map((item, i) => {
+        return {
+          ...item,
+          isActive: i === index,
+        }
+      })
+    })
+  }
+  return (
+    <div className='flex h-full w-full flex-col gap-4 lg:gap-6'>
+      <div className='flex w-[calc(100%+32px)] flex-row gap-4 overflow-x-auto lg:w-full'>
+        {activeItems.map((button, i) => {
+          return (
+            <Button
+              key={i}
+              color={'white'}
+              variant={button.isActive ? 'contained' : 'outlined'}
+              size={'sm'}
+              as={'button'}
+              onClick={() => handleClick(i)}
+              type='button'
+              label={button.name}
+            />
+          )
+        })}
+      </div>
+
+      <div className='flex h-full w-full flex-col gap-4 lg:gap-6'>
+        {activeItems.map(
+          (item, i) =>
+            activeItems[i].isActive && (
+              <div
+                className='flex h-full flex-col justify-between gap-4'
+                key={i}
+              >
+                <Typography variant='body' font={'mono'}>
+                  {item.description}
+                </Typography>
+                <LinkComponent
+                  icon={'arrow-right'}
+                  text={'Подробнее'}
+                  href={'/'}
+                  variant={'icon-right'}
+                  className='self-end'
+                />
+              </div>
+            ),
+        )}
+      </div>
+    </div>
+  )
+}
+
+export default ContentGuide

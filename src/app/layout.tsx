@@ -1,8 +1,9 @@
 import { getNavigationData } from '@/lib/api/fetchNavigation'
 import { getSocials } from '@/lib/api/fetchSocials'
 import { cn } from '@/lib/utils/cn'
-import Footer from '@/ui/Footer/Footer'
-import Header from '@/ui/Header/Header'
+import Footer from '@/ui/components/Footer/Footer'
+import Header from '@/ui/components/Header/Header'
+import Layout from '@/ui/components/Layout/Layout'
 import type { Metadata } from 'next'
 import { Roboto_Mono, Roboto_Slab } from 'next/font/google'
 
@@ -30,14 +31,27 @@ export default async function RootLayout({
 }>) {
   const navigationData = await getNavigationData()
   const socials = await getSocials()
+  const transformedNavigationData = navigationData.map((item) => {
+    return {
+      ...item,
+      isActive: false,
+    }
+  })
+
+  const headerData = transformedNavigationData.filter(
+    (item) => item.showInHeader,
+  )
+  const footerData = transformedNavigationData.filter(
+    (item) => item.showInFooter,
+  )
   return (
     <html lang='en'>
       <body
         className={cn(robotoSlab.variable, robotoMono.variable, 'antialiased')}
       >
-        <Header headerData={navigationData} />
-        {children}
-        <Footer navigationData={navigationData} socials={socials} />
+        <Header headerData={headerData} />
+        <Layout>{children}</Layout>
+        <Footer footerData={footerData} socials={socials} />
       </body>
     </html>
   )

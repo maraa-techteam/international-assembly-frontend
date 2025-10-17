@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils/cn'
+import { TransformedSecondTierNavigationType } from '@/types/Navigation'
 import Link from 'next/link'
 import { FC, useState } from 'react'
 
@@ -17,15 +18,9 @@ type NavItemProps = {
     name: string
     href: string
     description: string
+    isFrequentlyVisited: boolean
   }[]
 }
-
-type SubNavTransformedType = {
-  name: string
-  href: string
-  description: string
-  isActive: boolean
-}[]
 
 const NavItem: FC<NavItemProps> = ({
   name,
@@ -34,13 +29,15 @@ const NavItem: FC<NavItemProps> = ({
   toggleSelect,
   isActive,
 }) => {
-  const transformedSubNav: SubNavTransformedType = subNav.map((item, i) => ({
-    ...item,
-    isActive: i === 0 ? true : false,
-  }))
+  const transformedSubNav: TransformedSecondTierNavigationType = subNav.map(
+    (item, i) => ({
+      ...item,
+      isActive: i === 0 ? true : false,
+    }),
+  )
 
   const [activeItems, setActiveItems] =
-    useState<SubNavTransformedType>(transformedSubNav)
+    useState<TransformedSecondTierNavigationType>(transformedSubNav)
 
   const handleMouseEnter = (index: number) => {
     setActiveItems((prev) => {
