@@ -7,7 +7,7 @@ import {
 } from '@/types/Navigation'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 import Icon from '../Icon/Icon'
 import NavItem from '../NavItem/NavItem'
@@ -30,6 +30,19 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
   const [navigation, setNavigation] = useState<TransformedNavigationDataType[]>(
     transformedNavigationData,
   )
+
+  useEffect(() => {
+    const handleEsc = (event: { key: string }) => {
+      if (event.key === 'Escape') {
+        resetSelect()
+      }
+    }
+    window.addEventListener('keydown', handleEsc)
+
+    return () => {
+      window.removeEventListener('keydown', handleEsc)
+    }
+  }, [])
 
   const toggleSelect = (index: number) => {
     setNavigation((prevItems) => {
@@ -123,6 +136,7 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
           'flex flex-row items-center justify-end gap-2',
           isSearchActive ? 'w-full' : 'w-fit',
         )}
+        onClick={() => resetSelect()}
       >
         <SearchBar
           className={cn(isMobileMenuActive && 'hidden')}
