@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils/cn'
-import imageLoader from '@/lib/utils/imageLoader'
+import imageLoader from '@/lib/utils/getImageUrl'
 import { ArticleCardType } from '@/types/Components'
 import Image from 'next/image'
 import { FC } from 'react'

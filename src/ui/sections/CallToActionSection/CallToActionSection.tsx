@@ -1,4 +1,4 @@
-import imageLoader from '@/lib/utils/imageLoader'
+import getImageUrl from '@/lib/utils/getImageUrl'
 import { CallToActionSectionProps } from '@/types/Sections'
 import ButtonGroup from '@/ui/components/ButtonGroup/ButtonGroup'
 import LinkComponent from '@/ui/components/LinkComponent/LinkComponent'
@@ -47,10 +47,11 @@ const CallToActionSection: FC<CallToActionSectionProps> = ({
         <>
           {image ? (
             <Image
-              src={imageLoader({ src: image, width: 700, quality: 50 })}
+              src={getImageUrl(image)}
               alt={title}
               width={500}
               height={400}
+              sizes='(max-width: 640px) 100vw, 600px'
               className='w-full max-w-md rounded-lg object-cover'
               priority={false}
             />
