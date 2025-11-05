@@ -23,7 +23,7 @@ const ArticleCard: FC<ArticleCardType> = ({
     >
       {image ? (
         <Image
-          src={imageLoader({ src: image, width: 300, quality: 50 })}
+          src={imageLoader(image)}
           alt={title}
           width={500}
           height={400}
