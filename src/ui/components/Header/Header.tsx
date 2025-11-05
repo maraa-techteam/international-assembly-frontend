@@ -1,10 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils/cn'
-import {
-  NavigationDataType,
-  TransformedNavigationDataType,
-} from '@/types/Navigation'
+import { TransformedNavigationType } from '@/types/Navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useEffect, useState } from 'react'
@@ -13,23 +10,13 @@ import Icon from '../Icon/Icon'
 import NavItem from '../NavItem/NavItem'
 import SearchBar from '../SearchBar/SearchBar'
 
-type HeaderProps = { headerData: NavigationDataType[] }
+type HeaderProps = { headerData: TransformedNavigationType[] }
 
 const Header: FC<HeaderProps> = ({ headerData }) => {
-  const transformedNavigationData = headerData
-    .map((item) => {
-      return {
-        ...item,
-        isActive: false,
-      }
-    })
-    .filter((item) => item.showInHeader)
-
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false)
   const [isMobileMenuActive, setIsMobileMenuActive] = useState<boolean>(false)
-  const [navigation, setNavigation] = useState<TransformedNavigationDataType[]>(
-    transformedNavigationData,
-  )
+  const [navigation, setNavigation] =
+    useState<TransformedNavigationType[]>(headerData)
 
   useEffect(() => {
     const handleEsc = (event: { key: string }) => {
@@ -110,7 +97,7 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
             }}
             className={cn('hidden', isSearchActive && 'block lg:hidden')}
           >
-            <Icon icon='close' className='text-foreground' size='md' />
+            <Icon icon='close' className='text-contrast' size='md' />
           </button>
         )}
       </div>
@@ -151,14 +138,14 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
             }}
             className={cn('block lg:hidden')}
           >
-            <Icon icon={'close'} className='text-foreground' size={'md'} />
+            <Icon icon={'close'} className='text-contrast' size={'md'} />
           </button>
         ) : (
           <button
             onClick={() => setIsMobileMenuActive((prev) => !prev)}
             className={cn('block lg:hidden', isSearchActive && 'hidden')}
           >
-            <Icon icon={'hamburger'} className='text-foreground' size={'md'} />
+            <Icon icon={'hamburger'} className='text-contrast' size={'md'} />
           </button>
         )}
       </div>

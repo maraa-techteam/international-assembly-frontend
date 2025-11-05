@@ -12,3 +12,4 @@ package-lock.json
 .lintstagedrc
 .husky
 coverage
+.github

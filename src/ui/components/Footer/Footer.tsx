@@ -1,33 +1,24 @@
 'use client'
 
 import { cn } from '@/lib/utils/cn'
-import {
-  NavigationDataType,
-  TransformedNavigationDataType,
-} from '@/types/Navigation'
+import { TransformedNavigationType } from '@/types/Navigation'
 import { Socials } from '@/types/Socials'
 import Image from 'next/image'
 import Link from 'next/link'
 import { FC, useState } from 'react'
 
 import Icon from '../Icon/Icon'
+import LinkComponent from '../LinkComponent/LinkComponent'
 import Typography from '../Typography/Typography'
 
-type FooterProps = { navigationData: NavigationDataType[]; socials: Socials[] }
+type FooterProps = {
+  footerData: TransformedNavigationType[]
+  socials: Socials[]
+}
 
-const Footer: FC<FooterProps> = ({ navigationData, socials }) => {
-  const transformedNavigationData = navigationData
-    .map((item) => {
-      return {
-        ...item,
-        isActive: false,
-      }
-    })
-    .filter((item) => item.showInFooter)
-
-  const [navigation, setNavigation] = useState<TransformedNavigationDataType[]>(
-    transformedNavigationData,
-  )
+const Footer: FC<FooterProps> = ({ footerData, socials }) => {
+  const [navigation, setNavigation] =
+    useState<TransformedNavigationType[]>(footerData)
 
   const toggleSelect = (index: number) => {
     setNavigation((prevItems) => {
@@ -40,7 +31,7 @@ const Footer: FC<FooterProps> = ({ navigationData, socials }) => {
   const date = new Date()
 
   return (
-    <footer className='bg-indigo-blue flex flex-col gap-4 p-4 lg:px-18 lg:py-12'>
+    <footer className='bg-primary flex flex-col gap-4 p-4 lg:px-18 lg:py-12'>
       <div className='flex w-full flex-col gap-4 lg:grid lg:grid-cols-5 lg:gap-8'>
         <div className='flex w-fit flex-col items-start gap-5'>
           <Link className='flex content-center items-center' href={'/'}>
@@ -48,16 +39,20 @@ const Footer: FC<FooterProps> = ({ navigationData, socials }) => {
               src={'/logo.svg'}
               width={230}
               height={54}
-              className='shrink-0'
+              className='w-auto shrink-0'
               alt={'logo'}
             />
           </Link>
           <div className='flex flex-row items-center justify-center gap-4'>
             {socials.map((item, i) => {
               return (
-                <Link key={i} href={item.href}>
-                  <Icon icon={item.icon} />
-                </Link>
+                <LinkComponent
+                  key={i}
+                  icon={item.icon}
+                  text={''}
+                  href={item.href}
+                  variant={'icon-only'}
+                />
               )
             })}
           </div>
@@ -73,7 +68,7 @@ const Footer: FC<FooterProps> = ({ navigationData, socials }) => {
                 >
                   <Typography
                     variant={'body'}
-                    className='text-sm font-bold text-white'
+                    className='text-contrast text-sm font-bold'
                     font={'mono'}
                   >
                     {item.name}
@@ -82,7 +77,7 @@ const Footer: FC<FooterProps> = ({ navigationData, socials }) => {
                     icon='chevron-down'
                     className={cn(
                       item.isActive ? 'scale-[-1]' : '',
-                      'flex text-white lg:hidden',
+                      'text-contrast flex lg:hidden',
                     )}
                   />
                 </div>
@@ -97,7 +92,7 @@ const Footer: FC<FooterProps> = ({ navigationData, socials }) => {
                     <Link key={i} href='#'>
                       <Typography
                         variant='body'
-                        className='text-sm text-white'
+                        className='text-contrast text-sm'
                         font='mono'
                       >
                         {sub.name}
@@ -116,7 +111,7 @@ const Footer: FC<FooterProps> = ({ navigationData, socials }) => {
 
       <Typography
         variant={'body'}
-        className='text-sm text-white opacity-40'
+        className='text-contrast text-sm opacity-40'
         font={'mono'}
       >
         {`

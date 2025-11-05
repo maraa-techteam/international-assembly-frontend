@@ -13,6 +13,7 @@ export async function getNavigationData() {
         'subNav.name',
         'subNav.href',
         'subNav.description',
+        'subNav.isFrequentlyVisited',
       ],
     }),
   )
