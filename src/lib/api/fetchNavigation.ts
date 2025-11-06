@@ -10,13 +10,13 @@ export async function getNavigationData() {
         'href',
         'showInHeader',
         'showInFooter',
-        'subNav.name',
-        'subNav.href',
-        'subNav.description',
-        'subNav.isFrequentlyVisited',
+        {
+          subNav: ['name', 'href', 'description', 'isFrequentlyVisited'],
+        },
       ],
     }),
   )
+
   return raw.map((item) => {
     return {
       name: item.name,

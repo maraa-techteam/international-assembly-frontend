@@ -1,19 +1,16 @@
 import { cn } from '@/lib/utils/cn'
 import imageLoader from '@/lib/utils/getImageUrl'
-import { ArticleCardType } from '@/types/Components'
+import { ArticleCardType } from '@/types/components'
+import { Label, Typography } from '@/ui/components'
 import Image from 'next/image'
-import { FC } from 'react'
 
-import Label from '../Label/Label'
-import Typography from '../Typography/Typography'
-
-const ArticleCard: FC<ArticleCardType> = ({
+export function ArticleCard({
   title,
   image,
   text,
   publishedAt,
   href,
-}) => {
+}: ArticleCardType) {
   return (
     <a
       href={href}
@@ -49,5 +46,3 @@ const ArticleCard: FC<ArticleCardType> = ({
     </a>
   )
 }
-
-export default ArticleCard

@@ -1,14 +1,11 @@
 'use client'
 
-import { FindGroupSectionProps } from '@/types/Sections'
-import Button from '@/ui/components/Button/Button'
-import Icon from '@/ui/components/Icon/Icon'
-import Section from '@/ui/components/Section/Section'
-import Select from '@/ui/components/Select/Select'
+import { FindGroupSectionProps } from '@/types/sections'
+import { Button, Icon, Section, Select } from '@/ui/components'
 import Typography from '@/ui/components/Typography/Typography'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
-const FindGroupSection: FC<FindGroupSectionProps> = ({ title, text }) => {
+export function FindGroupSection({ title, text }: FindGroupSectionProps) {
   const [options, setOptions] = useState<{ country: string; presence: string }>(
     {
       country: '',
@@ -72,6 +69,7 @@ const FindGroupSection: FC<FindGroupSectionProps> = ({ title, text }) => {
           color='secondary'
           as='button'
           className='w-full gap-4 lg:max-w-[300px]'
+          size={'sm'}
         >
           <Typography
             variant={'caption'}
@@ -86,4 +84,3 @@ const FindGroupSection: FC<FindGroupSectionProps> = ({ title, text }) => {
     </Section>
   )
 }
-export default FindGroupSection

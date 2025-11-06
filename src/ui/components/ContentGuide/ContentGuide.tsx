@@ -3,19 +3,15 @@
 import {
   SecondTierNavigationType,
   TransformedSecondTierNavigationType,
-} from '@/types/Navigation'
-import { FC, useState } from 'react'
-
-import Button from '../Button/Button'
-import LinkComponent from '../LinkComponent/LinkComponent'
-import Typography from '../Typography/Typography'
+} from '@/types/navigation'
+import { Button, LinkComponent, Typography } from '@/ui/components'
+import { useState } from 'react'
 
 type ContentGuideProps = {
   data: SecondTierNavigationType[]
-  color?: 'primary' | 'white' | 'secondary'
 }
 
-const ContentGuide: FC<ContentGuideProps> = ({ data }) => {
+export function ContentGuide({ data }: ContentGuideProps) {
   const transformedSubNav: TransformedSecondTierNavigationType = data.map(
     (item, i) => ({
       ...item,
@@ -80,5 +76,3 @@ const ContentGuide: FC<ContentGuideProps> = ({ data }) => {
     </div>
   )
 }
-
-export default ContentGuide

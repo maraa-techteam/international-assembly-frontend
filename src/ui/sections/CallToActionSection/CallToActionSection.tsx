@@ -1,13 +1,14 @@
 import getImageUrl from '@/lib/utils/getImageUrl'
-import { CallToActionSectionProps } from '@/types/Sections'
-import ButtonGroup from '@/ui/components/ButtonGroup/ButtonGroup'
-import LinkComponent from '@/ui/components/LinkComponent/LinkComponent'
-import Section from '@/ui/components/Section/Section'
-import Typography from '@/ui/components/Typography/Typography'
+import { CallToActionSectionProps } from '@/types/sections'
+import {
+  ButtonGroup,
+  LinkComponent,
+  Section,
+  Typography,
+} from '@/ui/components'
 import Image from 'next/image'
-import { FC } from 'react'
 
-const CallToActionSection: FC<CallToActionSectionProps> = ({
+export function CallToActionSection({
   title,
   text,
   linkText,
@@ -15,7 +16,7 @@ const CallToActionSection: FC<CallToActionSectionProps> = ({
   linkIcon,
   actions,
   image,
-}) => {
+}: CallToActionSectionProps) {
   return (
     <Section
       variant='double-column'
@@ -65,5 +66,3 @@ const CallToActionSection: FC<CallToActionSectionProps> = ({
     />
   )
 }
-
-export default CallToActionSection

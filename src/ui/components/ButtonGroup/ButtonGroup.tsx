@@ -1,21 +1,13 @@
 import { cn } from '@/lib/utils/cn'
-import { FC } from 'react'
+import { ButtonGroupProps } from '@/types/components'
+import { Button } from '@/ui/components'
 
-import Button, { ButtonType } from '../Button/Button'
-
-type ButtonGroupProps = {
-  buttons: Array<ButtonType>
-  orientation: 'horizontal' | 'vertical'
-  alignment?: 'start' | 'center' | 'end'
-  className?: string
-}
-
-const ButtonGroup: FC<ButtonGroupProps> = ({
+export function ButtonGroup({
   buttons,
   orientation,
   className,
   alignment = 'center',
-}) => {
+}: ButtonGroupProps) {
   return (
     <div
       className={cn(
@@ -51,5 +43,3 @@ const ButtonGroup: FC<ButtonGroupProps> = ({
     </div>
   )
 }
-
-export default ButtonGroup

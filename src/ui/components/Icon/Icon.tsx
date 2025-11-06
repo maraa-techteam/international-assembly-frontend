@@ -1,22 +1,7 @@
 import { cn } from '@/lib/utils/cn'
-import { FC } from 'react'
+import { IconProps } from '@/types/components'
 
-type IconProps = {
-  icon:
-    | 'arrow-right'
-    | 'chevron-down'
-    | 'search'
-    | 'close'
-    | 'hamburger'
-    | 'chevron-right'
-    | 'arrow-left'
-    | 'youtube'
-    | 'telegram'
-  size?: 'sm' | 'md' | 'lg'
-  className?: string
-}
-
-const Icon: FC<IconProps> = ({ icon, size = 'md', className }) => {
+export function Icon({ icon, size = 'md', className }: IconProps) {
   const sizeClasses = {
     sm: 'w-4 h-4', // 16px container
     md: 'w-6 h-6', // 24px container
@@ -185,8 +170,9 @@ const Icon: FC<IconProps> = ({ icon, size = 'md', className }) => {
 
   return (
     <span
+      data-testid='icon'
       className={cn(
-        'inline-flex flex-shrink-0 items-center justify-center',
+        'text-contrast inline-flex flex-shrink-0 items-center justify-center',
         sizeClasses[size],
         className,
       )}
@@ -196,5 +182,3 @@ const Icon: FC<IconProps> = ({ icon, size = 'md', className }) => {
     </span>
   )
 }
-
-export default Icon

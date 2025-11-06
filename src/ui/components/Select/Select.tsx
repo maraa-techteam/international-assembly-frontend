@@ -1,27 +1,18 @@
 import { cn } from '@/lib/utils/cn'
-import { FC } from 'react'
+import { SelectProps } from '@/types/components'
+import { Icon } from '@/ui/components'
 
-import Icon from '../Icon/Icon'
-
-type SelectProps = {
-  label: string
-  options: string[]
-  value: string
-  onChange: (value: string) => void
-  className?: string
-}
-
-const Select: FC<SelectProps> = ({
+export function Select({
   label,
   options,
   value,
   onChange,
   className,
-}) => {
+}: SelectProps) {
   return (
     <div
       className={cn(
-        'text-primary relative inline-flex w-full items-center overflow-hidden rounded-3xl bg-white px-4 py-3 font-medium lg:max-w-[300px]',
+        'relative inline-flex w-full items-center overflow-hidden rounded-3xl bg-white font-medium lg:max-w-[300px]',
         className,
       )}
     >
@@ -30,7 +21,7 @@ const Select: FC<SelectProps> = ({
         name={label}
         id={`select-${label}`}
         onChange={(e) => onChange(e.target.value)}
-        className='text-primary w-full cursor-pointer appearance-none bg-white font-mono whitespace-nowrap transition-colors'
+        className='text-primary w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 font-mono whitespace-nowrap transition-colors focus:outline-none'
       >
         <option value=''>{label}</option>
         {options.map((option) => (
@@ -39,9 +30,12 @@ const Select: FC<SelectProps> = ({
           </option>
         ))}
       </select>
-      <Icon icon='chevron-down' size={'md'} />
+
+      <Icon
+        icon='chevron-down'
+        className='text-primary pointer-events-none absolute right-4'
+        size={'md'}
+      />
     </div>
   )
 }
-
-export default Select
