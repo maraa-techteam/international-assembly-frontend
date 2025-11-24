@@ -1,10 +1,6 @@
-import { FC } from 'react'
-
 type LayoutProps = {
   children: React.ReactNode
 }
-const Layout: FC<LayoutProps> = ({ children }) => {
+export function Layout({ children }: LayoutProps) {
   return <main className='flex flex-col'>{children}</main>
 }
-
-export default Layout

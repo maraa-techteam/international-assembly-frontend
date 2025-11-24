@@ -1,17 +1,7 @@
 import { cn } from '@/lib/utils/cn'
-import { FC } from 'react'
+import { SectionProps } from '@/types/components'
 
-type SectionProps = {
-  children?: React.ReactNode
-  className?: string
-  alignment?: 'start' | 'center' | 'end'
-  variant: 'single-column' | 'double-column'
-  color: 'primary' | 'white' | 'secondary'
-  leftColumn?: React.ReactNode
-  rightColumn?: React.ReactNode
-}
-
-const Section: FC<SectionProps> = ({
+export function Section({
   children,
   className,
   color,
@@ -19,8 +9,8 @@ const Section: FC<SectionProps> = ({
   alignment = 'start',
   leftColumn,
   rightColumn,
-}) => {
-  const baseClasses = `p-4 ${alignment === 'start' ? 'justify-start' : alignment === 'center' ? 'justify-center' : 'justify-end'} flex flex-col lg:min-h-[440px] lg:px-18 lg:py-6`
+}: SectionProps) {
+  const baseClasses = `px-4 py-6 ${alignment === 'start' ? 'justify-start' : alignment === 'center' ? 'justify-center' : 'justify-end'} flex flex-col lg:min-h-[440px] lg:px-18 lg:py-6`
   return (
     <section
       className={cn(
@@ -45,5 +35,3 @@ const Section: FC<SectionProps> = ({
     </section>
   )
 }
-
-export default Section

@@ -25,16 +25,12 @@
     color: var(--foreground);
   }
 
-  .bg-contrast {
-    background-color: var(--primary);
-  }
-
   .bg-primary .text-contrast {
     color: white;
   }
 
-  .bg-primary .bg-contrast {
-    background-color: white;
+  .bg-secondary .text-contrast {
+    color: var(--foreground);
   }
 }
 

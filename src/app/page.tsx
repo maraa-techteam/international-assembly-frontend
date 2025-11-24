@@ -1,11 +1,13 @@
 import { getFrequentlyVisitedLinks } from '@/lib/api/fetchFrequentlyVisitedLinks'
 import { getPageData } from '@/lib/api/fetchPage'
-import { DirectusSection } from '@/types/Sections'
-import CallToActionSection from '@/ui/sections/CallToActionSection/CallToActionSection'
-import CardSection from '@/ui/sections/CardsSection/CardsSection'
-import ContentGuideSection from '@/ui/sections/ContentGuideSection/ContentGuideSection'
-import FindGroupSection from '@/ui/sections/FindGroupSection/FindGroupSection'
-import HeroSection from '@/ui/sections/HeroSection/HeroSection'
+import { DirectusSection } from '@/types/sections'
+import {
+  CallToActionSection,
+  CardSection,
+  ContentGuideSection,
+  FindGroupSection,
+  HeroSection,
+} from '@/ui/sections'
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -30,7 +32,7 @@ export default async function Home() {
               text={sectionData.text}
               linkText={sectionData.linkText}
               linkHref={sectionData.linkHref}
-              linkIcon='telegram'
+              linkIcon={sectionData.linkIcon}
               actions={sectionData.actions}
               image={sectionData.image}
             />

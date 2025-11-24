@@ -1,10 +1,8 @@
-import { HeroSectionProps } from '@/types/Sections'
-import ButtonGroup from '@/ui/components/ButtonGroup/ButtonGroup'
-import Section from '@/ui/components/Section/Section'
+import { HeroSectionProps } from '@/types/sections'
+import { ButtonGroup, Section } from '@/ui/components'
 import Typography from '@/ui/components/Typography/Typography'
-import { FC } from 'react'
 
-const HeroSection: FC<HeroSectionProps> = ({ title, buttons }) => {
+export function HeroSection({ title, buttons }: HeroSectionProps) {
   return (
     <Section
       variant='single-column'
@@ -18,5 +16,3 @@ const HeroSection: FC<HeroSectionProps> = ({ title, buttons }) => {
     </Section>
   )
 }
-
-export default HeroSection

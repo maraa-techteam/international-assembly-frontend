@@ -1,19 +1,12 @@
 import { cn } from '@/lib/utils/cn'
-import { FC } from 'react'
+import { TypographyProps } from '@/types/components/Typography/Typography'
 
-type TypographyProps = {
-  variant: 'h1' | 'h2' | 'h3' | 'body' | 'caption'
-  font: 'slab' | 'mono'
-  children: React.ReactNode
-  className?: string
-}
-
-const Typography: FC<TypographyProps> = ({
+export function Typography({
   variant = 'body',
   children,
   font = 'mono',
   className = '',
-}) => {
+}: TypographyProps) {
   switch (variant) {
     case 'h1':
       return (

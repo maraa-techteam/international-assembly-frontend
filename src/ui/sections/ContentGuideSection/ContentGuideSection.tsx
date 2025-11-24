@@ -1,10 +1,9 @@
-import { ContentGuideSectionProps } from '@/types/Sections'
-import ContentGuide from '@/ui/components/ContentGuide/ContentGuide'
-import Section from '@/ui/components/Section/Section'
+import { ContentGuideSectionProps } from '@/types/sections'
+import { Section } from '@/ui/components'
+import { ContentGuide } from '@/ui/components'
 import Typography from '@/ui/components/Typography/Typography'
-import { FC } from 'react'
 
-const ContentGuideSection: FC<ContentGuideSectionProps> = ({ data, title }) => {
+export function ContentGuideSection({ data, title }: ContentGuideSectionProps) {
   return (
     <Section
       variant='double-column'
@@ -15,10 +14,9 @@ const ContentGuideSection: FC<ContentGuideSectionProps> = ({ data, title }) => {
           <Typography variant={'h2'} font={'mono'}>
             {title}
           </Typography>
-          <ContentGuide data={data} />
+          {!!data.length && <ContentGuide data={data} />}
         </>
       }
     />
   )
 }
-export default ContentGuideSection

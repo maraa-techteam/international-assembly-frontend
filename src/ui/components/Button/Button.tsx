@@ -1,34 +1,20 @@
 import { cn } from '@/lib/utils/cn'
+import { ButtonType } from '@/types/components'
 import Link from 'next/link'
-import { FC, ReactNode } from 'react'
 
-export type ButtonType = {
-  variant: 'contained' | 'outlined'
-  type: 'button' | 'submit'
-  size?: 'sm' | 'lg'
-  as?: 'button' | 'link'
-  href?: string
-  color?: 'primary' | 'white' | 'secondary'
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
-  className?: string
-  children?: ReactNode
-  label?: string
-  disabled?: boolean
-}
-
-const Button: FC<ButtonType> = ({
+export function Button({
   variant,
   as = 'button',
   className,
   type = 'button',
   onClick,
-  color = 'primary',
+  color,
   children,
   label,
-  size = 'sm',
+  size,
   href,
   disabled = false,
-}) => {
+}: ButtonType) {
   const getColorClasses = () => {
     if (variant === 'contained') {
       switch (color) {
@@ -82,5 +68,3 @@ const Button: FC<ButtonType> = ({
     </button>
   )
 }
-
-export default Button

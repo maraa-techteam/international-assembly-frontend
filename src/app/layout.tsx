@@ -1,9 +1,7 @@
 import { getNavigationData } from '@/lib/api/fetchNavigation'
 import { getSocials } from '@/lib/api/fetchSocials'
 import { cn } from '@/lib/utils/cn'
-import Footer from '@/ui/components/Footer/Footer'
-import Header from '@/ui/components/Header/Header'
-import Layout from '@/ui/components/Layout/Layout'
+import { Footer, Header, Layout } from '@/ui/components'
 import type { Metadata } from 'next'
 import { Roboto_Mono, Roboto_Slab } from 'next/font/google'
 
@@ -47,7 +45,11 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={cn(robotoSlab.variable, robotoMono.variable, 'antialiased')}
+        className={cn(
+          robotoSlab.variable,
+          robotoMono.variable,
+          'overflow-x-hidden antialiased',
+        )}
       >
         <Header headerData={headerData} />
         <Layout>{children}</Layout>
