@@ -1,40 +1,20 @@
 import { cn } from '@/lib/utils/cn'
+import { LinkComponentProps } from '@/types/components'
+import { Icon } from '@/ui/components'
 import Link from 'next/link'
-import { FC } from 'react'
 
-import Icon from '../Icon/Icon'
-import Typography from '../Typography/Typography'
-
-type LinkComponentProps = {
-  icon:
-    | 'search'
-    | 'arrow-right'
-    | 'chevron-down'
-    | 'close'
-    | 'hamburger'
-    | 'chevron-right'
-    | 'arrow-left'
-    | 'youtube'
-    | 'telegram'
-  text: string
-  href: string
-  variant: 'icon-left' | 'icon-right' | 'icon-only'
-  color?: 'text-primary' | 'text-contrast' | 'text-secondary'
-  className?: string
-  isUnderlined?: boolean
-}
-
-const LinkComponent: FC<LinkComponentProps> = ({
+export function LinkComponent({
   icon,
   text,
   href,
   variant,
   className,
   color,
-  isUnderlined = false,
-}) => {
+  isUnderlined,
+}: LinkComponentProps) {
   return (
     <Link
+      aria-label={variant === 'icon-only' ? icon : text}
       className={cn(
         'text-contrast flex flex-row items-center justify-center gap-4',
         className,
@@ -43,13 +23,11 @@ const LinkComponent: FC<LinkComponentProps> = ({
       )}
       href={href}
     >
-      {variant === 'icon-left' && <Icon icon={icon} />}
+      {variant === 'icon-left' && <Icon className={cn(color)} icon={icon} />}
       {variant === 'icon-only' ? (
-        <Icon icon={icon} />
+        <Icon className={cn(`text-${color}`)} icon={icon} />
       ) : (
-        <Typography font='mono' className={cn(color)} variant='caption'>
-          {text}
-        </Typography>
+        text
       )}
       {variant === 'icon-right' && <Icon icon={icon} />}
     </Link>

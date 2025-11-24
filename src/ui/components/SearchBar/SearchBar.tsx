@@ -1,23 +1,17 @@
+'use client'
+
 import { cn } from '@/lib/utils/cn'
+import { SearchBarProps } from '@/types/components'
+import { Icon } from '@/ui/components'
 import React, { useRef, useState } from 'react'
 
-import Icon from '../Icon/Icon'
-
-type SearchBarProps = {
-  onSearch?: (value: string) => void
-  onToggle: (isActive: boolean) => void
-  isExpanded: boolean
-  className?: string
-  placeholder?: string
-}
-
-const SearchBar: React.FC<SearchBarProps> = ({
+export function SearchBar({
   onSearch,
   onToggle,
   isExpanded,
   className,
   placeholder = 'Поиск на сайте',
-}) => {
+}: SearchBarProps) {
   const [searchValue, setSearchValue] = useState('')
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -66,6 +60,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
         >
           {!isExpanded && (
             <button
+              aria-label='open-search'
               onClick={handleToggle}
               className={
                 'flex h-12 w-12 cursor-pointer items-center justify-center'
@@ -103,5 +98,3 @@ const SearchBar: React.FC<SearchBarProps> = ({
     </>
   )
 }
-
-export default SearchBar

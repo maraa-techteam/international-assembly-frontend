@@ -1,22 +1,13 @@
 'use client'
 
-import { cn } from '@/lib/utils/cn'
-import { TransformedNavigationType } from '@/types/Navigation'
-import { Socials } from '@/types/Socials'
+import { FooterProps } from '@/types/components'
+import { TransformedNavigationType } from '@/types/navigation'
+import { FooterNavItem, LinkComponent, Typography } from '@/ui/components'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC, useState } from 'react'
+import { useState } from 'react'
 
-import Icon from '../Icon/Icon'
-import LinkComponent from '../LinkComponent/LinkComponent'
-import Typography from '../Typography/Typography'
-
-type FooterProps = {
-  footerData: TransformedNavigationType[]
-  socials: Socials[]
-}
-
-const Footer: FC<FooterProps> = ({ footerData, socials }) => {
+export function Footer({ footerData, socials }: FooterProps) {
   const [navigation, setNavigation] =
     useState<TransformedNavigationType[]>(footerData)
 
@@ -32,14 +23,14 @@ const Footer: FC<FooterProps> = ({ footerData, socials }) => {
 
   return (
     <footer className='bg-primary flex flex-col gap-4 p-4 lg:px-18 lg:py-12'>
-      <div className='flex w-full flex-col gap-4 lg:grid lg:grid-cols-5 lg:gap-8'>
+      <div className='flex w-full flex-col gap-4 lg:flex-row lg:gap-32'>
         <div className='flex w-fit flex-col items-start gap-5'>
           <Link className='flex content-center items-center' href={'/'}>
             <Image
               src={'/logo.svg'}
               width={230}
               height={54}
-              className='w-auto shrink-0'
+              className='w-auto min-w-60'
               alt={'logo'}
             />
           </Link>
@@ -58,53 +49,17 @@ const Footer: FC<FooterProps> = ({ footerData, socials }) => {
           </div>
         </div>
 
-        {navigation.map((item, i) => {
-          if (item.subNav.length) {
-            return (
-              <div key={i} className='flex w-full flex-col items-start gap-2'>
-                <div
-                  onClick={() => toggleSelect(i)}
-                  className='flex w-full flex-row items-center justify-between'
-                >
-                  <Typography
-                    variant={'body'}
-                    className='text-contrast text-sm font-bold'
-                    font={'mono'}
-                  >
-                    {item.name}
-                  </Typography>
-                  <Icon
-                    icon='chevron-down'
-                    className={cn(
-                      item.isActive ? 'scale-[-1]' : '',
-                      'text-contrast flex lg:hidden',
-                    )}
-                  />
-                </div>
-
-                <nav
-                  className={cn(
-                    'flex flex-col gap-2 overflow-hidden transition-all duration-300',
-                    item.isActive ? 'max-h-96' : 'max-h-0 lg:max-h-96',
-                  )}
-                >
-                  {item.subNav.map((sub, i) => (
-                    <Link key={i} href='#'>
-                      <Typography
-                        variant='body'
-                        className='text-contrast text-sm'
-                        font='mono'
-                      >
-                        {sub.name}
-                      </Typography>
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            )
-          }
-          return null
-        })}
+        <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
+          {navigation.map((item, i) => (
+            <FooterNavItem
+              key={i}
+              name={item.name}
+              subNav={item.subNav}
+              isActive={item.isActive}
+              toggleSelect={() => toggleSelect(i)}
+            />
+          ))}
+        </ul>
       </div>
 
       <div className='h-[1px] w-full bg-white opacity-40' />
@@ -114,12 +69,8 @@ const Footer: FC<FooterProps> = ({ footerData, socials }) => {
         className='text-contrast text-sm opacity-40'
         font={'mono'}
       >
-        {`
-        © ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных
-        Анонимных Алкоголиков`}
+        {`© ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков`}
       </Typography>
     </footer>
   )
 }
-
-export default Footer

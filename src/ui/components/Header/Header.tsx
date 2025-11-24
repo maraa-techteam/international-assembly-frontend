@@ -1,22 +1,29 @@
 'use client'
 
 import { cn } from '@/lib/utils/cn'
-import { TransformedNavigationType } from '@/types/Navigation'
+import { TransformedNavigationType } from '@/types/navigation'
+import { Icon, NavItem, SearchBar } from '@/ui/components'
 import Image from 'next/image'
 import Link from 'next/link'
-import { FC, useEffect, useState } from 'react'
-
-import Icon from '../Icon/Icon'
-import NavItem from '../NavItem/NavItem'
-import SearchBar from '../SearchBar/SearchBar'
+import { useEffect, useState } from 'react'
 
 type HeaderProps = { headerData: TransformedNavigationType[] }
 
-const Header: FC<HeaderProps> = ({ headerData }) => {
+export function Header({ headerData }: HeaderProps) {
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false)
   const [isMobileMenuActive, setIsMobileMenuActive] = useState<boolean>(false)
   const [navigation, setNavigation] =
     useState<TransformedNavigationType[]>(headerData)
+
+  const [hidden, setHidden] = useState(false)
+
+  const resetSelect = () => {
+    setNavigation((prevItems) => {
+      return prevItems.map((item) => {
+        return { ...item, isActive: false }
+      })
+    })
+  }
 
   useEffect(() => {
     const handleEsc = (event: { key: string }) => {
@@ -31,6 +38,31 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
     }
   }, [])
 
+  useEffect(() => {
+    let lastScroll = 0
+
+    const handleScroll = () => {
+      const currentScroll = window.scrollY
+
+      if (currentScroll <= 0) {
+        setHidden(false)
+        return
+      }
+
+      if (currentScroll > lastScroll) {
+        setHidden(true)
+        resetSelect()
+      } else {
+        setHidden(false)
+      }
+
+      lastScroll = currentScroll
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   const toggleSelect = (index: number) => {
     setNavigation((prevItems) => {
       return prevItems.map((item, i) => {
@@ -39,24 +71,17 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
     })
   }
 
-  const resetSelect = () => {
-    setNavigation((prevItems) => {
-      return prevItems.map((item) => {
-        return { ...item, isActive: false }
-      })
-    })
-  }
-
   return (
     <header
       className={cn(
-        'relative flex w-full flex-row items-center justify-between gap-3 overflow-x-clip bg-white p-4 lg:gap-8 lg:px-18',
+        'flex w-full flex-row items-center justify-between gap-3 overflow-x-clip bg-white p-4 transition-transform duration-300 lg:sticky lg:top-0 lg:z-1 lg:translate-y-0 lg:gap-8 lg:px-18',
         isSearchActive && 'flex-col items-stretch lg:flex-row',
+        hidden && 'lg:-translate-y-full',
       )}
     >
       <ul
         className={cn(
-          'absolute top-[80px] right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
+          'fixed top-[80px] right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:absolute lg:hidden',
           isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
         )}
       >
@@ -142,6 +167,7 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
           </button>
         ) : (
           <button
+            aria-label='open-mobile-menu'
             onClick={() => setIsMobileMenuActive((prev) => !prev)}
             className={cn('block lg:hidden', isSearchActive && 'hidden')}
           >
@@ -152,5 +178,3 @@ const Header: FC<HeaderProps> = ({ headerData }) => {
     </header>
   )
 }
-
-export default Header
