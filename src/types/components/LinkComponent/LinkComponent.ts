@@ -1,3 +1,4 @@
+import { Color } from '@/types/base'
 import { IconType } from '@/types/components'
 
 export type LinkComponentProps = {
@@ -5,7 +6,7 @@ export type LinkComponentProps = {
   text: string
   href: string
   variant: 'icon-left' | 'icon-right' | 'icon-only'
-  color?: 'text-primary' | 'text-contrast' | 'text-secondary'
+  color?: Color
   className?: string
   isUnderlined?: boolean
 }

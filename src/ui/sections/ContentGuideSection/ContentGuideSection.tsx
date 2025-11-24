@@ -6,12 +6,12 @@ import Typography from '@/ui/components/Typography/Typography'
 export function ContentGuideSection({ data, title }: ContentGuideSectionProps) {
   return (
     <Section
-      variant='double-column'
+      variant={'double-column'}
       color={'primary'}
       className='items-start overflow-x-hidden'
       leftColumn={
         <>
-          <Typography variant={'h2'} font={'mono'}>
+          <Typography variant={'h2'} font={'roboto'}>
             {title}
           </Typography>
           {!!data.length && <ContentGuide data={data} />}

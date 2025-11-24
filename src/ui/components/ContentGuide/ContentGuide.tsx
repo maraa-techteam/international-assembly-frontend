@@ -59,7 +59,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
                 className='flex h-full flex-col justify-between gap-4'
                 key={i}
               >
-                <Typography variant='body' font={'mono'}>
+                <Typography variant='body' font={'roboto'}>
                   {item.description}
                 </Typography>
                 <LinkComponent
@@ -67,6 +67,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
                   text={'Подробнее'}
                   href={'/'}
                   variant={'icon-right'}
+                  color={'contrast'}
                   className='self-end'
                 />
               </div>

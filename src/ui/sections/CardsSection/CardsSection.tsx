@@ -5,7 +5,7 @@ import Typography from '@/ui/components/Typography/Typography'
 export function CardSection({ title, cards, type }: CardSectionProps) {
   return (
     <Section variant='single-column' alignment='start' color={'white'}>
-      <Typography variant='h2' font='mono'>
+      <Typography variant='h2' font='roboto'>
         {title}
       </Typography>
       <Grid

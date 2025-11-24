@@ -40,10 +40,10 @@ export function FindGroupSection({ title, text }: FindGroupSectionProps) {
       className='items-start'
       color={'primary'}
     >
-      <Typography className='text-left' variant={'h2'} font={'mono'}>
+      <Typography className='text-left' variant={'h2'} font={'roboto'}>
         {title}
       </Typography>
-      <Typography variant={'body'} font={'mono'}>
+      <Typography variant={'body'} font={'roboto'}>
         {text}
       </Typography>
       <form
@@ -74,11 +74,11 @@ export function FindGroupSection({ title, text }: FindGroupSectionProps) {
           <Typography
             variant={'caption'}
             className='text-foreground font-medium'
-            font={'mono'}
+            font={'roboto'}
           >
             Поиск
           </Typography>
-          <Icon icon='arrow-right' size={'md'} />
+          <Icon color='foreground' icon='arrow-right' size={'md'} />
         </Button>
       </form>
     </Section>

@@ -66,7 +66,7 @@ export function SearchBar({
                 'flex h-12 w-12 cursor-pointer items-center justify-center'
               }
             >
-              <Icon icon={'search'} size={'md'} />
+              <Icon color='foreground' icon={'search'} size={'md'} />
             </button>
           )}
 
@@ -78,7 +78,7 @@ export function SearchBar({
                 value={searchValue}
                 onChange={handleInputChange}
                 placeholder={placeholder}
-                className='z-0 h-12 w-full rounded-full border-none bg-gray-100 px-4 font-mono text-base transition-all duration-700 ease-in-out outline-none lg:rounded-xl'
+                className='font-roboto z-0 h-12 w-full rounded-full border-none bg-gray-100 px-4 text-base transition-all duration-700 ease-in-out outline-none lg:rounded-xl'
               />
 
               <button
@@ -88,7 +88,12 @@ export function SearchBar({
                   'absolute top-1/2 right-3 hidden h-6 w-6 -translate-y-1/2 transform items-center justify-center text-gray-600 transition-colors duration-200 lg:flex',
                 )}
               >
-                <Icon icon={'close'} className='text-foreground' size={'md'} />
+                <Icon
+                  color='foreground'
+                  icon={'close'}
+                  className='text-foreground'
+                  size={'md'}
+                />
               </button>
             </form>
           )}

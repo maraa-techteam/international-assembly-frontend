@@ -22,11 +22,12 @@ export function FooterNavItem({
         <Typography
           variant={'body'}
           className='text-contrast text-sm font-bold'
-          font={'mono'}
+          font={'roboto'}
         >
           {name}
         </Typography>
         <Icon
+          color={'contrast'}
           icon='chevron-down'
           className={cn(
             isActive ? 'scale-[-1]' : '',
@@ -46,7 +47,7 @@ export function FooterNavItem({
             <Typography
               variant='body'
               className={'text-contrast text-sm text-nowrap'}
-              font='mono'
+              font='roboto'
             >
               {sub.name}
             </Typography>

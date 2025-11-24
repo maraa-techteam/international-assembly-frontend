@@ -1,6 +1,5 @@
 export type GridType = {
-  isScrollable: boolean
-  columns: 2 | 3 | 4
-  gap: number
-  children?: React.ReactNode
+  children: React.ReactNode
+  className?: string
+  as?: 'div' | 'ul' | 'nav'
 }

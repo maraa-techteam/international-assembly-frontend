@@ -1,6 +1,83 @@
 import { cn } from '@/lib/utils/cn'
 import { ButtonType } from '@/types/components'
+import { type VariantProps, cva } from 'class-variance-authority'
 import Link from 'next/link'
+
+const buttonVariants = cva(
+  [
+    'inline-flex',
+    'items-center',
+    'whitespace-nowrap',
+    'justify-center',
+    'rounded-3xl',
+    'cursor-pointer',
+    'font-roboto',
+    'transition-colors',
+    'px-4',
+    'py-3',
+  ],
+  {
+    variants: {
+      variant: {
+        contained: '',
+        outlined: 'bg-transparent border',
+      },
+      color: {
+        primary: '',
+        secondary: '',
+        white: '',
+      },
+      size: {
+        sm: 'px-4 py-3 text-sm',
+        lg: 'px-5 lg:max-w-75 w-full py-4 text-lg',
+      },
+    },
+    compoundVariants: [
+      // Contained + Primary
+      {
+        variant: 'contained',
+        color: 'primary',
+        className: 'bg-primary text-white hover:bg-primary/90',
+      },
+      // Contained + Secondary
+      {
+        variant: 'contained',
+        color: 'secondary',
+        className: 'bg-secondary text-foreground hover:bg-secondary/90',
+      },
+      // Contained + White
+      {
+        variant: 'contained',
+        color: 'white',
+        className: 'bg-white text-primary hover:bg-white/90',
+      },
+      // Outlined + Primary
+      {
+        variant: 'outlined',
+        color: 'primary',
+        className: 'border-primary text-primary hover:bg-primary/10',
+      },
+      // Outlined + Secondary
+      {
+        variant: 'outlined',
+        color: 'secondary',
+        className: 'border-secondary text-secondary hover:bg-secondary/10',
+      },
+      // Outlined + White
+      {
+        variant: 'outlined',
+        color: 'white',
+        className: 'border-white text-white hover:bg-white/10',
+      },
+    ],
+    defaultVariants: {
+      variant: 'contained',
+      color: 'primary',
+    },
+  },
+)
+
+export type ButtonVariants = VariantProps<typeof buttonVariants>
 
 export function Button({
   variant,
@@ -15,37 +92,9 @@ export function Button({
   href,
   disabled = false,
 }: ButtonType) {
-  const getColorClasses = () => {
-    if (variant === 'contained') {
-      switch (color) {
-        case 'primary':
-          return 'bg-primary text-white'
-        case 'white':
-          return 'bg-white text-primary'
-        case 'secondary':
-          return 'bg-secondary text-foreground'
-        default:
-          return 'bg-primary text-white '
-      }
-    } else {
-      switch (color) {
-        case 'primary':
-          return 'bg-transparent border border-primary text-primary'
-        case 'white':
-          return 'bg-transparent border border-white text-white'
-        case 'secondary':
-          return 'bg-transparent border border-secondary text-secondary'
-        default:
-          return 'bg-transparent border border-primary text-primary'
-      }
-    }
-  }
-
   const baseClasses = cn(
-    'inline-flex items-center whitespace-nowrap justify-center rounded-3xl cursor-pointer font-mono transition-colors px-4 py-3',
-    size === 'lg' && 'lg:px-5 lg:py-[18px] w-full rounded-2xl lg:max-w-75',
-    getColorClasses(),
-    disabled && 'opacity-30 cursor-not-allowed',
+    buttonVariants({ variant, size, color }),
+    disabled && 'opacity-30 cursor-not-allowed pointer-events-none',
     className,
   )
 

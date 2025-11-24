@@ -1,39 +1,73 @@
 import { cn } from '@/lib/utils/cn'
 import { GridType } from '@/types/components'
+import { VariantProps, cva } from 'class-variance-authority'
 
-type dynamicClassTypes = { [key: number]: string }
+const gridVariants = cva('flex w-full flex-col lg:grid', {
+  variants: {
+    columns: {
+      1: 'lg:grid-cols-1',
+      2: 'lg:grid-cols-2',
+      3: 'lg:grid-cols-3',
+      4: 'lg:grid-cols-4',
+      5: 'lg:grid-cols-5',
+      6: 'lg:grid-cols-6',
+    },
+    gap: {
+      0: 'gap-0',
+      1: 'gap-1 lg:gap-3',
+      2: 'gap-2 lg:gap-4',
+      3: 'gap-3 lg:gap-5',
+      4: 'gap-4 lg:gap-6',
+      5: 'gap-5 lg:gap-7',
+      6: 'gap-6 lg:gap-8',
+      8: 'gap-8 lg:gap-10',
+    },
+    align: {
+      start: 'items-start',
+      center: 'items-center',
+      end: 'items-end',
+      stretch: 'items-stretch',
+    },
+    justify: {
+      start: 'justify-start',
+      center: 'justify-center',
+      end: 'justify-end',
+      between: 'justify-between',
+    },
+    isScrollable: {
+      true: 'overflow-x-auto',
+      false: '',
+    },
+  },
+  defaultVariants: {
+    columns: 2,
+    gap: 4,
+    align: 'stretch', // Better default for grids
+    justify: 'start',
+    isScrollable: false,
+  },
+})
 
-const columnClasses: dynamicClassTypes = {
-  2: 'lg:grid-cols-2',
-  3: 'lg:grid-cols-3',
-  4: 'lg:grid-cols-4',
-}
-
-const gapClasses: dynamicClassTypes = {
-  1: 'gap-1 lg:gap-3',
-  2: 'gap-2 lg:gap-4',
-  3: 'gap-3 lg:gap-5',
-  4: 'gap-4 lg:gap-6',
-  5: 'gap-5 lg:gap-7',
-  6: 'gap-6 lg:gap-8',
-}
+type GridProps = VariantProps<typeof gridVariants> & GridType
 
 export function Grid({
-  isScrollable,
-  columns = 2,
   children,
-  gap = 4,
-}: GridType) {
+  columns,
+  gap,
+  align,
+  justify,
+  isScrollable,
+  className,
+  as: Component = 'div',
+}: GridProps) {
   return (
-    <div
+    <Component
       className={cn(
-        'flex w-full flex-col items-start justify-center lg:grid',
-        columnClasses[columns],
-        gapClasses[gap],
-        isScrollable && 'overflow-x-auto',
+        gridVariants({ columns, gap, align, justify, isScrollable }),
+        className,
       )}
     >
       {children}
-    </div>
+    </Component>
   )
 }

@@ -52,7 +52,7 @@ describe('MobileSubMenu component', () => {
     )
 
     const menu = container.firstChild as HTMLElement
-    expect(menu).toHaveClass('translate-x-[0]')
+    expect(menu).toHaveClass('translate-x-0')
     expect(menu).not.toHaveClass('translate-x-full')
   })
 
@@ -67,7 +67,7 @@ describe('MobileSubMenu component', () => {
 
     const menu = container.firstChild as HTMLElement
     expect(menu).toHaveClass('translate-x-full')
-    expect(menu).not.toHaveClass('translate-x-[0]')
+    expect(menu).not.toHaveClass('translate-x-0')
   })
 
   it('calls toggleSelect when back button is clicked', () => {
