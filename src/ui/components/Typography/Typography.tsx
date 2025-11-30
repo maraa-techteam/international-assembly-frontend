@@ -4,7 +4,7 @@ import { TypographyProps } from '@/types/components/Typography/Typography'
 export function Typography({
   variant = 'body',
   children,
-  font = 'mono',
+  font = 'roboto',
   className = '',
 }: TypographyProps) {
   switch (variant) {
@@ -13,7 +13,7 @@ export function Typography({
         <h1
           className={cn(
             'text-contrast text-2xl font-bold lg:text-4xl',
-            font === 'slab' ? 'font-slab' : 'font-mono',
+            font === 'slab' ? 'font-slab' : 'font-roboto',
             className,
           )}
         >
@@ -31,7 +31,7 @@ export function Typography({
         <h3
           className={cn(
             'text-contrast text-md font-bold lg:text-2xl',
-            font === 'slab' ? 'font-slab' : 'font-mono',
+            font === 'slab' ? 'font-slab' : 'font-roboto',
             className,
           )}
         >
@@ -43,7 +43,7 @@ export function Typography({
         <p
           className={cn(
             'text-contrast max-w-[800px] text-base font-normal',
-            font === 'slab' ? 'font-slab' : 'font-mono',
+            font === 'slab' ? 'font-slab' : 'font-roboto',
             className,
           )}
         >
@@ -55,7 +55,7 @@ export function Typography({
         <span
           className={cn(
             'text-contrast text-base font-normal',
-            font === 'slab' ? 'font-slab' : 'font-mono',
+            font === 'slab' ? 'font-slab' : 'font-roboto',
             className,
           )}
         >

@@ -3,7 +3,7 @@ import { getSocials } from '@/lib/api/fetchSocials'
 import { cn } from '@/lib/utils/cn'
 import { Footer, Header, Layout } from '@/ui/components'
 import type { Metadata } from 'next'
-import { Roboto_Mono, Roboto_Slab } from 'next/font/google'
+import { Roboto, Roboto_Slab } from 'next/font/google'
 
 import './globals.css'
 
@@ -12,8 +12,8 @@ const robotoSlab = Roboto_Slab({
   subsets: ['latin', 'cyrillic'],
 })
 
-const robotoMono = Roboto_Mono({
-  variable: '--font-roboto-mono',
+const roboto = Roboto({
+  variable: '--font-roboto-normal',
   subsets: ['latin', 'cyrillic'],
 })
 
@@ -47,7 +47,7 @@ export default async function RootLayout({
       <body
         className={cn(
           robotoSlab.variable,
-          robotoMono.variable,
+          roboto.variable,
           'overflow-x-hidden antialiased',
         )}
       >

@@ -1,13 +1,39 @@
 import { cn } from '@/lib/utils/cn'
 import { IconProps } from '@/types/components'
+import { type VariantProps, cva } from 'class-variance-authority'
 
-export function Icon({ icon, size = 'md', className }: IconProps) {
-  const sizeClasses = {
-    sm: 'w-4 h-4', // 16px container
-    md: 'w-6 h-6', // 24px container
-    lg: 'w-8 h-8', // 32px container
-  }
+const iconVariants = cva(
+  'inline-flex flex-shrink-0 items-center justify-center',
+  {
+    variants: {
+      size: {
+        sm: 'w-4 h-4',
+        md: 'w-6 h-6',
+        lg: 'w-8 h-8',
+      },
+      color: {
+        white: 'text-white',
+        primary: 'text-primary',
+        secondary: 'text-secondary',
+        foreground: 'text-foreground',
+        contrast: 'text-contrast',
+      },
+    },
+    defaultVariants: {
+      size: 'md',
+      color: 'contrast',
+    },
+  },
+)
 
+export type IconVariantProps = VariantProps<typeof iconVariants>
+
+export function Icon({
+  icon,
+  size = 'md',
+  color = 'contrast',
+  className,
+}: IconProps) {
   const icons = {
     'arrow-right': (
       <svg
@@ -171,11 +197,7 @@ export function Icon({ icon, size = 'md', className }: IconProps) {
   return (
     <span
       data-testid='icon'
-      className={cn(
-        'text-contrast inline-flex flex-shrink-0 items-center justify-center',
-        sizeClasses[size],
-        className,
-      )}
+      className={cn(iconVariants({ size, color }), className)}
       aria-hidden='true'
     >
       {icons[icon]}

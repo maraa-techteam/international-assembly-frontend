@@ -21,7 +21,7 @@ export function Select({
         name={label}
         id={`select-${label}`}
         onChange={(e) => onChange(e.target.value)}
-        className='text-primary w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 font-mono whitespace-nowrap transition-colors focus:outline-none'
+        className='text-primary font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 whitespace-nowrap transition-colors focus:outline-none'
       >
         <option value=''>{label}</option>
         {options.map((option) => (
@@ -34,6 +34,7 @@ export function Select({
       <Icon
         icon='chevron-down'
         className='text-primary pointer-events-none absolute right-4'
+        color='primary'
         size={'md'}
       />
     </div>

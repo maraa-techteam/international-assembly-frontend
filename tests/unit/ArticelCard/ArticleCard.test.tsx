@@ -46,10 +46,8 @@ describe('ArticleCard component', () => {
 
     const image = screen.getByAltText('Заголовок статьи')
     expect(image).toBeInTheDocument()
-    expect(image).toHaveAttribute(
-      'src',
-      '/_next/image?url=https%3A%2F%2Fmaraa-cms.up.railway.app%2Fassets%2F%2Ftest-image.jpg&w=1080&q=75',
-    )
+    const src = image.getAttribute('src')
+    expect(src).toContain('test-image.jpg')
   })
 
   it('renders placeholder when there is no image', () => {

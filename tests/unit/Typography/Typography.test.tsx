@@ -10,12 +10,12 @@ describe('Typography', () => {
 
   it('should be of correct font', () => {
     render(
-      <Typography variant={'h1'} font='mono'>
+      <Typography variant={'h1'} font='roboto'>
         I am a test!
       </Typography>,
     )
     const element = screen.getByRole('heading', { level: 1 })
-    expect(element).toHaveClass('font-mono')
+    expect(element).toHaveClass('font-roboto')
   })
 
   it('should render children correctly', () => {

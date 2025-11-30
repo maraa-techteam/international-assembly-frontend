@@ -1,7 +1,8 @@
 import getImageUrl from '@/lib/utils/getImageUrl'
 import { CallToActionSectionProps } from '@/types/sections'
 import {
-  ButtonGroup,
+  Button,
+  Grid,
   LinkComponent,
   Section,
   Typography,
@@ -23,25 +24,38 @@ export function CallToActionSection({
       color={'white'}
       leftColumn={
         <>
-          <Typography variant='h2' font='mono'>
+          <Typography variant='h2' font='roboto'>
             {title}
           </Typography>
-          <Typography variant='body' font='mono'>
+          <Typography variant='body' font='roboto'>
             {text}
           </Typography>
           <LinkComponent
             icon={linkIcon}
             isUnderlined
-            color='text-primary'
+            color={'primary'}
             text={linkText}
             href={linkHref}
             variant={'icon-left'}
           />
-          <ButtonGroup
-            orientation='horizontal'
-            alignment='end'
-            buttons={actions}
-          />
+          <Grid
+            as={'nav'}
+            justify={'center'}
+            className={'lg:flex lg:flex-row'}
+            align={'center'}
+          >
+            {actions.map((button, i) => (
+              <Button
+                key={i}
+                variant={button.variant}
+                size={button.size}
+                color={button.color}
+                as={button.as}
+              >
+                {button.label}
+              </Button>
+            ))}
+          </Grid>
         </>
       }
       rightColumn={

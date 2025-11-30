@@ -38,6 +38,7 @@ export function Footer({ footerData, socials }: FooterProps) {
             {socials.map((item, i) => {
               return (
                 <LinkComponent
+                  color={'contrast'}
                   key={i}
                   icon={item.icon}
                   text={''}
@@ -67,7 +68,7 @@ export function Footer({ footerData, socials }: FooterProps) {
       <Typography
         variant={'body'}
         className='text-contrast text-sm opacity-40'
-        font={'mono'}
+        font={'roboto'}
       >
         {`© ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков`}
       </Typography>

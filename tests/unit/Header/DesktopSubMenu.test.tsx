@@ -1,76 +1,58 @@
 import { DesktopSubMenu } from '@/ui/components'
-import { render, screen } from '@testing-library/react'
-import { fireEvent } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 
-const mockSubMenuData = [
+const mockNavigationData = [
   {
-    name: 'Что такое АА?',
-    href: '/',
-    description: 'Описание страницы Что такое АА?',
+    name: 'Item 1',
+    href: '/item-1',
+    description: 'Description for item 1',
     isFrequentlyVisited: true,
   },
   {
-    name: 'Что такое МА?',
-    href: '/',
-    description: 'Описание страницы Что такое МА?',
-    isFrequentlyVisited: true,
-  },
-]
-
-const mockSubMenuActiveData = [
-  {
-    name: 'Что такое АА?',
-    href: '/',
-    description: 'Описание страницы Что такое АА?',
-    isActive: true,
-    isFrequentlyVisited: true,
+    name: 'Item 2',
+    href: '/item-2',
+    description: 'Description for item 2',
+    isFrequentlyVisited: false,
   },
   {
-    name: 'Что такое МА?',
-    href: '/',
-    description: 'Описание страницы Что такое МА?',
-    isActive: false,
-    isFrequentlyVisited: true,
+    name: 'Item 3',
+    href: '/item-3',
+    description: 'Description for item 3',
+    isFrequentlyVisited: false,
   },
 ]
 
-describe('DesktopSubMenu component', () => {
-  it('renders items and descriptions correctly', () => {
-    render(
-      <DesktopSubMenu
-        activeItems={mockSubMenuActiveData}
-        subNav={mockSubMenuData}
-        onMouseEnter={() => null}
-      />,
-    )
+describe('DesktopSubMenu', () => {
+  it('renders all navigation items', () => {
+    render(<DesktopSubMenu navigationData={mockNavigationData} />)
 
-    // Both menu items should be in the document
-    expect(screen.getByText('Что такое АА?')).toBeInTheDocument()
-    expect(screen.getByText('Что такое МА?')).toBeInTheDocument()
-
-    // Only the active item's description should be visible
-    expect(
-      screen.getByText('Описание страницы Что такое АА?'),
-    ).toBeInTheDocument()
-    expect(
-      screen.queryByText('Описание страницы Что такое МА?'),
-    ).not.toBeInTheDocument()
+    expect(screen.getByText('Item 1')).toBeInTheDocument()
+    expect(screen.getByText('Item 2')).toBeInTheDocument()
+    expect(screen.getByText('Item 3')).toBeInTheDocument()
   })
 
-  it('calls onMouseEnter when hovering over menu item', () => {
-    const mockOnMouseEnter = jest.fn()
+  it('displays first item description by default', () => {
+    render(<DesktopSubMenu navigationData={mockNavigationData} />)
 
-    render(
-      <DesktopSubMenu
-        activeItems={mockSubMenuActiveData}
-        subNav={mockSubMenuData}
-        onMouseEnter={mockOnMouseEnter}
-      />,
-    )
+    expect(screen.getByText('Description for item 1')).toBeInTheDocument()
+  })
 
-    const menuItem = screen.getByText('Что такое МА?')
-    fireEvent.mouseEnter(menuItem)
+  it('changes active item on mouse enter', () => {
+    render(<DesktopSubMenu navigationData={mockNavigationData} />)
 
-    expect(mockOnMouseEnter).toHaveBeenCalledWith(1)
+    const item2Link = screen.getByText('Item 2').closest('a')
+
+    fireEvent.mouseEnter(item2Link!)
+
+    expect(screen.getByText('Description for item 2')).toBeInTheDocument()
+    expect(screen.queryByText('Description for item 1')).not.toBeInTheDocument()
+  })
+
+  it('applies active styles to first item by default', () => {
+    render(<DesktopSubMenu navigationData={mockNavigationData} />)
+
+    const item1Link = screen.getByText('Item 1').closest('a')
+
+    expect(item1Link).toHaveClass('bg-primary', 'text-white')
   })
 })

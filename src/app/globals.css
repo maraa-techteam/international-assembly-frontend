@@ -17,7 +17,7 @@
   --color-indigo-blue: var(--indigo-blue);
   --color-primary-grey: var(--primary-grey);
   --font-slab: var(--font-roboto-slab);
-  --font-mono: var(--font-roboto-mono);
+  --font-roboto: var(--font-roboto-normal);
 }
 
 @layer utilities {

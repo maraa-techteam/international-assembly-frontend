@@ -35,10 +35,10 @@ export function ArticleCard({
       <div className='flex flex-col items-start justify-start gap-4'>
         <Label text={publishedAt} />
         <div className='flex flex-col gap-2'>
-          <Typography variant='h3' className='line-clamp-2' font='mono'>
+          <Typography variant='h3' className='line-clamp-2' font='roboto'>
             {title}
           </Typography>
-          <Typography variant='body' className='line-clamp-3' font='mono'>
+          <Typography variant='body' className='line-clamp-3' font='roboto'>
             {text}
           </Typography>
         </div>

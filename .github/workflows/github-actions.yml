@@ -1,9 +1,6 @@
 name: CI/CD Pipeline
 
 on:
-  push:
-    branches:
-      - '**'
   pull_request:
     branches:
       - '**'
@@ -80,9 +77,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Run tests
+      - name: Run unit and integration tests
+        env:
+          DIRECTUS_CMS_URL: "https://${{ secrets.DIRECTUS_CMS_URL }}"
         run: |
-          echo "Running unit tests..."
+          echo "Running unit and integration tests..."
           pnpm run test:unit
           
 
