@@ -1,7 +1,7 @@
 import { ArticleCardType } from '@/types/components'
 import { BaseSection } from '@/types/sections'
 
-export type CardSectionProps = BaseSection & {
-  type: 'article' | 'book' | 'brochure'
-  cards: ArticleCardType[]
+export type ArticleCardSectionProps = BaseSection & {
+  type: 'article'
+  article_cards: ArticleCardType[]
 }

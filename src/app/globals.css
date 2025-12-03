@@ -34,6 +34,80 @@
   }
 }
 
+@layer rte {
+  .rte {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    a {
+      color: var(--color-primary);
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: var(--color-secondary);
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 700;
+      @media (max-width: 1024px) {
+        font-size: 24px;
+      }
+    }
+
+    h2 {
+      font-size: 30px;
+      font-weight: 700;
+      @media (max-width: 1024px) {
+        font-size: 18px;
+      }
+    }
+
+    h3 {
+      /* mb-4, text-lg, font-bold */
+      font-size: 18px;
+      font-weight: 700;
+
+      @media (max-width: 1024px) {
+        font-size: 16px;
+      }
+    }
+
+    h4 {
+      font-size: 16px;
+      font-weight: 700;
+
+      @media (max-width: 1024px) {
+        font-size: 12px;
+      }
+    }
+
+    p {
+      max-width: 800px;
+      font-size: 1rem;
+      font-weight: 400;
+    }
+
+    ol {
+      list-style: decimal;
+      list-style-position: inside;
+      /* padding-left: 24px; */
+    }
+    ul {
+      list-style: none;
+      list-style-position: inside;
+
+      li {
+        &::marker {
+          content: '\2714\00a0';
+        }
+      }
+      /* padding-left: 24px; */
+    }
+  }
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

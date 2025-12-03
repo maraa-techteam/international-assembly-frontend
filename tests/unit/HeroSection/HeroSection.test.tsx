@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react'
 
 const mockProps: HeroSectionProps = {
   title: 'Добро пожаловать в АА',
-  buttons: [
+  actions: [
     {
       label: 'Связаться',
       size: 'lg',

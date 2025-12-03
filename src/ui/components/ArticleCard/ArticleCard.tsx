@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils/cn'
+import { formatDate } from '@/lib/utils/dateFormatter'
 import imageLoader from '@/lib/utils/getImageUrl'
 import { ArticleCardType } from '@/types/components'
 import { Label, Typography } from '@/ui/components'
@@ -7,13 +8,13 @@ import Image from 'next/image'
 export function ArticleCard({
   title,
   image,
-  text,
-  publishedAt,
-  href,
+  perex,
+  date_created,
+  link,
 }: ArticleCardType) {
   return (
     <a
-      href={href}
+      href={link}
       className={cn(
         'inline-flex max-w-[800px] flex-col items-start justify-center gap-6 lg:flex-row',
       )}
@@ -33,13 +34,13 @@ export function ArticleCard({
         </div>
       )}
       <div className='flex flex-col items-start justify-start gap-4'>
-        <Label text={publishedAt} />
+        <Label text={formatDate(date_created)} />
         <div className='flex flex-col gap-2'>
           <Typography variant='h3' className='line-clamp-2' font='roboto'>
             {title}
           </Typography>
           <Typography variant='body' className='line-clamp-3' font='roboto'>
-            {text}
+            {perex}
           </Typography>
         </div>
       </div>

@@ -1,10 +1,14 @@
-import { CardSectionProps } from '@/types/sections'
+import { ArticleCardSectionProps } from '@/types/sections'
 import { ArticleCard, Grid, Section } from '@/ui/components'
 import Typography from '@/ui/components/Typography/Typography'
 
-export function CardSection({ title, cards, type }: CardSectionProps) {
+export function ArticleCardSection({
+  title,
+  article_cards,
+  type,
+}: ArticleCardSectionProps) {
   return (
-    <Section variant='single-column' alignment='start' color={'white'}>
+    <Section variant='single-column' alignment='center' color={'white'}>
       <Typography variant='h2' font='roboto'>
         {title}
       </Typography>
@@ -13,14 +17,14 @@ export function CardSection({ title, cards, type }: CardSectionProps) {
         columns={type === 'article' ? 2 : type === 'book' ? 4 : 3}
         gap={6}
       >
-        {cards.map((card, i) => (
+        {article_cards.map((card, i) => (
           <ArticleCard
             key={i}
             title={card.title}
-            text={card.text}
+            perex={card.perex}
             image={card.image}
-            href={card.href}
-            publishedAt={card.publishedAt}
+            link={card.link}
+            date_created={card.date_created}
           />
         ))}
       </Grid>

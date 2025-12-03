@@ -41,9 +41,13 @@ export function LinkComponent({
       className={cn(linkVariants({ color, isUnderlined }), className)}
       href={href}
     >
-      {variant === 'icon-left' && <Icon color={color} icon={icon} />}
-      {variant === 'icon-only' ? <Icon color={color} icon={icon} /> : text}
-      {variant === 'icon-right' && <Icon color={color} icon={icon} />}
+      {variant === 'icon-left' && icon && <Icon color={color} icon={icon} />}
+      {variant === 'icon-only' && icon ? (
+        <Icon color={color} icon={icon} />
+      ) : (
+        text
+      )}
+      {variant === 'icon-right' && icon && <Icon color={color} icon={icon} />}
     </Link>
   )
 }
