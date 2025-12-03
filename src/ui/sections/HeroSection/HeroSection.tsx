@@ -7,7 +7,7 @@ export function HeroSection({ title, buttons }: HeroSectionProps) {
     <Section
       variant='single-column'
       color={'white'}
-      className='gap-8 text-center lg:gap-15 lg:py-39'
+      className='gap-8 py-10 text-center lg:gap-15 lg:py-39'
     >
       <Typography variant={'h1'} className='lg:text-5xl' font={'roboto'}>
         {title}

@@ -38,7 +38,7 @@ describe('Header', () => {
   it('renders search bar', () => {
     render(<Header headerData={mockHeaderData} />)
 
-    const searchBar = screen.getByLabelText('open-search')
+    const searchBar = screen.getByLabelText('Открыть строку поиска')
     expect(searchBar).toBeInTheDocument()
   })
 

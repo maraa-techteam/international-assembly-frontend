@@ -1,115 +1,55 @@
+import { FooterNavItemProps } from '@/types/components'
 import { FooterNavItem } from '@/ui/components'
 import { render, screen } from '@testing-library/react'
 
-const mockSubNav = [
-  {
-    name: 'История',
-    href: '/about/history',
-    description: 'Описание истории',
-    isFrequentlyVisited: true,
-  },
-  {
-    name: 'Команда',
-    href: '/about/team',
-    description: 'Описание команды',
-    isFrequentlyVisited: false,
-  },
-]
+const mockProps: FooterNavItemProps = {
+  name: 'Test Category',
+  subNav: [
+    {
+      name: 'Link 1',
+      href: '/link-1',
+      description: 'Description 1',
+      isFrequentlyVisited: true,
+    },
+    {
+      name: 'Link 2',
+      href: '/link-2',
+      description: 'Description 2',
+      isFrequentlyVisited: true,
+    },
+    {
+      name: 'Link 3',
+      href: '/link-3',
+      description: 'Description 3',
+      isFrequentlyVisited: true,
+    },
+  ],
+}
 
-describe('FooterNavItem component', () => {
-  it('returns null when subNav is empty', () => {
-    const { container } = render(
-      <FooterNavItem
-        name='Контакты'
-        subNav={[]}
-        isActive={false}
-        toggleSelect={() => null}
-      />,
-    )
+describe('FooterNavItem', () => {
+  it('desktop nav is always visible and cannot be toggled', () => {
+    render(<FooterNavItem {...mockProps} />)
 
-    expect(container.firstChild).toBeNull()
+    // Desktop version uses regular ul (not details/summary)
+    const desktopList = screen.getAllByRole('list')[0]
+    expect(desktopList).toBeVisible()
+
+    // Details element has lg:invisible lg:hidden classes
+    const details = screen.getByRole('group')
+    expect(details).toHaveClass('lg:invisible', 'lg:hidden')
   })
 
-  it('renders component when subNav has items', () => {
-    render(
-      <FooterNavItem
-        name='О нас'
-        subNav={mockSubNav}
-        isActive={false}
-        toggleSelect={() => null}
-      />,
-    )
+  it('links have correct href attributes', () => {
+    render(<FooterNavItem {...mockProps} />)
 
-    expect(screen.getByText('О нас')).toBeInTheDocument()
-  })
+    const links = screen.getAllByRole('link')
 
-  it('renders all subNav items', () => {
-    render(
-      <FooterNavItem
-        name='О нас'
-        subNav={mockSubNav}
-        isActive={false}
-        toggleSelect={() => null}
-      />,
-    )
+    // Should have 6 links total (3 in desktop view, 3 in mobile view)
+    expect(links).toHaveLength(6)
 
-    expect(screen.getByText('История')).toBeInTheDocument()
-    expect(screen.getByText('Команда')).toBeInTheDocument()
-  })
-
-  it('applies rotation class to icon when isActive is true', () => {
-    render(
-      <FooterNavItem
-        name='О нас'
-        subNav={mockSubNav}
-        isActive={true}
-        toggleSelect={() => null}
-      />,
-    )
-
-    const icon = screen.getByTestId('icon')
-    expect(icon).toHaveClass('scale-[-1]')
-  })
-
-  it('does not apply rotation class to icon when isActive is false', () => {
-    render(
-      <FooterNavItem
-        name='О нас'
-        subNav={mockSubNav}
-        isActive={false}
-        toggleSelect={() => null}
-      />,
-    )
-
-    const icon = screen.getByTestId('icon')
-    expect(icon).not.toHaveClass('scale-[-1]')
-  })
-
-  it('hides nav when isActive is false', () => {
-    const { container } = render(
-      <FooterNavItem
-        name='О нас'
-        subNav={mockSubNav}
-        isActive={false}
-        toggleSelect={() => null}
-      />,
-    )
-
-    const nav = container.querySelector('nav')
-    expect(nav).toHaveClass('hidden')
-  })
-
-  it('shows nav when isActive is true', () => {
-    const { container } = render(
-      <FooterNavItem
-        name='О нас'
-        subNav={mockSubNav}
-        isActive={true}
-        toggleSelect={() => null}
-      />,
-    )
-
-    const nav = container.querySelector('nav')
-    expect(nav).not.toHaveClass('hidden')
+    // Check hrefs
+    expect(links[0]).toHaveAttribute('href', '/link-1')
+    expect(links[1]).toHaveAttribute('href', '/link-2')
+    expect(links[2]).toHaveAttribute('href', '/link-3')
   })
 })

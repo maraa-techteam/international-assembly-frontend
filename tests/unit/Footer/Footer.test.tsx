@@ -19,6 +19,7 @@ const mockFooterData: TransformedNavigationType[] = [
     showInFooter: true,
     showInHeader: true,
   },
+
   {
     name: 'Ресурсы',
     href: '/resources',
@@ -51,8 +52,24 @@ describe('Footer component', () => {
   it('renders correct number of navigation items', () => {
     render(<Footer footerData={mockFooterData} socials={mockSocials} />)
 
-    const navItems = screen.getAllByRole('listitem')
-    expect(navItems).toHaveLength(2)
+    const menu = screen.getAllByRole('list')
+    expect(menu[1].children.length).toBe(mockFooterData.length)
+  })
+
+  it('renders logo', () => {
+    render(<Footer footerData={mockFooterData} socials={mockSocials} />)
+
+    const logo = screen.getByAltText(
+      'Логотип Международной Ассамблеи по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков',
+    )
+    expect(logo).toBeInTheDocument()
+  })
+
+  it('renders socials', () => {
+    render(<Footer footerData={mockFooterData} socials={mockSocials} />)
+
+    const socials = screen.getAllByTestId('icon')
+    expect(socials.length).toBe(mockSocials.length * 2)
   })
 
   it('renders copyright text with current year', () => {
@@ -67,9 +84,9 @@ describe('Footer component', () => {
   it('toggles navigation item to active when clicked', () => {
     render(<Footer footerData={mockFooterData} socials={mockSocials} />)
 
-    const firstNavButton = screen.getByText('О нас')
+    const firstNavButton = screen.getAllByText('О нас')[0]
     fireEvent.click(firstNavButton)
 
-    expect(screen.getByText('Что такое АА?')).toBeInTheDocument()
+    expect(screen.getAllByText('Что такое АА?')[0]).toBeInTheDocument()
   })
 })
