@@ -1,24 +1,9 @@
-'use client'
-
 import { FooterProps } from '@/types/components'
-import { TransformedNavigationType } from '@/types/navigation'
 import { FooterNavItem, LinkComponent, Typography } from '@/ui/components'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
 
 export function Footer({ footerData, socials }: FooterProps) {
-  const [navigation, setNavigation] =
-    useState<TransformedNavigationType[]>(footerData)
-
-  const toggleSelect = (index: number) => {
-    setNavigation((prevItems) => {
-      return prevItems.map((item, i) => {
-        return { ...item, isActive: i === index ? !item.isActive : false }
-      })
-    })
-  }
-
   const date = new Date()
 
   return (
@@ -31,34 +16,31 @@ export function Footer({ footerData, socials }: FooterProps) {
               width={230}
               height={54}
               className='w-auto min-w-60'
-              alt={'logo'}
+              alt={
+                'Логотип Международной Ассамблеи по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков'
+              }
             />
           </Link>
-          <div className='flex flex-row items-center justify-center gap-4'>
+          <ul className='flex flex-row items-center justify-center gap-4'>
             {socials.map((item, i) => {
               return (
-                <LinkComponent
-                  color={'contrast'}
-                  key={i}
-                  icon={item.icon}
-                  text={''}
-                  href={item.href}
-                  variant={'icon-only'}
-                />
+                <li key={i}>
+                  <LinkComponent
+                    color={'contrast'}
+                    icon={item.icon}
+                    text={''}
+                    href={item.href}
+                    variant={'icon-only'}
+                  />
+                </li>
               )
             })}
-          </div>
+          </ul>
         </div>
 
         <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
-          {navigation.map((item, i) => (
-            <FooterNavItem
-              key={i}
-              name={item.name}
-              subNav={item.subNav}
-              isActive={item.isActive}
-              toggleSelect={() => toggleSelect(i)}
-            />
+          {footerData.map((item, i) => (
+            <FooterNavItem key={i} name={item.name} subNav={item.subNav} />
           ))}
         </ul>
       </div>

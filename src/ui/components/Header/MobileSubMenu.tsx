@@ -16,7 +16,6 @@ export function MobileSubMenu({
 }: MobileSubMenuProps) {
   return (
     <ul
-      role='menu'
       className={cn(
         'fixed top-0 right-0 z-20 flex h-dvh w-full transform flex-col bg-white transition-transform duration-300 lg:hidden',
         isActive ? 'translate-x-0' : 'translate-x-full',

@@ -9,8 +9,6 @@ export type FooterNavItemProps = {
     description: string
     isFrequentlyVisited: boolean
   }[]
-  isActive: boolean
-  toggleSelect: () => void
 }
 
 export type FooterProps = {

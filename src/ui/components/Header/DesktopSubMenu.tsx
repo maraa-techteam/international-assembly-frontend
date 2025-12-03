@@ -36,10 +36,7 @@ export function DesktopSubMenu({ navigationData }: DesktopSubMenuProps) {
     })
   }
   return (
-    <div
-      role='menu'
-      className='absolute top-15 right-1/2 hidden w-dvw max-w-3xl translate-x-1/2 grid-cols-2 gap-8 bg-white p-8 shadow lg:grid'
-    >
+    <div className='absolute top-15 right-1/2 hidden w-dvw max-w-3xl translate-x-1/2 grid-cols-2 gap-8 bg-white p-8 shadow lg:grid'>
       <ul className='hidden flex-col lg:flex'>
         {activeItems.map((item, i) => (
           <li key={i}>
@@ -62,7 +59,7 @@ export function DesktopSubMenu({ navigationData }: DesktopSubMenuProps) {
           </li>
         ))}
       </ul>
-      <div className='hidden flex-col p-4 lg:flex'>
+      <div aria-hidden className='hidden flex-col p-4 lg:flex'>
         {navigationData.map((item, i) => {
           return (
             <Typography

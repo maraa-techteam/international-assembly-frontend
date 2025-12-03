@@ -99,7 +99,6 @@ export function Header({ headerData }: HeaderProps) {
   return (
     <header
       ref={headerRef}
-      role='banner'
       className={cn(
         'fixed top-0 z-50 flex w-full translate-y-0 flex-row items-center justify-between gap-3 bg-white p-4 transition-transform duration-300 lg:gap-8 lg:px-18',
         isSearchActive && 'flex-col items-stretch lg:flex-row',
@@ -142,16 +141,14 @@ export function Header({ headerData }: HeaderProps) {
               className='text-contrast'
               size='md'
               color='foreground'
-              aria-hidden='true'
             />
           </button>
         )}
       </div>
 
-      {/* Mobile menu */}
       <nav aria-label='Основная навигация'>
+        {/* Mobile menu */}
         <ul
-          id='mobile-menu'
           className={cn(
             'absolute top-[80px] right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
             isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
@@ -160,7 +157,7 @@ export function Header({ headerData }: HeaderProps) {
         >
           {navigation.map((item, i) => {
             return (
-              <li className='relative' role='listitem' key={i}>
+              <li className='relative' key={i}>
                 <NavItem
                   key={i}
                   href={item.href}
@@ -191,13 +188,10 @@ export function Header({ headerData }: HeaderProps) {
 
         {/* Desktop menu */}
         {!isSearchActive && (
-          <ul
-            className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'
-            role='menubar'
-          >
+          <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
             {navigation.map((item, i) => {
               return (
-                <li className='relative' key={i} role='listitem'>
+                <li className='relative' key={i}>
                   <NavItem
                     key={`${i}-${item.isActive}`}
                     href={item.href}
@@ -257,7 +251,6 @@ export function Header({ headerData }: HeaderProps) {
               className='text-contrast'
               size={'md'}
               color='foreground'
-              aria-hidden='true'
             />
           </button>
         ) : (
@@ -273,7 +266,6 @@ export function Header({ headerData }: HeaderProps) {
               className='text-contrast'
               size={'md'}
               color='foreground'
-              aria-hidden='true'
             />
           </button>
         )}

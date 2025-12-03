@@ -73,7 +73,7 @@ describe('NavItem', () => {
       />,
     )
 
-    fireEvent.click(screen.getByRole('menuitem'))
+    fireEvent.click(screen.getAllByRole('button')[0])
     expect(mockToggleSelect).toHaveBeenCalledTimes(1)
   })
 })

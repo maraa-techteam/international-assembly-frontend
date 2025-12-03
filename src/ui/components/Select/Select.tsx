@@ -16,10 +16,14 @@ export function Select({
         className,
       )}
     >
+      <label
+        htmlFor={label}
+        className='sr-only'
+      >{`Выберите вариант: ${label}`}</label>
       <select
         value={value}
         name={label}
-        id={`select-${label}`}
+        id={label}
         onChange={(e) => onChange(e.target.value)}
         className='text-primary font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 whitespace-nowrap transition-colors focus:outline-none'
       >
