@@ -9,17 +9,22 @@ export async function getPageData(slug: string) {
         slug: { _eq: slug },
       },
       fields: [
-        'status',
         'meta_description',
         'meta_title',
         'slug',
-        { sections: ['collection', { item: ['*'] }] },
+        {
+          sections: [
+            'collection',
+            {
+              item: ['*', { article_cards: ['*', { image: 'id' }] }],
+            },
+          ],
+        },
       ],
     }),
   )
   return raw.map((page) => {
     return {
-      status: page.status,
       meta_title: page.meta_title,
       meta_description: page.meta_description,
       slug: page.slug === 'home' ? '/' : page.slug,

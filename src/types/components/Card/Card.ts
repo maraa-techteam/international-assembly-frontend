@@ -1,9 +1,9 @@
 type CardBase = {
   title: string
-  text: string
+  perex: string
   image: string | null
 }
 export type ArticleCardType = CardBase & {
-  href: string
-  publishedAt: string
+  link: string
+  date_created: string
 }

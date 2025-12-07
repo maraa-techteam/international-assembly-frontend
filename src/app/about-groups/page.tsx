@@ -1,25 +1,23 @@
-import { getFrequentlyVisitedLinks } from '@/lib/api/fetchFrequentlyVisitedLinks'
 import { getPageData } from '@/lib/api/fetchPage'
 import { DirectusSection } from '@/types/sections'
+import { Accordion, Section } from '@/ui/components'
 import {
-  ArticleCardSection,
   CallToActionSection,
-  ContentGuideSection,
   FindGroupSection,
   HeroSection,
 } from '@/ui/sections'
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const pageData = await getPageData('home')
+  const pageData = await getPageData('about-groups')
   return {
     title: pageData[0].meta_title,
     description: pageData[0].meta_description,
   }
 }
-export default async function Home() {
-  const frequentlyVisitedLinks = await getFrequentlyVisitedLinks()
-  const pageData = await getPageData('home')
+
+export default async function AboutGroups() {
+  const pageData = await getPageData('about-groups')
 
   return (
     <>
@@ -37,7 +35,8 @@ export default async function Home() {
               image={section.item.image}
             />
           )
-        } else if (section.collection === 'hero_section') {
+        }
+        if (section.collection === 'hero_section') {
           return (
             <HeroSection
               key={i}
@@ -45,15 +44,8 @@ export default async function Home() {
               actions={section.item.actions}
             />
           )
-        } else if (section.collection === 'links_section') {
-          return (
-            <ContentGuideSection
-              key={i}
-              title={section.item.title}
-              data={frequentlyVisitedLinks}
-            />
-          )
-        } else if (section.collection === 'find_group_section') {
+        }
+        if (section.collection === 'find_group_section') {
           return (
             <FindGroupSection
               key={i}
@@ -61,14 +53,12 @@ export default async function Home() {
               text={section.item.text}
             />
           )
-        } else if (section.collection === 'article_card_section') {
+        }
+        if (section.collection === 'accordion_section') {
           return (
-            <ArticleCardSection
-              key={i}
-              title={section.item.title}
-              type={'article'}
-              article_cards={section.item.article_cards}
-            />
+            <Section key={i} variant={'single-column'} color={'white'}>
+              <Accordion items={section.item.accordion} />
+            </Section>
           )
         }
         return null

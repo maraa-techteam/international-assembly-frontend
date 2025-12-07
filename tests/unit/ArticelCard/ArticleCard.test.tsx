@@ -1,12 +1,13 @@
+import { formatDate } from '@/lib/utils/dateFormatter'
 import { ArticleCardType } from '@/types/components'
 import { ArticleCard } from '@/ui/components'
 import { render, screen } from '@testing-library/react'
 
 const mockProps: ArticleCardType = {
   title: 'Заголовок статьи',
-  text: 'Краткое описание статьи для предварительного просмотра',
-  publishedAt: '15 января 2024',
-  href: '/articles/test-article',
+  perex: 'Краткое описание статьи для предварительного просмотра',
+  date_created: '15 января 2024',
+  link: '/articles/test-article',
   image: '/test-image.jpg',
 }
 
@@ -30,7 +31,7 @@ describe('ArticleCard component', () => {
   it('renders published date', () => {
     render(<ArticleCard {...mockProps} />)
 
-    expect(screen.getByText('15 января 2024')).toBeInTheDocument()
+    expect(screen.getByText(formatDate('15 января 2024'))).toBeInTheDocument()
   })
 
   it('renders as a link with correct href', () => {

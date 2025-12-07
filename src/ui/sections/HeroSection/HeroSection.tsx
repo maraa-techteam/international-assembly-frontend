@@ -2,7 +2,7 @@ import { HeroSectionProps } from '@/types/sections'
 import { Button, Grid, Section } from '@/ui/components'
 import Typography from '@/ui/components/Typography/Typography'
 
-export function HeroSection({ title, buttons }: HeroSectionProps) {
+export function HeroSection({ title, actions }: HeroSectionProps) {
   return (
     <Section
       variant='single-column'
@@ -18,15 +18,15 @@ export function HeroSection({ title, buttons }: HeroSectionProps) {
         className={'lg:flex lg:flex-row'}
         align={'center'}
       >
-        {buttons.map((button, i) => (
+        {actions.map((action, i) => (
           <Button
             key={i}
-            variant={button.variant}
-            size={button.size}
-            color={button.color}
-            as={button.as}
+            variant={action.variant}
+            size={action.size}
+            color={action.color}
+            as={action.as}
           >
-            {button.label}
+            {action.label}
           </Button>
         ))}
       </Grid>

@@ -4,6 +4,7 @@ import {
   Button,
   Grid,
   LinkComponent,
+  RichTextPreview,
   Section,
   Typography,
 } from '@/ui/components'
@@ -11,6 +12,7 @@ import Image from 'next/image'
 
 export function CallToActionSection({
   title,
+  headingVariant = 'h2',
   text,
   linkText,
   linkHref,
@@ -24,20 +26,20 @@ export function CallToActionSection({
       color={'white'}
       leftColumn={
         <>
-          <Typography variant='h2' font='roboto'>
+          <Typography variant={headingVariant} font='roboto'>
             {title}
           </Typography>
-          <Typography variant='body' font='roboto'>
-            {text}
-          </Typography>
-          <LinkComponent
-            icon={linkIcon}
-            isUnderlined
-            color={'primary'}
-            text={linkText}
-            href={linkHref}
-            variant={'icon-left'}
-          />
+          <RichTextPreview htmlContent={text} />
+          {linkText && linkHref && (
+            <LinkComponent
+              icon={linkIcon}
+              isUnderlined
+              color={'primary'}
+              text={linkText}
+              href={linkHref}
+              variant={'icon-left'}
+            />
+          )}
           <Grid
             as={'nav'}
             justify={'center'}
@@ -67,7 +69,7 @@ export function CallToActionSection({
               width={500}
               height={400}
               sizes='(max-width: 640px) 100vw, 600px'
-              className='w-full max-w-md rounded-lg object-cover'
+              className='w-full max-w-md rounded-lg object-contain object-top'
               priority={false}
             />
           ) : (
