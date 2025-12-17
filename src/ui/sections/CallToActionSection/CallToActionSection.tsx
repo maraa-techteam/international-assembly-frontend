@@ -1,4 +1,4 @@
-import getImageUrl from '@/lib/utils/getImageUrl'
+import { getImageUrl } from '@/lib/utils/getImageUrl'
 import { CallToActionSectionProps } from '@/types/sections'
 import {
   Button,
@@ -12,7 +12,7 @@ import Image from 'next/image'
 
 export function CallToActionSection({
   title,
-  headingVariant = 'h2',
+  headingLevel = 'h2',
   text,
   linkText,
   linkHref,
@@ -26,7 +26,7 @@ export function CallToActionSection({
       color={'white'}
       leftColumn={
         <>
-          <Typography variant={headingVariant} font='roboto'>
+          <Typography variant={headingLevel} font='roboto'>
             {title}
           </Typography>
           <RichTextPreview htmlContent={text} />

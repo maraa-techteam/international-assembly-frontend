@@ -1,14 +1,7 @@
-import { getFrequentlyVisitedLinks } from '@/lib/api/fetchFrequentlyVisitedLinks'
 import { getPageData } from '@/lib/api/fetchPage'
-import { DirectusSection } from '@/types/sections'
-import {
-  ArticleCardSection,
-  CallToActionSection,
-  ContentGuideSection,
-  FindGroupSection,
-  HeroSection,
-} from '@/ui/sections'
 import { Metadata } from 'next'
+
+import PageBuilder from './pageBuilder'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await getPageData('home')
@@ -17,62 +10,8 @@ export async function generateMetadata(): Promise<Metadata> {
     description: pageData[0].meta_description,
   }
 }
-export default async function Home() {
-  const frequentlyVisitedLinks = await getFrequentlyVisitedLinks()
-  const pageData = await getPageData('home')
 
-  return (
-    <>
-      {pageData[0].sections.map((section: DirectusSection, i: number) => {
-        if (section.collection === 'cta_section') {
-          return (
-            <CallToActionSection
-              key={i}
-              title={section.item.title}
-              text={section.item.text}
-              linkText={section.item.linkText}
-              linkHref={section.item.linkHref}
-              linkIcon={section.item.linkIcon}
-              actions={section.item.actions}
-              image={section.item.image}
-            />
-          )
-        } else if (section.collection === 'hero_section') {
-          return (
-            <HeroSection
-              key={i}
-              title={section.item.title}
-              actions={section.item.actions}
-            />
-          )
-        } else if (section.collection === 'links_section') {
-          return (
-            <ContentGuideSection
-              key={i}
-              title={section.item.title}
-              data={frequentlyVisitedLinks}
-            />
-          )
-        } else if (section.collection === 'find_group_section') {
-          return (
-            <FindGroupSection
-              key={i}
-              title={section.item.title}
-              text={section.item.text}
-            />
-          )
-        } else if (section.collection === 'article_card_section') {
-          return (
-            <ArticleCardSection
-              key={i}
-              title={section.item.title}
-              type={'article'}
-              article_cards={section.item.article_cards}
-            />
-          )
-        }
-        return null
-      })}
-    </>
-  )
+export default async function Home() {
+  const pageData = await getPageData('home')
+  return <PageBuilder pageData={pageData[0]} />
 }

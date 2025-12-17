@@ -16,7 +16,19 @@ export async function getPageData(slug: string) {
           sections: [
             'collection',
             {
-              item: ['*', { article_cards: ['*', { image: 'id' }] }],
+              item: [
+                '*',
+                // Expand article_cards to get full article data
+                {
+                  article_cards: [
+                    '*',
+                    {
+                      article_id: ['*'], // This gets all fields from the article
+                    },
+                  ],
+                },
+                { primary_item: ['*'] },
+              ],
             },
           ],
         },

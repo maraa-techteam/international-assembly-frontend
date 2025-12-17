@@ -5,6 +5,7 @@ import {
   ContentGuideSectionProps,
   FindGroupSectionProps,
   HeroSectionProps,
+  HighlightedElementSection,
 } from '@/types/sections'
 
 export type DirectusSection =
@@ -31,4 +32,8 @@ export type DirectusSection =
   | {
       collection: 'article_card_section'
       item: ArticleCardSectionProps
+    }
+  | {
+      collection: 'highlighted_element_section'
+      item: HighlightedElementSection
     }
