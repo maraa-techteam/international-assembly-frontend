@@ -1,7 +1,8 @@
 import { cn } from '@/lib/utils/cn'
 import { formatDate } from '@/lib/utils/dateFormatter'
-import imageLoader from '@/lib/utils/getImageUrl'
-import { ArticleCardType } from '@/types/components'
+import { getImageUrl } from '@/lib/utils/getImageUrl'
+import { transliterate } from '@/lib/utils/transliterate'
+import { ArticleCard as ArticleCardProps } from '@/types/components'
 import { Label, Typography } from '@/ui/components'
 import Image from 'next/image'
 
@@ -10,33 +11,43 @@ export function ArticleCard({
   image,
   perex,
   date_created,
-  link,
-}: ArticleCardType) {
+  className,
+  isHighlighted,
+}: ArticleCardProps) {
+  const slug = transliterate(title).toLowerCase().replace(/\s+/g, '-')
   return (
     <a
-      href={link}
+      href={`/news-and-events/${slug}`}
       className={cn(
-        'inline-flex max-w-[800px] flex-col items-start justify-center gap-6 lg:flex-row',
+        'inline-flex flex-col items-start justify-center gap-6 lg:grid lg:grid-cols-2',
+        className,
       )}
     >
       {image ? (
         <Image
-          src={imageLoader(image)}
+          src={getImageUrl(image)}
           alt={title}
           width={500}
           height={400}
-          className='w-full max-w-md min-w-[250px] rounded-lg object-cover'
+          className={cn(
+            'w-full rounded-lg object-cover',
+            isHighlighted && 'aspect-video',
+          )}
           priority={false}
         />
       ) : (
-        <div className='flex h-64 w-full min-w-[250px] items-center justify-center rounded-lg bg-[#f5f5f5]'>
+        <div className='flex h-64 w-full items-center justify-center rounded-lg bg-[#f5f5f5]'>
           <span className='text-sm text-gray-400'>Картинка не найдена</span>
         </div>
       )}
       <div className='flex flex-col items-start justify-start gap-4'>
         <Label text={formatDate(date_created)} />
         <div className='flex flex-col gap-2'>
-          <Typography variant='h3' className='line-clamp-2' font='roboto'>
+          <Typography
+            variant={isHighlighted ? 'h2' : 'h3'}
+            className={cn('line-clamp-2')}
+            font='roboto'
+          >
             {title}
           </Typography>
           <Typography variant='body' className='line-clamp-3' font='roboto'>
