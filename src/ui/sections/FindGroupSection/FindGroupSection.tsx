@@ -60,6 +60,7 @@ export function FindGroupSection({ title, text }: FindGroupSectionProps) {
           label={'Присутствие'}
           options={['Онлайн', 'Офлайн']}
           value={options.presence}
+          textColor='text-primary'
           onChange={(v) => handleChange('presence', v)}
         />
         <Button

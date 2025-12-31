@@ -51,7 +51,8 @@ export default function GroupsFilterDashboard() {
       <Grid columns={3}>
         <Select
           label={'Страна'}
-          isMultiSelect={true}
+          customDropdown={true}
+          className='text-foreground'
           options={[
             'Международные',
             'Болгария',
@@ -63,8 +64,9 @@ export default function GroupsFilterDashboard() {
             'Франция',
             'Чехия',
           ]}
-          value={''}
-          onChange={() => null}
+          value={options.country}
+          textColor='text-foreground'
+          onChange={(value) => handleChange('country', value)}
         />
       </Grid>
     </div>

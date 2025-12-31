@@ -12,6 +12,6 @@ export type IconType =
 export type IconProps = {
   icon: IconType
   size?: 'sm' | 'md' | 'lg'
-  color: 'contrast' | 'primary' | 'secondary' | 'foreground' | 'white'
+  color?: 'contrast' | 'primary' | 'secondary' | 'foreground' | 'white'
   className?: string
 }
