@@ -8,6 +8,7 @@ export function Select({
   value,
   onChange,
   className,
+  isMultiSelect = false,
 }: SelectProps) {
   return (
     <div
@@ -25,6 +26,7 @@ export function Select({
         name={label}
         id={label}
         onChange={(e) => onChange(e.target.value)}
+        multiple={isMultiSelect}
         className='text-primary font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 whitespace-nowrap transition-colors focus:outline-none'
       >
         <option value=''>{label}</option>
