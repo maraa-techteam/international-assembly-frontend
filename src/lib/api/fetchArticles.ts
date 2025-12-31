@@ -6,6 +6,8 @@ export async function fetchArticles() {
   return await directus.request(
     readItems('article', {
       fields: [
+        'id',
+        'slug',
         'title',
         'date_updated',
         'date_created',

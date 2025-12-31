@@ -86,6 +86,30 @@ export function Icon({
         />
       </svg>
     ),
+    'double-chevron-right': (
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        width='14'
+        height='14'
+        viewBox='0 0 14 14'
+        fill='none'
+      >
+        <path
+          d='M1 13L7 7L1 1'
+          stroke='currentColor'
+          strokeWidth='1.5'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+        <path
+          d='M7 13L13 7L7 1'
+          stroke='currentColor'
+          strokeWidth='1.5'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+      </svg>
+    ),
     search: (
       <svg
         xmlns='http://www.w3.org/2000/svg'
@@ -190,6 +214,71 @@ export function Icon({
             <rect width='24' height='24' fill='currentColor' />
           </clipPath>
         </defs>
+      </svg>
+    ),
+    check: (
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        width='16'
+        height='16'
+        viewBox='0 0 16 16'
+        fill='none'
+      >
+        <path
+          d='M6.00016 11.2002L2.80016 8.00016L1.86683 8.9335L6.00016 13.0668L14.0002 5.06683L13.0668 4.1335L6.00016 11.2002Z'
+          fill='currentColor'
+        />
+      </svg>
+    ),
+    person: (
+      <svg
+        width='18'
+        height='19'
+        viewBox='0 0 18 19'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          d='M15.75 18.25C16.0152 18.25 16.2696 18.1446 16.4571 17.9571C16.6446 17.7696 16.75 17.5152 16.75 17.25V16.004C16.754 13.198 12.776 11 8.75 11C4.724 11 0.75 13.198 0.75 16.004V17.25C0.75 17.5152 0.855357 17.7696 1.04289 17.9571C1.23043 18.1446 1.48478 18.25 1.75 18.25H15.75ZM12.354 4.354C12.354 4.82728 12.2608 5.29593 12.0797 5.73319C11.8985 6.17045 11.6331 6.56775 11.2984 6.90241C10.9638 7.23707 10.5664 7.50254 10.1292 7.68366C9.69193 7.86478 9.22328 7.958 8.75 7.958C8.27672 7.958 7.80807 7.86478 7.37081 7.68366C6.93355 7.50254 6.53625 7.23707 6.20159 6.90241C5.86692 6.56775 5.60146 6.17045 5.42034 5.73319C5.23922 5.29593 5.146 4.82728 5.146 4.354C5.146 3.39816 5.52571 2.48147 6.20159 1.80559C6.87747 1.12971 7.79416 0.75 8.75 0.75C9.70584 0.75 10.6225 1.12971 11.2984 1.80559C11.9743 2.48147 12.354 3.39816 12.354 4.354Z'
+          stroke='#004382'
+          strokeWidth='1.5'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+      </svg>
+    ),
+    phone: (
+      <svg
+        width='18'
+        height='18'
+        viewBox='0 0 18 18'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          d='M16.256 4.71C15.5425 7.49248 14.0945 10.0321 12.0633 12.0633C10.0321 14.0945 7.49248 15.5425 4.71 16.256C2.569 16.801 0.75 14.96 0.75 12.75V11.75C0.75 11.198 1.199 10.755 1.748 10.7C2.6584 10.6095 3.55207 10.3945 4.404 10.061L5.924 11.581C8.39887 10.3946 10.3946 8.39887 11.581 5.924L10.061 4.404C10.3948 3.55211 10.6102 2.65844 10.701 1.748C10.755 1.198 11.198 0.75 11.75 0.75H12.75C14.96 0.75 16.801 2.569 16.256 4.71Z'
+          stroke='#004382'
+          strokeWidth='1.5'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
+      </svg>
+    ),
+    website: (
+      <svg
+        width='13'
+        height='13'
+        viewBox='0 0 13 13'
+        fill='none'
+        xmlns='http://www.w3.org/2000/svg'
+      >
+        <path
+          d='M0.749976 12.0637L12.0637 0.749966M12.0637 0.749966L12.0637 9.23525M12.0637 0.749966L3.5784 0.749965'
+          stroke='#004382'
+          strokeWidth='1.5'
+          strokeLinecap='round'
+          strokeLinejoin='round'
+        />
       </svg>
     ),
   }
