@@ -231,7 +231,10 @@ export function Header({ headerData }: HeaderProps) {
         )}
       >
         <SearchBar
-          className={cn(isMobileMenuActive && 'hidden')}
+          className={cn(
+            isMobileMenuActive && 'hidden',
+            'lg:max-w-125 lg:rounded-xl',
+          )}
           isExpanded={isSearchActive}
           onToggle={toggleSearch}
           aria-label='Поиск по сайту'

@@ -7,7 +7,7 @@ import React, { useRef, useState } from 'react'
 
 export function SearchBar({
   onSearch,
-  onToggle,
+  onToggle = () => {},
   isExpanded,
   className,
   placeholder = 'Поиск на сайте',
@@ -48,7 +48,6 @@ export function SearchBar({
       <div
         className={cn(
           'relative flex w-full items-center justify-end',
-          isExpanded ? 'lg:max-w-[500px]' : 'max-w-fit',
           className,
         )}
       >
@@ -72,13 +71,17 @@ export function SearchBar({
 
           {isExpanded && (
             <form onSubmit={handleSubmit} className='relative'>
+              <Icon
+                icon='search'
+                className='pointer-events-none absolute top-1/2 left-3 -translate-y-1/2 transform text-gray-600'
+              />
               <input
                 ref={inputRef}
                 type='text'
                 value={searchValue}
                 onChange={handleInputChange}
                 placeholder={placeholder}
-                className='font-roboto z-0 h-12 w-full rounded-full border-none bg-gray-100 px-4 text-base transition-all duration-700 ease-in-out outline-none lg:rounded-xl'
+                className='font-roboto z-0 h-12 w-full rounded-full border-none bg-gray-100 pr-4 pl-12 text-base transition-all duration-700 ease-in-out outline-none'
               />
 
               <button

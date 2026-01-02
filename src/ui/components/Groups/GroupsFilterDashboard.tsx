@@ -1,6 +1,6 @@
 'use client'
 
-import { Grid, Select } from '@/ui/components'
+import { Grid, SearchBar, Select } from '@/ui/components'
 import { useEffect, useState } from 'react'
 
 type GroupsOptions = {
@@ -47,7 +47,13 @@ export default function GroupsFilterDashboard() {
   // const [isOptionsSelected, setIsOptionsSelected] = useState<boolean>(false)
 
   return (
-    <div className='bg-light-blue -mx-4 flex flex-col gap-4 p-4 lg:mx-0 lg:rounded-2xl'>
+    <div className='bg-light-blue flex w-full flex-col gap-4 p-4 lg:mx-0 lg:rounded-2xl'>
+      <SearchBar
+        placeholder='Введите название группы'
+        className='w-full rounded-2xl'
+        onToggle={() => null}
+        isExpanded={true}
+      />
       <Grid columns={3}>
         <Select
           label={'Страна'}
@@ -67,6 +73,33 @@ export default function GroupsFilterDashboard() {
           value={options.country}
           textColor='text-foreground'
           onChange={(value) => handleChange('country', value)}
+        />
+        <Select
+          label={'Присутствие'}
+          customDropdown={true}
+          className='text-foreground'
+          options={['Онлайн', 'Офлайн', 'Гибрид']}
+          value={options.presence}
+          textColor='text-foreground'
+          onChange={(value) => handleChange('presence', value)}
+        />
+
+        <Select
+          label={'Расписание'}
+          customDropdown={true}
+          className='text-foreground'
+          options={[
+            'Понедельник',
+            'Вторник',
+            'Среда',
+            'Четверг',
+            'Пятница',
+            'Суббота',
+            'Воскресенье',
+          ]}
+          value={options.schedule}
+          textColor='text-foreground'
+          onChange={(value) => handleChange('schedule', value)}
         />
       </Grid>
     </div>

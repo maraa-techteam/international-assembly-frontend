@@ -2,7 +2,7 @@
 
 import { cn } from '@/lib/utils/cn'
 import { SelectProps } from '@/types/components'
-import { Button, Icon, Typography } from '@/ui/components'
+import { Icon, Typography } from '@/ui/components'
 import { useState } from 'react'
 
 export function Select({
@@ -60,7 +60,7 @@ export function Select({
             </Typography>
             <div
               className={cn(
-                'absolute top-full flex w-full flex-col rounded-b-3xl bg-white',
+                'absolute top-full z-1 flex w-full flex-col rounded-b-3xl bg-white',
                 isDropdownOpen ? 'flex' : 'hidden',
               )}
             >

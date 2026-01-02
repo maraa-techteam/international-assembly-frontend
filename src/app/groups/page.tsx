@@ -13,9 +13,12 @@ import { Metadata } from 'next'
 export default async function GroupsPage() {
   return (
     <>
-      <Section variant={'single-column'} color={'white'}>
+      <Section
+        leftColumn={<GroupsFilterDashboard />}
+        variant={'double-column'}
+        color={'white'}
+      >
         <Typography variant='h1'>Поиск группы</Typography>
-        <GroupsFilterDashboard />
       </Section>
     </>
   )
