@@ -172,6 +172,9 @@ export function Header({ headerData }: HeaderProps) {
                 />
                 {item.subNav.length > 0 && (
                   <MobileSubMenu
+                    onClick={() => {
+                      setIsMobileMenuActive(false)
+                    }}
                     isActive={item.isActive}
                     activeItems={item.subNav.map((subItem, j) => ({
                       ...subItem,
