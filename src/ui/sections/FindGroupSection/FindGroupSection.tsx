@@ -51,15 +51,16 @@ export function FindGroupSection({ title, text }: FindGroupSectionProps) {
         onSubmit={handleSubmit}
       >
         <Select
+          className='lg:max-w-75'
           label={'Страна'}
           options={['China', 'USA', 'Germany']}
-          value={options.country}
+          textColor='text-primary'
           onChange={(v) => handleChange('country', v)}
         />
         <Select
+          className='lg:max-w-75'
           label={'Присутствие'}
           options={['Онлайн', 'Офлайн']}
-          value={options.presence}
           textColor='text-primary'
           onChange={(v) => handleChange('presence', v)}
         />
@@ -69,7 +70,7 @@ export function FindGroupSection({ title, text }: FindGroupSectionProps) {
           type='submit'
           color='secondary'
           as='button'
-          className='w-full gap-4 lg:max-w-[300px]'
+          className='w-full gap-4 lg:max-w-75'
           size={'sm'}
         >
           <Typography

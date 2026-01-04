@@ -192,6 +192,20 @@ export function Icon({
         </defs>
       </svg>
     ),
+    check: (
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        width='16'
+        height='16'
+        viewBox='0 0 16 16'
+        fill='none'
+      >
+        <path
+          d='M6.00016 11.2002L2.80016 8.00016L1.86683 8.9335L6.00016 13.0668L14.0002 5.06683L13.0668 4.1335L6.00016 11.2002Z'
+          fill='currentColor'
+        />
+      </svg>
+    ),
   }
 
   return (

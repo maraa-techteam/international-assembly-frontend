@@ -8,6 +8,7 @@ export type IconType =
   | 'arrow-left'
   | 'youtube'
   | 'telegram'
+  | 'check'
 
 export type IconProps = {
   icon: IconType
