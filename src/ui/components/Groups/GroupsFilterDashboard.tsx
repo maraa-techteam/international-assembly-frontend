@@ -1,5 +1,6 @@
 'use client'
 
+import { cn } from '@/lib/utils/cn'
 import {
   Button,
   Grid,
@@ -37,6 +38,15 @@ export default function GroupsFilterDashboard() {
         : setIsOptionsSelected(false),
     [options],
   )
+
+  const resetOptions = useCallback(() => {
+    setOptions({
+      country: '',
+      presence: '',
+      schedule: '',
+      searchValue: '',
+    })
+  }, [])
 
   const handleChange = useCallback(
     (
@@ -128,8 +138,13 @@ export default function GroupsFilterDashboard() {
         />
       </Grid>
       <div className='flex w-full justify-between'>
-        <button>
-          <Typography className='' variant={'caption'}>
+        <button onClick={resetOptions} disabled={!isOptionsSelected}>
+          <Typography
+            className={cn(
+              !isOptionsSelected && 'cursor-not-allowed text-gray-400',
+            )}
+            variant={'caption'}
+          >
             Сбросить фильтры
           </Typography>
         </button>

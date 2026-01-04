@@ -94,7 +94,7 @@ export function Button({
 }: ButtonType) {
   const baseClasses = cn(
     buttonVariants({ variant, size, color }),
-    disabled && 'opacity-30 cursor-not-allowed pointer-events-none',
+    disabled && 'opacity-30 cursor-not-allowed',
     className,
   )
 

@@ -20,9 +20,9 @@ export function Select({
       isSelected: false,
     })),
   )
-  const dropdownRef = useRef<HTMLDivElement>(null)
+  const selectRef = useRef<HTMLDivElement>(null)
 
-  useOnClickOutside(dropdownRef, () => {
+  useOnClickOutside(selectRef, () => {
     setIsDropdownOpen(false)
   })
 
@@ -49,8 +49,17 @@ export function Select({
 
   const selectedCount = dropdownOptions.filter((opt) => opt.isSelected).length
 
+  const resetOptions = () => {
+    setDropdownOptions((prevOptions) =>
+      prevOptions.map((option) => ({
+        ...option,
+        isSelected: false,
+      })),
+    )
+  }
+
   return (
-    <div className={cn('relative flex w-full', className)}>
+    <div ref={selectRef} className={cn('relative flex w-full', className)}>
       <div
         className={cn(
           'inline-flex w-full items-center overflow-hidden rounded-3xl bg-white font-medium',
@@ -74,20 +83,24 @@ export function Select({
         </Typography>
 
         {selectedCount > 0 && (
-          <div className='bg-primary absolute right-11 rounded-md p-1 text-[10px] text-white'>
+          <div className='bg-primary absolute right-11 flex max-h-5 items-center rounded-md p-1 text-[10px] text-white'>
             +{selectedCount}
           </div>
         )}
 
         <Icon
           icon='chevron-down'
-          className={cn('pointer-events-none absolute right-4', textColor)}
+          className={cn(
+            'pointer-events-none absolute right-4',
+            textColor,
+            isDropdownOpen && 'rotate-180',
+          )}
           size={'md'}
         />
       </div>
 
       <div
-        ref={dropdownRef}
+        ref={selectRef}
         className={cn(
           'absolute top-full z-10 flex w-full flex-col rounded-b-3xl bg-white',
           !isDropdownOpen && 'hidden',
@@ -109,7 +122,7 @@ export function Select({
                 checked={option.isSelected}
                 onChange={() => handleSelect(option.label)}
                 className='sr-only'
-                aria-label={String(option.label)}
+                aria-label={option.label}
               />
 
               <span
