@@ -49,8 +49,17 @@ export default function GroupsFilterDashboard() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (isOptionsSelected) {
-      // const queryParams = new URLSearchParams(options).toString()
-      console.log(options)
+      const filteredOptions = Object.entries(options).reduce(
+        (acc, [key, value]) => {
+          if (value.trim()) {
+            acc[key] = value
+          }
+          return acc
+        },
+        {} as Record<string, string>,
+      )
+      const queryParams = new URLSearchParams(filteredOptions).toString()
+      console.log(queryParams)
     }
   }
 
