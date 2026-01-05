@@ -4,4 +4,5 @@ export type SearchBarProps = {
   isExpanded: boolean
   className?: string
   placeholder?: string
+  isReseted?: boolean
 }

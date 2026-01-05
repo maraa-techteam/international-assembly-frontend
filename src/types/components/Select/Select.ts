@@ -4,4 +4,5 @@ export type SelectProps = {
   textColor?: 'text-primary' | 'text-foreground' | 'text-secondary'
   onChange: (value: string) => void
   className?: string
+  isReseted?: boolean
 }

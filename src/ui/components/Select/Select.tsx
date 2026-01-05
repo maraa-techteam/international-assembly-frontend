@@ -12,6 +12,7 @@ export function Select({
   onChange,
   className,
   textColor,
+  isReseted,
 }: SelectProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [dropdownOptions, setDropdownOptions] = useState(
@@ -39,6 +40,15 @@ export function Select({
     })
   }
 
+  const resetOptions = () => {
+    setDropdownOptions((prevOptions) =>
+      prevOptions.map((option) => ({
+        ...option,
+        isSelected: false,
+      })),
+    )
+  }
+
   useEffect(() => {
     const selectedOptions = dropdownOptions
       .filter((option) => option.isSelected)
@@ -49,14 +59,9 @@ export function Select({
 
   const selectedCount = dropdownOptions.filter((opt) => opt.isSelected).length
 
-  const resetOptions = () => {
-    setDropdownOptions((prevOptions) =>
-      prevOptions.map((option) => ({
-        ...option,
-        isSelected: false,
-      })),
-    )
-  }
+  useEffect(() => {
+    resetOptions()
+  }, [isReseted])
 
   return (
     <div ref={selectRef} className={cn('relative flex w-full', className)}>

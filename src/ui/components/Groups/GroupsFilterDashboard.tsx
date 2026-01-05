@@ -27,6 +27,7 @@ export default function GroupsFilterDashboard() {
   })
 
   const [isOptionsSelected, setIsOptionsSelected] = useState<boolean>(false)
+  const [areOptionsReseted, setAreOptionsReseted] = useState<boolean>(false)
 
   useEffect(
     () =>
@@ -40,6 +41,7 @@ export default function GroupsFilterDashboard() {
   )
 
   const resetOptions = useCallback(() => {
+    setAreOptionsReseted((prev) => !prev)
     setOptions({
       country: '',
       presence: '',
@@ -79,6 +81,7 @@ export default function GroupsFilterDashboard() {
         placeholder='Введите название группы'
         className='w-full rounded-2xl'
         isExpanded={true}
+        isReseted={areOptionsReseted}
         onSearch={useCallback(
           (value: string) => handleChange('searchValue', value),
           [handleChange],
@@ -88,6 +91,7 @@ export default function GroupsFilterDashboard() {
         <Select
           label={'Страна'}
           className='text-foreground'
+          isReseted={areOptionsReseted}
           options={[
             'Международные',
             'Болгария',
@@ -108,6 +112,7 @@ export default function GroupsFilterDashboard() {
         <Select
           label={'Присутствие'}
           className='text-foreground'
+          isReseted={areOptionsReseted}
           options={['Онлайн', 'Офлайн', 'Гибрид']}
           textColor='text-foreground'
           onChange={useCallback(
@@ -119,6 +124,7 @@ export default function GroupsFilterDashboard() {
         <Select
           label={'Расписание'}
           className='text-foreground'
+          isReseted={areOptionsReseted}
           options={[
             'Понедельник',
             'Вторник',

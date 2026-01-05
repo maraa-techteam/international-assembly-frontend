@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils/cn'
 import { SearchBarProps } from '@/types/components'
 import { Icon } from '@/ui/components'
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 export function SearchBar({
   onSearch,
@@ -11,6 +11,7 @@ export function SearchBar({
   isExpanded,
   className,
   placeholder = 'Поиск на сайте',
+  isReseted = false,
 }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState('')
 
@@ -42,6 +43,10 @@ export function SearchBar({
       onSearch(searchValue.trim())
     }
   }
+
+  useEffect(() => {
+    setSearchValue('')
+  }, [isReseted])
 
   return (
     <>
