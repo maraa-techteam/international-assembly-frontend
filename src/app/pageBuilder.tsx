@@ -60,16 +60,18 @@ export default async function PageBuilder({ pageData }: PageBuilderProps) {
               data={frequentlyVisitedLinks}
             />
           )
-        } else if (section.collection === 'find_group_section') {
-          return (
-            <FindGroupSection
-              key={i}
-              title={section.item.title}
-              text={section.item.text}
-              headingLevel={headingLevel}
-            />
-          )
-        } else if (section.collection === 'article_card_section') {
+        }
+        // else if (section.collection === 'find_group_section') {
+        //   return (
+        //     <FindGroupSection
+        //       key={i}
+        //       title={section.item.title}
+        //       text={section.item.text}
+        //       headingLevel={headingLevel}
+        //     />
+        //   )
+        // }
+        else if (section.collection === 'article_card_section') {
           const flattened = section.item.article_cards.map(
             (junction: ArticleCard | { article_id: ArticleCard }) => {
               return {

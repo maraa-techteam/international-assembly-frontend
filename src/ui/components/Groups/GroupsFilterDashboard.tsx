@@ -72,6 +72,7 @@ export default function GroupsFilterDashboard() {
       )
       const queryParams = new URLSearchParams(filteredOptions).toString()
       console.log(queryParams)
+      resetOptions()
     }
   }
 
@@ -120,7 +121,6 @@ export default function GroupsFilterDashboard() {
             [handleChange],
           )}
         />
-
         <Select
           label={'Расписание'}
           className='text-foreground'
@@ -143,8 +143,12 @@ export default function GroupsFilterDashboard() {
           )}
         />
       </Grid>
-      <div className='flex w-full justify-between'>
-        <button onClick={resetOptions} disabled={!isOptionsSelected}>
+      <div className='align-end flex w-full flex-col gap-4 lg:flex-row lg:justify-between'>
+        <button
+          onClick={resetOptions}
+          className='w-fit self-end'
+          disabled={!isOptionsSelected}
+        >
           <Typography
             className={cn(
               !isOptionsSelected && 'cursor-not-allowed text-gray-400',

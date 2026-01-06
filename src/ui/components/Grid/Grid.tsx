@@ -11,6 +11,7 @@ const gridVariants = cva('flex w-full flex-col lg:grid', {
       4: 'lg:grid-cols-4',
       5: 'lg:grid-cols-5',
       6: 'lg:grid-cols-6',
+      7: 'lg:grid-cols-7',
     },
     gap: {
       0: 'gap-0',
@@ -42,7 +43,7 @@ const gridVariants = cva('flex w-full flex-col lg:grid', {
   defaultVariants: {
     columns: 2,
     gap: 4,
-    align: 'stretch', // Better default for grids
+    align: 'stretch',
     justify: 'start',
     isScrollable: false,
   },

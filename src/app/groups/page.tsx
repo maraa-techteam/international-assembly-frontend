@@ -1,5 +1,6 @@
 import { Section, Typography } from '@/ui/components'
 import GroupsFilterDashboard from '@/ui/components/Groups/GroupsFilterDashboard'
+import GroupsTable from '@/ui/components/Groups/GroupsTable'
 import { Metadata } from 'next'
 
 // export async function generateMetadata(): Promise<Metadata> {
@@ -13,12 +14,22 @@ import { Metadata } from 'next'
 export default async function GroupsPage() {
   return (
     <>
+      <Section className='py-0' variant={'single-column'} color={'white'}>
+        <Typography variant='h1'>Поиск группы</Typography>
+      </Section>
       <Section
-        leftColumn={<GroupsFilterDashboard />}
-        variant={'double-column'}
+        variant={'single-column'}
+        className='px-0 lg:pt-0'
         color={'white'}
       >
-        <Typography variant='h1'>Поиск группы</Typography>
+        <GroupsFilterDashboard />
+      </Section>
+      <Section
+        className='px-0 pt-0 lg:pt-0'
+        variant='single-column'
+        color={'white'}
+      >
+        <GroupsTable />
       </Section>
     </>
   )
