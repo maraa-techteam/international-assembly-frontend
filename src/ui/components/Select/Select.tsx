@@ -2,25 +2,27 @@
 
 import { useOnClickOutside } from '@/lib/hooks/useOutsideClick'
 import { cn } from '@/lib/utils/cn'
-import { SelectProps } from '@/types/components'
 import { Icon, Typography } from '@/ui/components'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+
+type SelectProps = {
+  label: string
+  options: string[]
+  value: string[]
+  onChange: (value: string[]) => void
+  className?: string
+  textColor?: string
+}
 
 export function Select({
   label,
   options,
+  value,
   onChange,
   className,
   textColor,
-  isReseted,
 }: SelectProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [dropdownOptions, setDropdownOptions] = useState(
-    options.map((option) => ({
-      label: option,
-      isSelected: false,
-    })),
-  )
   const selectRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(selectRef, () => {
@@ -30,38 +32,14 @@ export function Select({
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen)
 
   const handleSelect = (optionLabel: string) => {
-    setDropdownOptions((prevOptions) => {
-      return prevOptions.map((option) => {
-        if (option.label === optionLabel) {
-          return { ...option, isSelected: !option.isSelected }
-        }
-        return option
-      })
-    })
+    if (value.includes(optionLabel)) {
+      onChange(value.filter((item) => item !== optionLabel))
+    } else {
+      onChange([...value, optionLabel])
+    }
   }
 
-  const resetOptions = () => {
-    setDropdownOptions((prevOptions) =>
-      prevOptions.map((option) => ({
-        ...option,
-        isSelected: false,
-      })),
-    )
-  }
-
-  useEffect(() => {
-    const selectedOptions = dropdownOptions
-      .filter((option) => option.isSelected)
-      .map((option) => option.label)
-      .join(',')
-    onChange(selectedOptions)
-  }, [dropdownOptions, onChange])
-
-  const selectedCount = dropdownOptions.filter((opt) => opt.isSelected).length
-
-  useEffect(() => {
-    resetOptions()
-  }, [isReseted])
+  const selectedCount = value.length
 
   return (
     <div ref={selectRef} className={cn('relative flex w-full', className)}>
@@ -111,11 +89,13 @@ export function Select({
           !isDropdownOpen && 'hidden',
         )}
       >
-        {dropdownOptions.map((option, i) => {
+        {options.map((option, i) => {
+          const isSelected = value.includes(option)
+
           return (
             <label
               role='option'
-              aria-selected={option.isSelected}
+              aria-selected={isSelected}
               key={i}
               className={cn(
                 'hover:bg-light-blue flex cursor-pointer items-center px-4 py-2',
@@ -124,22 +104,22 @@ export function Select({
             >
               <input
                 type='checkbox'
-                checked={option.isSelected}
-                onChange={() => handleSelect(option.label)}
+                checked={isSelected}
+                onChange={() => handleSelect(option)}
                 className='sr-only'
-                aria-label={option.label}
+                aria-label={option}
               />
 
               <span
                 className={cn(
                   'mr-3 flex h-4 w-4 items-center justify-center rounded-sm border transition-colors',
-                  option.isSelected
+                  isSelected
                     ? 'bg-primary border-primary text-white'
                     : 'border-gray-300 bg-white',
                 )}
                 aria-hidden='true'
               >
-                {option.isSelected && (
+                {isSelected && (
                   <Icon
                     icon='check'
                     size={'sm'}
@@ -147,7 +127,7 @@ export function Select({
                   />
                 )}
               </span>
-              <span className='truncate'>{option.label}</span>
+              <span className='truncate'>{option}</span>
             </label>
           )
         })}

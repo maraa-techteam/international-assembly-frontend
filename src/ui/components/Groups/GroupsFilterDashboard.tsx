@@ -12,28 +12,27 @@ import {
 import { useCallback, useEffect, useState } from 'react'
 
 type GroupsOptions = {
-  country: string
-  presence: string
-  schedule: string
+  country: string[]
+  presence: string[]
+  schedule: string[]
   searchValue: string
 }
 
 export default function GroupsFilterDashboard() {
   const [options, setOptions] = useState<GroupsOptions>({
-    country: '',
-    presence: '',
-    schedule: '',
+    country: [],
+    presence: [],
+    schedule: [],
     searchValue: '',
   })
 
   const [isOptionsSelected, setIsOptionsSelected] = useState<boolean>(false)
-  const [areOptionsReseted, setAreOptionsReseted] = useState<boolean>(false)
 
   useEffect(
     () =>
-      options.country ||
-      options.presence ||
-      options.schedule ||
+      options.country.length > 0 ||
+      options.presence.length > 0 ||
+      options.schedule.length > 0 ||
       options.searchValue
         ? setIsOptionsSelected(true)
         : setIsOptionsSelected(false),
@@ -41,35 +40,43 @@ export default function GroupsFilterDashboard() {
   )
 
   const resetOptions = useCallback(() => {
-    setAreOptionsReseted((prev) => !prev)
     setOptions({
-      country: '',
-      presence: '',
-      schedule: '',
+      country: [],
+      presence: [],
+      schedule: [],
       searchValue: '',
     })
   }, [])
 
-  const handleChange = useCallback(
-    (
-      field: 'country' | 'presence' | 'schedule' | 'searchValue',
-      value: string,
-    ) => setOptions((prev) => ({ ...prev, [field]: value })),
+  const handleSelectChange = useCallback(
+    (field: 'country' | 'presence' | 'schedule', value: string[]) => {
+      setOptions((prev) => ({ ...prev, [field]: value }))
+    },
     [],
   )
+
+  const handleSearchChange = useCallback((value: string) => {
+    setOptions((prev) => ({ ...prev, searchValue: value }))
+  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (isOptionsSelected) {
-      const filteredOptions = Object.entries(options).reduce(
-        (acc, [key, value]) => {
-          if (value.trim()) {
-            acc[key] = value
-          }
-          return acc
-        },
-        {} as Record<string, string>,
-      )
+      const filteredOptions: Record<string, string> = {}
+
+      if (options.country.length > 0) {
+        filteredOptions.country = options.country.join(',')
+      }
+      if (options.presence.length > 0) {
+        filteredOptions.presence = options.presence.join(',')
+      }
+      if (options.schedule.length > 0) {
+        filteredOptions.schedule = options.schedule.join(',')
+      }
+      if (options.searchValue.trim()) {
+        filteredOptions.searchValue = options.searchValue
+      }
+
       const queryParams = new URLSearchParams(filteredOptions).toString()
       console.log(queryParams)
       resetOptions()
@@ -82,17 +89,14 @@ export default function GroupsFilterDashboard() {
         placeholder='Введите название группы'
         className='w-full rounded-2xl'
         isExpanded={true}
-        isReseted={areOptionsReseted}
-        onSearch={useCallback(
-          (value: string) => handleChange('searchValue', value),
-          [handleChange],
-        )}
+        isReseted={!options.searchValue}
+        onSearch={handleSearchChange}
       />
       <Grid columns={3}>
         <Select
           label={'Страна'}
           className='text-foreground'
-          isReseted={areOptionsReseted}
+          value={options.country}
           options={[
             'Международные',
             'Болгария',
@@ -105,26 +109,20 @@ export default function GroupsFilterDashboard() {
             'Чехия',
           ]}
           textColor='text-foreground'
-          onChange={useCallback(
-            (value) => handleChange('country', value),
-            [handleChange],
-          )}
+          onChange={(value) => handleSelectChange('country', value)}
         />
         <Select
           label={'Присутствие'}
           className='text-foreground'
-          isReseted={areOptionsReseted}
+          value={options.presence}
           options={['Онлайн', 'Офлайн', 'Гибрид']}
           textColor='text-foreground'
-          onChange={useCallback(
-            (value) => handleChange('presence', value),
-            [handleChange],
-          )}
+          onChange={(value) => handleSelectChange('presence', value)}
         />
         <Select
           label={'Расписание'}
           className='text-foreground'
-          isReseted={areOptionsReseted}
+          value={options.schedule}
           options={[
             'Понедельник',
             'Вторник',
@@ -135,12 +133,7 @@ export default function GroupsFilterDashboard() {
             'Воскресенье',
           ]}
           textColor='text-foreground'
-          onChange={useCallback(
-            (value) => {
-              handleChange('schedule', value)
-            },
-            [handleChange],
-          )}
+          onChange={(value) => handleSelectChange('schedule', value)}
         />
       </Grid>
       <div className='align-end flex w-full flex-col gap-4 lg:flex-row lg:justify-between'>

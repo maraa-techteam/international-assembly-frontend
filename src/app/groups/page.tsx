@@ -1,7 +1,6 @@
 import { Section, Typography } from '@/ui/components'
 import GroupsFilterDashboard from '@/ui/components/Groups/GroupsFilterDashboard'
 import GroupsTable from '@/ui/components/Groups/GroupsTable'
-import { Metadata } from 'next'
 
 // export async function generateMetadata(): Promise<Metadata> {
 //   const pageData = await getPageData('groups')
