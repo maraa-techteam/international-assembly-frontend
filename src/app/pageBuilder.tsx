@@ -99,7 +99,7 @@ export default async function PageBuilder({ pageData }: PageBuilderProps) {
           )
         } else if (section.collection === 'accordion_section') {
           return (
-            <Section key={i} variant={'single-column'} color={'white'}>
+            <Section key={i} color={'white'}>
               <Accordion items={section.item.accordion} />
             </Section>
           )
