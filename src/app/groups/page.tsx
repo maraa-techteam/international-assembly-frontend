@@ -16,10 +16,10 @@ export default async function GroupsPage() {
       <Section className='py-0' color={'white'}>
         <Typography variant='h1'>Поиск группы</Typography>
       </Section>
-      <Section className='px-0 lg:pt-0' color={'white'}>
+      <Section className='px-0 lg:max-w-250 lg:pt-0' color={'white'}>
         <GroupsFilterDashboard />
       </Section>
-      <Section className='px-0 pt-0 lg:pt-0' color={'white'}>
+      <Section className='px-0 pt-0 lg:max-w-250 lg:pt-0' color={'white'}>
         <GroupsTable />
       </Section>
     </>

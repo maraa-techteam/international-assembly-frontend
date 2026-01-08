@@ -1,10 +1,14 @@
 import { fetchArticles } from '@/lib/api/fetchArticles'
+import { fetchNewsAndEventsPage } from '@/lib/api/fetchNewsAndEventsPage'
 import { getPageData } from '@/lib/api/fetchPage'
-import { ArticleCard, Section } from '@/ui/components'
+import {
+  ArticleCard,
+  RichTextPreview,
+  Section,
+  Typography,
+} from '@/ui/components'
 import { Grid } from '@/ui/components/Grid/Grid'
 import { Metadata } from 'next'
-
-import PageBuilder from '../pageBuilder'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await getPageData('news-and-events')
@@ -15,24 +19,37 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function NewsAndEventsPage() {
-  const pageData = await getPageData('news-and-events')
+  const pageData = await fetchNewsAndEventsPage()
   const articles = await fetchArticles()
+  const page = pageData[0]
 
   return (
     <>
-      <PageBuilder pageData={pageData[0]} />
-      <Section variant={'single-column'} color={'white'}>
+      <Section color={'white'}>
+        <Typography variant={'h1'} font='roboto'>
+          {page.title}
+        </Typography>
+        <RichTextPreview htmlContent={page.text} />
+        <ArticleCard
+          isHighlighted
+          className='max-w-full'
+          {...page.highlighted_post}
+        />
+      </Section>
+      <Section color={'white'}>
         <Grid isScrollable={false} columns={2} gap={6}>
           {articles &&
-            articles.map((card, i) => (
-              <ArticleCard
-                key={i}
-                title={card.title}
-                perex={card.perex}
-                image={card.image}
-                date_created={card.date_created}
-              />
-            ))}
+            articles.map((article) =>
+              article.title === page.highlighted_post.title ? null : (
+                <ArticleCard
+                  key={article.title}
+                  title={article.title}
+                  perex={article.perex}
+                  image={article.image}
+                  date_created={article.date_created}
+                />
+              ),
+            )}
         </Grid>
       </Section>
     </>
