@@ -1,6 +1,5 @@
 import { fetchArticles } from '@/lib/api/fetchArticles'
 import { fetchNewsAndEventsPage } from '@/lib/api/fetchNewsAndEventsPage'
-import { getPageData } from '@/lib/api/fetchPage'
 import {
   ArticleCard,
   RichTextPreview,
@@ -11,7 +10,7 @@ import { Grid } from '@/ui/components/Grid/Grid'
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const pageData = await getPageData('news-and-events')
+  const pageData = await fetchNewsAndEventsPage()
   return {
     title: pageData[0].meta_title,
     description: pageData[0].meta_description,

@@ -1,14 +1,15 @@
 import { fetchArticle } from '@/lib/api/fetchArticle'
 import { formatDate } from '@/lib/utils/dateFormatter'
 import { getImageUrl } from '@/lib/utils/getImageUrl'
+import { Article } from '@/types/base'
 import {
+  ArticleCard,
   Grid,
   Label,
   RichTextPreview,
   Section,
   Typography,
 } from '@/ui/components'
-import { ArticleCardSection } from '@/ui/sections'
 import { Metadata } from 'next'
 import Image from 'next/image'
 
@@ -84,11 +85,24 @@ export default async function ArticleDetailPage({
         </Grid>
       </Section>
       {relatedArticles.length > 0 && (
-        <ArticleCardSection
-          title={'Могло бы вас заинтересовать'}
-          headingLevel={'h2'}
-          article_cards={relatedArticles}
-        />
+        <Section alignment='center' color={'white'}>
+          <Typography variant='h2' font='roboto'>
+            Могло бы вас заинтересовать
+          </Typography>
+          <Grid isScrollable columns={2} gap={6}>
+            {relatedArticles.map((card: Article) => {
+              return (
+                <ArticleCard
+                  key={card.title}
+                  title={card.title}
+                  perex={card.perex}
+                  image={card.image}
+                  date_created={card.date_created}
+                />
+              )
+            })}
+          </Grid>
+        </Section>
       )}
     </>
   )

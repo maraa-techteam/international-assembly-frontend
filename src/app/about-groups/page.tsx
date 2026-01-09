@@ -29,7 +29,7 @@ export default async function AboutGroups() {
   return (
     <>
       <Section
-        className='grid grid-cols-[1fr_0.5fr]'
+        className='flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr]'
         alignment='start'
         color={'white'}
       >

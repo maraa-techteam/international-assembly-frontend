@@ -33,7 +33,8 @@ export default async function Home() {
         className='gap-8 py-10 text-center lg:gap-15 lg:py-39'
       >
         <Typography variant={'h1'} className='lg:text-5xl' font={'roboto'}>
-          Проблемы с алкоголем? Есть решение.
+          Проблемы с алкоголем?{' '}
+          <span className='text-primary'>Есть решение.</span>
         </Typography>
         <Grid
           as={'nav'}
@@ -76,7 +77,6 @@ export default async function Home() {
           <Typography variant={'h2'} font='roboto'>
             Нужна помощь?
           </Typography>
-          {/* <RichTextPreview htmlContent={text} /> */}
           <Typography variant={'body'}>
             А.А. уже более 80 лет помогает алкоголикам выздороветь. Программа
             выздоровления АА построена на простом принципе: один алкоголик
