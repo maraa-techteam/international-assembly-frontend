@@ -25,7 +25,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AboutGroups() {
   const pageData = await fetchAboutGroupsPage()
   const page = pageData[0]
-  console.log(page.faq)
 
   return (
     <>
@@ -66,6 +65,7 @@ export default async function AboutGroups() {
               variant={'contained'}
               size={'lg'}
               color={'primary'}
+              as={'link'}
               href={page.button_right[0].link}
             >
               {page.button_right[0].label}

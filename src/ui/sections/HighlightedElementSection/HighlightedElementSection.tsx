@@ -13,7 +13,7 @@ export function HighlightedElementSection({
   primary_item,
 }: HighlightedElementSectionProps) {
   return (
-    <Section variant={'single-column'} color={'white'}>
+    <Section color={'white'}>
       <Typography variant={headingLevel} font='roboto'>
         {title}
       </Typography>

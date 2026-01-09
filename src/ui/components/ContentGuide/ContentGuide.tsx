@@ -51,14 +51,11 @@ export function ContentGuide({ data }: ContentGuideProps) {
         })}
       </div>
 
-      <div className='flex h-full w-full flex-col gap-4 lg:gap-6'>
+      <div className='flex flex-col gap-4 lg:gap-6'>
         {activeItems.map(
           (item, i) =>
             activeItems[i].isActive && (
-              <div
-                className='flex h-full flex-col justify-between gap-4'
-                key={i}
-              >
+              <div className='flex flex-col justify-between gap-4' key={i}>
                 <Typography variant='body' font={'roboto'}>
                   {item.description}
                 </Typography>

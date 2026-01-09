@@ -60,7 +60,7 @@ export default async function ArticleDetailPage({
 
   return (
     <>
-      <Section variant={'single-column'} color={'contrast'}>
+      <Section color={'contrast'}>
         <Typography variant='h1'>{article?.title}</Typography>
         <Label text={formatDate(article?.date_created)} />
         <Grid align={'start'} justify={'center'} columns={2}>
