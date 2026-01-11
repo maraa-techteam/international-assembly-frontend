@@ -11,6 +11,7 @@ import {
   Section,
   Typography,
 } from '@/ui/components'
+import GroupsFilterDashboard from '@/ui/components/Groups/GroupsFilterDashboard'
 import { Metadata } from 'next'
 import Image from 'next/image'
 
@@ -74,15 +75,17 @@ export default async function Home() {
         color={'white'}
       >
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
-          <Typography variant={'h2'} font='roboto'>
-            Нужна помощь?
-          </Typography>
-          <Typography variant={'body'}>
-            А.А. уже более 80 лет помогает алкоголикам выздороветь. Программа
-            выздоровления АА построена на простом принципе: один алкоголик
-            делится с другим. Если ваше пьянство выходит из-под контроля, АА
-            может помочь.
-          </Typography>
+          <div className='flex flex-col gap-2'>
+            <Typography variant={'h2'} font='roboto'>
+              Нужна помощь?
+            </Typography>
+            <Typography variant={'body'}>
+              А.А. уже более 80 лет помогает алкоголикам выздороветь. Программа
+              выздоровления АА построена на простом принципе: один алкоголик
+              делится с другим. Если ваше пьянство выходит из-под контроля, АА
+              может помочь.
+            </Typography>
+          </div>
           <LinkComponent
             icon={'telegram'}
             isUnderlined
@@ -128,6 +131,19 @@ export default async function Home() {
             priority={false}
           />
         </div>
+      </Section>
+      <Section color={'primary'}>
+        <div className='flex flex-col gap-2'>
+          <Typography variant='h2' font='roboto'>
+            Поиск русскоязычных групп
+          </Typography>
+          <Typography variant='body'>
+            Найдите русскоязычные группы Анонимных Алкоголиков в вашем городе
+            или онлайн.
+          </Typography>
+        </div>
+
+        <GroupsFilterDashboard variant='widget' className='bg-primary p-0' />
       </Section>
       <Section alignment='center' color={'white'}>
         <Typography variant='h2' font='roboto'>
