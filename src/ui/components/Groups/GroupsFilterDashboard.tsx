@@ -20,9 +20,13 @@ type GroupsOptions = {
 
 export default function GroupsFilterDashboard({
   className,
+  dropdownOptions,
+  // onSubmit,
   variant,
 }: {
   className?: string
+  dropdownOptions: Omit<GroupsOptions, 'searchValue'>
+  // onSubmit: (options: GroupsOptions) => void
   variant?: 'widget'
 }) {
   const [options, setOptions] = useState<GroupsOptions>({
@@ -83,9 +87,10 @@ export default function GroupsFilterDashboard({
         filteredOptions.searchValue = options.searchValue
       }
 
-      const queryParams = new URLSearchParams(filteredOptions).toString()
-      console.log(queryParams)
-      resetOptions()
+      // onSubmit(options)
+      // const queryParams = new URLSearchParams(filteredOptions)
+      // console.log(queryParams.toString())
+      // resetOptions()
     }
   }
 
@@ -110,24 +115,14 @@ export default function GroupsFilterDashboard({
         <Select
           label={'Страна'}
           value={options.country}
-          options={[
-            'Международные',
-            'Болгария',
-            'Германия',
-            'Испания',
-            'Италия',
-            'Польша',
-            'Турция',
-            'Франция',
-            'Чехия',
-          ]}
+          options={dropdownOptions.country}
           textColor={variant === 'widget' ? 'text-primary' : 'text-foreground'}
           onChange={(value) => handleSelectChange('country', value)}
         />
         <Select
           label={'Присутствие'}
           value={options.presence}
-          options={['Онлайн', 'Офлайн', 'Гибрид']}
+          options={dropdownOptions.presence}
           textColor={variant === 'widget' ? 'text-primary' : 'text-foreground'}
           onChange={(value) => handleSelectChange('presence', value)}
         />
@@ -135,15 +130,7 @@ export default function GroupsFilterDashboard({
           <Select
             label={'Расписание'}
             value={options.schedule}
-            options={[
-              'Понедельник',
-              'Вторник',
-              'Среда',
-              'Четверг',
-              'Пятница',
-              'Суббота',
-              'Воскресенье',
-            ]}
+            options={dropdownOptions.schedule}
             textColor={
               variant === 'widget' ? 'text-primary' : 'text-foreground'
             }

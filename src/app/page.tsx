@@ -1,5 +1,6 @@
 import { fetchArticles } from '@/lib/api/fetchArticles'
 import { getFrequentlyVisitedLinks } from '@/lib/api/fetchFrequentlyVisitedLinks'
+import { fetchGroups } from '@/lib/api/fetchGroups'
 import { fetchHomePage } from '@/lib/api/fetchHomePage'
 import { getImageUrl } from '@/lib/utils/getImageUrl'
 import {
@@ -27,6 +28,19 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const frequentlyVisitedLinks = await getFrequentlyVisitedLinks()
   const article_cards = await fetchArticles()
+  const groups = await fetchGroups()
+
+  const countries = groups.map((group) => group.country)
+  const presence = ['Онлайн', 'Офлайн', 'Гибрид']
+  const schedule = [
+    'Понедельник',
+    'Вторник',
+    'Среда',
+    'Четверг',
+    'Пятница',
+    'Суббота',
+    'Воскресенье',
+  ]
   return (
     <>
       <Section
@@ -143,7 +157,16 @@ export default async function Home() {
           </Typography>
         </div>
 
-        <GroupsFilterDashboard variant='widget' className='bg-primary p-0' />
+        <GroupsFilterDashboard
+          // onSubmit={() => null}
+          dropdownOptions={{
+            country: countries,
+            presence: presence,
+            schedule: schedule,
+          }}
+          variant='widget'
+          className='bg-primary p-0'
+        />
       </Section>
       <Section alignment='center' color={'white'}>
         <Typography variant='h2' font='roboto'>

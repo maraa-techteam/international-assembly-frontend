@@ -4,7 +4,7 @@ import directus from '../utils/directus'
 
 export async function fetchGroupsPage() {
   const raw = await directus.request(
-    readItems('about_groups_page', {
+    readItems('groups_page', {
       fields: ['meta_title', 'meta_description', 'title'],
     }),
   )
