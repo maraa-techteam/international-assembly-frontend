@@ -40,6 +40,10 @@ export default function GroupsFilterDashboard({
 
   const [isOptionsSelected, setIsOptionsSelected] = useState<boolean>(false)
 
+  const [urlParams, setUrlParams] = useState<URLSearchParams>(
+    new URLSearchParams(),
+  )
+
   useEffect(
     () =>
       options.country.length > 0 ||
@@ -62,7 +66,10 @@ export default function GroupsFilterDashboard({
   }, [router, pathname])
 
   const handleSelectChange = useCallback(
-    (field: 'country' | 'presence' | 'schedule', value: string[]) => {
+    (
+      field: 'country' | 'presence' | 'schedule' | 'searchValue',
+      value: string[],
+    ) => {
       if (!value.length) router.push(pathname)
       setOptions((prev) => ({ ...prev, [field]: value }))
     },
@@ -85,12 +92,13 @@ export default function GroupsFilterDashboard({
         params.set('presence', options.presence.join(','))
       }
       if (options.schedule.length > 0) {
-        params.set('schedule', options.schedule.join(','))
+        params.set('schedule_slots', options.schedule.join(','))
       }
       if (options.searchValue.trim()) {
         params.set('searchValue', options.searchValue)
       }
 
+      setUrlParams(params)
       router.push(`${pathname}?${params.toString()}`)
     }
   }
@@ -107,6 +115,7 @@ export default function GroupsFilterDashboard({
           placeholder='Введите название группы'
           className='w-full rounded-2xl'
           isExpanded={true}
+          //HERE I HAVE TO RESET SEARCH VALUE WHEN FILTERS ARE RESET, NOT BASED ON searchValue ITSELF
           isReseted={!options.searchValue}
           onSearch={handleSearchChange}
         />
@@ -169,7 +178,8 @@ export default function GroupsFilterDashboard({
           >
             <Typography
               className={cn(
-                !isOptionsSelected && 'cursor-not-allowed text-gray-400',
+                (!isOptionsSelected || !urlParams.toString()) &&
+                  'cursor-not-allowed text-gray-400',
               )}
               variant={'caption'}
             >

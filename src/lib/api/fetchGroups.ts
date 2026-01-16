@@ -4,18 +4,19 @@ import { SearchParams } from 'next/dist/server/request/search-params'
 import directus from '../utils/directus'
 
 export async function fetchGroups(params?: SearchParams) {
-  // Convert comma-separated strings to arrays
   const countries = params?.country
     ? (params.country as string).split(',')
     : undefined
 
-  const presences = params?.presence
+  const presence = params?.presence
     ? (params.presence as string).split(',')
     : undefined
 
-  const schedules = params?.schedule
-    ? (params.schedule as string).split(',')
+  const schedule_slots = params?.schedule_slots
+    ? (params.schedule_slots as string).split(',')
     : undefined
+
+  const searchValue = params?.searchValue
 
   const raw = await directus.request(
     readItems('groups', {
@@ -25,20 +26,23 @@ export async function fetchGroups(params?: SearchParams) {
               _in: countries,
             }
           : undefined,
-        presence: presences
+        presence: presence
           ? {
-              _in: presences,
+              _in: presence,
             }
           : undefined,
-        // schedule: schedules
-        //   ? {
-        //       _and: schedules.map((day) => ({
-        //         _contains: {
-        //           [day]: [{}],
-        //         },
-        //       })),
-        //     }
-        //   : undefined,
+        schedule_slots: schedule_slots
+          ? {
+              day: {
+                _in: schedule_slots,
+              },
+            }
+          : undefined,
+        name: searchValue
+          ? {
+              _contains: searchValue,
+            }
+          : undefined,
       },
 
       fields: [
@@ -52,7 +56,6 @@ export async function fetchGroups(params?: SearchParams) {
         'youtube',
         'telegram',
         'contact',
-        'schedule',
         'time_zone',
         { schedule_slots: ['day', 'time'] },
       ],
@@ -70,7 +73,6 @@ export async function fetchGroups(params?: SearchParams) {
       youtube: item.youtube,
       telegram: item.telegram,
       contact: item.contact,
-      schedule: item.schedule,
       time_zone: item.time_zone,
       schedule_slots: item.schedule_slots,
     }

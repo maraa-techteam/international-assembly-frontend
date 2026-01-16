@@ -1,6 +1,6 @@
 import { Typography } from '@/ui/components'
 
-import GroupSchedule, { WeekSchedule } from './GroupSchedule'
+import GroupSchedule from './GroupSchedule'
 
 export type TimeZones =
   | 'Европа/Лондон (UTC+0/+1)'
@@ -53,7 +53,6 @@ export type GroupType = {
   youtube: string
   telegram: string
   contact: { name: string; phone: string; email: string }[]
-  schedule: WeekSchedule
   schedule_slots: { day: string; time: string }[]
   time_zone: TimeZones
 }
@@ -65,7 +64,6 @@ export default function GroupTableItem({
 }: {
   group: GroupTableItemProps
 }) {
-  console.log('GROUP SCHEDULE SLOTS:', group.schedule_slots, group.name)
   return (
     <div key={group.name} className='flex flex-col divide-y divide-gray-300'>
       <div className='over:bg-light-blue grid grid-cols-[1fr_0.5fr_0.5fr_1.5fr] gap-4 px-4'>

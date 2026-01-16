@@ -36,7 +36,6 @@ export default async function GroupsPage({
     'Суббота',
     'Воскресенье',
   ]
-
   return (
     <>
       <Section className='py-0' color={'white'}>
