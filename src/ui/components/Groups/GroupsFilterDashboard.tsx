@@ -9,9 +9,10 @@ import {
   Select,
   Typography,
 } from '@/ui/components'
+import { usePathname, useRouter } from 'next/navigation'
 import { useCallback, useEffect, useState } from 'react'
 
-type GroupsOptions = {
+export type FilterOptions = {
   country: string[]
   presence: string[]
   schedule: string[]
@@ -21,15 +22,16 @@ type GroupsOptions = {
 export default function GroupsFilterDashboard({
   className,
   dropdownOptions,
-  // onSubmit,
   variant,
 }: {
   className?: string
-  dropdownOptions: Omit<GroupsOptions, 'searchValue'>
-  // onSubmit: (options: GroupsOptions) => void
+  dropdownOptions: Omit<FilterOptions, 'searchValue'>
   variant?: 'widget'
 }) {
-  const [options, setOptions] = useState<GroupsOptions>({
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const [options, setOptions] = useState<FilterOptions>({
     country: [],
     presence: [],
     schedule: [],
@@ -56,13 +58,15 @@ export default function GroupsFilterDashboard({
       schedule: [],
       searchValue: '',
     })
-  }, [])
+    router.push(pathname)
+  }, [router, pathname])
 
   const handleSelectChange = useCallback(
     (field: 'country' | 'presence' | 'schedule', value: string[]) => {
+      if (!value.length) router.push(pathname)
       setOptions((prev) => ({ ...prev, [field]: value }))
     },
-    [],
+    [pathname, router],
   )
 
   const handleSearchChange = useCallback((value: string) => {
@@ -72,25 +76,22 @@ export default function GroupsFilterDashboard({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     if (isOptionsSelected) {
-      const filteredOptions: Record<string, string> = {}
+      const params = new URLSearchParams()
 
       if (options.country.length > 0) {
-        filteredOptions.country = options.country.join(',')
+        params.set('country', options.country.join(','))
       }
       if (options.presence.length > 0) {
-        filteredOptions.presence = options.presence.join(',')
+        params.set('presence', options.presence.join(','))
       }
       if (options.schedule.length > 0) {
-        filteredOptions.schedule = options.schedule.join(',')
+        params.set('schedule', options.schedule.join(','))
       }
       if (options.searchValue.trim()) {
-        filteredOptions.searchValue = options.searchValue
+        params.set('searchValue', options.searchValue)
       }
 
-      // onSubmit(options)
-      // const queryParams = new URLSearchParams(filteredOptions)
-      // console.log(queryParams.toString())
-      // resetOptions()
+      router.push(`${pathname}?${params.toString()}`)
     }
   }
 

@@ -4,6 +4,7 @@ import { Section, Typography } from '@/ui/components'
 import GroupsFilterDashboard from '@/ui/components/Groups/GroupsFilterDashboard'
 import GroupsTable from '@/ui/components/Groups/GroupsTable'
 import { Metadata } from 'next'
+import { SearchParams } from 'next/dist/server/request/search-params'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await fetchGroupsPage()
@@ -13,12 +14,16 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function GroupsPage() {
+export default async function GroupsPage({
+  searchParams,
+}: {
+  searchParams: SearchParams
+}) {
+  const params = await searchParams
   const pageData = await fetchGroupsPage()
+  const filteredGroups = await fetchGroups(params)
   const groups = await fetchGroups()
   const page = pageData[0]
-
-  console.log(page)
 
   const countries = groups.map((group) => group.country)
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
@@ -50,7 +55,7 @@ export default async function GroupsPage() {
         className='px-0 pt-0 lg:max-w-250 lg:pt-0 lg:pr-0'
         color={'white'}
       >
-        <GroupsTable groups={groups} />
+        <GroupsTable groups={filteredGroups} />
       </Section>
     </>
   )

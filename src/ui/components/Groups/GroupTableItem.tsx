@@ -54,6 +54,7 @@ export type GroupType = {
   telegram: string
   contact: { name: string; phone: string; email: string }[]
   schedule: WeekSchedule
+  schedule_slots: { day: string; time: string }[]
   time_zone: TimeZones
 }
 
@@ -64,6 +65,7 @@ export default function GroupTableItem({
 }: {
   group: GroupTableItemProps
 }) {
+  console.log('GROUP SCHEDULE SLOTS:', group.schedule_slots, group.name)
   return (
     <div key={group.name} className='flex flex-col divide-y divide-gray-300'>
       <div className='over:bg-light-blue grid grid-cols-[1fr_0.5fr_0.5fr_1.5fr] gap-4 px-4'>
@@ -76,7 +78,10 @@ export default function GroupTableItem({
         <Typography variant='body' className='truncate py-4'>
           {group.presence}
         </Typography>
-        <GroupSchedule schedule={group.schedule} time_zone={group.time_zone} />
+        <GroupSchedule
+          schedule={group.schedule_slots}
+          time_zone={group.time_zone}
+        />
       </div>
     </div>
   )
