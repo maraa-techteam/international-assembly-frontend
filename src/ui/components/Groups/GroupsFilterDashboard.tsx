@@ -9,8 +9,9 @@ import {
   Select,
   Typography,
 } from '@/ui/components'
-import { usePathname, useRouter } from 'next/navigation'
-import { useCallback, useEffect, useState } from 'react'
+import next from 'next'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 export type FilterOptions = {
   country: string[]
@@ -30,33 +31,85 @@ export default function GroupsFilterDashboard({
 }) {
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
 
-  const [options, setOptions] = useState<FilterOptions>({
-    country: [],
-    presence: [],
-    schedule: [],
-    searchValue: '',
-  })
-
-  const [isOptionsSelected, setIsOptionsSelected] = useState<boolean>(false)
-
-  const [urlParams, setUrlParams] = useState<URLSearchParams>(
-    new URLSearchParams(),
+  const appliedFilters: FilterOptions = useMemo(
+    () => ({
+      country: searchParams.get('country')?.split(',') ?? [],
+      presence: searchParams.get('presence')?.split(',') ?? [],
+      schedule: searchParams.get('schedule_slots')?.split(',') ?? [],
+      searchValue: searchParams.get('searchValue') ?? '',
+    }),
+    [searchParams],
   )
 
-  useEffect(
-    () =>
-      options.country.length > 0 ||
-      options.presence.length > 0 ||
-      options.schedule.length > 0 ||
-      options.searchValue
-        ? setIsOptionsSelected(true)
-        : setIsOptionsSelected(false),
-    [options],
-  )
+  const [draft, setDraft] = useState<FilterOptions>(appliedFilters)
+
+  useEffect(() => {
+    setDraft(appliedFilters)
+  }, [searchParams, appliedFilters])
+
+  const isOptionsSelected =
+    draft.country.length > 0 ||
+    draft.presence.length > 0 ||
+    draft.schedule.length > 0 ||
+    !!draft.searchValue
+
+  const handleSelectChange = (
+    field: 'country' | 'presence' | 'schedule',
+    value: string[],
+  ) => {
+    const nextState = {
+      ...draft,
+      [field]: value,
+    }
+
+    const isAllEmpty =
+      !nextState.country.length &&
+      !nextState.presence.length &&
+      !nextState.schedule.length &&
+      !nextState.searchValue
+
+    if (isAllEmpty) {
+      router.push(pathname)
+    }
+
+    setDraft(nextState)
+  }
+
+  const handleSearchChange = (value: string) => {
+    if (
+      !value &&
+      !draft.country.length &&
+      !draft.presence.length &&
+      !draft.schedule.length
+    ) {
+      router.push(pathname)
+    }
+    setDraft((prev) => ({ ...prev, searchValue: value }))
+  }
+
+  const applyFilters = useCallback(() => {
+    const params = new URLSearchParams()
+
+    if (draft.country.length) {
+      params.set('country', draft.country.join(','))
+    }
+    if (draft.presence.length) {
+      params.set('presence', draft.presence.join(','))
+    }
+    if (draft.schedule.length) {
+      params.set('schedule_slots', draft.schedule.join(','))
+    }
+    if (draft.searchValue.trim()) {
+      params.set('searchValue', draft.searchValue.trim())
+    }
+
+    router.push(`${pathname}?${params.toString()}`)
+  }, [draft, pathname, router])
 
   const resetOptions = useCallback(() => {
-    setOptions({
+    setDraft({
       country: [],
       presence: [],
       schedule: [],
@@ -64,44 +117,6 @@ export default function GroupsFilterDashboard({
     })
     router.push(pathname)
   }, [router, pathname])
-
-  const handleSelectChange = useCallback(
-    (
-      field: 'country' | 'presence' | 'schedule' | 'searchValue',
-      value: string[],
-    ) => {
-      if (!value.length) router.push(pathname)
-      setOptions((prev) => ({ ...prev, [field]: value }))
-    },
-    [pathname, router],
-  )
-
-  const handleSearchChange = useCallback((value: string) => {
-    setOptions((prev) => ({ ...prev, searchValue: value }))
-  }, [])
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (isOptionsSelected) {
-      const params = new URLSearchParams()
-
-      if (options.country.length > 0) {
-        params.set('country', options.country.join(','))
-      }
-      if (options.presence.length > 0) {
-        params.set('presence', options.presence.join(','))
-      }
-      if (options.schedule.length > 0) {
-        params.set('schedule_slots', options.schedule.join(','))
-      }
-      if (options.searchValue.trim()) {
-        params.set('searchValue', options.searchValue)
-      }
-
-      setUrlParams(params)
-      router.push(`${pathname}?${params.toString()}`)
-    }
-  }
 
   return (
     <div
@@ -114,32 +129,32 @@ export default function GroupsFilterDashboard({
         <SearchBar
           placeholder='Введите название группы'
           className='w-full rounded-2xl'
-          isExpanded={true}
-          //HERE I HAVE TO RESET SEARCH VALUE WHEN FILTERS ARE RESET, NOT BASED ON searchValue ITSELF
-          isReseted={!options.searchValue}
+          isExpanded
           onSearch={handleSearchChange}
         />
       )}
 
       <Grid columns={3}>
         <Select
-          label={'Страна'}
-          value={options.country}
+          label='Страна'
+          value={draft.country}
           options={dropdownOptions.country}
           textColor={variant === 'widget' ? 'text-primary' : 'text-foreground'}
           onChange={(value) => handleSelectChange('country', value)}
         />
+
         <Select
-          label={'Присутствие'}
-          value={options.presence}
+          label='Присутствие'
+          value={draft.presence}
           options={dropdownOptions.presence}
           textColor={variant === 'widget' ? 'text-primary' : 'text-foreground'}
           onChange={(value) => handleSelectChange('presence', value)}
         />
+
         {variant !== 'widget' && (
           <Select
-            label={'Расписание'}
-            value={options.schedule}
+            label='Расписание'
+            value={draft.schedule}
             options={dropdownOptions.schedule}
             textColor={
               variant === 'widget' ? 'text-primary' : 'text-foreground'
@@ -147,28 +162,24 @@ export default function GroupsFilterDashboard({
             onChange={(value) => handleSelectChange('schedule', value)}
           />
         )}
+
         {variant === 'widget' && (
           <Button
-            variant={'contained'}
+            variant='contained'
             disabled={!isOptionsSelected}
-            type='submit'
             color='secondary'
-            as='button'
             className='w-full gap-4'
-            size={'sm'}
-            onClick={handleSubmit}
+            size='sm'
+            onClick={applyFilters}
           >
-            <Typography
-              variant={'caption'}
-              className='font-medium'
-              font={'roboto'}
-            >
+            <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
             </Typography>
-            <Icon icon='arrow-right' size={'md'} />
+            <Icon icon='arrow-right' size='md' />
           </Button>
         )}
       </Grid>
+
       {variant !== 'widget' && (
         <div className='align-end flex w-full flex-col gap-4 lg:flex-row lg:justify-between'>
           <button
@@ -178,32 +189,26 @@ export default function GroupsFilterDashboard({
           >
             <Typography
               className={cn(
-                (!isOptionsSelected || !urlParams.toString()) &&
-                  'cursor-not-allowed text-gray-400',
+                !isOptionsSelected && 'cursor-not-allowed text-gray-400',
               )}
-              variant={'caption'}
+              variant='caption'
             >
               Сбросить фильтры
             </Typography>
           </button>
+
           <Button
-            variant={'contained'}
+            variant='contained'
             disabled={!isOptionsSelected}
-            type='submit'
             color='primary'
-            as='button'
             className='w-full gap-4 lg:max-w-75'
-            size={'sm'}
-            onClick={handleSubmit}
+            size='sm'
+            onClick={applyFilters}
           >
-            <Typography
-              variant={'caption'}
-              className='font-medium'
-              font={'roboto'}
-            >
+            <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
             </Typography>
-            <Icon icon='arrow-right' size={'md'} />
+            <Icon icon='arrow-right' size='md' />
           </Button>
         </div>
       )}
