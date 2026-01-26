@@ -26,9 +26,7 @@ export default async function GroupsPage({
   const groups = await fetchGroups()
   const page = pageData[0]
 
-  console.log(groups)
-
-  const countries = groups.map((group) => group.country)
+  const countries = [...new Set(groups.map((group) => group.country))]
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
   const schedule = [
     'Понедельник',
@@ -61,7 +59,7 @@ export default async function GroupsPage({
         color={'white'}
       >
         <GroupsTable groups={filteredGroups} />
-        {<Pagination totalPages={2} />}
+        <Pagination totalItems={filteredGroups.length} />
       </Section>
     </>
   )
