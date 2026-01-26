@@ -5,6 +5,7 @@ export type IconType =
   | 'close'
   | 'hamburger'
   | 'chevron-right'
+  | 'double-chevron-right'
   | 'arrow-left'
   | 'youtube'
   | 'telegram'

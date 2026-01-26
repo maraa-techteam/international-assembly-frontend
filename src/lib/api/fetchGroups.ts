@@ -18,8 +18,16 @@ export async function fetchGroups(params?: SearchParams) {
 
   const searchValue = params?.searchValue
 
+  const page = params?.page ? parseInt(params.page as string) : 1
+
+  const itemsPerPage = params?.limit ? parseInt(params.limit as string) : 10
+
   const raw = await directus.request(
     readItems('groups', {
+      limit: itemsPerPage,
+      page,
+      meta: 'total_count',
+
       filter: {
         country: countries
           ? {

@@ -9,7 +9,6 @@ import {
   Select,
   Typography,
 } from '@/ui/components'
-import next from 'next'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 

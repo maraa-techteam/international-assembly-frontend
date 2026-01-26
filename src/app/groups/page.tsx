@@ -1,6 +1,7 @@
 import { fetchGroups } from '@/lib/api/fetchGroups'
 import { fetchGroupsPage } from '@/lib/api/fetchGroupsPage'
 import { Section, Typography } from '@/ui/components'
+import { Pagination } from '@/ui/components'
 import GroupsFilterDashboard from '@/ui/components/Groups/GroupsFilterDashboard'
 import GroupsTable from '@/ui/components/Groups/GroupsTable'
 import { Metadata } from 'next'
@@ -25,6 +26,8 @@ export default async function GroupsPage({
   const groups = await fetchGroups()
   const page = pageData[0]
 
+  console.log(groups)
+
   const countries = groups.map((group) => group.country)
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
   const schedule = [
@@ -36,6 +39,9 @@ export default async function GroupsPage({
     'Суббота',
     'Воскресенье',
   ]
+
+  // I have to pass parameter like page=2 to switch pages. Pagination has to show only number of available pages. On click of the pagination it has to set parameter of the page and reload the data with new page parameter
+
   return (
     <>
       <Section className='py-0' color={'white'}>
@@ -55,6 +61,7 @@ export default async function GroupsPage({
         color={'white'}
       >
         <GroupsTable groups={filteredGroups} />
+        {<Pagination totalPages={2} />}
       </Section>
     </>
   )
