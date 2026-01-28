@@ -71,7 +71,7 @@ export async function fetchGroups(params?: SearchParams) {
   )
 
   // When meta is requested, Directus returns { data, meta }
-  const raw = Array.isArray(response) ? response : response.data || response
+  const raw = Array.isArray(response) ? response : response.data ?? response
   const meta = Array.isArray(response) ? undefined : response.meta
 
   const items = raw.map((item) => {
