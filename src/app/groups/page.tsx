@@ -38,8 +38,6 @@ export default async function GroupsPage({
     'Воскресенье',
   ]
 
-  // I have to pass parameter like page=2 to switch pages. Pagination has to show only number of available pages. On click of the pagination it has to set parameter of the page and reload the data with new page parameter
-
   return (
     <>
       <Section className='py-0' color={'white'}>

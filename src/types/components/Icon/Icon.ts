@@ -10,6 +10,9 @@ export type IconType =
   | 'youtube'
   | 'telegram'
   | 'check'
+  | 'person'
+  | 'phone'
+  | 'website'
 
 export type IconProps = {
   icon: IconType
