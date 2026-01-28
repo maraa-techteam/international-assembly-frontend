@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const frequentlyVisitedLinks = await getFrequentlyVisitedLinks()
   const article_cards = await fetchArticles()
-  const groups = await fetchGroups()
+  const { items: groups } = await fetchGroups()
 
   const countries = groups.map((group) => group.country)
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']

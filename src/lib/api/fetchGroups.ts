@@ -22,7 +22,7 @@ export async function fetchGroups(params?: SearchParams) {
 
   const itemsPerPage = params?.limit ? parseInt(params.limit as string) : 10
 
-  const raw = await directus.request(
+  const response = await directus.request(
     readItems('groups', {
       limit: itemsPerPage,
       page,
@@ -69,7 +69,12 @@ export async function fetchGroups(params?: SearchParams) {
       ],
     }),
   )
-  return raw.map((item) => {
+
+  // When meta is requested, Directus returns { data, meta }
+  const raw = Array.isArray(response) ? response : response.data || response
+  const meta = Array.isArray(response) ? undefined : response.meta
+
+  const items = raw.map((item) => {
     return {
       name: item.name,
       description: item.description,
@@ -85,4 +90,11 @@ export async function fetchGroups(params?: SearchParams) {
       schedule_slots: item.schedule_slots,
     }
   })
+
+  return {
+    items,
+    totalCount: meta?.total_count ?? items.length,
+    page,
+    limit: itemsPerPage,
+  }
 }
