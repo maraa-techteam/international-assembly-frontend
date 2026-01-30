@@ -90,7 +90,7 @@ export default async function AboutGroups() {
           )}
         </div>
       </Section>
-      <Section className='px-0 pt-0 lg:pt-0' color={'white'}>
+      <Section className='pt-0 lg:pt-0' color={'white'}>
         <Accordion items={page.faq} />
       </Section>
     </>

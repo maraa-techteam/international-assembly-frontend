@@ -84,8 +84,8 @@ export function Select({
 
       <div
         className={cn(
-          'absolute top-full z-10 flex w-full flex-col rounded-b-3xl bg-white',
-          !isDropdownOpen && 'hidden',
+          'absolute top-full z-10 hidden w-full flex-col rounded-b-3xl bg-white',
+          isDropdownOpen && 'flex shadow-md',
         )}
       >
         {options.map((option, i) => {

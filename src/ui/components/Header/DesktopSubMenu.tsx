@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 type DesktopSubMenuProps = {
+  onSelect: () => void
   navigationData: {
     name: string
     href: string
@@ -15,7 +16,10 @@ type DesktopSubMenuProps = {
   }[]
 }
 
-export function DesktopSubMenu({ navigationData }: DesktopSubMenuProps) {
+export function DesktopSubMenu({
+  navigationData,
+  onSelect,
+}: DesktopSubMenuProps) {
   const transformedSubNav: TransformedSecondTierNavigationType =
     navigationData.map((item, i) => ({
       ...item,
@@ -41,6 +45,7 @@ export function DesktopSubMenu({ navigationData }: DesktopSubMenuProps) {
         {activeItems.map((item, i) => (
           <li key={i}>
             <Link
+              onClick={onSelect}
               href={item.href}
               className={cn(
                 'hover:bg-primary flex flex-col rounded-full px-3 py-4 whitespace-nowrap last:mb-0 hover:text-white',

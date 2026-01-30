@@ -165,7 +165,7 @@ export default async function Home() {
               schedule: schedule,
             }}
             variant='widget'
-            className='bg-primary p-0'
+            className='bg-primary max-w-200 p-0'
           />
         </Suspense>
       </Section>

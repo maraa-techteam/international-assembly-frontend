@@ -8,7 +8,11 @@ type GroupsTableProps = {
 
 export function GroupsTable({ groups }: GroupsTableProps) {
   if (groups.length === 0) {
-    return <Typography variant='body'>Группы не найдены</Typography>
+    return (
+      <div className='px-4 lg:px-0'>
+        <Typography variant='body'>Группы не найдены</Typography>
+      </div>
+    )
   }
   return (
     <>
