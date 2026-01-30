@@ -7,12 +7,14 @@ type MobileSubMenuProps = {
   isActive: boolean
   activeItems: TransformedSecondTierNavigationType
   toggleSelect: () => void
+  onClick: () => void
 }
 
 export function MobileSubMenu({
   isActive,
   activeItems,
   toggleSelect,
+  onClick,
 }: MobileSubMenuProps) {
   return (
     <ul
@@ -41,6 +43,7 @@ export function MobileSubMenu({
       {activeItems.map((item, i) => (
         <li key={i}>
           <Link
+            onClick={() => onClick()}
             href={item.href}
             className={cn(
               'hover:bg-primary group flex flex-row justify-between px-3 py-4 whitespace-nowrap last:mb-0',

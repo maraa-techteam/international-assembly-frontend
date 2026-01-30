@@ -1,7 +1,6 @@
 import { cn } from '@/lib/utils/cn'
 import { formatDate } from '@/lib/utils/dateFormatter'
 import { getImageUrl } from '@/lib/utils/getImageUrl'
-import { transliterate } from '@/lib/utils/transliterate'
 import { ArticleCard as ArticleCardProps } from '@/types/components'
 import { Label, Typography } from '@/ui/components'
 import Image from 'next/image'
@@ -10,11 +9,11 @@ export function ArticleCard({
   title,
   image,
   perex,
+  slug,
   date_created,
   className,
   isHighlighted,
 }: ArticleCardProps) {
-  const slug = transliterate(title).toLowerCase().replace(/\s+/g, '-')
   return (
     <a
       href={`/news-and-events/${slug}`}

@@ -1,11 +1,15 @@
 import { readItems } from '@directus/sdk'
 
 import directus from '../utils/directus'
-import { transliterate } from '../utils/transliterate'
 
 export async function fetchArticle(slug: string) {
   const raw = await directus.request(
     readItems('article', {
+      filter: {
+        slug: {
+          _eq: slug,
+        },
+      },
       fields: [
         'title',
         'date_updated',
@@ -25,7 +29,5 @@ export async function fetchArticle(slug: string) {
     }),
   )
 
-  return raw.find((item) => {
-    return transliterate(item.title).toLowerCase().replace(/\s+/g, '-') === slug
-  })
+  return raw[0]
 }

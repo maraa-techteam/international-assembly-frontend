@@ -9,13 +9,36 @@ it('should call onChange when option is selected', async () => {
   render(
     <Select
       options={['Option 1', 'Option 2']}
-      label={'Select an option'}
-      value={''}
+      label='Select an option'
+      value={[]}
       onChange={mockOnChange}
     />,
   )
 
-  await user.selectOptions(screen.getByRole('combobox'), 'Option 2')
+  // open dropdown
+  await user.click(screen.getByText('Select an option'))
 
-  expect(mockOnChange).toHaveBeenCalledWith('Option 2')
+  // select "Option 2"
+  await user.click(screen.getByLabelText('Option 2'))
+
+  expect(mockOnChange).toHaveBeenCalledWith(['Option 2'])
+})
+
+it('should remove option when it is clicked again', async () => {
+  const user = userEvent.setup()
+  const mockOnChange = jest.fn()
+
+  render(
+    <Select
+      options={['Option 1', 'Option 2']}
+      label='Select an option'
+      value={['Option 2']}
+      onChange={mockOnChange}
+    />,
+  )
+
+  await user.click(screen.getByText('Select an option'))
+  await user.click(screen.getByLabelText('Option 2'))
+
+  expect(mockOnChange).toHaveBeenCalledWith([])
 })

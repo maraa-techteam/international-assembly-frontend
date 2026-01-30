@@ -7,5 +7,6 @@ export type ArticleCard = CardBase & {
   date_created: string
   isHighlighted?: boolean
   className?: string
+  slug: string
   related_articles?: ArticleCard[]
 }

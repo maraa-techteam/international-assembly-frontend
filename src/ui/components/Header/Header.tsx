@@ -172,6 +172,9 @@ export function Header({ headerData }: HeaderProps) {
                 />
                 {item.subNav.length > 0 && (
                   <MobileSubMenu
+                    onClick={() => {
+                      setIsMobileMenuActive(false)
+                    }}
                     isActive={item.isActive}
                     activeItems={item.subNav.map((subItem, j) => ({
                       ...subItem,
@@ -228,7 +231,10 @@ export function Header({ headerData }: HeaderProps) {
         )}
       >
         <SearchBar
-          className={cn(isMobileMenuActive && 'hidden')}
+          className={cn(
+            isMobileMenuActive && 'hidden',
+            'lg:max-w-125 lg:rounded-xl',
+          )}
           isExpanded={isSearchActive}
           onToggle={toggleSearch}
           aria-label='Поиск по сайту'
