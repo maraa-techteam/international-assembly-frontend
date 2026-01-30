@@ -63,7 +63,7 @@ export default async function GroupsPage({
         color={'white'}
       >
         <GroupsTable groups={filteredGroups} />
-        <Pagination totalItems={filteredGroups.length} />
+        <Pagination fetchedCount={filteredGroups.length} />
       </Section>
     </>
   )

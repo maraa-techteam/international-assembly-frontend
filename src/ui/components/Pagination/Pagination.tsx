@@ -4,25 +4,30 @@ import { Button } from '@/ui/components'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 type PaginationProps = {
-  totalItems: number
+  fetchedCount: number
 }
 
-export function Pagination({ totalItems }: PaginationProps) {
+export function Pagination({ fetchedCount }: PaginationProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
   const handleLoadMore = () => {
-    const currentPage = parseInt(searchParams.get('page') || '1', 10)
-    const nextPage = currentPage + 1
-    const params = new URLSearchParams(searchParams.toString())
+    const currentLimit = parseInt(searchParams.get('limit') || '10', 10)
+    const nextLimit = currentLimit + 10
 
-    params.set('page', nextPage.toString())
+    const params = new URLSearchParams(searchParams.toString())
+    params.set('limit', nextLimit.toString())
+
+    // ensure we don't "page" when doing load more
+    params.delete('page')
 
     router.push(`${pathname}?${params.toString()}`, { scroll: false })
   }
 
-  const hasMore = totalItems === 10
+  // Show button only if we got a "full batch" (likely more exists)
+  const currentLimit = parseInt(searchParams.get('limit') || '10', 10)
+  const hasMore = fetchedCount >= currentLimit
 
   if (!hasMore) return null
 

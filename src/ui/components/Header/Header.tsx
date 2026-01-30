@@ -212,6 +212,7 @@ export function Header({ headerData }: HeaderProps) {
                   />
                   {item.isActive && item.subNav.length > 0 && (
                     <DesktopSubMenu
+                      onSelect={resetSelect}
                       key={i}
                       navigationData={item.subNav}
                       aria-label={`Подменю ${item.name}`}
