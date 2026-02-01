@@ -38,7 +38,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
         {activeItems.map((button, i) => {
           return (
             <Button
-              key={i}
+              key={button.name}
               color={'white'}
               variant={button.isActive ? 'contained' : 'outlined'}
               size={'sm'}
@@ -55,7 +55,10 @@ export function ContentGuide({ data }: ContentGuideProps) {
         {activeItems.map(
           (item, i) =>
             activeItems[i].isActive && (
-              <div className='flex flex-col justify-between gap-4' key={i}>
+              <div
+                className='flex flex-col justify-between gap-4'
+                key={item.name}
+              >
                 <Typography variant='body' font={'roboto'}>
                   {item.description}
                 </Typography>

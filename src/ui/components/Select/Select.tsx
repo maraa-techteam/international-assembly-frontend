@@ -95,7 +95,7 @@ export function Select({
             <label
               role='option'
               aria-selected={isSelected}
-              key={i}
+              key={option}
               className={cn(
                 'hover:bg-light-blue flex cursor-pointer items-center px-4 py-2',
                 i === options.length - 1 && 'rounded-b-3xl',

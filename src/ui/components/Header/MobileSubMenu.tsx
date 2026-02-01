@@ -40,8 +40,8 @@ export function MobileSubMenu({
         </button>
       </li>
 
-      {activeItems.map((item, i) => (
-        <li key={i}>
+      {activeItems.map((item) => (
+        <li key={item.name}>
           <Link
             onClick={() => onClick()}
             href={item.href}

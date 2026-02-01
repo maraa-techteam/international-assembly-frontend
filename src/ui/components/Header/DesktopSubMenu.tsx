@@ -43,7 +43,7 @@ export function DesktopSubMenu({
     <div className='absolute top-15 right-1/2 hidden w-dvw max-w-3xl translate-x-1/2 grid-cols-2 gap-8 bg-white p-8 shadow lg:grid'>
       <ul className='hidden flex-col lg:flex'>
         {activeItems.map((item, i) => (
-          <li key={i}>
+          <li key={item.name}>
             <Link
               onClick={onSelect}
               href={item.href}
@@ -71,7 +71,7 @@ export function DesktopSubMenu({
               variant='body'
               font='roboto'
               className='text-sm'
-              key={i}
+              key={item.name}
             >
               {activeItems[i].isActive && item.description}
             </Typography>
