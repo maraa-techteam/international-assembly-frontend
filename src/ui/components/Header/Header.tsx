@@ -157,9 +157,8 @@ export function Header({ headerData }: HeaderProps) {
         >
           {navigation.map((item, i) => {
             return (
-              <li className='relative' key={i}>
+              <li className='relative' key={item.name}>
                 <NavItem
-                  key={i}
                   href={item.href}
                   name={item.name}
                   isActive={item.isActive}
@@ -194,9 +193,8 @@ export function Header({ headerData }: HeaderProps) {
           <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
             {navigation.map((item, i) => {
               return (
-                <li className='relative' key={i}>
+                <li className='relative' key={item.name}>
                   <NavItem
-                    key={`${i}-${item.isActive}`}
                     href={item.href}
                     name={item.name}
                     isActive={item.isActive}
@@ -213,7 +211,6 @@ export function Header({ headerData }: HeaderProps) {
                   {item.isActive && item.subNav.length > 0 && (
                     <DesktopSubMenu
                       onSelect={resetSelect}
-                      key={i}
                       navigationData={item.subNav}
                       aria-label={`Подменю ${item.name}`}
                     />

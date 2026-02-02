@@ -1,7 +1,6 @@
 export * from './Card/Card'
 export * from './Grid/Grid'
 export * from './Button/Button'
-export * from './ButtonGroup/ButtonGroup'
 export * from './Footer/Footer'
 export * from './Icon/Icon'
 export * from './Label/Label'

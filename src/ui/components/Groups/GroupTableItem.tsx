@@ -44,6 +44,7 @@ export type TimeZones =
   | 'Атлантика/Рейкьявик (UTC+0)'
 
 export type GroupType = {
+  id?: string
   name: string
   description: string
   country: string

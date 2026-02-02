@@ -17,8 +17,8 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
         {name}
       </Typography>
       <ul className={'mb-2 hidden flex-col gap-1 lg:flex'}>
-        {subNav.map((sub, i) => (
-          <li key={i}>
+        {subNav.map((sub) => (
+          <li key={sub.name}>
             <Link href={sub.href}>
               <Typography
                 variant='body'
@@ -51,8 +51,8 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
           />
         </summary>
         <ul className='mb-2 flex flex-col gap-2'>
-          {subNav.map((sub, i) => (
-            <li key={i}>
+          {subNav.map((sub) => (
+            <li key={sub.name}>
               <Link href={sub.href}>
                 <Typography
                   variant='body'

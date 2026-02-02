@@ -36,8 +36,8 @@ export function GroupsTable({ groups }: GroupsTableProps) {
               Расписание
             </Typography>
           </div>
-          {groups?.map((group: GroupType, index) => (
-            <GroupTableItem key={index} group={group} />
+          {groups?.map((group: GroupType) => (
+            <GroupTableItem key={group.id} group={group} />
           ))}
         </div>
       </div>
