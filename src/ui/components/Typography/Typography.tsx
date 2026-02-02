@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils/cn'
 import { TypographyProps } from '@/types/components'
 import { cva } from 'class-variance-authority'
 
-const typographyVariants = cva('text-contrast', {
+const typographyVariants = cva('text-contrast wrap-break-word', {
   variants: {
     variant: {
       h1: 'text-2xl font-bold lg:text-4xl',

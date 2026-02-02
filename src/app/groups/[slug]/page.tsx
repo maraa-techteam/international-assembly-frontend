@@ -78,7 +78,7 @@ export default async function GroupDetailPage({
               (contactItem: { name: string; phone: string }, index: number) => {
                 return (
                   <div
-                    key={contactItem.name}
+                    key={contactItem.phone}
                     className={cn(
                       'flex flex-col gap-4 pb-4',
                       index === group.contact.length - 1 && 'pb-0',
