@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils/cn'
+import { debounce } from '@/lib/utils/debounce'
 import {
   Button,
   Grid,
@@ -76,7 +77,7 @@ export function GroupsFilterDashboard({
     setDraft(nextState)
   }
 
-  const handleSearchChange = (value: string) => {
+  const handleSearchChange = debounce((value: string) => {
     if (
       !value &&
       !draft.country.length &&
@@ -86,7 +87,7 @@ export function GroupsFilterDashboard({
       router.push(pathname)
     }
     setDraft((prev) => ({ ...prev, searchValue: value }))
-  }
+  }, 300)
 
   const applyFilters = useCallback(() => {
     const params = new URLSearchParams()
