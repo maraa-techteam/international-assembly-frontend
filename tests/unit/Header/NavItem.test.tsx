@@ -1,4 +1,4 @@
-import { NavItem } from '@/ui/components'
+import { NavItem } from '@/ui'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 describe('NavItem', () => {

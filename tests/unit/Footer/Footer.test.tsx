@@ -1,6 +1,6 @@
 import { Socials } from '@/types/navigation'
 import { TransformedNavigationType } from '@/types/navigation'
-import { Footer } from '@/ui/components'
+import { Footer } from '@/ui'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 const mockFooterData: TransformedNavigationType[] = [

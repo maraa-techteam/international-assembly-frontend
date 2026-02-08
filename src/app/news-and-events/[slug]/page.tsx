@@ -7,7 +7,7 @@ import {
   RichTextPreview,
   Section,
   Typography,
-} from '@/ui/components'
+} from '@/ui'
 import { formatDate } from '@/utils/dateFormatter'
 import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'

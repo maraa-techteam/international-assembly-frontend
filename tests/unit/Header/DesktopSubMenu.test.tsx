@@ -1,4 +1,4 @@
-import { DesktopSubMenu } from '@/ui/components'
+import { DesktopSubMenu } from '@/ui'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 const mockNavigationData = [
@@ -24,7 +24,14 @@ const mockNavigationData = [
 
 describe('DesktopSubMenu', () => {
   it('renders all navigation items', () => {
-    render(<DesktopSubMenu navigationData={mockNavigationData} />)
+    render(
+      <DesktopSubMenu
+        navigationData={mockNavigationData}
+        onSelect={function (): void {
+          throw new Error('Function not implemented.')
+        }}
+      />,
+    )
 
     expect(screen.getByText('Item 1')).toBeInTheDocument()
     expect(screen.getByText('Item 2')).toBeInTheDocument()
@@ -32,13 +39,27 @@ describe('DesktopSubMenu', () => {
   })
 
   it('displays first item description by default', () => {
-    render(<DesktopSubMenu navigationData={mockNavigationData} />)
+    render(
+      <DesktopSubMenu
+        navigationData={mockNavigationData}
+        onSelect={function (): void {
+          throw new Error('Function not implemented.')
+        }}
+      />,
+    )
 
     expect(screen.getByText('Description for item 1')).toBeInTheDocument()
   })
 
   it('changes active item on mouse enter', () => {
-    render(<DesktopSubMenu navigationData={mockNavigationData} />)
+    render(
+      <DesktopSubMenu
+        navigationData={mockNavigationData}
+        onSelect={function (): void {
+          throw new Error('Function not implemented.')
+        }}
+      />,
+    )
 
     const item2Link = screen.getByText('Item 2').closest('a')
 
@@ -49,7 +70,14 @@ describe('DesktopSubMenu', () => {
   })
 
   it('applies active styles to first item by default', () => {
-    render(<DesktopSubMenu navigationData={mockNavigationData} />)
+    render(
+      <DesktopSubMenu
+        navigationData={mockNavigationData}
+        onSelect={function (): void {
+          throw new Error('Function not implemented.')
+        }}
+      />,
+    )
 
     const item1Link = screen.getByText('Item 1').closest('a')
 

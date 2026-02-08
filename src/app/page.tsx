@@ -1,17 +1,17 @@
 import { fetchArticles } from '@/api/fetchArticles'
 import { getFrequentlyVisitedLinks } from '@/api/fetchFrequentlyVisitedLinks'
-import { fetchGroups } from '@/api/fetchGroups'
 import { fetchHomePage } from '@/api/fetchHomePage'
+import { GroupsFilterDashboard } from '@/features/groups'
+import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import {
   ArticleCard,
   Button,
   ContentGuide,
   Grid,
-  GroupsFilterDashboard,
   LinkComponent,
   Section,
   Typography,
-} from '@/ui/components'
+} from '@/ui'
 import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'

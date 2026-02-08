@@ -1,4 +1,4 @@
-import { Icon } from '@/ui/components'
+import { Icon } from '@/ui'
 import { render, screen } from '@testing-library/react'
 
 describe('Icon component', () => {

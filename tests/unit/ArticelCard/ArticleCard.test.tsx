@@ -1,5 +1,5 @@
 import { Article } from '@/types/base'
-import { ArticleCard } from '@/ui/components'
+import { ArticleCard } from '@/ui'
 import { formatDate } from '@/utils/dateFormatter'
 import { render, screen } from '@testing-library/react'
 

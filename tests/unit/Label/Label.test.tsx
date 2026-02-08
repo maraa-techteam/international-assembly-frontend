@@ -1,4 +1,4 @@
-import { Label } from '@/ui/components'
+import { Label } from '@/ui'
 import { render, screen } from '@testing-library/react'
 
 it('should render label text', () => {

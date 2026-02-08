@@ -1,4 +1,4 @@
-import { fetchGroup } from '@/api/fetchGroup'
+import { GroupSchedule, fetchGroup } from '@/features/groups'
 import {
   Grid,
   Icon,
@@ -6,8 +6,7 @@ import {
   RichTextPreview,
   Section,
   Typography,
-} from '@/ui/components'
-import GroupSchedule from '@/ui/components/Groups/GroupSchedule'
+} from '@/ui'
 import { cn } from '@/utils/cn'
 import { Metadata } from 'next'
 

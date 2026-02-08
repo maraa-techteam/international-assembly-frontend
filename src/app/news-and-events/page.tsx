@@ -1,12 +1,7 @@
 import { fetchArticles } from '@/api/fetchArticles'
 import { fetchNewsAndEventsPage } from '@/api/fetchNewsAndEventsPage'
-import {
-  ArticleCard,
-  RichTextPreview,
-  Section,
-  Typography,
-} from '@/ui/components'
-import { Grid } from '@/ui/components/Grid/Grid'
+import { ArticleCard, RichTextPreview, Section, Typography } from '@/ui'
+import { Grid } from '@/ui/Grid/Grid'
 import { Metadata } from 'next'
 
 const pageData = await fetchNewsAndEventsPage()

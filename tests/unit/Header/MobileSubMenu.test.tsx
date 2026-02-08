@@ -1,4 +1,4 @@
-import { MobileSubMenu } from '@/ui/components'
+import { MobileSubMenu } from '@/ui'
 import { render, screen } from '@testing-library/react'
 import { fireEvent } from '@testing-library/react'
 

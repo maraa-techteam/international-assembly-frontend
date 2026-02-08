@@ -7,7 +7,7 @@ import {
   RichTextPreview,
   Section,
   Typography,
-} from '@/ui/components'
+} from '@/ui'
 import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'
