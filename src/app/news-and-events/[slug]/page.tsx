@@ -1,13 +1,6 @@
-import { fetchArticle } from '@/api/fetchArticle'
-import { Article } from '@/types/base'
-import {
-  ArticleCard,
-  Grid,
-  Label,
-  RichTextPreview,
-  Section,
-  Typography,
-} from '@/ui'
+import { Label, RichTextPreview, Typography } from '@/components'
+import { Article, ArticleCard, fetchArticle } from '@/features/articles'
+import { Grid, Section } from '@/layouts'
 import { formatDate } from '@/utils/dateFormatter'
 import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
@@ -99,6 +92,7 @@ export default async function ArticleDetailPage({
                   perex={card.perex}
                   image={card.image}
                   date_created={card.date_created}
+                  id={card.id}
                 />
               )
             })}

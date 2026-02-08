@@ -1,5 +1,5 @@
+import { FooterNavItem } from '@/components'
 import { FooterNavItemProps } from '@/types/components'
-import { FooterNavItem } from '@/ui'
 import { render, screen } from '@testing-library/react'
 
 const mockProps: FooterNavItemProps = {

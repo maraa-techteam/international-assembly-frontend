@@ -2,12 +2,11 @@ import { fetchAboutGroupsPage } from '@/api/fetchAboutGroupsPage'
 import {
   Accordion,
   Button,
-  Grid,
   LinkComponent,
   RichTextPreview,
-  Section,
   Typography,
-} from '@/ui'
+} from '@/components'
+import { Grid, Section } from '@/layouts'
 import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'

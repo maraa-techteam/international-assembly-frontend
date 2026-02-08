@@ -1,4 +1,3 @@
-export * from './Card/Card'
 export * from './Grid/Grid'
 export * from './Button/Button'
 export * from './Footer/Footer'

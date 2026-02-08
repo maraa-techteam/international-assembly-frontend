@@ -1,12 +1,6 @@
+import { Icon, LinkComponent, RichTextPreview, Typography } from '@/components'
 import { GroupSchedule, fetchGroup } from '@/features/groups'
-import {
-  Grid,
-  Icon,
-  LinkComponent,
-  RichTextPreview,
-  Section,
-  Typography,
-} from '@/ui'
+import { Grid, Section } from '@/layouts'
 import { cn } from '@/utils/cn'
 import { Metadata } from 'next'
 

@@ -1,4 +1,4 @@
-import { Grid } from '@/ui'
+import { Grid } from '@/components'
 import { render, screen } from '@testing-library/react'
 
 describe('Grid component', () => {

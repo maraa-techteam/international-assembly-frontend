@@ -1,4 +1,4 @@
-import { Header } from '@/ui'
+import { Header } from '@/components'
 import { render, screen } from '@testing-library/react'
 
 const mockHeaderData = [

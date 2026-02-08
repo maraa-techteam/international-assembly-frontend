@@ -1,17 +1,11 @@
-import { fetchArticles } from '@/api/fetchArticles'
 import { getFrequentlyVisitedLinks } from '@/api/fetchFrequentlyVisitedLinks'
 import { fetchHomePage } from '@/api/fetchHomePage'
+import { Button, LinkComponent, Typography } from '@/components'
+import { ArticleCard } from '@/features/articles'
+import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { GroupsFilterDashboard } from '@/features/groups'
 import { fetchGroups } from '@/features/groups/api/fetchGroups'
-import {
-  ArticleCard,
-  Button,
-  ContentGuide,
-  Grid,
-  LinkComponent,
-  Section,
-  Typography,
-} from '@/ui'
+import { ContentGuide, Grid, Section } from '@/layouts'
 import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -183,6 +177,7 @@ export default async function Home() {
                 perex={card.perex}
                 image={card.image}
                 date_created={card.date_created}
+                id={card.id}
               />
             )
           })}

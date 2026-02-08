@@ -1,4 +1,4 @@
-import { Select } from '@/ui'
+import { Select } from '@/components'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 

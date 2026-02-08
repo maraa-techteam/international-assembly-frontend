@@ -1,7 +1,8 @@
-import { fetchArticles } from '@/api/fetchArticles'
 import { fetchNewsAndEventsPage } from '@/api/fetchNewsAndEventsPage'
-import { ArticleCard, RichTextPreview, Section, Typography } from '@/ui'
-import { Grid } from '@/ui/Grid/Grid'
+import { RichTextPreview, Typography } from '@/components'
+import { ArticleCard, fetchArticles } from '@/features/articles'
+import { Section } from '@/layouts'
+import { Grid } from '@/layouts/Grid/Grid'
 import { Metadata } from 'next'
 
 const pageData = await fetchNewsAndEventsPage()
@@ -42,6 +43,7 @@ export default async function NewsAndEventsPage() {
                   perex={article.perex}
                   image={article.image}
                   date_created={article.date_created}
+                  id={article.id}
                 />
               ),
             )}

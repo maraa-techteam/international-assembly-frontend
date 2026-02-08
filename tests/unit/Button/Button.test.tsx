@@ -1,5 +1,5 @@
-import { Button, Icon } from '@/ui'
-import Typography from '@/ui/Typography/Typography'
+import { Button, Icon } from '@/components'
+import Typography from '@/components/Typography/Typography'
 import { render, screen } from '@testing-library/react'
 
 describe('Button', () => {

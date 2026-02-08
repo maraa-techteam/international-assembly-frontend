@@ -1,4 +1,4 @@
-import LinkComponent from '@/ui/LinkComponent/LinkComponent'
+import LinkComponent from '@/components/LinkComponent/LinkComponent'
 import { render, screen } from '@testing-library/react'
 
 describe('LinkComponent', () => {

@@ -1,4 +1,4 @@
-import { DesktopSubMenu } from '@/ui'
+import { DesktopSubMenu } from '@/components'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 const mockNavigationData = [

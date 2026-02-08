@@ -1,10 +1,11 @@
 import { fetchGroupsPage } from '@/api/fetchGroupsPage'
+import { Pagination, Typography } from '@/components'
 import {
   GroupsFilterDashboard,
   GroupsTable,
   fetchGroups,
 } from '@/features/groups'
-import { Pagination, Section, Typography } from '@/ui'
+import { Section } from '@/layouts'
 import { Metadata } from 'next'
 import { SearchParams } from 'next/dist/server/request/search-params'
 import { Suspense } from 'react'
