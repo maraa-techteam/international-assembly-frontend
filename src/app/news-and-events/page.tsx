@@ -1,5 +1,5 @@
-import { fetchArticles } from '@/lib/api/fetchArticles'
-import { fetchNewsAndEventsPage } from '@/lib/api/fetchNewsAndEventsPage'
+import { fetchArticles } from '@/api/fetchArticles'
+import { fetchNewsAndEventsPage } from '@/api/fetchNewsAndEventsPage'
 import {
   ArticleCard,
   RichTextPreview,

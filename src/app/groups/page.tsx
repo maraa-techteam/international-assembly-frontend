@@ -1,5 +1,5 @@
-import { fetchGroups } from '@/lib/api/fetchGroups'
-import { fetchGroupsPage } from '@/lib/api/fetchGroupsPage'
+import { fetchGroups } from '@/api/fetchGroups'
+import { fetchGroupsPage } from '@/api/fetchGroupsPage'
 import {
   GroupsFilterDashboard,
   GroupsTable,

@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils/cn'
 import { GridType } from '@/types/components'
+import { cn } from '@/utils/cn'
 import { VariantProps, cva } from 'class-variance-authority'
 
 const gridVariants = cva('flex w-full flex-col lg:grid', {

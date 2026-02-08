@@ -1,5 +1,4 @@
-import { fetchGroup } from '@/lib/api/fetchGroup'
-import { cn } from '@/lib/utils/cn'
+import { fetchGroup } from '@/api/fetchGroup'
 import {
   Grid,
   Icon,
@@ -9,6 +8,7 @@ import {
   Typography,
 } from '@/ui/components'
 import GroupSchedule from '@/ui/components/Groups/GroupSchedule'
+import { cn } from '@/utils/cn'
 import { Metadata } from 'next'
 
 export async function generateMetadata({

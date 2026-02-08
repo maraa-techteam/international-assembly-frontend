@@ -1,10 +1,11 @@
-import { formatDate } from '@/lib/utils/dateFormatter'
 import { Article } from '@/types/base'
 import { ArticleCard } from '@/ui/components'
+import { formatDate } from '@/utils/dateFormatter'
 import { render, screen } from '@testing-library/react'
 
 const mockProps: Article = {
   title: 'Заголовок статьи',
+  slug: 'zagolovok-stati',
   perex: 'Краткое описание статьи для предварительного просмотра',
   date_created: '15 января 2024',
   image: '/test-image.jpg',

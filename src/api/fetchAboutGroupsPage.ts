@@ -1,6 +1,6 @@
 import { readItems } from '@directus/sdk'
 
-import directus from '../utils/directus'
+import directus from '../lib/directus'
 
 export async function fetchAboutGroupsPage() {
   const raw = await directus.request(

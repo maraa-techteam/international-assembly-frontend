@@ -1,7 +1,6 @@
 'use client'
 
-import { useOnClickOutside } from '@/lib/hooks/useOutsideClick'
-import { cn } from '@/lib/utils/cn'
+import { useOnClickOutside } from '@/hooks/useOutsideClick'
 import { TransformedNavigationType } from '@/types/navigation'
 import {
   DesktopSubMenu,
@@ -10,6 +9,7 @@ import {
   NavItem,
   SearchBar,
 } from '@/ui/components'
+import { cn } from '@/utils/cn'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'

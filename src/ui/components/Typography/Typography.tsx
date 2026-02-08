@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils/cn'
 import { TypographyProps } from '@/types/components'
+import { cn } from '@/utils/cn'
 import { cva } from 'class-variance-authority'
 
 const typographyVariants = cva('text-contrast wrap-break-word', {

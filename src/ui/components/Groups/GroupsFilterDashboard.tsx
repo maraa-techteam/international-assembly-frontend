@@ -1,7 +1,5 @@
 'use client'
 
-import { cn } from '@/lib/utils/cn'
-import { debounce } from '@/lib/utils/debounce'
 import {
   Button,
   Grid,
@@ -10,6 +8,8 @@ import {
   Select,
   Typography,
 } from '@/ui/components'
+import { cn } from '@/utils/cn'
+import { debounce } from '@/utils/debounce'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 

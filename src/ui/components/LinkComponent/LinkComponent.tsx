@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils/cn'
 import { LinkComponentProps } from '@/types/components'
 import { Icon } from '@/ui/components'
+import { cn } from '@/utils/cn'
 import { type VariantProps, cva } from 'class-variance-authority'
 import Link from 'next/link'
 

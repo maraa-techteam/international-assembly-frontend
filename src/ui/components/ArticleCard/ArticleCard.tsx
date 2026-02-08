@@ -1,8 +1,8 @@
-import { cn } from '@/lib/utils/cn'
-import { formatDate } from '@/lib/utils/dateFormatter'
-import { getImageUrl } from '@/lib/utils/getImageUrl'
 import { ArticleCard as ArticleCardProps } from '@/types/components'
 import { Label, Typography } from '@/ui/components'
+import { cn } from '@/utils/cn'
+import { formatDate } from '@/utils/dateFormatter'
+import { getImageUrl } from '@/utils/getImageUrl'
 import Image from 'next/image'
 
 export function ArticleCard({

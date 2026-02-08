@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils/cn'
 import { TransformedSecondTierNavigationType } from '@/types/navigation'
 import { Icon, Typography } from '@/ui/components'
+import { cn } from '@/utils/cn'
 import Link from 'next/link'
 
 type MobileSubMenuProps = {

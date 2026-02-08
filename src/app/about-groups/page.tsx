@@ -1,5 +1,4 @@
-import { fetchAboutGroupsPage } from '@/lib/api/fetchAboutGroupsPage'
-import { getImageUrl } from '@/lib/utils/getImageUrl'
+import { fetchAboutGroupsPage } from '@/api/fetchAboutGroupsPage'
 import {
   Accordion,
   Button,
@@ -9,6 +8,7 @@ import {
   Section,
   Typography,
 } from '@/ui/components'
+import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'
 

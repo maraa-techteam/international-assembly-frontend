@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils/cn'
 import { SectionProps } from '@/types/components'
+import { cn } from '@/utils/cn'
 import { type VariantProps, cva } from 'class-variance-authority'
 
 const sectionVariants = cva(

@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils/cn'
 import { Typography } from '@/ui/components'
+import { cn } from '@/utils/cn'
 
 import { TimeZones } from './GroupTableItem'
 

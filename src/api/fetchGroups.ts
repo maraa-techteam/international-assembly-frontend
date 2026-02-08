@@ -1,7 +1,7 @@
 import { readItems } from '@directus/sdk'
 import { SearchParams } from 'next/dist/server/request/search-params'
 
-import directus from '../utils/directus'
+import directus from '../lib/directus'
 
 export async function fetchGroups(params?: SearchParams) {
   const countries = params?.country

@@ -1,6 +1,4 @@
-import { fetchArticle } from '@/lib/api/fetchArticle'
-import { formatDate } from '@/lib/utils/dateFormatter'
-import { getImageUrl } from '@/lib/utils/getImageUrl'
+import { fetchArticle } from '@/api/fetchArticle'
 import { Article } from '@/types/base'
 import {
   ArticleCard,
@@ -10,6 +8,8 @@ import {
   Section,
   Typography,
 } from '@/ui/components'
+import { formatDate } from '@/utils/dateFormatter'
+import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'
 

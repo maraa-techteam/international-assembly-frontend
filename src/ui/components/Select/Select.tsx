@@ -1,8 +1,8 @@
 'use client'
 
-import { useOnClickOutside } from '@/lib/hooks/useOutsideClick'
-import { cn } from '@/lib/utils/cn'
+import { useOnClickOutside } from '@/hooks/useOutsideClick'
 import { Icon, Typography } from '@/ui/components'
+import { cn } from '@/utils/cn'
 import { useRef, useState } from 'react'
 
 type SelectProps = {

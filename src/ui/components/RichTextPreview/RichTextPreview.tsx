@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils/cn'
+import { cn } from '@/utils/cn'
 import sanitizeHtml from 'sanitize-html'
 
 export function RichTextPreview({

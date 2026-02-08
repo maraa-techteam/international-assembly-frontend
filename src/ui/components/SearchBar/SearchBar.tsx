@@ -1,8 +1,8 @@
 'use client'
 
-import { cn } from '@/lib/utils/cn'
 import { SearchBarProps } from '@/types/components'
 import { Icon } from '@/ui/components'
+import { cn } from '@/utils/cn'
 import React, { useEffect, useRef, useState } from 'react'
 
 export function SearchBar({

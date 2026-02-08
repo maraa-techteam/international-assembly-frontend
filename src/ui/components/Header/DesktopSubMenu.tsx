@@ -1,8 +1,8 @@
 'use client'
 
-import { cn } from '@/lib/utils/cn'
 import { TransformedSecondTierNavigationType } from '@/types/navigation'
 import { Typography } from '@/ui/components'
+import { cn } from '@/utils/cn'
 import Link from 'next/link'
 import { useState } from 'react'
 

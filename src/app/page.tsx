@@ -1,8 +1,7 @@
-import { fetchArticles } from '@/lib/api/fetchArticles'
-import { getFrequentlyVisitedLinks } from '@/lib/api/fetchFrequentlyVisitedLinks'
-import { fetchGroups } from '@/lib/api/fetchGroups'
-import { fetchHomePage } from '@/lib/api/fetchHomePage'
-import { getImageUrl } from '@/lib/utils/getImageUrl'
+import { fetchArticles } from '@/api/fetchArticles'
+import { getFrequentlyVisitedLinks } from '@/api/fetchFrequentlyVisitedLinks'
+import { fetchGroups } from '@/api/fetchGroups'
+import { fetchHomePage } from '@/api/fetchHomePage'
 import {
   ArticleCard,
   Button,
@@ -13,6 +12,7 @@ import {
   Section,
   Typography,
 } from '@/ui/components'
+import { getImageUrl } from '@/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { Suspense } from 'react'

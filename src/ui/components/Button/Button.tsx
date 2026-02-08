@@ -1,5 +1,5 @@
-import { cn } from '@/lib/utils/cn'
 import { ButtonType } from '@/types/components'
+import { cn } from '@/utils/cn'
 import { type VariantProps, cva } from 'class-variance-authority'
 import Link from 'next/link'
 

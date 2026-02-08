@@ -1,17 +1,18 @@
 import { readItems } from '@directus/sdk'
 
-import directus from '../utils/directus'
+import directus from '../lib/directus'
 
-export async function fetchHomePage() {
+export async function fetchGroupsPage() {
   const raw = await directus.request(
-    readItems('home_page', {
-      fields: ['meta_title', 'meta_description'],
+    readItems('groups_page', {
+      fields: ['meta_title', 'meta_description', 'title'],
     }),
   )
   return raw.map((item) => {
     return {
       meta_title: item.meta_title,
       meta_description: item.meta_description,
+      title: item.title,
     }
   })
 }
