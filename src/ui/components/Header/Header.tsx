@@ -49,10 +49,11 @@ export function Header({ headerData }: HeaderProps) {
   }
 
   const resetSelect = () => {
-    setNavigation((prevItems) => {
-      return prevItems.map((item) => {
-        return { ...item, isActive: false }
-      })
+    setNavigation((prev) => {
+      if (!prev.some((item) => item.isActive)) return prev
+      return prev.map((item) =>
+        item.isActive ? { ...item, isActive: false } : item,
+      )
     })
   }
 
@@ -72,24 +73,33 @@ export function Header({ headerData }: HeaderProps) {
 
   useEffect(() => {
     let lastScroll = 0
+    let ticking = false
+
     const handleScroll = () => {
-      const currentScroll = window.scrollY
+      if (ticking) return
+      ticking = true
 
-      if (currentScroll <= 0) {
-        setHidden(false)
-        return
-      }
+      requestAnimationFrame(() => {
+        const currentScroll = window.scrollY
 
-      if (currentScroll > lastScroll) {
-        if (!isSearchActive && !isMobileMenuActive) {
-          setHidden(true)
-          resetSelect()
+        if (currentScroll <= 0) {
+          setHidden(false)
+          return
         }
-      } else {
-        setHidden(false)
-      }
 
-      lastScroll = currentScroll
+        if (currentScroll > lastScroll) {
+          if (!isSearchActive && !isMobileMenuActive) {
+            setHidden(true)
+            resetSelect()
+          }
+        } else {
+          setHidden(false)
+        }
+
+        lastScroll = currentScroll
+
+        ticking = false
+      })
     }
 
     window.addEventListener('scroll', handleScroll)
