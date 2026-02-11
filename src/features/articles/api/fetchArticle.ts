@@ -1,6 +1,6 @@
 import { readItems } from '@directus/sdk'
 
-import directus from '../../../lib/directus'
+import directus from '../../../common/lib/directus'
 
 export async function fetchArticle(slug: string) {
   const raw = await directus.request(

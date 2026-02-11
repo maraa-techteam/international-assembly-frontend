@@ -1,10 +1,10 @@
-import { Label, Typography } from '@/components'
-import { cn } from '@/utils/cn'
-import { formatDate } from '@/utils/dateFormatter'
-import { getImageUrl } from '@/utils/getImageUrl'
+import { Label, Typography } from '@/common/components'
+import { cn } from '@/common/utils/cn'
+import { formatDate } from '@/common/utils/dateFormatter'
+import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
 
-import { ArticleCardType } from '../../types/ArticleCard.type'
+import { ArticleCardType } from './ArticleCard.type'
 
 type ArticleCardProps = ArticleCardType
 

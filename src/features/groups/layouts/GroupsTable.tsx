@@ -1,4 +1,4 @@
-import { Typography } from '@/components'
+import { Typography } from '@/common/components'
 
 import GroupsTableItem from '../components/GroupsTableItem/GroupTableItem'
 import { GroupType } from '../types/Group.type'

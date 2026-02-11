@@ -1,4 +1,4 @@
-import { TimeZones } from './TimeZones.type'
+import { TimeZones } from '../components/GroupSchedule/GroupSchedule.type'
 
 export type GroupType = {
   id?: string

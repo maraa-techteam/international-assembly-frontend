@@ -1,11 +1,9 @@
-import { Typography } from '@/components'
-import { cn } from '@/utils/cn'
+import { Typography } from '@/common/components'
+import { cn } from '@/common/utils/cn'
 
-import { TimeZones } from '../../types/TimeZones.type'
+import { GroupScheduleType } from './GroupSchedule.type'
 
-type WeekSchedule = { day: string; time: string }[]
-
-type GroupScheduleProps = { schedule: WeekSchedule; time_zone: TimeZones }
+type GroupScheduleProps = GroupScheduleType
 
 const getDay = (day: string) => {
   switch (day) {

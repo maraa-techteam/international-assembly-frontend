@@ -1,4 +1,4 @@
-import { Typography } from '@/components'
+import { Typography } from '@/common/components'
 import Link from 'next/link'
 
 import { GroupType } from '../../types/Group.type'
