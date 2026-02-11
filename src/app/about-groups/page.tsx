@@ -1,14 +1,13 @@
-import { fetchAboutGroupsPage } from '@/lib/api/fetchAboutGroupsPage'
-import { getImageUrl } from '@/lib/utils/getImageUrl'
+import { fetchAboutGroupsPage } from '@/common/api/fetchAboutGroupsPage'
 import {
   Accordion,
   Button,
-  Grid,
   LinkComponent,
   RichTextPreview,
-  Section,
   Typography,
-} from '@/ui/components'
+} from '@/common/components'
+import { Grid, Section } from '@/common/layouts'
+import { getImageUrl } from '@/common/utils/getImageUrl'
 import { Metadata } from 'next'
 import Image from 'next/image'
 

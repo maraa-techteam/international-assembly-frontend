@@ -1,7 +1,7 @@
-import { getNavigationData } from '@/lib/api/fetchNavigation'
-import { getSocials } from '@/lib/api/fetchSocials'
-import { cn } from '@/lib/utils/cn'
-import { Footer, Header, Layout } from '@/ui/components'
+import { getNavigationData } from '@/common/api/fetchNavigation'
+import { getSocials } from '@/common/api/fetchSocials'
+import { Footer, Header, Layout } from '@/common/layouts'
+import { cn } from '@/common/utils/cn'
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Slab } from 'next/font/google'
 

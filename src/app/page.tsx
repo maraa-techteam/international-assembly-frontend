@@ -1,18 +1,12 @@
-import { fetchArticles } from '@/lib/api/fetchArticles'
-import { getFrequentlyVisitedLinks } from '@/lib/api/fetchFrequentlyVisitedLinks'
-import { fetchGroups } from '@/lib/api/fetchGroups'
-import { fetchHomePage } from '@/lib/api/fetchHomePage'
-import { getImageUrl } from '@/lib/utils/getImageUrl'
-import {
-  ArticleCard,
-  Button,
-  ContentGuide,
-  Grid,
-  GroupsFilterDashboard,
-  LinkComponent,
-  Section,
-  Typography,
-} from '@/ui/components'
+import { getFrequentlyVisitedLinks } from '@/common/api/fetchFrequentlyVisitedLinks'
+import { fetchHomePage } from '@/common/api/fetchHomePage'
+import { Button, LinkComponent, Typography } from '@/common/components'
+import { ContentGuide, Grid, Section } from '@/common/layouts'
+import { getImageUrl } from '@/common/utils/getImageUrl'
+import { ArticleCard } from '@/features/articles'
+import { fetchArticles } from '@/features/articles/api/fetchArticles'
+import { GroupsFilterDashboard } from '@/features/groups'
+import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { Suspense } from 'react'
@@ -183,6 +177,7 @@ export default async function Home() {
                 perex={card.perex}
                 image={card.image}
                 date_created={card.date_created}
+                id={card.id}
               />
             )
           })}
