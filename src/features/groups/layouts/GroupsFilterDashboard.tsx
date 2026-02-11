@@ -1,17 +1,13 @@
 'use client'
 
-import {
-  Button,
-  Icon,
-  SearchBar,
-  Select,
-  Typography,
-} from '@/common/components'
+import { Button, Icon, Select, Typography } from '@/common/components'
 import { Grid } from '@/common/layouts'
 import { cn } from '@/common/utils/cn'
-import { debounce } from '@/common/utils/debounce'
+import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+
+import { Search } from '../components/Search/Search'
 
 type FilterOptions = {
   country: string[]
@@ -35,9 +31,9 @@ export function GroupsFilterDashboard({
 
   const appliedFilters: FilterOptions = useMemo(
     () => ({
-      country: searchParams.get('country')?.split(',') ?? [],
-      presence: searchParams.get('presence')?.split(',') ?? [],
-      schedule: searchParams.get('schedule_slots')?.split(',') ?? [],
+      country: searchParams.getAll('country') ?? [],
+      presence: searchParams.getAll('presence') ?? [],
+      schedule: searchParams.getAll('schedule_slots') ?? [],
       searchValue: searchParams.get('searchValue') ?? '',
     }),
     [searchParams],
@@ -77,7 +73,7 @@ export function GroupsFilterDashboard({
     setDraft(nextState)
   }
 
-  const handleSearchChange = debounce((value: string) => {
+  const handleSearchChange = (value: string) => {
     if (
       !value &&
       !draft.country.length &&
@@ -87,53 +83,25 @@ export function GroupsFilterDashboard({
       router.push(pathname)
     }
     setDraft((prev) => ({ ...prev, searchValue: value }))
-  }, 300)
-
-  const applyFilters = useCallback(() => {
-    const params = new URLSearchParams()
-
-    if (draft.country.length) {
-      params.set('country', draft.country.join(','))
-    }
-    if (draft.presence.length) {
-      params.set('presence', draft.presence.join(','))
-    }
-    if (draft.schedule.length) {
-      params.set('schedule_slots', draft.schedule.join(','))
-    }
-    if (draft.searchValue.trim()) {
-      params.set('searchValue', draft.searchValue.trim())
-    }
-
-    router.push(`groups?${params.toString()}`)
-  }, [draft, router])
-
-  const resetOptions = useCallback(() => {
-    setDraft({
-      country: [],
-      presence: [],
-      schedule: [],
-      searchValue: '',
-    })
-    router.push(pathname)
-  }, [router, pathname])
+  }
 
   return (
-    <div
+    <form
+      action={variant === 'widget' ? `groups/${pathname}` : pathname}
+      method='get'
+      id='groups-filter'
       className={cn(
         'bg-light-blue flex w-full flex-col gap-4 p-4 lg:mx-0 lg:rounded-2xl',
         className,
       )}
     >
       {variant !== 'widget' && (
-        <SearchBar
+        <Search
           placeholder='Введите название группы'
-          className='w-full rounded-2xl'
-          isExpanded
-          onSearch={handleSearchChange}
+          value={appliedFilters.searchValue}
+          onDebouncedChange={handleSearchChange}
         />
       )}
-
       <Grid columns={3}>
         <Select
           label='Страна'
@@ -170,7 +138,7 @@ export function GroupsFilterDashboard({
             color='secondary'
             className='w-full gap-4'
             size='sm'
-            onClick={applyFilters}
+            type='submit'
           >
             <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
@@ -181,29 +149,26 @@ export function GroupsFilterDashboard({
       </Grid>
 
       {variant !== 'widget' && (
-        <div className='align-end flex w-full flex-col gap-4 lg:flex-row lg:justify-between'>
-          <button
-            onClick={resetOptions}
-            className='w-fit self-end'
-            disabled={!isOptionsSelected}
+        <div className='flex w-full flex-col items-center gap-4 lg:flex-row lg:justify-between'>
+          <Link
+            className={cn(
+              !isOptionsSelected && 'pointer-events-none text-gray-400',
+              'h-fit',
+            )}
+            href={pathname}
+            aria-disabled={!isOptionsSelected}
+            tabIndex={isOptionsSelected ? 0 : -1}
           >
-            <Typography
-              className={cn(
-                !isOptionsSelected && 'cursor-not-allowed text-gray-400',
-              )}
-              variant='caption'
-            >
-              Сбросить фильтры
-            </Typography>
-          </button>
+            Сбросить фильтры
+          </Link>
 
           <Button
+            type='submit'
             variant='contained'
             disabled={!isOptionsSelected}
             color='primary'
             className='w-full gap-4 lg:max-w-75'
             size='sm'
-            onClick={applyFilters}
           >
             <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
@@ -212,6 +177,6 @@ export function GroupsFilterDashboard({
           </Button>
         </div>
       )}
-    </div>
+    </form>
   )
 }

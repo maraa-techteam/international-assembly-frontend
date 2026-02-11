@@ -3,7 +3,7 @@
 import { Icon, Typography } from '@/common/components'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
 import { cn } from '@/common/utils/cn'
-import { useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 
 import { SelectType } from './Select.type'
 
@@ -36,22 +36,42 @@ export function Select({
     }
   }
 
+  const getName = (label: string) =>
+    label === 'Страна'
+      ? 'country'
+      : label === 'Присутствие'
+        ? 'presence'
+        : 'schedule_slots'
+
   const selectedCount = value.length
 
+  const id = useId()
+  const checkboxId = `${id}-checkbox`
+
   return (
-    <div ref={selectRef} className={cn('relative flex w-full', className)}>
-      <div
+    <div
+      ref={selectRef}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') {
+          e.preventDefault()
+          e.stopPropagation()
+          setIsDropdownOpen(false)
+        }
+      }}
+      className={cn('relative flex w-full', className)}
+    >
+      <button
+        id={`dropdown-trigger-${id}`}
+        aria-expanded={isDropdownOpen}
+        aria-controls={`dropdown-menu-${id}`}
+        tabIndex={0}
+        type='button'
         className={cn(
           'inline-flex w-full items-center overflow-hidden rounded-3xl bg-white font-medium',
           isDropdownOpen && 'rounded-b-none',
         )}
         onClick={toggleDropdown}
       >
-        <label
-          htmlFor={label}
-          className='sr-only'
-        >{`Выберите вариант: ${label}`}</label>
-
         <Typography
           className={cn(
             'font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 whitespace-nowrap transition-colors',
@@ -77,54 +97,60 @@ export function Select({
           )}
           size={'md'}
         />
-      </div>
+      </button>
 
       <div
-        className={cn(
-          'absolute top-full z-10 hidden w-full flex-col rounded-b-3xl bg-white',
-          isDropdownOpen && 'flex shadow-md',
-        )}
+        id={`dropdown-menu-${id}`}
+        hidden={!isDropdownOpen}
+        className='absolute top-full z-10 flex w-full flex-col rounded-b-3xl bg-white shadow-md'
       >
         {options.map((option, i) => {
           const isSelected = value.includes(option)
 
           return (
-            <label
-              role='option'
-              aria-selected={isSelected}
-              key={option}
-              className={cn(
-                'hover:bg-light-blue flex cursor-pointer items-center px-4 py-2',
-                i === options.length - 1 && 'rounded-b-3xl',
-              )}
-            >
+            <div key={option}>
               <input
+                tabIndex={0}
+                name={getName(label)}
+                id={`${checkboxId}-${i}`}
                 type='checkbox'
                 checked={isSelected}
+                value={option}
                 onChange={() => handleSelect(option)}
-                className='sr-only'
+                className='peer sr-only'
                 aria-label={option}
               />
-
-              <span
+              <label
+                htmlFor={`${checkboxId}-${i}`}
+                role='option'
+                aria-selected={isSelected}
                 className={cn(
-                  'mr-3 flex h-4 w-4 items-center justify-center rounded-sm border transition-colors',
-                  isSelected
-                    ? 'bg-primary border-primary text-white'
-                    : 'border-gray-300 bg-white',
+                  'hover:bg-light-blue peer-focus-visible:bg-light-blue flex cursor-pointer items-center px-4 py-2 peer-focus-visible:outline-2',
+                  i === options.length - 1 && 'rounded-b-3xl',
                 )}
-                aria-hidden='true'
               >
-                {isSelected && (
-                  <Icon
-                    icon='check'
-                    size={'sm'}
-                    className='pointer-events-none'
-                  />
-                )}
-              </span>
-              <span className='truncate'>{option}</span>
-            </label>
+                <span
+                  role='checkbox'
+                  aria-checked={isSelected}
+                  className={cn(
+                    'mr-3 flex h-4 w-4 items-center justify-center rounded-sm border transition-colors',
+                    isSelected
+                      ? 'bg-primary border-primary text-white'
+                      : 'border-gray-300 bg-white',
+                  )}
+                  aria-hidden='true'
+                >
+                  {isSelected && (
+                    <Icon
+                      icon='check'
+                      size={'sm'}
+                      className='pointer-events-none'
+                    />
+                  )}
+                </span>
+                <span className='truncate'>{option}</span>
+              </label>
+            </div>
           )
         })}
       </div>

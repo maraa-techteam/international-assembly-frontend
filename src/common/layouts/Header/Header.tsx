@@ -1,6 +1,7 @@
 'use client'
 
 import { Icon, SearchBar } from '@/common/components'
+import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
 import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
@@ -55,19 +56,10 @@ export function Header({ headerData }: HeaderProps) {
     })
   }
 
-  useEffect(() => {
-    const handleEsc = (event: { key: string }) => {
-      if (event.key === 'Escape') {
-        setIsSearchActive(false)
-        resetSelect()
-      }
-    }
-    window.addEventListener('keydown', handleEsc)
-
-    return () => {
-      window.removeEventListener('keydown', handleEsc)
-    }
-  }, [])
+  useEscapeClose(() => {
+    setIsSearchActive(false)
+    resetSelect()
+  })
 
   useEffect(() => {
     let lastScroll = 0

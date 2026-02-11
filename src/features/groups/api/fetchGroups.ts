@@ -5,16 +5,10 @@ import directus from '../../../common/lib/directus'
 
 export async function fetchGroups(params?: SearchParams) {
   const countries = params?.country
-    ? (params.country as string).split(',')
-    : undefined
 
   const presence = params?.presence
-    ? (params.presence as string).split(',')
-    : undefined
 
   const schedule_slots = params?.schedule_slots
-    ? (params.schedule_slots as string).split(',')
-    : undefined
 
   const searchValue = params?.searchValue
 
