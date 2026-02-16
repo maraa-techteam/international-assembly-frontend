@@ -39,12 +39,7 @@ export function Header({ headerData }: HeaderProps) {
   }
 
   const toggleSearch = (active: boolean) => {
-    const scrollY = window.scrollY
     setIsSearchActive(active)
-    // Restore scroll position after layout change
-    requestAnimationFrame(() => {
-      window.scrollTo(0, scrollY)
-    })
   }
 
   const resetSelect = () => {
@@ -67,6 +62,7 @@ export function Header({ headerData }: HeaderProps) {
 
     const handleScroll = () => {
       if (ticking) return
+
       ticking = true
 
       requestAnimationFrame(() => {
@@ -74,6 +70,7 @@ export function Header({ headerData }: HeaderProps) {
 
         if (currentScroll <= 0) {
           setHidden(false)
+          ticking = false
           return
         }
 
@@ -87,12 +84,12 @@ export function Header({ headerData }: HeaderProps) {
         }
 
         lastScroll = currentScroll
-
         ticking = false
       })
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobileMenuActive, isSearchActive])
 
@@ -106,33 +103,22 @@ export function Header({ headerData }: HeaderProps) {
       )}
     >
       <div className='flex flex-row items-center justify-between'>
-        <Link
-          className='flex content-center items-center'
-          href={'/'}
-          aria-label='Перейти на главную страницу'
-        >
-          <div className='flex w-fit flex-row content-center items-center gap-2'>
-            <Image
-              src={'/logo_colorized.svg'}
-              width={230}
-              height={54}
-              className='shrink-0'
-              alt='Логотип АА'
-            />
-          </div>
+        <Link className='flex content-center items-center' href={'/'}>
+          <Image
+            src={'/logo_colorized.svg'}
+            width={230}
+            height={54}
+            className='shrink-0'
+            alt='Логотип АА'
+          />
         </Link>
 
         {(!isMobileMenuActive || !isSearchActive) && (
           <button
-            onClick={() => {
-              if (!isMobileMenuActive) {
-                setIsSearchActive(false)
-              } else {
-                setIsMobileMenuActive((prev) => !prev)
-              }
-            }}
-            aria-label={
-              isMobileMenuActive ? 'Закрыть мобильное меню' : 'Закрыть поиск'
+            onClick={() =>
+              !isMobileMenuActive
+                ? setIsSearchActive(false)
+                : setIsMobileMenuActive((prev) => !prev)
             }
             className={cn('hidden', isSearchActive && 'block lg:hidden')}
           >
@@ -146,15 +132,44 @@ export function Header({ headerData }: HeaderProps) {
         )}
       </div>
 
-      <nav aria-label='Основная навигация'>
-        {/* Mobile menu */}
-        <ul
-          className={cn(
-            'absolute top-[80px] right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
-            isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
-          )}
-          aria-hidden={!isMobileMenuActive}
-        >
+      {/* Mobile menu */}
+      <ul
+        className={cn(
+          'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
+          isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
+        )}
+      >
+        {navigation.map((item, i) => {
+          return (
+            <li className='relative' key={item.name}>
+              <NavItem
+                href={item.href}
+                name={item.name}
+                isActive={item.isActive}
+                toggleSelect={() => toggleSelect(i)}
+                subNav={item.subNav}
+              />
+              {item.subNav.length > 0 && (
+                <MobileSubMenu
+                  onClick={() => {
+                    setIsMobileMenuActive(false)
+                  }}
+                  isActive={item.isActive}
+                  activeItems={item.subNav.map((subItem, j) => ({
+                    ...subItem,
+                    isActive: j === 0 ? true : false,
+                  }))}
+                  toggleSelect={() => toggleSelect(i)}
+                />
+              )}
+            </li>
+          )
+        })}
+      </ul>
+
+      {/* Desktop menu */}
+      {!isSearchActive && (
+        <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
           {navigation.map((item, i) => {
             return (
               <li className='relative' key={item.name}>
@@ -164,64 +179,18 @@ export function Header({ headerData }: HeaderProps) {
                   isActive={item.isActive}
                   toggleSelect={() => toggleSelect(i)}
                   subNav={item.subNav}
-                  aria-expanded={item.isActive}
-                  aria-controls={
-                    item.subNav.length > 0 ? `submenu-mobile-${i}` : undefined
-                  }
                 />
-                {item.subNav.length > 0 && (
-                  <MobileSubMenu
-                    onClick={() => {
-                      setIsMobileMenuActive(false)
-                    }}
-                    isActive={item.isActive}
-                    activeItems={item.subNav.map((subItem, j) => ({
-                      ...subItem,
-                      isActive: j === 0 ? true : false,
-                    }))}
-                    toggleSelect={() => toggleSelect(i)}
-                    aria-label={`Подменю ${item.name}`}
+                {item.isActive && item.subNav.length > 0 && (
+                  <DesktopSubMenu
+                    onSelect={resetSelect}
+                    navigationData={item.subNav}
                   />
                 )}
               </li>
             )
           })}
         </ul>
-
-        {/* Desktop menu */}
-        {!isSearchActive && (
-          <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
-            {navigation.map((item, i) => {
-              return (
-                <li className='relative' key={item.name}>
-                  <NavItem
-                    href={item.href}
-                    name={item.name}
-                    isActive={item.isActive}
-                    toggleSelect={() => toggleSelect(i)}
-                    subNav={item.subNav}
-                    aria-expanded={item.isActive}
-                    aria-controls={
-                      item.subNav.length > 0
-                        ? `submenu-desktop-${i}`
-                        : undefined
-                    }
-                    aria-haspopup={item.subNav.length > 0 ? 'menu' : undefined}
-                  />
-                  {item.isActive && item.subNav.length > 0 && (
-                    <DesktopSubMenu
-                      onSelect={resetSelect}
-                      navigationData={item.subNav}
-                      aria-label={`Подменю ${item.name}`}
-                    />
-                  )}
-                </li>
-              )
-            })}
-          </ul>
-        )}
-      </nav>
-
+      )}
       <div
         className={cn(
           'flex flex-row items-center justify-end gap-2',
@@ -235,7 +204,6 @@ export function Header({ headerData }: HeaderProps) {
           )}
           isExpanded={isSearchActive}
           onToggle={toggleSearch}
-          aria-label='Поиск по сайту'
         />
 
         {/* Hamburger menu toggle */}
@@ -245,9 +213,6 @@ export function Header({ headerData }: HeaderProps) {
               resetSelect()
               setIsMobileMenuActive((prev) => !prev)
             }}
-            aria-label='Закрыть мобильное меню'
-            aria-expanded={isMobileMenuActive}
-            aria-controls='mobile-menu'
             className={cn('block lg:hidden')}
           >
             <Icon
@@ -259,9 +224,6 @@ export function Header({ headerData }: HeaderProps) {
           </button>
         ) : (
           <button
-            aria-label='Открыть мобильное меню'
-            aria-expanded={isMobileMenuActive}
-            aria-controls='mobile-menu'
             onClick={() => setIsMobileMenuActive((prev) => !prev)}
             className={cn('block lg:hidden', isSearchActive && 'hidden')}
           >

@@ -39,39 +39,35 @@ export default async function Home() {
   return (
     <>
       <Section
-        color={'white'}
+        color='white'
         className='gap-8 py-10 text-center lg:gap-15 lg:py-39'
       >
-        <Typography variant={'h1'} className='lg:text-5xl' font={'roboto'}>
+        <Typography variant='h1' className='lg:text-5xl' font='roboto'>
           Проблемы с алкоголем?{' '}
           <span className='text-primary'>Есть решение.</span>
         </Typography>
         <Grid
-          as={'nav'}
-          justify={'center'}
-          className={'lg:flex lg:flex-row'}
-          align={'center'}
+          as='nav'
+          justify='center'
+          className='lg:flex lg:flex-row'
+          align='center'
         >
           <Button
-            variant={'outlined'}
-            size={'lg'}
-            color={'primary'}
-            as={'link'}
+            variant='outlined'
+            size='lg'
+            color='primary'
+            as='link'
+            href='/groups'
           >
             Найти группу
           </Button>
-          <Button
-            variant={'contained'}
-            size={'lg'}
-            color={'primary'}
-            as={'link'}
-          >
+          <Button variant='contained' size='lg' color='primary' as='link'>
             Я здесь впервые
           </Button>
         </Grid>
       </Section>
-      <Section color={'primary'} className='items-start overflow-x-hidden'>
-        <Typography variant={'h2'} font={'roboto'}>
+      <Section color='primary' className='items-start overflow-x-hidden'>
+        <Typography variant='h2' font='roboto'>
           Все что вас интересует
         </Typography>
         {!!frequentlyVisitedLinks.length && (
@@ -81,14 +77,14 @@ export default async function Home() {
       <Section
         className='flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr]'
         alignment='start'
-        color={'white'}
+        color='white'
       >
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
           <div className='flex flex-col gap-2'>
-            <Typography variant={'h2'} font='roboto'>
+            <Typography variant='h2' font='roboto'>
               Нужна помощь?
             </Typography>
-            <Typography variant={'body'}>
+            <Typography variant='body'>
               А.А. уже более 80 лет помогает алкоголикам выздороветь. Программа
               выздоровления АА построена на простом принципе: один алкоголик
               делится с другим. Если ваше пьянство выходит из-под контроля, АА
@@ -96,33 +92,33 @@ export default async function Home() {
             </Typography>
           </div>
           <LinkComponent
-            icon={'telegram'}
+            icon='telegram'
             isUnderlined
-            color={'primary'}
-            text={'Связаться с сообществом'}
-            href={'https://t.me/@QSAAbot'}
-            variant={'icon-left'}
+            color='primary'
+            text='Связаться с сообществом'
+            href='https://t.me/@QSAAbot'
+            variant='icon-left'
           />
           <Grid
-            as={'nav'}
-            justify={'start'}
-            className={'lg:flex lg:flex-row'}
-            align={'center'}
+            as='nav'
+            justify='start'
+            className='lg:flex lg:flex-row'
+            align='center'
           >
             <Button
-              variant={'outlined'}
-              size={'lg'}
-              color={'primary'}
-              as={'link'}
+              variant='outlined'
+              size='lg'
+              color='primary'
+              as='link'
               href='#'
             >
               Подходит ли мне АА?
             </Button>
             <Button
-              variant={'contained'}
-              size={'lg'}
-              color={'primary'}
-              as={'link'}
+              variant='contained'
+              size='lg'
+              color='primary'
+              as='link'
               href='#'
             >
               Начать путь
@@ -132,7 +128,7 @@ export default async function Home() {
         <div className='flex h-fit w-full lg:w-auto'>
           <Image
             src={getImageUrl('76877722-f746-4213-a78e-020d5f72fb49')}
-            alt={'Нужна помощь?'}
+            alt='Нужна помощь?'
             width={500}
             height={400}
             sizes='(max-width: 640px) 100vw, 600px'
@@ -141,7 +137,7 @@ export default async function Home() {
           />
         </div>
       </Section>
-      <Section color={'primary'}>
+      <Section color='primary'>
         <div className='flex flex-col gap-2'>
           <Typography variant='h2' font='roboto'>
             Поиск русскоязычных групп
@@ -163,7 +159,7 @@ export default async function Home() {
           />
         </Suspense>
       </Section>
-      <Section alignment='center' color={'white'}>
+      <Section alignment='center' color='white'>
         <Typography variant='h2' font='roboto'>
           Новости и события
         </Typography>

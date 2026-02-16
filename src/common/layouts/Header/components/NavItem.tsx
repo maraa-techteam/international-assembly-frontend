@@ -22,44 +22,39 @@ export function NavItem({
   toggleSelect,
   isActive,
 }: NavItemProps) {
+  const baseClasses =
+    'hover:bg-primary flex w-full cursor-pointer flex-row items-center justify-between px-4 py-3 whitespace-nowrap lg:w-fit lg:justify-center lg:gap-1 lg:p-0 lg:hover:bg-transparent'
+  if (subNav.length === 0) {
+    return (
+      <Link href={href} className={cn(baseClasses)}>
+        {name}
+      </Link>
+    )
+  }
   return (
-    <button
-      onClick={toggleSelect}
-      className='hover:bg-primary group z-10 flex w-full cursor-pointer flex-row items-center justify-between px-4 py-3 whitespace-nowrap lg:w-fit lg:justify-center lg:gap-1 lg:p-0 lg:hover:bg-transparent'
-    >
-      {subNav.length === 0 ? (
-        <Link
-          href={href}
-          className='lg:group-hover:text-foreground font-medium group-hover:text-white lg:font-normal'
-        >
-          {name}
-        </Link>
-      ) : (
-        <>
-          <Typography
-            variant='caption'
-            className='lg:group-hover:text-foreground font-medium group-hover:text-white lg:font-normal'
-            font='roboto'
-          >
-            {name}
-          </Typography>
-          <Icon
-            color='foreground'
-            icon={'chevron-down'}
-            size={'md'}
-            className={cn(
-              isActive ? 'scale-[-1]' : '',
-              'text-foreground hidden lg:flex',
-            )}
-          />
-          <Icon
-            color='foreground'
-            icon={'chevron-right'}
-            size={'md'}
-            className={'text-foreground flex group-hover:text-white lg:hidden'}
-          />
-        </>
-      )}
+    <button onClick={toggleSelect} className={cn(baseClasses)}>
+      <Typography
+        variant='caption'
+        className='lg:group-hover:text-foreground font-medium group-hover:text-white lg:font-normal'
+        font='roboto'
+      >
+        {name}
+      </Typography>
+      <Icon
+        color='foreground'
+        icon={'chevron-down'}
+        size={'md'}
+        className={cn(
+          isActive ? 'scale-[-1]' : '',
+          'text-foreground hidden lg:flex',
+        )}
+      />
+      <Icon
+        color='foreground'
+        icon={'chevron-right'}
+        size={'md'}
+        className={'text-foreground flex group-hover:text-white lg:hidden'}
+      />
     </button>
   )
 }

@@ -1,6 +1,6 @@
 export * from './Button/Button'
 export * from './Icon/Icon'
-export * from './Select/Select'
+export * from '../../features/groups/components/Select/Select'
 export * from './SearchBar/SearchBar'
 export * from './Typography/Typography'
 export * from './Label/Label'

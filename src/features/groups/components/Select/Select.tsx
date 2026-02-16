@@ -74,7 +74,7 @@ export function Select({
       >
         <Typography
           className={cn(
-            'font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 whitespace-nowrap transition-colors',
+            'font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 text-left whitespace-nowrap transition-colors',
             textColor,
           )}
           variant={'caption'}

@@ -26,6 +26,7 @@ export function MobileSubMenu({
       <li>
         <button
           onClick={() => toggleSelect()}
+          tabIndex={isActive ? 0 : -1}
           className='flex w-full cursor-pointer flex-row items-center gap-4 px-4 py-3 whitespace-nowrap hover:text-white lg:hidden lg:w-fit lg:justify-center lg:gap-1 lg:p-0'
         >
           <Icon
@@ -43,6 +44,7 @@ export function MobileSubMenu({
       {activeItems.map((item) => (
         <li key={item.name}>
           <Link
+            tabIndex={isActive ? 0 : -1}
             onClick={() => onClick()}
             href={item.href}
             className={cn(

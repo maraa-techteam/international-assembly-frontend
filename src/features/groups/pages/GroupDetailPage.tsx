@@ -83,11 +83,11 @@ export async function GroupDetailPage({
                     )}
                   >
                     <div className='flex flex-row gap-4'>
-                      <Icon icon={'person'} />
+                      <Icon className='text-primary' icon={'person'} />
                       <Typography variant='body'>{contactItem.name}</Typography>
                     </div>
                     <div className='flex flex-row gap-4'>
-                      <Icon icon={'phone'} />
+                      <Icon className='text-primary' icon={'phone'} />
                       <Typography variant='body'>
                         {contactItem.phone}
                       </Typography>
@@ -109,7 +109,6 @@ export async function GroupDetailPage({
               href={group?.website}
               text='Веб-сайт'
               icon='website'
-              color='primary'
               variant='icon-left'
             />
           )}
@@ -118,7 +117,6 @@ export async function GroupDetailPage({
               href='https://www.youtube.com/@internationalassembly'
               text='Youtube'
               icon='youtube'
-              color='primary'
               variant='icon-left'
             />
           )}
