@@ -77,7 +77,7 @@ export function Select({
             'font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 text-left whitespace-nowrap transition-colors',
             textColor,
           )}
-          variant={'caption'}
+          variant='caption'
         >
           {label}
         </Typography>
@@ -95,7 +95,7 @@ export function Select({
             textColor,
             isDropdownOpen && 'rotate-180',
           )}
-          size={'md'}
+          size='md'
         />
       </button>
 
@@ -143,7 +143,7 @@ export function Select({
                   {isSelected && (
                     <Icon
                       icon='check'
-                      size={'sm'}
+                      size='sm'
                       className='pointer-events-none'
                     />
                   )}

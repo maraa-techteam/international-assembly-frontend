@@ -55,19 +55,17 @@ export function NavItem({
         {name}
       </Typography>
       <Icon
-        color='foreground'
-        icon={'chevron-down'}
-        size={'md'}
+        icon='chevron-down'
+        size='md'
         className={cn(
           isActive ? 'scale-[-1]' : '',
           'text-foreground hidden lg:flex',
         )}
       />
       <Icon
-        color='foreground'
-        icon={'chevron-right'}
-        size={'md'}
-        className={'text-foreground flex group-hover:text-white lg:hidden'}
+        icon='chevron-right'
+        size='md'
+        className='text-foreground flex group-hover:text-white lg:hidden'
       />
     </button>
   )

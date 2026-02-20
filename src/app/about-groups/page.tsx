@@ -30,7 +30,7 @@ export default async function AboutGroups() {
       <Section
         className='flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr]'
         alignment='start'
-        color={'white'}
+        color='white'
       >
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
           <Typography variant='h1'>{page.title}</Typography>
@@ -39,32 +39,32 @@ export default async function AboutGroups() {
             <LinkComponent
               icon={page.additional_link.icon}
               isUnderlined
-              color={'primary'}
+              color='primary'
               text={page.additional_link.text}
               href={page.additional_link.href}
-              variant={'icon-left'}
+              variant='icon-left'
             />
           )}
           <Grid
-            as={'nav'}
-            justify={'start'}
-            className={'lg:flex lg:flex-row'}
-            align={'center'}
+            as='nav'
+            justify='start'
+            className='lg:flex lg:flex-row'
+            align='center'
           >
             <Button
-              variant={'outlined'}
-              size={'lg'}
-              color={'primary'}
-              as={'link'}
+              variant='outlined'
+              size='lg'
+              color='primary'
+              as='link'
               href={page.button_left[0].link}
             >
               {page.button_left[0].label}
             </Button>
             <Button
-              variant={'contained'}
-              size={'lg'}
-              color={'primary'}
-              as={'link'}
+              variant='contained'
+              size='lg'
+              color='primary'
+              as='link'
               href={page.button_right[0].link}
             >
               {page.button_right[0].label}
@@ -89,7 +89,7 @@ export default async function AboutGroups() {
           )}
         </div>
       </Section>
-      <Section className='pt-0 lg:pt-0' color={'white'}>
+      <Section className='pt-0 lg:pt-0' color='white'>
         <Accordion items={page.faq} />
       </Section>
     </>

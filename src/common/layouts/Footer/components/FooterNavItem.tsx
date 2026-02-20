@@ -12,19 +12,19 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
   return (
     <li role='none' className='flex flex-col gap-2'>
       <Typography
-        variant={'body'}
+        variant='body'
         className='text-contrast hidden text-sm font-bold lg:inline-block'
-        font={'roboto'}
+        font='roboto'
       >
         {name}
       </Typography>
-      <ul role='menu' className={'mb-2 hidden flex-col gap-1 lg:flex'}>
+      <ul role='menubar' className='mb-2 hidden flex-col gap-1 lg:flex'>
         {subNav.map((sub) => (
           <li role='none' key={sub.name}>
             <Link role='menuitem' href={sub.href}>
               <Typography
                 variant='body'
-                className={'text-contrast text-sm text-nowrap'}
+                className='text-contrast text-sm text-nowrap'
                 font='roboto'
               >
                 {sub.name}
@@ -40,16 +40,15 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
       >
         <summary className='flex w-full cursor-pointer flex-row items-center justify-between'>
           <Typography
-            variant={'body'}
+            variant='body'
             className='text-contrast text-sm font-bold'
-            font={'roboto'}
+            font='roboto'
           >
             {name}
           </Typography>
           <Icon
-            color={'contrast'}
             icon='chevron-down'
-            className={'text-contrast flex group-open:scale-[-1]'}
+            className='text-contrast flex group-open:scale-[-1]'
           />
         </summary>
         <ul role='menu' className='mb-2 flex flex-col gap-2'>
@@ -58,7 +57,7 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
               <Link role='menuitem' href={sub.href}>
                 <Typography
                   variant='body'
-                  className={'text-contrast text-sm text-nowrap'}
+                  className='text-contrast text-sm text-nowrap'
                   font='roboto'
                 >
                   {sub.name}

@@ -112,9 +112,9 @@ export function Header({ headerData }: HeaderProps) {
       )}
     >
       <div className='flex flex-row items-center justify-between'>
-        <Link className='flex content-center items-center' href={'/'}>
+        <Link className='flex content-center items-center' href='/'>
           <Image
-            src={'/logo_colorized.svg'}
+            src='/logo_colorized.svg'
             width={230}
             height={54}
             className='shrink-0'
@@ -126,6 +126,9 @@ export function Header({ headerData }: HeaderProps) {
           <button
             aria-expanded={isSearchActive}
             aria-controls='search-input'
+            aria-label={
+              isSearchActive ? 'Закрыть строку поиска' : 'Открыть строку поиска'
+            }
             onClick={() =>
               !isMobileMenuActive
                 ? setIsSearchActive(false)
@@ -133,12 +136,7 @@ export function Header({ headerData }: HeaderProps) {
             }
             className={cn('hidden', isSearchActive && 'block lg:hidden')}
           >
-            <Icon
-              icon='close'
-              className='text-contrast'
-              size='md'
-              color='foreground'
-            />
+            <Icon icon='close' className='text-contrast' size='md' />
           </button>
         )}
       </div>
@@ -148,6 +146,7 @@ export function Header({ headerData }: HeaderProps) {
           'flex lg:hidden lg:max-w-125 lg:rounded-xl',
           isMobileMenuActive && 'hidden',
         )}
+        placeholder='Поиск на сайте'
         isExpanded={isSearchActive}
         onToggle={toggleSearch}
       />
@@ -164,33 +163,25 @@ export function Header({ headerData }: HeaderProps) {
             aria-expanded={isMobileMenuActive}
             aria-controls='mobile-menu'
             aria-haspopup
+            aria-label='Закрыть мобильное меню'
             onClick={() => {
               resetSelect()
               setIsMobileMenuActive((prev) => !prev)
             }}
             className={cn('block lg:hidden')}
           >
-            <Icon
-              icon={'close'}
-              className='text-contrast'
-              size={'md'}
-              color='foreground'
-            />
+            <Icon icon='close' className='text-contrast' size='md' />
           </button>
         ) : (
           <button
             aria-expanded={isMobileMenuActive}
             aria-controls='mobile-menu'
             aria-haspopup
+            aria-label='Открыть мобильное меню'
             onClick={() => setIsMobileMenuActive((prev) => !prev)}
             className={cn('block lg:hidden', isSearchActive && 'hidden')}
           >
-            <Icon
-              icon='hamburger'
-              className='text-contrast'
-              size='md'
-              color='foreground'
-            />
+            <Icon icon='hamburger' className='text-contrast' size='md' />
           </button>
         )}
       </div>

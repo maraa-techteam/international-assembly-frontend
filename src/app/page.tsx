@@ -43,8 +43,8 @@ export default async function Home() {
         className='gap-8 py-10 text-center lg:gap-15 lg:py-39'
       >
         <Typography variant='h1' className='lg:text-5xl' font='roboto'>
-          Проблемы с алкоголем?{' '}
-          <span className='text-primary'>Есть решение.</span>
+          Проблемы с алкоголем?
+          <span className='text-primary'> Есть решение.</span>
         </Typography>
         <Grid
           as='nav'

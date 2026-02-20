@@ -81,7 +81,7 @@ describe('NavItem', () => {
       />,
     )
 
-    fireEvent.click(screen.getAllByRole('button')[0])
+    fireEvent.click(screen.getAllByRole('menuitem')[0])
     expect(mockToggleSelect).toHaveBeenCalledTimes(1)
   })
 
@@ -95,7 +95,7 @@ describe('NavItem', () => {
         subNav={[]}
       />,
     )
-    const element = screen.getAllByRole('link')[0]
+    const element = screen.getAllByRole('menuitem')[0]
     fireEvent.click(element)
     expect(element).toHaveAttribute('href', '/test')
   })

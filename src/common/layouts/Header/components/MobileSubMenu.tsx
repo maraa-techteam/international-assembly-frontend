@@ -32,10 +32,9 @@ export function MobileSubMenu({
           className='flex w-full cursor-pointer flex-row items-center gap-4 px-4 py-3 whitespace-nowrap hover:text-white lg:hidden lg:w-fit lg:justify-center lg:gap-1 lg:p-0'
         >
           <Icon
-            color={'foreground'}
-            icon={'arrow-left'}
-            size={'md'}
-            className={'text-foreground flex lg:hidden'}
+            icon='arrow-left'
+            size='md'
+            className='text-foreground flex lg:hidden'
           />
           <Typography variant='caption' className='font-normal' font='roboto'>
             Назад
@@ -62,9 +61,8 @@ export function MobileSubMenu({
               {item.name}
             </Typography>
             <Icon
-              color={'foreground'}
-              icon={'chevron-right'}
-              size={'md'}
+              icon='chevron-right'
+              size='md'
               className={
                 'text-foreground flex group-hover:text-white lg:hidden'
               }

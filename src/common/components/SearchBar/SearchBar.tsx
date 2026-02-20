@@ -43,6 +43,7 @@ export function SearchBar({
 
   return (
     <div
+      role='search'
       className={cn('relative flex w-full items-center justify-end', className)}
     >
       <div
@@ -70,6 +71,7 @@ export function SearchBar({
 
             <input
               id='search-input'
+              aria-label='Строка поиска'
               ref={inputRef}
               type='text'
               value={searchValue}

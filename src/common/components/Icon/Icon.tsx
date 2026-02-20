@@ -157,7 +157,6 @@ export type IconVariantProps = VariantProps<typeof iconVariants>
 type IconPropsType = {
   icon: IconType
   size?: 'sm' | 'md' | 'lg'
-  color?: 'contrast' | 'primary' | 'secondary' | 'foreground' | 'white'
   className?: string
 }
 

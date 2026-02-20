@@ -53,7 +53,7 @@ describe('Footer component', () => {
   it('renders correct number of navigation items', () => {
     render(<Footer footerData={mockFooterData} socials={mockSocials} />)
 
-    const menu = screen.getAllByRole('list')
+    const menu = screen.getAllByRole('menubar')
     expect(menu[1].children.length).toBe(mockFooterData.length)
   })
 

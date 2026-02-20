@@ -39,10 +39,10 @@ export function ContentGuide({ data }: ContentGuideProps) {
           return (
             <Button
               key={button.name}
-              color={'white'}
+              color='white'
               variant={button.isActive ? 'contained' : 'outlined'}
-              size={'sm'}
-              as={'button'}
+              size='sm'
+              as='button'
               onClick={() => handleClick(i)}
               type='button'
               label={button.name}
@@ -59,15 +59,15 @@ export function ContentGuide({ data }: ContentGuideProps) {
                 className='flex flex-col justify-between gap-4'
                 key={item.name}
               >
-                <Typography variant='body' font={'roboto'}>
+                <Typography variant='body' font='roboto'>
                   {item.description}
                 </Typography>
                 <LinkComponent
-                  icon={'arrow-right'}
-                  text={'Подробнее'}
-                  href={'/'}
-                  variant={'icon-right'}
-                  color={'contrast'}
+                  icon='arrow-right'
+                  text='Подробнее'
+                  href='/'
+                  variant='icon-right'
+                  color='contrast'
                   className='self-end'
                 />
               </div>
