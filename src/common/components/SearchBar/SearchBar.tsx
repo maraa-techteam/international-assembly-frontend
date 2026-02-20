@@ -48,14 +48,14 @@ export function SearchBar({
       <div
         className={cn(
           'relative transition-all duration-200 ease-out',
-          isExpanded ? 'w-full' : 'w-12',
+          isExpanded && 'w-full',
         )}
       >
         {!isExpanded && (
           <button
             aria-label='Открыть строку поиска'
             onClick={handleToggle}
-            className='flex h-12 w-12 cursor-pointer items-center justify-center'
+            className='flex cursor-pointer items-center justify-center'
           >
             <Icon icon='search' size='md' />
           </button>
@@ -69,6 +69,7 @@ export function SearchBar({
             />
 
             <input
+              id='search-input'
               ref={inputRef}
               type='text'
               value={searchValue}

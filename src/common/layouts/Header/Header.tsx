@@ -3,15 +3,14 @@
 import { Icon, SearchBar } from '@/common/components'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
+import { DesktopSubMenu } from '@/common/layouts/Header/components/DesktopSubMenu'
+import { MobileSubMenu } from '@/common/layouts/Header/components/MobileSubMenu'
+import { NavItem } from '@/common/layouts/Header/components/NavItem'
 import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-
-import { DesktopSubMenu } from './components/DesktopSubMenu'
-import { MobileSubMenu } from './components/MobileSubMenu'
-import { NavItem } from './components/NavItem'
 
 type HeaderProps = { headerData: TransformedNavigationType[] }
 
@@ -30,6 +29,16 @@ export function Header({ headerData }: HeaderProps) {
     resetSelect()
   })
 
+  useEscapeClose(() => {
+    setIsSearchActive(false)
+    if (navigation.some((item) => item.isActive)) {
+      resetSelect()
+      return
+    }
+    setIsMobileMenuActive(false)
+    resetSelect()
+  })
+
   const toggleSelect = (index: number) => {
     setNavigation((prevItems) => {
       return prevItems.map((item, i) => {
@@ -39,7 +48,12 @@ export function Header({ headerData }: HeaderProps) {
   }
 
   const toggleSearch = (active: boolean) => {
+    const scrollY = window.scrollY
     setIsSearchActive(active)
+    // Restore scroll position after layout change
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY)
+    })
   }
 
   const resetSelect = () => {
@@ -50,11 +64,6 @@ export function Header({ headerData }: HeaderProps) {
       )
     })
   }
-
-  useEscapeClose(() => {
-    setIsSearchActive(false)
-    resetSelect()
-  })
 
   useEffect(() => {
     let lastScroll = 0
@@ -97,7 +106,7 @@ export function Header({ headerData }: HeaderProps) {
     <header
       ref={headerRef}
       className={cn(
-        'fixed top-0 z-50 flex w-full translate-y-0 flex-row items-center justify-between gap-3 bg-white p-4 transition-transform duration-300 lg:gap-8 lg:px-18',
+        'fixed top-0 z-50 flex w-full translate-y-0 flex-row items-center justify-between gap-4 bg-white p-4 transition-transform duration-300 lg:gap-8 lg:px-18',
         isSearchActive && 'flex-col items-stretch lg:flex-row',
         hidden && !isMobileMenuActive && '-translate-y-full',
       )}
@@ -115,6 +124,8 @@ export function Header({ headerData }: HeaderProps) {
 
         {(!isMobileMenuActive || !isSearchActive) && (
           <button
+            aria-expanded={isSearchActive}
+            aria-controls='search-input'
             onClick={() =>
               !isMobileMenuActive
                 ? setIsSearchActive(false)
@@ -132,8 +143,62 @@ export function Header({ headerData }: HeaderProps) {
         )}
       </div>
 
+      <SearchBar
+        className={cn(
+          'flex lg:hidden lg:max-w-125 lg:rounded-xl',
+          isMobileMenuActive && 'hidden',
+        )}
+        isExpanded={isSearchActive}
+        onToggle={toggleSearch}
+      />
+
+      <div
+        className={cn(
+          'flex flex-row items-center justify-end gap-2',
+          isSearchActive ? 'w-full' : 'w-fit',
+        )}
+      >
+        {/* Hamburger menu toggle */}
+        {isMobileMenuActive ? (
+          <button
+            aria-expanded={isMobileMenuActive}
+            aria-controls='mobile-menu'
+            aria-haspopup
+            onClick={() => {
+              resetSelect()
+              setIsMobileMenuActive((prev) => !prev)
+            }}
+            className={cn('block lg:hidden')}
+          >
+            <Icon
+              icon={'close'}
+              className='text-contrast'
+              size={'md'}
+              color='foreground'
+            />
+          </button>
+        ) : (
+          <button
+            aria-expanded={isMobileMenuActive}
+            aria-controls='mobile-menu'
+            aria-haspopup
+            onClick={() => setIsMobileMenuActive((prev) => !prev)}
+            className={cn('block lg:hidden', isSearchActive && 'hidden')}
+          >
+            <Icon
+              icon='hamburger'
+              className='text-contrast'
+              size='md'
+              color='foreground'
+            />
+          </button>
+        )}
+      </div>
+
       {/* Mobile menu */}
       <ul
+        id='mobile-menu'
+        role='menubar'
         className={cn(
           'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
           isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
@@ -141,8 +206,9 @@ export function Header({ headerData }: HeaderProps) {
       >
         {navigation.map((item, i) => {
           return (
-            <li className='relative' key={item.name}>
+            <li role='none' className='relative' key={item.name}>
               <NavItem
+                isFocusable={isMobileMenuActive}
                 href={item.href}
                 name={item.name}
                 isActive={item.isActive}
@@ -169,11 +235,15 @@ export function Header({ headerData }: HeaderProps) {
 
       {/* Desktop menu */}
       {!isSearchActive && (
-        <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
+        <ul
+          role='menubar'
+          className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'
+        >
           {navigation.map((item, i) => {
             return (
-              <li className='relative' key={item.name}>
+              <li role='none' className='relative' key={item.name}>
                 <NavItem
+                  isFocusable={true}
                   href={item.href}
                   name={item.name}
                   isActive={item.isActive}
@@ -191,51 +261,14 @@ export function Header({ headerData }: HeaderProps) {
           })}
         </ul>
       )}
-      <div
+      <SearchBar
         className={cn(
-          'flex flex-row items-center justify-end gap-2',
-          isSearchActive ? 'w-full' : 'w-fit',
+          isMobileMenuActive && 'hidden',
+          'hidden lg:flex lg:max-w-125 lg:rounded-xl',
         )}
-      >
-        <SearchBar
-          className={cn(
-            isMobileMenuActive && 'hidden',
-            'lg:max-w-125 lg:rounded-xl',
-          )}
-          isExpanded={isSearchActive}
-          onToggle={toggleSearch}
-        />
-
-        {/* Hamburger menu toggle */}
-        {isMobileMenuActive ? (
-          <button
-            onClick={() => {
-              resetSelect()
-              setIsMobileMenuActive((prev) => !prev)
-            }}
-            className={cn('block lg:hidden')}
-          >
-            <Icon
-              icon={'close'}
-              className='text-contrast'
-              size={'md'}
-              color='foreground'
-            />
-          </button>
-        ) : (
-          <button
-            onClick={() => setIsMobileMenuActive((prev) => !prev)}
-            className={cn('block lg:hidden', isSearchActive && 'hidden')}
-          >
-            <Icon
-              icon={'hamburger'}
-              className='text-contrast'
-              size={'md'}
-              color='foreground'
-            />
-          </button>
-        )}
-      </div>
+        isExpanded={isSearchActive}
+        onToggle={toggleSearch}
+      />
     </header>
   )
 }

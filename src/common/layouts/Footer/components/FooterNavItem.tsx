@@ -10,7 +10,7 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
   }
 
   return (
-    <li className='flex flex-col gap-2'>
+    <li role='none' className='flex flex-col gap-2'>
       <Typography
         variant={'body'}
         className='text-contrast hidden text-sm font-bold lg:inline-block'
@@ -18,10 +18,10 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
       >
         {name}
       </Typography>
-      <ul className={'mb-2 hidden flex-col gap-1 lg:flex'}>
+      <ul role='menu' className={'mb-2 hidden flex-col gap-1 lg:flex'}>
         {subNav.map((sub) => (
-          <li key={sub.name}>
-            <Link href={sub.href}>
+          <li role='none' key={sub.name}>
+            <Link role='menuitem' href={sub.href}>
               <Typography
                 variant='body'
                 className={'text-contrast text-sm text-nowrap'}
@@ -52,10 +52,10 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
             className={'text-contrast flex group-open:scale-[-1]'}
           />
         </summary>
-        <ul className='mb-2 flex flex-col gap-2'>
+        <ul role='menu' className='mb-2 flex flex-col gap-2'>
           {subNav.map((sub) => (
-            <li key={sub.name}>
-              <Link href={sub.href}>
+            <li role='none' key={sub.name}>
+              <Link role='menuitem' href={sub.href}>
                 <Typography
                   variant='body'
                   className={'text-contrast text-sm text-nowrap'}

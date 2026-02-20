@@ -25,10 +25,13 @@ export function Footer({ footerData, socials }: FooterProps) {
               }
             />
           </Link>
-          <ul className='flex flex-row items-center justify-center gap-4'>
+          <ul
+            role='menubar'
+            className='flex flex-row items-center justify-center gap-4'
+          >
             {socials.map((item) => {
               return (
-                <li key={item.name}>
+                <li role='none' key={item.name}>
                   <LinkComponent
                     color={'contrast'}
                     icon={item.icon}
@@ -42,7 +45,10 @@ export function Footer({ footerData, socials }: FooterProps) {
           </ul>
         </div>
 
-        <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
+        <ul
+          role='menubar'
+          className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'
+        >
           {footerData.map((item) => (
             <FooterNavItem
               key={item.name}
