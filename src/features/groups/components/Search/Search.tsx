@@ -29,7 +29,7 @@ export function Search({
 
   return (
     <div className={cn('flex w-full flex-col gap-2', className)}>
-      <label htmlFor='groups-search' className={'sr-only'}>
+      <label htmlFor='groups-search' className='sr-only'>
         {label}
       </label>
 

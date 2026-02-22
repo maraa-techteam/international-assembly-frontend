@@ -20,8 +20,8 @@ export async function ArticlesListPage() {
 
   return (
     <>
-      <Section color={'white'}>
-        <Typography variant={'h1'} font='roboto'>
+      <Section color='white'>
+        <Typography variant='h1' font='roboto'>
           {page.title}
         </Typography>
         <RichTextPreview htmlContent={page.text} />
@@ -31,7 +31,7 @@ export async function ArticlesListPage() {
           {...page.highlighted_post}
         />
       </Section>
-      <Section color={'white'}>
+      <Section color='white'>
         <Grid isScrollable={false} columns={2} gap={6}>
           {articles &&
             articles.map((article) =>

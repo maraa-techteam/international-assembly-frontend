@@ -31,14 +31,14 @@ export async function GroupDetailPage({
   const group = await fetchGroup(slug)
 
   return (
-    <Section color={'white'} className='w-full lg:max-w-200'>
+    <Section color='white' className='w-full lg:max-w-200'>
       <LinkComponent
         href='/groups'
         icon='arrow-left'
-        text={'Назад'}
+        text='Назад'
         color='foreground'
         className='self-start'
-        variant={'icon-left'}
+        variant='icon-left'
       />
       <Typography variant='h1'>{group?.name}</Typography>
       <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
@@ -83,11 +83,11 @@ export async function GroupDetailPage({
                     )}
                   >
                     <div className='flex flex-row gap-4'>
-                      <Icon icon={'person'} />
+                      <Icon className='text-primary' icon='person' />
                       <Typography variant='body'>{contactItem.name}</Typography>
                     </div>
                     <div className='flex flex-row gap-4'>
-                      <Icon icon={'phone'} />
+                      <Icon className='text-primary' icon='phone' />
                       <Typography variant='body'>
                         {contactItem.phone}
                       </Typography>
@@ -109,7 +109,6 @@ export async function GroupDetailPage({
               href={group?.website}
               text='Веб-сайт'
               icon='website'
-              color='primary'
               variant='icon-left'
             />
           )}
@@ -118,7 +117,6 @@ export async function GroupDetailPage({
               href='https://www.youtube.com/@internationalassembly'
               text='Youtube'
               icon='youtube'
-              color='primary'
               variant='icon-left'
             />
           )}

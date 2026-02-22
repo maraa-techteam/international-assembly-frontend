@@ -70,11 +70,33 @@ describe('NavItem', () => {
         href='/test'
         toggleSelect={mockToggleSelect}
         isActive={false}
-        subNav={[]}
+        subNav={[
+          {
+            name: 'Sub',
+            href: '/sub',
+            description: 'Desc',
+            isFrequentlyVisited: false,
+          },
+        ]}
       />,
     )
 
-    fireEvent.click(screen.getAllByRole('button')[0])
+    fireEvent.click(screen.getAllByRole('menuitem')[0])
     expect(mockToggleSelect).toHaveBeenCalledTimes(1)
+  })
+
+  it('opens page when clicked', () => {
+    render(
+      <NavItem
+        name='Test Nav'
+        href='/test'
+        toggleSelect={mockToggleSelect}
+        isActive={false}
+        subNav={[]}
+      />,
+    )
+    const element = screen.getAllByRole('menuitem')[0]
+    fireEvent.click(element)
+    expect(element).toHaveAttribute('href', '/test')
   })
 })

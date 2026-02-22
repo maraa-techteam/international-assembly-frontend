@@ -34,7 +34,7 @@ describe('FooterNavItem', () => {
     render(<FooterNavItem {...mockProps} />)
 
     // Desktop version uses regular ul (not details/summary)
-    const desktopList = screen.getAllByRole('list')[0]
+    const desktopList = screen.getAllByRole('menubar')[0]
     expect(desktopList).toBeVisible()
 
     // Details element has lg:invisible lg:hidden classes
@@ -45,7 +45,7 @@ describe('FooterNavItem', () => {
   it('links have correct href attributes', () => {
     render(<FooterNavItem {...mockProps} />)
 
-    const links = screen.getAllByRole('link')
+    const links = screen.getAllByRole('menuitem')
 
     // Should have 6 links total (3 in desktop view, 3 in mobile view)
     expect(links).toHaveLength(6)

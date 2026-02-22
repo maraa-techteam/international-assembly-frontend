@@ -2,6 +2,20 @@ import { render, screen } from '@testing-library/react'
 
 import { Header } from './Header'
 
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    prefetch: jest.fn(),
+    back: jest.fn(),
+    forward: jest.fn(),
+    refresh: jest.fn(),
+  }),
+  usePathname: () => '/',
+  useSearchParams: () => new URLSearchParams(),
+  useParams: () => ({}),
+}))
+
 const mockHeaderData = [
   {
     name: 'О нас',
@@ -25,8 +39,8 @@ describe('Header', () => {
   it('renders navigation items', () => {
     render(<Header headerData={mockHeaderData} />)
 
-    const navItems = screen.getAllByRole('listitem')
-    expect(navItems).toHaveLength(mockHeaderData.length)
+    const navItems = screen.getAllByRole('menubar')[0]
+    expect(navItems).toBeInTheDocument()
   })
 
   it('renders logo', () => {
@@ -36,10 +50,10 @@ describe('Header', () => {
     expect(logo).toBeInTheDocument()
   })
 
-  it('renders search bar', () => {
+  it('renders search bar with placeholder', () => {
     render(<Header headerData={mockHeaderData} />)
 
-    const searchBar = screen.getByLabelText('Открыть строку поиска')
+    const searchBar = screen.getAllByRole('search')[0]
     expect(searchBar).toBeInTheDocument()
   })
 

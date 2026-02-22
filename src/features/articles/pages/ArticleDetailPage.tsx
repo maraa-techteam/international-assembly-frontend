@@ -54,10 +54,10 @@ export async function ArticleDetailPage({
 
   return (
     <>
-      <Section color={'contrast'}>
+      <Section color='contrast'>
         <Typography variant='h1'>{article?.title}</Typography>
         <Label text={formatDate(article?.date_created)} />
-        <Grid align={'start'} justify={'center'} columns={2}>
+        <Grid align='start' justify='center' columns={2}>
           <RichTextPreview htmlContent={article?.content || ''} />
           {article?.image ? (
             <Image
@@ -78,7 +78,7 @@ export async function ArticleDetailPage({
         </Grid>
       </Section>
       {relatedArticles.length > 0 && (
-        <Section alignment='center' color={'white'}>
+        <Section alignment='center' color='white'>
           <Typography variant='h2' font='roboto'>
             Могло бы вас заинтересовать
           </Typography>

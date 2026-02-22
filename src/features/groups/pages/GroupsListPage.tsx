@@ -43,10 +43,10 @@ export async function GroupsListPage({
 
   return (
     <>
-      <Section className='py-0' color={'white'}>
+      <Section className='py-0' color='white'>
         <Typography variant='h1'>{page.title}</Typography>
       </Section>
-      <Section className='px-0 lg:max-w-250 lg:pt-0 lg:pr-0' color={'white'}>
+      <Section className='px-0 lg:max-w-250 lg:pt-0 lg:pr-0' color='white'>
         <Suspense fallback={null}>
           <GroupsFilterDashboard
             dropdownOptions={{
@@ -57,10 +57,7 @@ export async function GroupsListPage({
           />
         </Suspense>
       </Section>
-      <Section
-        className='px-0 pt-0 lg:max-w-250 lg:pt-0 lg:pr-0'
-        color={'white'}
-      >
+      <Section className='px-0 pt-0 lg:max-w-250 lg:pt-0 lg:pr-0' color='white'>
         <GroupsTable groups={filteredGroups} />
         <Pagination fetchedCount={filteredGroups.length} />
       </Section>

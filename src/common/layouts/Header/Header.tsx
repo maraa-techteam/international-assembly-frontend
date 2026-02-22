@@ -3,15 +3,14 @@
 import { Icon, SearchBar } from '@/common/components'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
+import { DesktopSubMenu } from '@/common/layouts/Header/components/DesktopSubMenu'
+import { MobileSubMenu } from '@/common/layouts/Header/components/MobileSubMenu'
+import { NavItem } from '@/common/layouts/Header/components/NavItem'
 import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
-
-import { DesktopSubMenu } from './components/DesktopSubMenu'
-import { MobileSubMenu } from './components/MobileSubMenu'
-import { NavItem } from './components/NavItem'
 
 type HeaderProps = { headerData: TransformedNavigationType[] }
 
@@ -27,6 +26,16 @@ export function Header({ headerData }: HeaderProps) {
 
   useOnClickOutside(headerRef, () => {
     setIsSearchActive(false)
+    resetSelect()
+  })
+
+  useEscapeClose(() => {
+    setIsSearchActive(false)
+    if (navigation.some((item) => item.isActive)) {
+      resetSelect()
+      return
+    }
+    setIsMobileMenuActive(false)
     resetSelect()
   })
 
@@ -56,17 +65,13 @@ export function Header({ headerData }: HeaderProps) {
     })
   }
 
-  useEscapeClose(() => {
-    setIsSearchActive(false)
-    resetSelect()
-  })
-
   useEffect(() => {
     let lastScroll = 0
     let ticking = false
 
     const handleScroll = () => {
       if (ticking) return
+
       ticking = true
 
       requestAnimationFrame(() => {
@@ -74,6 +79,7 @@ export function Header({ headerData }: HeaderProps) {
 
         if (currentScroll <= 0) {
           setHidden(false)
+          ticking = false
           return
         }
 
@@ -87,12 +93,12 @@ export function Header({ headerData }: HeaderProps) {
         }
 
         lastScroll = currentScroll
-
         ticking = false
       })
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobileMenuActive, isSearchActive])
 
@@ -100,127 +106,50 @@ export function Header({ headerData }: HeaderProps) {
     <header
       ref={headerRef}
       className={cn(
-        'fixed top-0 z-50 flex w-full translate-y-0 flex-row items-center justify-between gap-3 bg-white p-4 transition-transform duration-300 lg:gap-8 lg:px-18',
+        'fixed top-0 z-50 flex w-full translate-y-0 flex-row items-center justify-between gap-4 bg-white p-4 transition-transform duration-300 lg:gap-8 lg:px-18',
         isSearchActive && 'flex-col items-stretch lg:flex-row',
         hidden && !isMobileMenuActive && '-translate-y-full',
       )}
     >
       <div className='flex flex-row items-center justify-between'>
-        <Link
-          className='flex content-center items-center'
-          href={'/'}
-          aria-label='Перейти на главную страницу'
-        >
-          <div className='flex w-fit flex-row content-center items-center gap-2'>
-            <Image
-              src={'/logo_colorized.svg'}
-              width={230}
-              height={54}
-              className='shrink-0'
-              alt='Логотип АА'
-            />
-          </div>
+        <Link className='flex content-center items-center' href='/'>
+          <Image
+            src='/logo_colorized.svg'
+            width={230}
+            height={54}
+            className='shrink-0'
+            alt='Логотип АА'
+          />
         </Link>
 
         {(!isMobileMenuActive || !isSearchActive) && (
           <button
-            onClick={() => {
-              if (!isMobileMenuActive) {
-                setIsSearchActive(false)
-              } else {
-                setIsMobileMenuActive((prev) => !prev)
-              }
-            }}
+            aria-expanded={isSearchActive}
+            aria-controls='search-input'
             aria-label={
-              isMobileMenuActive ? 'Закрыть мобильное меню' : 'Закрыть поиск'
+              isSearchActive ? 'Закрыть строку поиска' : 'Открыть строку поиска'
+            }
+            onClick={() =>
+              !isMobileMenuActive
+                ? setIsSearchActive(false)
+                : setIsMobileMenuActive((prev) => !prev)
             }
             className={cn('hidden', isSearchActive && 'block lg:hidden')}
           >
-            <Icon
-              icon='close'
-              className='text-contrast'
-              size='md'
-              color='foreground'
-            />
+            <Icon icon='close' className='text-contrast' size='md' />
           </button>
         )}
       </div>
 
-      <nav aria-label='Основная навигация'>
-        {/* Mobile menu */}
-        <ul
-          className={cn(
-            'absolute top-[80px] right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
-            isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
-          )}
-          aria-hidden={!isMobileMenuActive}
-        >
-          {navigation.map((item, i) => {
-            return (
-              <li className='relative' key={item.name}>
-                <NavItem
-                  href={item.href}
-                  name={item.name}
-                  isActive={item.isActive}
-                  toggleSelect={() => toggleSelect(i)}
-                  subNav={item.subNav}
-                  aria-expanded={item.isActive}
-                  aria-controls={
-                    item.subNav.length > 0 ? `submenu-mobile-${i}` : undefined
-                  }
-                />
-                {item.subNav.length > 0 && (
-                  <MobileSubMenu
-                    onClick={() => {
-                      setIsMobileMenuActive(false)
-                    }}
-                    isActive={item.isActive}
-                    activeItems={item.subNav.map((subItem, j) => ({
-                      ...subItem,
-                      isActive: j === 0 ? true : false,
-                    }))}
-                    toggleSelect={() => toggleSelect(i)}
-                    aria-label={`Подменю ${item.name}`}
-                  />
-                )}
-              </li>
-            )
-          })}
-        </ul>
-
-        {/* Desktop menu */}
-        {!isSearchActive && (
-          <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
-            {navigation.map((item, i) => {
-              return (
-                <li className='relative' key={item.name}>
-                  <NavItem
-                    href={item.href}
-                    name={item.name}
-                    isActive={item.isActive}
-                    toggleSelect={() => toggleSelect(i)}
-                    subNav={item.subNav}
-                    aria-expanded={item.isActive}
-                    aria-controls={
-                      item.subNav.length > 0
-                        ? `submenu-desktop-${i}`
-                        : undefined
-                    }
-                    aria-haspopup={item.subNav.length > 0 ? 'menu' : undefined}
-                  />
-                  {item.isActive && item.subNav.length > 0 && (
-                    <DesktopSubMenu
-                      onSelect={resetSelect}
-                      navigationData={item.subNav}
-                      aria-label={`Подменю ${item.name}`}
-                    />
-                  )}
-                </li>
-              )
-            })}
-          </ul>
+      <SearchBar
+        className={cn(
+          'flex lg:hidden lg:max-w-125 lg:rounded-xl',
+          isMobileMenuActive && 'hidden',
         )}
-      </nav>
+        placeholder='Поиск на сайте'
+        isExpanded={isSearchActive}
+        onToggle={toggleSearch}
+      />
 
       <div
         className={cn(
@@ -228,52 +157,109 @@ export function Header({ headerData }: HeaderProps) {
           isSearchActive ? 'w-full' : 'w-fit',
         )}
       >
-        <SearchBar
-          className={cn(
-            isMobileMenuActive && 'hidden',
-            'lg:max-w-125 lg:rounded-xl',
-          )}
-          isExpanded={isSearchActive}
-          onToggle={toggleSearch}
-          aria-label='Поиск по сайту'
-        />
-
         {/* Hamburger menu toggle */}
         {isMobileMenuActive ? (
           <button
+            aria-expanded={isMobileMenuActive}
+            aria-controls='mobile-menu'
+            aria-haspopup
+            aria-label='Закрыть мобильное меню'
             onClick={() => {
               resetSelect()
               setIsMobileMenuActive((prev) => !prev)
             }}
-            aria-label='Закрыть мобильное меню'
-            aria-expanded={isMobileMenuActive}
-            aria-controls='mobile-menu'
             className={cn('block lg:hidden')}
           >
-            <Icon
-              icon={'close'}
-              className='text-contrast'
-              size={'md'}
-              color='foreground'
-            />
+            <Icon icon='close' className='text-contrast' size='md' />
           </button>
         ) : (
           <button
-            aria-label='Открыть мобильное меню'
             aria-expanded={isMobileMenuActive}
             aria-controls='mobile-menu'
+            aria-haspopup
+            aria-label='Открыть мобильное меню'
             onClick={() => setIsMobileMenuActive((prev) => !prev)}
             className={cn('block lg:hidden', isSearchActive && 'hidden')}
           >
-            <Icon
-              icon={'hamburger'}
-              className='text-contrast'
-              size={'md'}
-              color='foreground'
-            />
+            <Icon icon='hamburger' className='text-contrast' size='md' />
           </button>
         )}
       </div>
+
+      {/* Mobile menu */}
+      <ul
+        id='mobile-menu'
+        role='menubar'
+        className={cn(
+          'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
+          isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
+        )}
+      >
+        {navigation.map((item, i) => {
+          return (
+            <li role='none' className='relative' key={item.name}>
+              <NavItem
+                isFocusable={isMobileMenuActive}
+                href={item.href}
+                name={item.name}
+                isActive={item.isActive}
+                toggleSelect={() => toggleSelect(i)}
+                subNav={item.subNav}
+              />
+              {item.subNav.length > 0 && (
+                <MobileSubMenu
+                  onClick={() => {
+                    setIsMobileMenuActive(false)
+                  }}
+                  isActive={item.isActive}
+                  activeItems={item.subNav.map((subItem, j) => ({
+                    ...subItem,
+                    isActive: j === 0 ? true : false,
+                  }))}
+                  toggleSelect={() => toggleSelect(i)}
+                />
+              )}
+            </li>
+          )
+        })}
+      </ul>
+
+      {/* Desktop menu */}
+      {!isSearchActive && (
+        <ul
+          role='menubar'
+          className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'
+        >
+          {navigation.map((item, i) => {
+            return (
+              <li role='none' className='relative' key={item.name}>
+                <NavItem
+                  isFocusable={true}
+                  href={item.href}
+                  name={item.name}
+                  isActive={item.isActive}
+                  toggleSelect={() => toggleSelect(i)}
+                  subNav={item.subNav}
+                />
+                {item.isActive && item.subNav.length > 0 && (
+                  <DesktopSubMenu
+                    onSelect={resetSelect}
+                    navigationData={item.subNav}
+                  />
+                )}
+              </li>
+            )
+          })}
+        </ul>
+      )}
+      <SearchBar
+        className={cn(
+          isMobileMenuActive && 'hidden',
+          'hidden lg:flex lg:max-w-125 lg:rounded-xl',
+        )}
+        isExpanded={isSearchActive}
+        onToggle={toggleSearch}
+      />
     </header>
   )
 }

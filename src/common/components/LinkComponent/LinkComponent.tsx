@@ -1,5 +1,5 @@
-import { Icon } from '@/common/components'
 import { cn } from '@/common/utils/cn'
+import { Icon } from '@/ui'
 import { type VariantProps, cva } from 'class-variance-authority'
 import Link from 'next/link'
 
@@ -44,13 +44,9 @@ export function LinkComponent({
       className={cn(linkVariants({ color, isUnderlined }), className)}
       href={href}
     >
-      {variant === 'icon-left' && icon && <Icon color={color} icon={icon} />}
-      {variant === 'icon-only' && icon ? (
-        <Icon color={color} icon={icon} />
-      ) : (
-        text
-      )}
-      {variant === 'icon-right' && icon && <Icon color={color} icon={icon} />}
+      {variant === 'icon-left' && icon && <Icon icon={icon} />}
+      {variant === 'icon-only' && icon ? <Icon icon={icon} /> : text}
+      {variant === 'icon-right' && icon && <Icon icon={icon} />}
     </Link>
   )
 }

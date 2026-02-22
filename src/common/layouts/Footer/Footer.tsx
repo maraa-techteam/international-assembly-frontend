@@ -14,9 +14,9 @@ export function Footer({ footerData, socials }: FooterProps) {
     <footer className='bg-primary flex flex-col gap-4 p-4 lg:px-18 lg:py-12'>
       <div className='flex w-full flex-col gap-4 lg:flex-row lg:gap-32'>
         <div className='flex w-fit flex-col items-start gap-5'>
-          <Link className='flex content-center items-center' href={'/'}>
+          <Link className='flex content-center items-center' href='/'>
             <Image
-              src={'/logo.svg'}
+              src='/logo.svg'
               width={230}
               height={54}
               className='w-auto min-w-60'
@@ -25,16 +25,19 @@ export function Footer({ footerData, socials }: FooterProps) {
               }
             />
           </Link>
-          <ul className='flex flex-row items-center justify-center gap-4'>
+          <ul
+            role='menubar'
+            className='flex flex-row items-center justify-center gap-4'
+          >
             {socials.map((item) => {
               return (
-                <li key={item.name}>
+                <li role='menuitem' key={item.name}>
                   <LinkComponent
-                    color={'contrast'}
+                    color='contrast'
                     icon={item.icon}
-                    text={''}
+                    text=''
                     href={item.href}
-                    variant={'icon-only'}
+                    variant='icon-only'
                   />
                 </li>
               )
@@ -42,7 +45,10 @@ export function Footer({ footerData, socials }: FooterProps) {
           </ul>
         </div>
 
-        <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
+        <ul
+          role='menubar'
+          className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'
+        >
           {footerData.map((item) => (
             <FooterNavItem
               key={item.name}
@@ -56,9 +62,9 @@ export function Footer({ footerData, socials }: FooterProps) {
       <div className='h-[1px] w-full bg-white opacity-40' />
 
       <Typography
-        variant={'body'}
+        variant='body'
         className='text-contrast text-sm opacity-40'
-        font={'roboto'}
+        font='roboto'
       >
         {`© ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков`}
       </Typography>

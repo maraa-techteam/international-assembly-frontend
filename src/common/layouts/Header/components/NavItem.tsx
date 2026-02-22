@@ -7,6 +7,7 @@ type NavItemProps = {
   href: string
   toggleSelect: () => void
   isActive: boolean
+  isFocusable?: boolean
   subNav: {
     name: string
     href: string
@@ -21,45 +22,51 @@ export function NavItem({
   subNav,
   toggleSelect,
   isActive,
+  isFocusable = false,
 }: NavItemProps) {
+  const baseClasses =
+    'hover:bg-primary flex w-full cursor-pointer flex-row items-center justify-between px-4 py-3 whitespace-nowrap lg:w-fit lg:justify-center lg:gap-1 lg:p-0 lg:hover:bg-transparent'
+  if (subNav.length === 0) {
+    return (
+      <Link
+        role='menuitem'
+        href={href}
+        className={cn(baseClasses)}
+        tabIndex={isFocusable ? 0 : -1}
+      >
+        {name}
+      </Link>
+    )
+  }
   return (
     <button
+      aria-haspopup
+      aria-expanded={isActive}
+      role='menuitem'
+      tabIndex={isFocusable ? 0 : -1}
       onClick={toggleSelect}
-      className='hover:bg-primary group z-10 flex w-full cursor-pointer flex-row items-center justify-between px-4 py-3 whitespace-nowrap lg:w-fit lg:justify-center lg:gap-1 lg:p-0 lg:hover:bg-transparent'
+      className={cn(baseClasses)}
     >
-      {subNav.length === 0 ? (
-        <Link
-          href={href}
-          className='lg:group-hover:text-foreground font-medium group-hover:text-white lg:font-normal'
-        >
-          {name}
-        </Link>
-      ) : (
-        <>
-          <Typography
-            variant='caption'
-            className='lg:group-hover:text-foreground font-medium group-hover:text-white lg:font-normal'
-            font='roboto'
-          >
-            {name}
-          </Typography>
-          <Icon
-            color='foreground'
-            icon={'chevron-down'}
-            size={'md'}
-            className={cn(
-              isActive ? 'scale-[-1]' : '',
-              'text-foreground hidden lg:flex',
-            )}
-          />
-          <Icon
-            color='foreground'
-            icon={'chevron-right'}
-            size={'md'}
-            className={'text-foreground flex group-hover:text-white lg:hidden'}
-          />
-        </>
-      )}
+      <Typography
+        variant='caption'
+        className='lg:group-hover:text-foreground font-medium group-hover:text-white lg:font-normal'
+        font='roboto'
+      >
+        {name}
+      </Typography>
+      <Icon
+        icon='chevron-down'
+        size='md'
+        className={cn(
+          isActive ? 'scale-[-1]' : '',
+          'text-foreground hidden lg:flex',
+        )}
+      />
+      <Icon
+        icon='chevron-right'
+        size='md'
+        className='text-foreground flex group-hover:text-white lg:hidden'
+      />
     </button>
   )
 }

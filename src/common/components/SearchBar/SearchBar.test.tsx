@@ -2,12 +2,21 @@ import { SearchBar } from '@/common/components'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
+const pushMock = jest.fn()
+
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({
+    push: pushMock,
+  }),
+}))
+
 describe('SearchBar - Input behavior', () => {
+  beforeEach(() => {
+    pushMock.mockClear()
+  })
+
   it('updates the search value on typing', async () => {
-    const onSearch = jest.fn()
-    render(
-      <SearchBar isExpanded={true} onToggle={jest.fn()} onSearch={onSearch} />,
-    )
+    render(<SearchBar isExpanded={true} onToggle={jest.fn()} />)
 
     const input = screen.getByPlaceholderText(/поиск на сайте/i)
     const user = userEvent.setup()
@@ -16,18 +25,15 @@ describe('SearchBar - Input behavior', () => {
     expect(input).toHaveValue('Hello')
   })
 
-  it('calls onSearch on form submit', async () => {
-    const onSearch = jest.fn()
-    render(
-      <SearchBar isExpanded={true} onToggle={jest.fn()} onSearch={onSearch} />,
-    )
+  it('navigates to search results on form submit', async () => {
+    render(<SearchBar isExpanded={true} onToggle={jest.fn()} />)
 
     const input = screen.getByPlaceholderText(/поиск на сайте/i)
     const user = userEvent.setup()
     await user.type(input, 'Test')
     await user.keyboard('{Enter}')
 
-    expect(onSearch).toHaveBeenCalledWith('Test')
+    expect(pushMock).toHaveBeenCalledWith('/search?search=Test')
   })
 })
 
@@ -46,7 +52,6 @@ describe('SearchBar - Toggle behavior', () => {
 
   it('renders collapsed state', () => {
     render(<SearchBar isExpanded={false} onToggle={onToggleMock} />)
-
     expect(screen.getByRole('button')).toBeInTheDocument()
   })
 
@@ -57,24 +62,24 @@ describe('SearchBar - Toggle behavior', () => {
     )
 
     await user.click(screen.getByRole('button'))
-
     expect(onToggleMock).toHaveBeenCalledWith(true)
 
-    // Re-render with isExpanded=true to simulate parent state change
     rerender(<SearchBar isExpanded={true} onToggle={onToggleMock} />)
 
-    // Advance fake timers
-    jest.advanceTimersByTime(300)
+    jest.advanceTimersByTime(100)
 
     const input = screen.getByPlaceholderText(/поиск на сайте/i)
     expect(document.activeElement).toBe(input)
   })
 
-  it('clears search when collapsing', async () => {
+  it('calls onToggle(false) when collapsing', async () => {
     const user = userEvent.setup({ delay: null })
     render(<SearchBar isExpanded={true} onToggle={onToggleMock} />)
 
-    const closeButton = screen.getByRole('button', { hidden: true })
+    // there are multiple buttons in expanded state; use aria-label for the close button
+    const closeButton = screen.getByRole('button', {
+      name: /закрыть строку поиска/i,
+    })
     await user.click(closeButton)
 
     expect(onToggleMock).toHaveBeenCalledWith(false)

@@ -18,21 +18,23 @@ export function MobileSubMenu({
 }: MobileSubMenuPropsType) {
   return (
     <ul
+      role='menu'
       className={cn(
         'fixed top-0 right-0 z-20 flex h-dvh w-full transform flex-col bg-white transition-transform duration-300 lg:hidden',
         isActive ? 'translate-x-0' : 'translate-x-full',
       )}
     >
-      <li>
+      <li role='none'>
         <button
+          role='menuitem'
           onClick={() => toggleSelect()}
+          tabIndex={isActive ? 0 : -1}
           className='flex w-full cursor-pointer flex-row items-center gap-4 px-4 py-3 whitespace-nowrap hover:text-white lg:hidden lg:w-fit lg:justify-center lg:gap-1 lg:p-0'
         >
           <Icon
-            color={'foreground'}
-            icon={'arrow-left'}
-            size={'md'}
-            className={'text-foreground flex lg:hidden'}
+            icon='arrow-left'
+            size='md'
+            className='text-foreground flex lg:hidden'
           />
           <Typography variant='caption' className='font-normal' font='roboto'>
             Назад
@@ -41,8 +43,10 @@ export function MobileSubMenu({
       </li>
 
       {activeItems.map((item) => (
-        <li key={item.name}>
+        <li role='none' key={item.name}>
           <Link
+            role='menuitem'
+            tabIndex={isActive ? 0 : -1}
             onClick={() => onClick()}
             href={item.href}
             className={cn(
@@ -57,9 +61,8 @@ export function MobileSubMenu({
               {item.name}
             </Typography>
             <Icon
-              color={'foreground'}
-              icon={'chevron-right'}
-              size={'md'}
+              icon='chevron-right'
+              size='md'
               className={
                 'text-foreground flex group-hover:text-white lg:hidden'
               }
