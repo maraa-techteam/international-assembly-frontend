@@ -36,12 +36,12 @@ const mockHeaderData = [
 ]
 
 describe('Header', () => {
-  // it('renders navigation items', () => {
-  //   render(<Header headerData={mockHeaderData} />)
+  it('renders navigation items', () => {
+    render(<Header headerData={mockHeaderData} />)
 
-  //   const navItems = screen.getByRole('menubar')
-  //   expect(navItems).toBeInTheDocument()
-  // })
+    const navItems = screen.getAllByRole('menubar')[0]
+    expect(navItems).toBeInTheDocument()
+  })
 
   it('renders logo', () => {
     render(<Header headerData={mockHeaderData} />)
@@ -50,12 +50,12 @@ describe('Header', () => {
     expect(logo).toBeInTheDocument()
   })
 
-  // it('renders search bar with placeholder', () => {
-  //   render(<Header headerData={mockHeaderData} />)
+  it('renders search bar with placeholder', () => {
+    render(<Header headerData={mockHeaderData} />)
 
-  //   const searchBar = screen.getByRole('search')
-  //   expect(searchBar).toBeInTheDocument()
-  // })
+    const searchBar = screen.getAllByRole('search')[0]
+    expect(searchBar).toBeInTheDocument()
+  })
 
   it('renders mobile menu toggler only on mobile', () => {
     render(<Header headerData={mockHeaderData} />)
