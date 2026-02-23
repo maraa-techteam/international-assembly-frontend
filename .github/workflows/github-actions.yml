@@ -83,5 +83,32 @@ jobs:
         run: |
           echo "Running unit and integration tests..."
           pnpm run test:unit
-          
+  e2e_test_job:
+    name: E2E API Tests
+    runs-on: ubuntu-latest
+    needs: build_job
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+
+      - name: Run E2E API tests
+        env:
+          DIRECTUS_CMS_URL: ${{ secrets.DIRECTUS_CMS_URL }}
+        run: |
+          echo "Running E2E API tests..."
+          pnpm run test:e2e --project=api

@@ -3,29 +3,35 @@ import { readItems } from '@directus/sdk'
 import directus from '../../../common/lib/directus'
 
 export async function fetchGroup(slug: string) {
-  const raw = await directus.request(
-    readItems('groups', {
-      filter: {
-        slug: {
-          _eq: slug,
+  try {
+    const raw = await directus.request(
+      readItems('groups', {
+        filter: {
+          slug: {
+            _eq: slug,
+          },
         },
-      },
-      fields: [
-        'name',
-        'description',
-        'country',
-        'presence',
-        'digital_address',
-        'address',
-        'website',
-        'youtube',
-        'telegram',
-        'contact',
-        'time_zone',
-        { schedule_slots: ['day', 'time'] },
-      ],
-    }),
-  )
+        fields: [
+          'name',
+          'description',
+          'country',
+          'presence',
+          'digital_address',
+          'address',
+          'website',
+          'youtube',
+          'telegram',
+          'contact',
+          'time_zone',
+          { schedule_slots: ['day', 'time'] },
+        ],
+      }),
+    )
 
-  return raw[0]
+    return raw[0]
+  } catch (error) {
+    throw new Error(
+      `Failed to fetch group with slug "${slug}": ${error instanceof Error ? error.message : String(error)}`,
+    )
+  }
 }
