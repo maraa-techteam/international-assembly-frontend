@@ -117,7 +117,7 @@ export function Header({ headerData }: HeaderProps) {
             src='/logo_colorized.svg'
             width={230}
             height={54}
-            className='shrink-0'
+            className='min-w-57.5 shrink-0'
             alt='Логотип АА'
           />
         </Link>
@@ -199,6 +199,11 @@ export function Header({ headerData }: HeaderProps) {
           return (
             <li role='none' className='relative' key={item.name}>
               <NavItem
+                onClick={
+                  !item.subNav.length
+                    ? () => setIsMobileMenuActive(false)
+                    : undefined
+                }
                 isFocusable={isMobileMenuActive}
                 href={item.href}
                 name={item.name}

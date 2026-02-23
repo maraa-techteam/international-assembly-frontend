@@ -19,7 +19,7 @@ export function Footer({ footerData, socials }: FooterProps) {
               src='/logo.svg'
               width={230}
               height={54}
-              className='w-auto min-w-60'
+              className='min-w-57.5 shrink-0'
               alt={
                 'Логотип Международной Ассамблеи по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков'
               }

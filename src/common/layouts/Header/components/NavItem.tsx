@@ -8,6 +8,7 @@ type NavItemProps = {
   toggleSelect: () => void
   isActive: boolean
   isFocusable?: boolean
+  onClick?: () => void
   subNav: {
     name: string
     href: string
@@ -23,12 +24,14 @@ export function NavItem({
   toggleSelect,
   isActive,
   isFocusable = false,
+  onClick,
 }: NavItemProps) {
   const baseClasses =
     'hover:bg-primary flex w-full cursor-pointer flex-row items-center justify-between px-4 py-3 whitespace-nowrap lg:w-fit lg:justify-center lg:gap-1 lg:p-0 lg:hover:bg-transparent'
   if (subNav.length === 0) {
     return (
       <Link
+        onClick={onClick}
         role='menuitem'
         href={href}
         className={cn(baseClasses)}
@@ -44,7 +47,10 @@ export function NavItem({
       aria-expanded={isActive}
       role='menuitem'
       tabIndex={isFocusable ? 0 : -1}
-      onClick={toggleSelect}
+      onClick={() => {
+        toggleSelect()
+        if (onClick) onClick()
+      }}
       className={cn(baseClasses)}
     >
       <Typography
