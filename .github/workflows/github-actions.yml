@@ -105,9 +105,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
-
       - name: Run E2E API tests
         env:
           DIRECTUS_CMS_URL: ${{ secrets.DIRECTUS_CMS_URL }}
