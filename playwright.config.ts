@@ -34,19 +34,29 @@ export default defineConfig({
 
   /* Configure projects for major browsers */
   projects: [
+    /* API tests project - tests the production Directus API directly */
+    {
+      name: 'api',
+      use: {},
+      testMatch: '**/api/**/*.test.ts',
+    },
+
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      testIgnore: '**/api/**',
     },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      testIgnore: '**/api/**',
     },
 
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] },
+      testIgnore: '**/api/**',
     },
 
     /* Test against mobile viewports. */
