@@ -15,6 +15,7 @@
     "test:unit:watch": "jest --watch",
     "test:unit:coverage": "jest --coverage",
     "test:e2e": "playwright test",
+    "test:e2e:api": "playwright test --project=api",
     "test:e2e:ui": "playwright test --ui",
     "prepare": "husky"
   },
