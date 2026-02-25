@@ -46,12 +46,7 @@ export default async function Home() {
           Проблемы с алкоголем?
           <span className='text-primary'> Есть решение.</span>
         </Typography>
-        <Grid
-          as='nav'
-          justify='center'
-          className='lg:flex lg:flex-row'
-          align='center'
-        >
+        <Grid as='nav' className='lg:flex lg:flex-row lg:justify-center'>
           <Button
             variant='outlined'
             size='lg'
@@ -99,12 +94,7 @@ export default async function Home() {
             href='https://t.me/@QSAAbot'
             variant='icon-left'
           />
-          <Grid
-            as='nav'
-            justify='start'
-            className='lg:flex lg:flex-row'
-            align='center'
-          >
+          <Grid as='nav' className='lg:flex lg:flex-row'>
             <Button
               variant='outlined'
               size='lg'

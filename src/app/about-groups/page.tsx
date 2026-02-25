@@ -45,12 +45,7 @@ export default async function AboutGroups() {
               variant='icon-left'
             />
           )}
-          <Grid
-            as='nav'
-            justify='start'
-            className='lg:flex lg:flex-row'
-            align='center'
-          >
+          <Grid as='nav' className='lg:flex lg:flex-row'>
             <Button
               variant='outlined'
               size='lg'

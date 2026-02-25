@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: process.env.DIRECTUS_CMS_URL || '',
         pathname: '/assets/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'picsum.photos',
+        pathname: '/id/**',
+      },
     ],
   },
 }

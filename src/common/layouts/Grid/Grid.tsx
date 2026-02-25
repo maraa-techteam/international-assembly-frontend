@@ -3,7 +3,7 @@ import { VariantProps, cva } from 'class-variance-authority'
 
 import { GridType } from './Grid.type'
 
-const gridVariants = cva('flex w-full flex-col lg:grid', {
+const gridVariants = cva('w-full grid', {
   variants: {
     columns: {
       1: 'lg:grid-cols-1',
@@ -24,18 +24,6 @@ const gridVariants = cva('flex w-full flex-col lg:grid', {
       6: 'gap-6 lg:gap-8',
       8: 'gap-8 lg:gap-10',
     },
-    align: {
-      start: 'items-start',
-      center: 'items-center',
-      end: 'items-end',
-      stretch: 'items-stretch',
-    },
-    justify: {
-      start: 'justify-start',
-      center: 'justify-center',
-      end: 'justify-end',
-      between: 'justify-between',
-    },
     isScrollable: {
       true: 'overflow-x-auto',
       false: '',
@@ -44,8 +32,6 @@ const gridVariants = cva('flex w-full flex-col lg:grid', {
   defaultVariants: {
     columns: 2,
     gap: 4,
-    align: 'stretch',
-    justify: 'start',
     isScrollable: false,
   },
 })
@@ -57,18 +43,14 @@ export function Grid({
   children,
   columns,
   gap,
-  align,
-  justify,
   isScrollable,
   className,
   as: Component = 'div',
 }: GridPropsType) {
   return (
     <Component
-      className={cn(
-        gridVariants({ columns, gap, align, justify, isScrollable }),
-        className,
-      )}
+      role={Component === 'ul' ? 'list' : undefined}
+      className={cn(gridVariants({ columns, gap, isScrollable }), className)}
     >
       {children}
     </Component>

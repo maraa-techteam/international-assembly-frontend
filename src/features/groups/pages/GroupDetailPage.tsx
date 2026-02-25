@@ -9,6 +9,8 @@ import { cn } from '@/common/utils/cn'
 import { GroupSchedule, fetchGroup } from '@/features/groups'
 import { Metadata } from 'next'
 
+import { Gallery } from '../components/Gallery/Gallery'
+
 export default async function generateMetadata({
   params,
 }: {
@@ -76,7 +78,7 @@ export async function GroupDetailPage({
               (contactItem: { name: string; phone: string }, index: number) => {
                 return (
                   <div
-                    key={contactItem.phone}
+                    key={contactItem.phone + '_' + contactItem.name}
                     className={cn(
                       'flex flex-col gap-4 pb-4',
                       index === group.contact.length - 1 && 'pb-0',
@@ -130,6 +132,9 @@ export async function GroupDetailPage({
             />
           )}
         </div>
+      )}
+      {group?.images && group.images.length > 0 && (
+        <Gallery images={group.images} />
       )}
     </Section>
   )
