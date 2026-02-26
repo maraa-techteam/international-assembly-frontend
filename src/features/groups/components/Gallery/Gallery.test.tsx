@@ -1,6 +1,4 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import Image, { ImageProps } from 'next/image'
-import { ReactNode } from 'react'
 
 import { Gallery } from './Gallery'
 import { ImageType } from './Gallery.type'
@@ -11,8 +9,8 @@ jest.mock('@/common/utils/getImageUrl', () => ({
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, width, height }: ImageProps) => (
-    <Image src={src} alt={alt} width={width} height={height} />
+  default: ({ src, alt, width, height }: any) => (
+    <img src={src} alt={alt} width={width} height={height} />
   ),
 }))
 
@@ -22,11 +20,11 @@ jest.mock('@/common/hooks/useEscapeClose', () => ({
 
 jest.mock('@/common/components', () => ({
   Icon: () => <div />,
-  Typography: (children: ReactNode | ReactNode[]) => <div>{children}</div>,
+  Typography: ({ children }: any) => <div>{children}</div>,
 }))
 
 jest.mock('@/common/layouts', () => ({
-  Grid: (children: ReactNode | ReactNode[]) => <ul>{children}</ul>,
+  Grid: ({ children }: any) => <ul>{children}</ul>,
 }))
 
 const mockImages: ImageType[] = [
