@@ -1,4 +1,4 @@
-import { LinkComponent, Typography } from '@/common/components'
+import { Icon, LinkComponent, Typography } from '@/common/components'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -32,13 +32,13 @@ export function Footer({ footerData, socials }: FooterProps) {
             {socials.map((item) => {
               return (
                 <li role='menuitem' key={item.name}>
-                  <LinkComponent
-                    color='contrast'
-                    icon={item.icon}
-                    text=''
+                  <Link
                     href={item.href}
-                    variant='icon-only'
-                  />
+                    target='_blank'
+                    className='flex items-center gap-2 text-white'
+                  >
+                    <Icon icon={item.icon} />
+                  </Link>
                 </li>
               )
             })}

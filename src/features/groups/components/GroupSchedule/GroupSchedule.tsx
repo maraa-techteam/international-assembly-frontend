@@ -45,10 +45,16 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
     }
   })
 
+  const removeSeconds = (time: string) => {
+    const [hours, minutes] = time.split(':')
+    return `${hours}:${minutes}`
+  }
+
   return (
     <div className='flex flex-col justify-center gap-1 py-2'>
       <div className='grid grid-cols-7'>
         {normalizedSchedule.map((slot) => {
+          const time = slot.time ? removeSeconds(slot.time) : ''
           return (
             <div
               key={slot.day}
@@ -61,7 +67,7 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
                 {getDay(slot.day)}
               </Typography>
               <Typography variant='caption' className='text-xs'>
-                {slot.time}
+                {time}
               </Typography>
             </div>
           )

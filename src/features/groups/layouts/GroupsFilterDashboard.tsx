@@ -112,7 +112,7 @@ export function GroupsFilterDashboard({
         />
 
         <Select
-          label='Присутствие'
+          label='Формат'
           value={draft.presence}
           options={dropdownOptions.presence}
           textColor={variant === 'widget' ? 'text-primary' : 'text-foreground'}

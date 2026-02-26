@@ -53,7 +53,8 @@ jobs:
 
       - name: Check if the project builds
         env:
-          DIRECTUS_CMS_URL: "https://${{ secrets.DIRECTUS_CMS_URL }}"
+          DIRECTUS_CMS_URL: ${{ secrets.DIRECTUS_CMS_URL }}
+          NEXT_PUBLIC_DIRECTUS_CMS_URL: ${{ secrets.DIRECTUS_CMS_URL }}
         run: |
           echo "Checking if the project builds..."
           pnpm run build

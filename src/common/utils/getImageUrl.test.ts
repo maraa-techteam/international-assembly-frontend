@@ -1,14 +1,14 @@
 import { getImageUrl } from './getImageUrl'
 
 describe('getImageUrl', () => {
-  const originalEnv = process.env
+  const originalEnv = process.env.NEXT_PUBLIC_DIRECTUS_CMS_URL
 
   beforeEach(() => {
-    process.env = { ...originalEnv, DIRECTUS_CMS_URL: 'cms.example.com' }
+    process.env.NEXT_PUBLIC_DIRECTUS_CMS_URL = 'cms.example.com'
   })
 
   afterEach(() => {
-    process.env = originalEnv
+    process.env.NEXT_PUBLIC_DIRECTUS_CMS_URL = originalEnv
   })
 
   it('builds the correct asset URL', () => {

@@ -31,7 +31,7 @@ export function GroupsTable({ groups }: GroupsTableProps) {
               Страна
             </Typography>
             <Typography className='py-4' variant='caption'>
-              Присутствие
+              Формат
             </Typography>
             <Typography className='py-4' variant='caption'>
               Расписание

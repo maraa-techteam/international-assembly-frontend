@@ -8,6 +8,9 @@ import { Grid, Section } from '@/common/layouts'
 import { cn } from '@/common/utils/cn'
 import { GroupSchedule, fetchGroup } from '@/features/groups'
 import { Metadata } from 'next'
+import Link from 'next/dist/client/link'
+
+import { Gallery } from '../components/Gallery/Gallery'
 
 export default async function generateMetadata({
   params,
@@ -57,7 +60,13 @@ export async function GroupDetailPage({
           <Typography variant='body'>{group?.address}</Typography>
         )}
         {group?.digital_address && (
-          <Typography variant='body'>{group?.digital_address}</Typography>
+          <Link
+            href={group?.digital_address}
+            target='_blank'
+            className='text-primary flex items-center gap-4 underline'
+          >
+            {group?.digital_address}
+          </Link>
         )}
       </div>
       <Grid>
@@ -76,7 +85,7 @@ export async function GroupDetailPage({
               (contactItem: { name: string; phone: string }, index: number) => {
                 return (
                   <div
-                    key={contactItem.phone}
+                    key={contactItem.phone + '_' + contactItem.name}
                     className={cn(
                       'flex flex-col gap-4 pb-4',
                       index === group.contact.length - 1 && 'pb-0',
@@ -105,31 +114,39 @@ export async function GroupDetailPage({
             Дополнительная информация
           </Typography>
           {group?.website && (
-            <LinkComponent
+            <Link
               href={group?.website}
-              text='Веб-сайт'
-              icon='website'
-              variant='icon-left'
-            />
+              target='_blank'
+              className='text-primary flex items-center gap-4'
+            >
+              <Icon icon='website' />
+              Веб-сайт
+            </Link>
           )}
           {group?.youtube && (
-            <LinkComponent
-              href='https://www.youtube.com/@internationalassembly'
-              text='Youtube'
-              icon='youtube'
-              variant='icon-left'
-            />
+            <Link
+              href={group?.youtube}
+              target='_blank'
+              className='text-primary flex items-center gap-4'
+            >
+              <Icon icon='youtube' />
+              YouTube
+            </Link>
           )}
           {group?.telegram && (
-            <LinkComponent
-              href='https://www.telegram.me/ia_berlin'
-              text='Telegram'
-              icon='telegram'
-              color='primary'
-              variant='icon-left'
-            />
+            <Link
+              href={group?.telegram}
+              target='_blank'
+              className='text-primary flex items-center gap-4'
+            >
+              <Icon icon='telegram' />
+              Telegram
+            </Link>
           )}
         </div>
+      )}
+      {group?.images && group.images.length > 0 && (
+        <Gallery images={group.images} />
       )}
     </Section>
   )

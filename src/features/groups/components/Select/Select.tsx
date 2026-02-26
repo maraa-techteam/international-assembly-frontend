@@ -39,7 +39,7 @@ export function Select({
   const getName = (label: string) =>
     label === 'Страна'
       ? 'country'
-      : label === 'Присутствие'
+      : label === 'Формат'
         ? 'presence'
         : 'schedule_slots'
 

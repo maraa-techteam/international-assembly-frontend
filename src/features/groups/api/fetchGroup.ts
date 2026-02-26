@@ -24,6 +24,7 @@ export async function fetchGroup(slug: string) {
           'contact',
           'time_zone',
           { schedule_slots: ['day', 'time'] },
+          { images: ['id', 'directus_files_id'] },
         ],
       }),
     )

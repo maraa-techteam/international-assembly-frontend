@@ -57,7 +57,7 @@ export async function ArticleDetailPage({
       <Section color='contrast'>
         <Typography variant='h1'>{article?.title}</Typography>
         <Label text={formatDate(article?.date_created)} />
-        <Grid align='start' justify='center' columns={2}>
+        <Grid columns={2}>
           <RichTextPreview htmlContent={article?.content || ''} />
           {article?.image ? (
             <Image
