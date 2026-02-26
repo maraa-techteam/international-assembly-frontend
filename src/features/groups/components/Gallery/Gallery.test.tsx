@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
+import { type ReactNode } from 'react'
 
 import { Gallery } from './Gallery'
 import { ImageType } from './Gallery.type'
@@ -9,9 +10,17 @@ jest.mock('@/common/utils/getImageUrl', () => ({
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, width, height }: any) => (
-    <img src={src} alt={alt} width={width} height={height} />
-  ),
+  default: ({
+    src,
+    alt,
+    width,
+    height,
+  }: {
+    src: string
+    alt: string
+    width?: number | `${number}`
+    height?: number | `${number}`
+  }) => <img src={src} alt={alt} width={width} height={height} />,
 }))
 
 jest.mock('@/common/hooks/useEscapeClose', () => ({
@@ -20,11 +29,11 @@ jest.mock('@/common/hooks/useEscapeClose', () => ({
 
 jest.mock('@/common/components', () => ({
   Icon: () => <div />,
-  Typography: ({ children }: any) => <div>{children}</div>,
+  Typography: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }))
 
 jest.mock('@/common/layouts', () => ({
-  Grid: ({ children }: any) => <ul>{children}</ul>,
+  Grid: ({ children }: { children: ReactNode }) => <ul>{children}</ul>,
 }))
 
 const mockImages: ImageType[] = [

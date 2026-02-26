@@ -10,9 +10,17 @@ jest.mock('@/common/utils/getImageUrl', () => ({
 
 jest.mock('next/image', () => ({
   __esModule: true,
-  default: ({ src, alt, width, height }: any) => (
-    <img src={src} alt={alt} width={width} height={height} />
-  ),
+  default: ({
+    src,
+    alt,
+    width,
+    height,
+  }: {
+    src: string
+    alt: string
+    width?: number | `${number}`
+    height?: number | `${number}`
+  }) => <img src={src} alt={alt} width={width} height={height} />,
 }))
 
 const mockProps: Article = {
