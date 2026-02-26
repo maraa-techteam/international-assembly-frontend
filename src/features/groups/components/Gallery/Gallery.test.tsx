@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 import { Gallery } from './Gallery'
 import { ImageType } from './Gallery.type'
@@ -32,54 +32,175 @@ const mockImages: ImageType[] = [
 ]
 
 describe('Gallery', () => {
-  it('renders gallery thumbnails', () => {
+  it('renders all gallery thumbnails', () => {
     render(<Gallery images={mockImages} />)
-    expect(screen.getByAltText('Image 1')).toBeInTheDocument()
-    expect(screen.getByAltText('Image 2')).toBeInTheDocument()
+    const thumbnails = screen.getAllByAltText('Изображение')
+    expect(thumbnails).toHaveLength(mockImages.length)
   })
 
-  it('opens modal when clicking a thumbnail', async () => {
+  it('does not show modal initially', () => {
+    render(<Gallery images={mockImages} />)
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('opens modal when clicking a thumbnail', () => {
     render(<Gallery images={mockImages} />)
     const button = screen.getAllByRole('button')[0]
     fireEvent.click(button)
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument()
-    })
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
   })
 
-  it('closes modal when clicking close button', async () => {
+  it('shows the first image in the modal when opening the first thumbnail', () => {
     render(<Gallery images={mockImages} />)
-    const button = screen.getAllByRole('button')[0]
-    fireEvent.click(button)
-
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument()
-    })
-
-    const closeButton = screen.getByLabelText('Закрыть просмотр изображений')
-    fireEvent.click(closeButton)
-
-    await waitFor(() => {
-      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
-    })
+    fireEvent.click(screen.getAllByRole('button')[0])
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image1.jpg'),
+    )
   })
 
-  it('navigates to next image', async () => {
+  it('closes modal when clicking the close button', () => {
     render(<Gallery images={mockImages} />)
-    const button = screen.getAllByRole('button')[0]
-    fireEvent.click(button)
+    fireEvent.click(screen.getAllByRole('button')[0])
+    expect(screen.getByRole('dialog')).toBeInTheDocument()
 
-    await waitFor(() => {
-      expect(screen.getByRole('dialog')).toBeInTheDocument()
+    fireEvent.click(screen.getByLabelText('Закрыть просмотр изображений'))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
+  it('navigates to the next image', () => {
+    render(<Gallery images={mockImages} />)
+    fireEvent.click(screen.getAllByRole('button')[0])
+
+    fireEvent.click(screen.getByLabelText('Следующее изображение'))
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image2.jpg'),
+    )
+  })
+
+  it('navigates to the previous image', () => {
+    render(<Gallery images={mockImages} />)
+    fireEvent.click(screen.getAllByRole('button')[0])
+    fireEvent.click(screen.getByLabelText('Следующее изображение'))
+
+    fireEvent.click(screen.getByLabelText('Предыдущее изображение'))
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image1.jpg'),
+    )
+  })
+
+  it('wraps around to the last image when navigating previous from the first', () => {
+    render(<Gallery images={mockImages} />)
+    fireEvent.click(screen.getAllByRole('button')[0])
+
+    fireEvent.click(screen.getByLabelText('Предыдущее изображение'))
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image3.jpg'),
+    )
+  })
+
+  it('wraps around to the first image when navigating next from the last', () => {
+    render(<Gallery images={mockImages} />)
+    // Open the last thumbnail
+    const buttons = screen.getAllByRole('button')
+    fireEvent.click(buttons[mockImages.length - 1])
+
+    fireEvent.click(screen.getByLabelText('Следующее изображение'))
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image1.jpg'),
+    )
+  })
+
+  it('navigates to a specific image via dot navigation', () => {
+    render(<Gallery images={mockImages} />)
+    fireEvent.click(screen.getAllByRole('button')[0])
+
+    fireEvent.click(screen.getByLabelText('Перейти к изображению 3'))
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image3.jpg'),
+    )
+  })
+
+  it('navigates to next image on left swipe', () => {
+    render(<Gallery images={mockImages} />)
+    fireEvent.click(screen.getAllByRole('button')[0])
+
+    const imageContainer = screen
+      .getByAltText('Выбранное изображение')
+      .closest('div')!
+    fireEvent.touchStart(imageContainer, {
+      targetTouches: [{ clientX: 200 }],
     })
-
-    const nextButton = screen.getByLabelText('Следующее изображение')
-    fireEvent.click(nextButton)
-
-    await waitFor(() => {
-      const img = screen.getByAltText('Выбранное изображение')
-      expect(img).toHaveAttribute('src', expect.stringContaining('image2.jpg'))
+    fireEvent.touchMove(imageContainer, {
+      targetTouches: [{ clientX: 100 }],
     })
+    fireEvent.touchEnd(imageContainer)
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image2.jpg'),
+    )
+  })
+
+  it('navigates to previous image on right swipe', () => {
+    render(<Gallery images={mockImages} />)
+    fireEvent.click(screen.getAllByRole('button')[0])
+    fireEvent.click(screen.getByLabelText('Следующее изображение'))
+
+    const imageContainer = screen
+      .getByAltText('Выбранное изображение')
+      .closest('div')!
+    fireEvent.touchStart(imageContainer, {
+      targetTouches: [{ clientX: 100 }],
+    })
+    fireEvent.touchMove(imageContainer, {
+      targetTouches: [{ clientX: 200 }],
+    })
+    fireEvent.touchEnd(imageContainer)
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image1.jpg'),
+    )
+  })
+
+  it('does not navigate on swipe below minimum distance', () => {
+    render(<Gallery images={mockImages} />)
+    fireEvent.click(screen.getAllByRole('button')[0])
+
+    const imageContainer = screen
+      .getByAltText('Выбранное изображение')
+      .closest('div')!
+    fireEvent.touchStart(imageContainer, {
+      targetTouches: [{ clientX: 200 }],
+    })
+    fireEvent.touchMove(imageContainer, {
+      targetTouches: [{ clientX: 175 }],
+    })
+    fireEvent.touchEnd(imageContainer)
+
+    const selectedImage = screen.getByAltText('Выбранное изображение')
+    expect(selectedImage).toHaveAttribute(
+      'src',
+      expect.stringContaining('image1.jpg'),
+    )
   })
 })
