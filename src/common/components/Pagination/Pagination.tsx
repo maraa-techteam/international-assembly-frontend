@@ -1,7 +1,8 @@
 'use client'
 
-import { Button } from '@/common/components'
+import { Button, Loader } from '@/common/components'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useTransition } from 'react'
 
 type PaginationProps = {
   fetchedCount: number
@@ -11,6 +12,7 @@ export function Pagination({ fetchedCount }: PaginationProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [isPending, startTransition] = useTransition()
 
   const handleLoadMore = () => {
     const currentLimit = parseInt(searchParams.get('limit') || '10', 10)
@@ -22,7 +24,9 @@ export function Pagination({ fetchedCount }: PaginationProps) {
     // ensure we don't "page" when doing load more
     params.delete('page')
 
-    router.push(`${pathname}?${params.toString()}`, { scroll: false })
+    startTransition(() => {
+      router.push(`${pathname}?${params.toString()}`, { scroll: false })
+    })
   }
 
   // Show button only if we got a "full batch" (likely more exists)
@@ -38,8 +42,10 @@ export function Pagination({ fetchedCount }: PaginationProps) {
         variant='contained'
         size='sm'
         color='primary'
+        disabled={isPending}
       >
         Показать ещё
+        {isPending && <Loader className='ml-2' />}
       </Button>
     </div>
   )
