@@ -141,20 +141,31 @@ export function GroupsFilterDashboard({
             variant='contained'
             disabled={!isOptionsSelected || isSubmitting}
             color='secondary'
-            className='w-full gap-4'
+            className='group w-full gap-2'
             size='sm'
             type='submit'
           >
             <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
             </Typography>
-            {isSubmitting ? <Loader /> : <Icon icon='arrow-right' size='md' />}
+            {isSubmitting ? (
+              <Loader />
+            ) : (
+              <Icon
+                icon='arrow-right'
+                className={cn(
+                  isOptionsSelected &&
+                    'transition-transform duration-300 ease-in-out group-hover:translate-x-1',
+                )}
+                size='md'
+              />
+            )}
           </Button>
         )}
       </Grid>
 
       {variant !== 'widget' && (
-        <div className='flex w-full flex-col items-center gap-4 lg:flex-row lg:justify-between'>
+        <div className='flex w-full flex-col items-end gap-4 lg:flex-row lg:items-center lg:justify-between'>
           <Link
             className={cn(
               !isOptionsSelected && 'pointer-events-none text-gray-400',
@@ -169,7 +180,7 @@ export function GroupsFilterDashboard({
             }}
           >
             Сбросить фильтры
-            {isResetting && <Loader />}
+            {isResetting && <Loader className='ml-1 h-3 w-3' />}
           </Link>
 
           <Button
@@ -177,13 +188,24 @@ export function GroupsFilterDashboard({
             variant='contained'
             disabled={!isOptionsSelected || isSubmitting}
             color='primary'
-            className='w-full gap-4 lg:max-w-75'
+            className='group w-full gap-3 lg:max-w-75'
             size='sm'
           >
             <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
             </Typography>
-            {isSubmitting ? <Loader /> : <Icon icon='arrow-right' size='md' />}
+            {isSubmitting ? (
+              <Loader />
+            ) : (
+              <Icon
+                icon='arrow-right'
+                className={cn(
+                  isOptionsSelected &&
+                    'transition-transform duration-300 ease-in-out group-hover:translate-x-1',
+                )}
+                size='md'
+              />
+            )}
           </Button>
         </div>
       )}
