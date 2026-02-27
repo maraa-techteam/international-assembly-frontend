@@ -63,7 +63,7 @@ export async function GroupDetailPage({
           <Link
             href={group?.digital_address}
             target='_blank'
-            className='text-primary flex items-center gap-4 underline'
+            className='text-primary flex items-center gap-4 break-all underline'
           >
             {group?.digital_address}
           </Link>
@@ -117,7 +117,7 @@ export async function GroupDetailPage({
             <Link
               href={group?.website}
               target='_blank'
-              className='text-primary flex items-center gap-4'
+              className='text-primary flex items-center gap-4 break-all'
             >
               <Icon icon='website' />
               Веб-сайт
@@ -127,7 +127,7 @@ export async function GroupDetailPage({
             <Link
               href={group?.youtube}
               target='_blank'
-              className='text-primary flex items-center gap-4'
+              className='text-primary flex items-center gap-4 break-all'
             >
               <Icon icon='youtube' />
               YouTube
@@ -137,7 +137,7 @@ export async function GroupDetailPage({
             <Link
               href={group?.telegram}
               target='_blank'
-              className='text-primary flex items-center gap-4'
+              className='text-primary flex items-center gap-4 break-all'
             >
               <Icon icon='telegram' />
               Telegram
