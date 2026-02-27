@@ -1,11 +1,11 @@
 'use client'
 
 import { Icon, Typography } from '@/common/components'
+import { ImageWithSkeleton } from '@/common/components/ImageWithSkeleton/ImageWithSkeleton'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { Grid } from '@/common/layouts'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { ImageType } from '@/features/groups/components/Gallery/Gallery.type'
-import Image from 'next/image'
 import { useState } from 'react'
 
 type GalleryPropstype = {
@@ -88,11 +88,12 @@ export function Gallery({ images }: GalleryPropstype) {
                 Открыть изображение
               </Typography>
             </button>
-            <Image
+            <ImageWithSkeleton
               width={188}
               height={130}
               src={getImageUrl(image.src)}
               alt={'Изображение'}
+              sizes='(max-width: 640px) 50vw, 188px'
               className='w-full rounded-lg object-cover transition-opacity hover:opacity-80'
             />
           </li>
@@ -132,11 +133,12 @@ export function Gallery({ images }: GalleryPropstype) {
               onTouchMove={handleTouchMove}
               onTouchEnd={handleTouchEnd}
             >
-              <Image
+              <ImageWithSkeleton
                 width={868}
                 height={600}
                 src={getImageUrl(selectedImage?.src || '')}
                 alt='Выбранное изображение'
+                sizes='(max-width: 768px) 100vw, 868px'
                 className='rounded-lg object-cover shadow-2xl'
               />
               <Typography

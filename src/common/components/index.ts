@@ -1,4 +1,5 @@
 export * from './Button/Button'
+export * from './ImageWithSkeleton/ImageWithSkeleton'
 export * from './Loader/Loader'
 export * from './Icon/Icon'
 export * from '../../features/groups/components/Select/Select'

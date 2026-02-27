@@ -1,8 +1,8 @@
 import { Label, Typography } from '@/common/components'
+import { ImageWithSkeleton } from '@/common/components/ImageWithSkeleton/ImageWithSkeleton'
 import { cn } from '@/common/utils/cn'
 import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'
-import Image from 'next/image'
 
 import { ArticleCardType } from './ArticleCard.type'
 
@@ -26,11 +26,12 @@ export function ArticleCard({
       )}
     >
       {image ? (
-        <Image
+        <ImageWithSkeleton
           src={getImageUrl(image)}
           alt={title}
           width={500}
           height={400}
+          sizes='(max-width: 768px) 100vw, 500px'
           className={cn(
             'w-full rounded-lg object-cover',
             isHighlighted && 'aspect-video',

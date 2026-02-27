@@ -1,6 +1,7 @@
 import { getFrequentlyVisitedLinks } from '@/common/api/fetchFrequentlyVisitedLinks'
 import { fetchHomePage } from '@/common/api/fetchHomePage'
 import { Button, LinkComponent, Typography } from '@/common/components'
+import { ImageWithSkeleton } from '@/common/components/ImageWithSkeleton/ImageWithSkeleton'
 import { ContentGuide, Grid, Section } from '@/common/layouts'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { ArticleCard } from '@/features/articles'
@@ -8,7 +9,6 @@ import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { GroupsFilterDashboard } from '@/features/groups'
 import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import { Metadata } from 'next'
-import Image from 'next/image'
 import { Suspense } from 'react'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -116,7 +116,7 @@ export default async function Home() {
           </Grid>
         </div>
         <div className='flex h-fit w-full lg:w-auto'>
-          <Image
+          <ImageWithSkeleton
             src={getImageUrl('76877722-f746-4213-a78e-020d5f72fb49')}
             alt='Нужна помощь?'
             width={500}

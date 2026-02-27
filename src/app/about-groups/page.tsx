@@ -6,10 +6,10 @@ import {
   RichTextPreview,
   Typography,
 } from '@/common/components'
+import { ImageWithSkeleton } from '@/common/components/ImageWithSkeleton/ImageWithSkeleton'
 import { Grid, Section } from '@/common/layouts'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { Metadata } from 'next'
-import Image from 'next/image'
 
 const pageData = await fetchAboutGroupsPage()
 
@@ -68,7 +68,7 @@ export default async function AboutGroups() {
         </div>
         <div className='flex h-fit w-full lg:w-auto'>
           {page.image ? (
-            <Image
+            <ImageWithSkeleton
               src={getImageUrl(page.image)}
               alt={page.title}
               width={500}

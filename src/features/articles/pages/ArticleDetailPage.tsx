@@ -1,10 +1,10 @@
 import { Label, RichTextPreview, Typography } from '@/common/components'
+import { ImageWithSkeleton } from '@/common/components/ImageWithSkeleton/ImageWithSkeleton'
 import { Grid, Section } from '@/common/layouts'
 import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { Article, ArticleCard, fetchArticle } from '@/features/articles'
 import { Metadata } from 'next'
-import Image from 'next/image'
 
 type RelatedArticleJunction = {
   id: number
@@ -60,11 +60,12 @@ export async function ArticleDetailPage({
         <Grid columns={2}>
           <RichTextPreview htmlContent={article?.content || ''} />
           {article?.image ? (
-            <Image
+            <ImageWithSkeleton
               src={getImageUrl(article?.image)}
               alt={article?.title}
               width={600}
               height={280}
+              sizes='(max-width: 768px) 100vw, 600px'
               className={
                 'max-h-70 w-full max-w-150 rounded-lg object-cover object-top'
               }
