@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Icon, Select, Typography } from '@/common/components'
+import { Button, Icon, Loader, Select, Typography } from '@/common/components'
 import { Grid } from '@/common/layouts'
 import { cn } from '@/common/utils/cn'
 import Link from 'next/link'
@@ -40,9 +40,13 @@ export function GroupsFilterDashboard({
   )
 
   const [draft, setDraft] = useState<FilterOptions>(appliedFilters)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isResetting, setIsResetting] = useState(false)
 
   useEffect(() => {
     setDraft(appliedFilters)
+    setIsSubmitting(false)
+    setIsResetting(false)
   }, [searchParams, appliedFilters])
 
   const isOptionsSelected =
@@ -90,6 +94,7 @@ export function GroupsFilterDashboard({
       action={variant === 'widget' ? `groups/${pathname}` : pathname}
       method='get'
       id='groups-filter'
+      onSubmit={() => setIsSubmitting(true)}
       className={cn(
         'bg-light-blue flex w-full flex-col gap-4 p-4 lg:mx-0 lg:rounded-2xl',
         className,
@@ -134,7 +139,7 @@ export function GroupsFilterDashboard({
         {variant === 'widget' && (
           <Button
             variant='contained'
-            disabled={!isOptionsSelected}
+            disabled={!isOptionsSelected || isSubmitting}
             color='secondary'
             className='w-full gap-4'
             size='sm'
@@ -143,7 +148,7 @@ export function GroupsFilterDashboard({
             <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
             </Typography>
-            <Icon icon='arrow-right' size='md' />
+            {isSubmitting ? <Loader /> : <Icon icon='arrow-right' size='md' />}
           </Button>
         )}
       </Grid>
@@ -153,19 +158,24 @@ export function GroupsFilterDashboard({
           <Link
             className={cn(
               !isOptionsSelected && 'pointer-events-none text-gray-400',
-              'h-fit',
+              isResetting && 'pointer-events-none',
+              'inline-flex h-fit items-center gap-1',
             )}
             href={pathname}
             aria-disabled={!isOptionsSelected}
             tabIndex={isOptionsSelected ? 0 : -1}
+            onClick={() => {
+              if (isOptionsSelected) setIsResetting(true)
+            }}
           >
             Сбросить фильтры
+            {isResetting && <Loader />}
           </Link>
 
           <Button
             type='submit'
             variant='contained'
-            disabled={!isOptionsSelected}
+            disabled={!isOptionsSelected || isSubmitting}
             color='primary'
             className='w-full gap-4 lg:max-w-75'
             size='sm'
@@ -173,7 +183,7 @@ export function GroupsFilterDashboard({
             <Typography variant='caption' className='font-medium' font='roboto'>
               Поиск
             </Typography>
-            <Icon icon='arrow-right' size='md' />
+            {isSubmitting ? <Loader /> : <Icon icon='arrow-right' size='md' />}
           </Button>
         </div>
       )}
