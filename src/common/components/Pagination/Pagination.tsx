@@ -73,7 +73,7 @@ export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
   if (totalPages <= 1 && !hasMore) return null
 
   const navBtnClass = cn(
-    'cursor-pointer rounded p-1 text-primary transition-colors',
+    'flex items-center justify-center cursor-pointer rounded p-1 text-primary transition-colors',
     'hover:bg-primary/10 disabled:cursor-not-allowed disabled:opacity-30',
   )
 
@@ -83,7 +83,7 @@ export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
         <div className='flex items-center gap-1'>
           <button
             type='button'
-            aria-label='First page'
+            aria-label='Первая страница'
             onClick={() => handlePageChange(1)}
             disabled={isPending || currentPage === 1}
             className={navBtnClass}
@@ -93,7 +93,7 @@ export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
 
           <button
             type='button'
-            aria-label='Previous page'
+            aria-label='Предыдущая страница'
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={isPending || currentPage === 1}
             className={navBtnClass}
@@ -121,7 +121,7 @@ export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
 
           <button
             type='button'
-            aria-label='Next page'
+            aria-label='Следующая страница'
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={isPending || currentPage === totalPages}
             className={navBtnClass}
@@ -131,7 +131,7 @@ export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
 
           <button
             type='button'
-            aria-label='Last page'
+            aria-label='Последняя страница'
             onClick={() => handlePageChange(totalPages)}
             disabled={isPending || currentPage === totalPages}
             className={navBtnClass}
