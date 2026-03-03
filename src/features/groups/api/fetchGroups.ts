@@ -1,4 +1,4 @@
-import { readItems } from '@directus/sdk'
+import { aggregate, readItems } from '@directus/sdk'
 import { SearchParams } from 'next/dist/server/request/search-params'
 
 import directus from '../../../common/lib/directus'
@@ -16,57 +16,67 @@ export async function fetchGroups(params?: SearchParams) {
 
   const itemsPerPage = params?.limit ? parseInt(params.limit as string) : 10
 
+  const filter = {
+    country: countries
+      ? {
+          _in: countries,
+        }
+      : undefined,
+    presence: presence
+      ? {
+          _in: presence,
+        }
+      : undefined,
+    schedule_slots: schedule_slots
+      ? {
+          day: {
+            _in: schedule_slots,
+          },
+        }
+      : undefined,
+    name: searchValue
+      ? {
+          _contains: searchValue,
+        }
+      : undefined,
+  }
+
   try {
-    const raw = await directus.request(
-      readItems('groups', {
-        limit: itemsPerPage,
-        page,
-        meta: 'total_count',
+    const [raw, countResult] = await Promise.all([
+      directus.request(
+        readItems('groups', {
+          limit: itemsPerPage,
+          page,
+          filter,
+          fields: [
+            'id',
+            'slug',
+            'name',
+            'description',
+            'country',
+            'presence',
+            'digital_address',
+            'address',
+            'website',
+            'youtube',
+            'telegram',
+            'contact',
+            'time_zone',
+            { schedule_slots: ['day', 'time'] },
+          ],
+        }),
+      ),
+      directus.request(
+        aggregate('groups', {
+          aggregate: { count: '*' },
+          query: { filter },
+        }),
+      ),
+    ])
 
-        filter: {
-          country: countries
-            ? {
-                _in: countries,
-              }
-            : undefined,
-          presence: presence
-            ? {
-                _in: presence,
-              }
-            : undefined,
-          schedule_slots: schedule_slots
-            ? {
-                day: {
-                  _in: schedule_slots,
-                },
-              }
-            : undefined,
-          name: searchValue
-            ? {
-                _contains: searchValue,
-              }
-            : undefined,
-        },
+    const totalCount = parseInt(countResult[0]?.count ?? '0', 10)
 
-        fields: [
-          'id',
-          'slug',
-          'name',
-          'description',
-          'country',
-          'presence',
-          'digital_address',
-          'address',
-          'website',
-          'youtube',
-          'telegram',
-          'contact',
-          'time_zone',
-          { schedule_slots: ['day', 'time'] },
-        ],
-      }),
-    )
-    return raw.map((item) => {
+    const data = raw.map((item) => {
       return {
         id: item.id,
         slug: item.slug,
@@ -84,6 +94,8 @@ export async function fetchGroups(params?: SearchParams) {
         schedule_slots: item.schedule_slots,
       }
     })
+
+    return { data, totalCount }
   } catch (error) {
     throw new Error(
       `Failed to fetch groups: ${error instanceof Error ? error.message : String(error)}`,
