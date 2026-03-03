@@ -31,10 +31,30 @@ const icons = {
     </>
   ),
 
+  'chevron-left': (
+    <>
+      <path
+        fill='currentColor'
+        transform='scale(-1,1) translate(-960,0)'
+        d='M504-480 320-664l56-56 240 240-240 240-56-56 184-184Z'
+      />
+    </>
+  ),
+
   'double-chevron-right': (
     <>
       <path
         fill='currentColor'
+        d='M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z'
+      />
+    </>
+  ),
+
+  'double-chevron-left': (
+    <>
+      <path
+        fill='currentColor'
+        transform='scale(-1,1) translate(-960,0)'
         d='M383-480 200-664l56-56 240 240-240 240-56-56 183-184Zm264 0L464-664l56-56 240 240-240 240-56-56 183-184Z'
       />
     </>

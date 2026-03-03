@@ -25,8 +25,8 @@ export async function GroupsListPage({
   searchParams: SearchParams
 }) {
   const params = await searchParams
-  const filteredGroups = await fetchGroups(params)
-  const groups = await fetchGroups()
+  const { data: filteredGroups, totalCount } = await fetchGroups(params)
+  const { data: groups } = await fetchGroups()
   const page = pageData[0]
 
   const countries = [...new Set(groups.map((group) => group.country))]
@@ -59,7 +59,10 @@ export async function GroupsListPage({
       </Section>
       <Section className='px-0 pt-0 lg:max-w-250 lg:pt-0 lg:pr-0' color='white'>
         <GroupsTable groups={filteredGroups} />
-        <Pagination fetchedCount={filteredGroups.length} />
+        <Pagination
+          fetchedCount={filteredGroups.length}
+          totalCount={totalCount}
+        />
       </Section>
     </>
   )
