@@ -69,6 +69,32 @@ describe('Pagination', () => {
     expect(screen.getByRole('button', { name: '3' })).toBeInTheDocument()
   })
 
+  it('shows only 3 page numbers at a time when there are more total pages', () => {
+    searchParamsMock.get.mockReturnValue(null)
+    render(<Pagination fetchedCount={10} totalCount={50} />)
+
+    // On page 1 with 5 total pages, only show pages 1–3
+    expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '3' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '4' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '5' })).not.toBeInTheDocument()
+  })
+
+  it('slides the page window to show current page in the middle', () => {
+    searchParamsMock.get.mockImplementation((key: string) => {
+      if (key === 'page') return '3'
+      return null
+    })
+    render(<Pagination fetchedCount={10} totalCount={50} />)
+
+    expect(screen.queryByRole('button', { name: '1' })).not.toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '3' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: '4' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: '5' })).not.toBeInTheDocument()
+  })
+
   it('pushes correct page param when a page button is clicked', async () => {
     searchParamsMock.get.mockReturnValue(null)
     searchParamsMock.toString.mockReturnValue('')
@@ -102,5 +128,111 @@ describe('Pagination', () => {
     expect(
       screen.getByRole('button', { name: /показать ещё/i }),
     ).toBeInTheDocument()
+  })
+
+  it('renders first, previous, next and last page nav buttons', () => {
+    searchParamsMock.get.mockReturnValue(null)
+    render(<Pagination fetchedCount={10} totalCount={25} />)
+
+    expect(
+      screen.getByRole('button', { name: 'First page' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Previous page' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Next page' }),
+    ).toBeInTheDocument()
+    expect(
+      screen.getByRole('button', { name: 'Last page' }),
+    ).toBeInTheDocument()
+  })
+
+  it('disables first and previous buttons on the first page', () => {
+    searchParamsMock.get.mockReturnValue(null)
+    render(<Pagination fetchedCount={10} totalCount={25} />)
+
+    expect(screen.getByRole('button', { name: 'First page' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Next page' })).not.toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Last page' })).not.toBeDisabled()
+  })
+
+  it('disables next and last buttons on the last page', () => {
+    searchParamsMock.get.mockImplementation((key: string) => {
+      if (key === 'page') return '3'
+      return null
+    })
+    render(<Pagination fetchedCount={10} totalCount={25} />)
+
+    expect(
+      screen.getByRole('button', { name: 'First page' }),
+    ).not.toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Previous page' }),
+    ).not.toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Last page' })).toBeDisabled()
+  })
+
+  it('navigates to next page when next button is clicked', async () => {
+    searchParamsMock.get.mockImplementation((key: string) => {
+      if (key === 'page') return '2'
+      return null
+    })
+    const user = userEvent.setup()
+    render(<Pagination fetchedCount={10} totalCount={50} />)
+
+    await user.click(screen.getByRole('button', { name: 'Next page' }))
+
+    expect(pushMock).toHaveBeenCalledWith(
+      expect.stringContaining('page=3'),
+      expect.anything(),
+    )
+  })
+
+  it('navigates to previous page when previous button is clicked', async () => {
+    searchParamsMock.get.mockImplementation((key: string) => {
+      if (key === 'page') return '3'
+      return null
+    })
+    const user = userEvent.setup()
+    render(<Pagination fetchedCount={10} totalCount={50} />)
+
+    await user.click(screen.getByRole('button', { name: 'Previous page' }))
+
+    expect(pushMock).toHaveBeenCalledWith(
+      expect.stringContaining('page=2'),
+      expect.anything(),
+    )
+  })
+
+  it('navigates to first page when first page button is clicked', async () => {
+    searchParamsMock.get.mockImplementation((key: string) => {
+      if (key === 'page') return '3'
+      return null
+    })
+    const user = userEvent.setup()
+    render(<Pagination fetchedCount={10} totalCount={50} />)
+
+    await user.click(screen.getByRole('button', { name: 'First page' }))
+
+    expect(pushMock).toHaveBeenCalledWith(
+      expect.stringContaining('page=1'),
+      expect.anything(),
+    )
+  })
+
+  it('navigates to last page when last page button is clicked', async () => {
+    searchParamsMock.get.mockReturnValue(null)
+    const user = userEvent.setup()
+    render(<Pagination fetchedCount={10} totalCount={50} />)
+
+    await user.click(screen.getByRole('button', { name: 'Last page' }))
+
+    expect(pushMock).toHaveBeenCalledWith(
+      expect.stringContaining('page=5'),
+      expect.anything(),
+    )
   })
 })
