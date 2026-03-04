@@ -10,6 +10,7 @@ import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 type HeaderProps = { headerData: TransformedNavigationType[] }
@@ -22,7 +23,10 @@ export function Header({ headerData }: HeaderProps) {
 
   const [hidden, setHidden] = useState(false)
 
+  const router = useRouter()
+  const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
+  const mobileMenuRef = useRef<HTMLUListElement>(null)
 
   useOnClickOutside(headerRef, () => {
     setIsSearchActive(false)
@@ -63,6 +67,44 @@ export function Header({ headerData }: HeaderProps) {
         item.isActive ? { ...item, isActive: false } : item,
       )
     })
+  }
+
+  // Close the mobile menu on route change (e.g. browser back/forward)
+  useEffect(() => {
+    setIsMobileMenuActive(false)
+    resetSelect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
+
+  // Close the menu with its transition, then navigate once the animation ends
+  const handleMobileNavClose = (href: string) => {
+    setIsMobileMenuActive(false)
+    resetSelect()
+
+    const menuEl = mobileMenuRef.current
+    if (!menuEl) {
+      router.push(href)
+      return
+    }
+
+    let done = false
+
+    const proceed = () => {
+      if (done) return
+      done = true
+      menuEl.removeEventListener('transitionend', onTransitionEnd)
+      router.push(href)
+    }
+
+    const onTransitionEnd = (e: TransitionEvent) => {
+      if (e.target !== menuEl) return
+      proceed()
+    }
+
+    menuEl.addEventListener('transitionend', onTransitionEnd)
+    // Fallback: navigate after 350 ms (50 ms longer than the 300 ms CSS
+    // transition) to guarantee navigation even if transitionend never fires.
+    setTimeout(proceed, 350)
   }
 
   useEffect(() => {
@@ -189,6 +231,7 @@ export function Header({ headerData }: HeaderProps) {
       {/* Mobile menu */}
       <ul
         id='mobile-menu'
+        ref={mobileMenuRef}
         role='menubar'
         className={cn(
           'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
@@ -199,10 +242,8 @@ export function Header({ headerData }: HeaderProps) {
           return (
             <li role='none' className='relative' key={item.name}>
               <NavItem
-                onClick={
-                  !item.subNav.length
-                    ? () => setIsMobileMenuActive(false)
-                    : undefined
+                onNavigate={
+                  !item.subNav.length ? handleMobileNavClose : undefined
                 }
                 isFocusable={isMobileMenuActive}
                 href={item.href}
@@ -213,9 +254,7 @@ export function Header({ headerData }: HeaderProps) {
               />
               {item.subNav.length > 0 && (
                 <MobileSubMenu
-                  onClick={() => {
-                    setIsMobileMenuActive(false)
-                  }}
+                  onNavigate={handleMobileNavClose}
                   isActive={item.isActive}
                   activeItems={item.subNav.map((subItem, j) => ({
                     ...subItem,

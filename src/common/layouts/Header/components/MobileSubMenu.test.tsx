@@ -34,9 +34,7 @@ describe('MobileSubMenu component', () => {
         isActive={true}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -52,9 +50,7 @@ describe('MobileSubMenu component', () => {
         isActive={true}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -69,15 +65,28 @@ describe('MobileSubMenu component', () => {
         isActive={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
     const menu = container.firstChild as HTMLElement
     expect(menu).toHaveClass('translate-x-full')
     expect(menu).not.toHaveClass('translate-x-0')
+  })
+
+  it('always applies transition classes', () => {
+    const { container } = render(
+      <MobileSubMenu
+        isActive={true}
+        activeItems={mockActiveItems}
+        toggleSelect={() => null}
+        onNavigate={() => null}
+      />,
+    )
+
+    const menu = container.firstChild as HTMLElement
+    expect(menu).toHaveClass('transition-transform')
+    expect(menu).toHaveClass('duration-300')
   })
 
   it('calls toggleSelect when back button is clicked', () => {
@@ -88,9 +97,7 @@ describe('MobileSubMenu component', () => {
         isActive={true}
         activeItems={mockActiveItems}
         toggleSelect={mockToggleSelect}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -106,9 +113,7 @@ describe('MobileSubMenu component', () => {
         isActive={true}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -121,15 +126,29 @@ describe('MobileSubMenu component', () => {
     expect(thirdLink).toHaveAttribute('href', '/history')
   })
 
+  it('calls onNavigate with the item href when a link is clicked', () => {
+    const mockOnNavigate = jest.fn()
+
+    render(
+      <MobileSubMenu
+        isActive={true}
+        activeItems={mockActiveItems}
+        toggleSelect={() => null}
+        onNavigate={mockOnNavigate}
+      />,
+    )
+
+    fireEvent.click(screen.getByText('Что такое МА?'))
+    expect(mockOnNavigate).toHaveBeenCalledWith('/ma')
+  })
+
   it('renders chevron icons for all menu items', () => {
     const { container } = render(
       <MobileSubMenu
         isActive={true}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -144,9 +163,7 @@ describe('MobileSubMenu component', () => {
         isActive={true}
         activeItems={[]}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 

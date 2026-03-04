@@ -7,14 +7,14 @@ type MobileSubMenuPropsType = {
   isActive: boolean
   activeItems: TransformedSecondTierNavigationType
   toggleSelect: () => void
-  onClick: () => void
+  onNavigate: (href: string) => void
 }
 
 export function MobileSubMenu({
   isActive,
   activeItems,
   toggleSelect,
-  onClick,
+  onNavigate,
 }: MobileSubMenuPropsType) {
   return (
     <ul
@@ -47,7 +47,10 @@ export function MobileSubMenu({
           <Link
             role='menuitem'
             tabIndex={isActive ? 0 : -1}
-            onClick={() => onClick()}
+            onClick={(e) => {
+              e.preventDefault()
+              onNavigate(item.href)
+            }}
             href={item.href}
             className={cn(
               'hover:bg-primary group flex flex-row justify-between px-3 py-4 whitespace-nowrap last:mb-0',
