@@ -32,12 +32,9 @@ describe('MobileSubMenu component', () => {
     render(
       <MobileSubMenu
         isActive={true}
-        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -51,12 +48,9 @@ describe('MobileSubMenu component', () => {
     const { container } = render(
       <MobileSubMenu
         isActive={true}
-        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -69,12 +63,9 @@ describe('MobileSubMenu component', () => {
     const { container } = render(
       <MobileSubMenu
         isActive={false}
-        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -83,18 +74,30 @@ describe('MobileSubMenu component', () => {
     expect(menu).not.toHaveClass('translate-x-0')
   })
 
+  it('always applies transition classes', () => {
+    const { container } = render(
+      <MobileSubMenu
+        isActive={true}
+        activeItems={mockActiveItems}
+        toggleSelect={() => null}
+        onNavigate={() => null}
+      />,
+    )
+
+    const menu = container.firstChild as HTMLElement
+    expect(menu).toHaveClass('transition-transform')
+    expect(menu).toHaveClass('duration-300')
+  })
+
   it('calls toggleSelect when back button is clicked', () => {
     const mockToggleSelect = jest.fn()
 
     render(
       <MobileSubMenu
         isActive={true}
-        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={mockToggleSelect}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -108,12 +111,9 @@ describe('MobileSubMenu component', () => {
     render(
       <MobileSubMenu
         isActive={true}
-        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -126,16 +126,29 @@ describe('MobileSubMenu component', () => {
     expect(thirdLink).toHaveAttribute('href', '/history')
   })
 
+  it('calls onNavigate with the item href when a link is clicked', () => {
+    const mockOnNavigate = jest.fn()
+
+    render(
+      <MobileSubMenu
+        isActive={true}
+        activeItems={mockActiveItems}
+        toggleSelect={() => null}
+        onNavigate={mockOnNavigate}
+      />,
+    )
+
+    fireEvent.click(screen.getByText('Что такое МА?'))
+    expect(mockOnNavigate).toHaveBeenCalledWith('/ma')
+  })
+
   it('renders chevron icons for all menu items', () => {
     const { container } = render(
       <MobileSubMenu
         isActive={true}
-        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
@@ -148,49 +161,14 @@ describe('MobileSubMenu component', () => {
     render(
       <MobileSubMenu
         isActive={true}
-        isNavigating={false}
         activeItems={[]}
         toggleSelect={() => null}
-        onClick={function (): void {
-          throw new Error('Function not implemented.')
-        }}
+        onNavigate={() => null}
       />,
     )
 
     // Only the back button should be present
     expect(screen.getByText('Назад')).toBeInTheDocument()
     expect(screen.queryByText('Что такое АА?')).not.toBeInTheDocument()
-  })
-
-  it('removes transition class when isNavigating is true for instant close', () => {
-    const { container } = render(
-      <MobileSubMenu
-        isActive={true}
-        isNavigating={true}
-        activeItems={mockActiveItems}
-        toggleSelect={() => null}
-        onClick={() => null}
-      />,
-    )
-
-    const menu = container.firstChild as HTMLElement
-    expect(menu).not.toHaveClass('transition-transform')
-    expect(menu).not.toHaveClass('duration-300')
-  })
-
-  it('applies transition class when isNavigating is false', () => {
-    const { container } = render(
-      <MobileSubMenu
-        isActive={true}
-        isNavigating={false}
-        activeItems={mockActiveItems}
-        toggleSelect={() => null}
-        onClick={() => null}
-      />,
-    )
-
-    const menu = container.firstChild as HTMLElement
-    expect(menu).toHaveClass('transition-transform')
-    expect(menu).toHaveClass('duration-300')
   })
 })

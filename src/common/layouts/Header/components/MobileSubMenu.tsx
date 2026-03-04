@@ -7,23 +7,20 @@ type MobileSubMenuPropsType = {
   isActive: boolean
   activeItems: TransformedSecondTierNavigationType
   toggleSelect: () => void
-  onClick: () => void
-  isNavigating: boolean
+  onNavigate: (href: string) => void
 }
 
 export function MobileSubMenu({
   isActive,
   activeItems,
   toggleSelect,
-  onClick,
-  isNavigating,
+  onNavigate,
 }: MobileSubMenuPropsType) {
   return (
     <ul
       role='menu'
       className={cn(
-        'fixed top-0 right-0 z-20 flex h-dvh w-full transform flex-col bg-white lg:hidden',
-        !isNavigating && 'transition-transform duration-300',
+        'fixed top-0 right-0 z-20 flex h-dvh w-full transform flex-col bg-white transition-transform duration-300 lg:hidden',
         isActive ? 'translate-x-0' : 'translate-x-full',
       )}
     >
@@ -50,7 +47,10 @@ export function MobileSubMenu({
           <Link
             role='menuitem'
             tabIndex={isActive ? 0 : -1}
-            onClick={() => onClick()}
+            onClick={(e) => {
+              e.preventDefault()
+              onNavigate(item.href)
+            }}
             href={item.href}
             className={cn(
               'hover:bg-primary group flex flex-row justify-between px-3 py-4 whitespace-nowrap last:mb-0',
