@@ -32,6 +32,7 @@ describe('MobileSubMenu component', () => {
     render(
       <MobileSubMenu
         isActive={true}
+        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
         onClick={function (): void {
@@ -50,6 +51,7 @@ describe('MobileSubMenu component', () => {
     const { container } = render(
       <MobileSubMenu
         isActive={true}
+        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
         onClick={function (): void {
@@ -67,6 +69,7 @@ describe('MobileSubMenu component', () => {
     const { container } = render(
       <MobileSubMenu
         isActive={false}
+        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
         onClick={function (): void {
@@ -86,6 +89,7 @@ describe('MobileSubMenu component', () => {
     render(
       <MobileSubMenu
         isActive={true}
+        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={mockToggleSelect}
         onClick={function (): void {
@@ -104,6 +108,7 @@ describe('MobileSubMenu component', () => {
     render(
       <MobileSubMenu
         isActive={true}
+        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
         onClick={function (): void {
@@ -125,6 +130,7 @@ describe('MobileSubMenu component', () => {
     const { container } = render(
       <MobileSubMenu
         isActive={true}
+        isNavigating={false}
         activeItems={mockActiveItems}
         toggleSelect={() => null}
         onClick={function (): void {
@@ -142,6 +148,7 @@ describe('MobileSubMenu component', () => {
     render(
       <MobileSubMenu
         isActive={true}
+        isNavigating={false}
         activeItems={[]}
         toggleSelect={() => null}
         onClick={function (): void {
@@ -153,5 +160,37 @@ describe('MobileSubMenu component', () => {
     // Only the back button should be present
     expect(screen.getByText('Назад')).toBeInTheDocument()
     expect(screen.queryByText('Что такое АА?')).not.toBeInTheDocument()
+  })
+
+  it('removes transition class when isNavigating is true for instant close', () => {
+    const { container } = render(
+      <MobileSubMenu
+        isActive={true}
+        isNavigating={true}
+        activeItems={mockActiveItems}
+        toggleSelect={() => null}
+        onClick={() => null}
+      />,
+    )
+
+    const menu = container.firstChild as HTMLElement
+    expect(menu).not.toHaveClass('transition-transform')
+    expect(menu).not.toHaveClass('duration-300')
+  })
+
+  it('applies transition class when isNavigating is false', () => {
+    const { container } = render(
+      <MobileSubMenu
+        isActive={true}
+        isNavigating={false}
+        activeItems={mockActiveItems}
+        toggleSelect={() => null}
+        onClick={() => null}
+      />,
+    )
+
+    const menu = container.firstChild as HTMLElement
+    expect(menu).toHaveClass('transition-transform')
+    expect(menu).toHaveClass('duration-300')
   })
 })

@@ -8,6 +8,7 @@ type MobileSubMenuPropsType = {
   activeItems: TransformedSecondTierNavigationType
   toggleSelect: () => void
   onClick: () => void
+  isNavigating: boolean
 }
 
 export function MobileSubMenu({
@@ -15,12 +16,14 @@ export function MobileSubMenu({
   activeItems,
   toggleSelect,
   onClick,
+  isNavigating,
 }: MobileSubMenuPropsType) {
   return (
     <ul
       role='menu'
       className={cn(
-        'fixed top-0 right-0 z-20 flex h-dvh w-full transform flex-col bg-white transition-transform duration-300 lg:hidden',
+        'fixed top-0 right-0 z-20 flex h-dvh w-full transform flex-col bg-white lg:hidden',
+        !isNavigating && 'transition-transform duration-300',
         isActive ? 'translate-x-0' : 'translate-x-full',
       )}
     >

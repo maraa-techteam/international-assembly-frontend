@@ -10,6 +10,7 @@ import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
 type HeaderProps = { headerData: TransformedNavigationType[] }
@@ -21,7 +22,9 @@ export function Header({ headerData }: HeaderProps) {
     useState<TransformedNavigationType[]>(headerData)
 
   const [hidden, setHidden] = useState(false)
+  const [isNavigating, setIsNavigating] = useState(false)
 
+  const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(headerRef, () => {
@@ -63,6 +66,20 @@ export function Header({ headerData }: HeaderProps) {
         item.isActive ? { ...item, isActive: false } : item,
       )
     })
+  }
+
+  // Close the mobile menu instantly (no transition) when the route changes
+  useEffect(() => {
+    setIsMobileMenuActive(false)
+    setIsNavigating(false)
+    resetSelect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
+
+  const handleMobileNavigation = () => {
+    setIsNavigating(true)
+    setIsMobileMenuActive(false)
+    resetSelect()
   }
 
   useEffect(() => {
@@ -191,7 +208,8 @@ export function Header({ headerData }: HeaderProps) {
         id='mobile-menu'
         role='menubar'
         className={cn(
-          'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
+          'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white lg:hidden',
+          !isNavigating && 'transition-transform duration-300',
           isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
         )}
       >
@@ -200,9 +218,7 @@ export function Header({ headerData }: HeaderProps) {
             <li role='none' className='relative' key={item.name}>
               <NavItem
                 onClick={
-                  !item.subNav.length
-                    ? () => setIsMobileMenuActive(false)
-                    : undefined
+                  !item.subNav.length ? handleMobileNavigation : undefined
                 }
                 isFocusable={isMobileMenuActive}
                 href={item.href}
@@ -213,9 +229,8 @@ export function Header({ headerData }: HeaderProps) {
               />
               {item.subNav.length > 0 && (
                 <MobileSubMenu
-                  onClick={() => {
-                    setIsMobileMenuActive(false)
-                  }}
+                  onClick={handleMobileNavigation}
+                  isNavigating={isNavigating}
                   isActive={item.isActive}
                   activeItems={item.subNav.map((subItem, j) => ({
                     ...subItem,

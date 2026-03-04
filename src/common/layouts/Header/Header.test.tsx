@@ -1,6 +1,8 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 import { Header } from './Header'
+
+let mockPathname = '/'
 
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -11,7 +13,7 @@ jest.mock('next/navigation', () => ({
     forward: jest.fn(),
     refresh: jest.fn(),
   }),
-  usePathname: () => '/',
+  usePathname: () => mockPathname,
   useSearchParams: () => new URLSearchParams(),
   useParams: () => ({}),
 }))
@@ -34,6 +36,10 @@ const mockHeaderData = [
     isActive: false,
   },
 ]
+
+beforeEach(() => {
+  mockPathname = '/'
+})
 
 describe('Header', () => {
   it('renders navigation items', () => {
@@ -64,5 +70,40 @@ describe('Header', () => {
     expect(mobileToggler).toBeInTheDocument()
     expect(mobileToggler).toHaveClass('block')
     expect(mobileToggler).toHaveClass('lg:hidden')
+  })
+
+  it('closes mobile menu instantly when pathname changes', () => {
+    const { rerender } = render(<Header headerData={mockHeaderData} />)
+
+    // Open mobile menu
+    fireEvent.click(screen.getByLabelText('Открыть мобильное меню'))
+    expect(screen.getByLabelText('Закрыть мобильное меню')).toBeInTheDocument()
+
+    // Simulate route change
+    mockPathname = '/about'
+    rerender(<Header headerData={mockHeaderData} />)
+
+    // Mobile menu should be closed
+    expect(screen.getByLabelText('Открыть мобильное меню')).toBeInTheDocument()
+  })
+
+  it('mobile menu has no transition class when closing via navigation', () => {
+    const { rerender, container } = render(
+      <Header headerData={mockHeaderData} />,
+    )
+
+    // Open mobile menu
+    fireEvent.click(screen.getByLabelText('Открыть мобильное меню'))
+
+    // Simulate clicking a nav link (handleMobileNavigation sets isNavigating=true)
+    const mobileMenu = container.querySelector('#mobile-menu') as HTMLElement
+    const navLink = mobileMenu.querySelector(
+      'a[role="menuitem"]',
+    ) as HTMLElement
+    fireEvent.click(navLink)
+
+    // Mobile menu should not have transition class (instant close)
+    expect(mobileMenu).not.toHaveClass('transition-transform')
+    expect(mobileMenu).not.toHaveClass('duration-300')
   })
 })
