@@ -34,7 +34,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
   }
   return (
     <div className='flex h-full w-full flex-col gap-4 lg:gap-6'>
-      <div className='flex w-[calc(100%+32px)] flex-row gap-4 overflow-x-auto lg:w-full'>
+      <div className='flex w-full snap-x snap-mandatory flex-row gap-4 overflow-x-auto'>
         {activeItems.map((button, i) => {
           return (
             <Button
@@ -46,6 +46,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
               onClick={() => handleClick(i)}
               type='button'
               label={button.name}
+              className='shrink-0 snap-start'
             />
           )
         })}
