@@ -4,6 +4,7 @@ import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { Article, ArticleCard, fetchArticle } from '@/features/articles'
 import { Metadata } from 'next'
+import { draftMode } from 'next/headers'
 import Image from 'next/image'
 
 type RelatedArticleJunction = {
@@ -44,7 +45,11 @@ export async function ArticleDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const article = await fetchArticle(slug)
+  const { isEnabled } = await draftMode()
+  const previewToken = isEnabled
+    ? process.env.DIRECTUS_PREVIEW_TOKEN
+    : undefined
+  const article = await fetchArticle(slug, previewToken)
 
   // Transform related articles from junction table format to flat article format
   const relatedArticles =

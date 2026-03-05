@@ -1,10 +1,11 @@
 import { readItems } from '@directus/sdk'
 
-import directus from '../../../common/lib/directus'
+import directus, { createPreviewDirectus } from '../../../common/lib/directus'
 
-export async function fetchGroup(slug: string) {
+export async function fetchGroup(slug: string, previewToken?: string) {
+  const client = previewToken ? createPreviewDirectus(previewToken) : directus
   try {
-    const raw = await directus.request(
+    const raw = await client.request(
       readItems('groups', {
         filter: {
           slug: {

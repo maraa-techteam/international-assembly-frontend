@@ -9,6 +9,7 @@ import { cn } from '@/common/utils/cn'
 import { GroupSchedule, fetchGroup } from '@/features/groups'
 import { Metadata } from 'next'
 import Link from 'next/dist/client/link'
+import { draftMode } from 'next/headers'
 
 import { Gallery } from '../components/Gallery/Gallery'
 
@@ -31,7 +32,11 @@ export async function GroupDetailPage({
   params: Promise<{ slug: string }>
 }) {
   const { slug } = await params
-  const group = await fetchGroup(slug)
+  const { isEnabled } = await draftMode()
+  const previewToken = isEnabled
+    ? process.env.DIRECTUS_PREVIEW_TOKEN
+    : undefined
+  const group = await fetchGroup(slug, previewToken)
 
   return (
     <Section color='white' className='w-full lg:max-w-200'>
