@@ -45,7 +45,7 @@ export async function GroupDetailPage({
       />
       <Typography variant='h1'>{group?.name}</Typography>
       <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
-        <Typography className='font-bold' variant='h3'>
+        <Typography className='text-sm font-bold' variant='h2'>
           Описание группы
         </Typography>
         <RichTextPreview
@@ -53,7 +53,7 @@ export async function GroupDetailPage({
         />
       </div>
       <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
-        <Typography className='font-bold' variant='h3'>
+        <Typography className='text-sm font-bold' variant='h2'>
           Место проведения
         </Typography>
         {group?.address && (
@@ -71,7 +71,7 @@ export async function GroupDetailPage({
       </div>
       <Grid>
         <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
-          <Typography className='font-bold' variant='h3'>
+          <Typography className='text-sm font-bold' variant='h2'>
             Расписание группы
           </Typography>
           <GroupSchedule
@@ -110,7 +110,7 @@ export async function GroupDetailPage({
       </Grid>
       {(group?.website || group?.youtube || group?.telegram) && (
         <div className='border-primary flex flex-col items-start gap-4 rounded-xl border-1 p-4'>
-          <Typography className='font-bold' variant='h3'>
+          <Typography className='text-[20px] font-bold' variant='h2'>
             Дополнительная информация
           </Typography>
           {group?.website && (

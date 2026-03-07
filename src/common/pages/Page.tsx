@@ -61,10 +61,10 @@ export default async function Page(page: PageProps) {
         <div className='flex h-fit w-full lg:w-auto'>
           {page.image ? (
             <Image
-              src={getImageUrl(page.image)}
+              src={getImageUrl(page.image, { width: 400, height: 250 })}
               alt={page.title}
-              width={500}
-              height={400}
+              width={400}
+              height={250}
               sizes='(max-width: 640px) 100vw, 600px'
               className='w-full max-w-md rounded-lg object-contain object-top'
               priority={false}
@@ -77,12 +77,15 @@ export default async function Page(page: PageProps) {
         </div>
       </Section>
       {page.rich_text && (
-        <Section className='pt-0 lg:pt-0' color='white'>
+        <Section className='max-w-200 pt-0 lg:pt-0' color='white'>
           <RichTextPreview htmlContent={page.rich_text} />
         </Section>
       )}
       {page.faq && (
-        <Section className='pt-0 lg:pt-0' color='white'>
+        <Section
+          className='pt-0 lg:grid lg:grid-cols-[1fr_0.5fr] lg:pt-0'
+          color='white'
+        >
           <Accordion items={page.faq} />
         </Section>
       )}

@@ -8,7 +8,7 @@ const directusCmsUrl = `https://${process.env.DIRECTUS_CMS_URL}`
 
 const directus = createDirectus(directusCmsUrl).with(
   rest({
-    onRequest: (options) => ({ ...options }),
+    onRequest: (options) => ({ ...options, cache: 'no-store' }),
   }),
 )
 
