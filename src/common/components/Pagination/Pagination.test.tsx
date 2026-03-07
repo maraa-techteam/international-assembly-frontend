@@ -135,16 +135,16 @@ describe('Pagination', () => {
     render(<Pagination fetchedCount={10} totalCount={25} />)
 
     expect(
-      screen.getByRole('button', { name: 'First page' }),
+      screen.getByRole('button', { name: 'Первая страница' }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: 'Previous page' }),
+      screen.getByRole('button', { name: 'Предыдущая страница' }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: 'Next page' }),
+      screen.getByRole('button', { name: 'Следующая страница' }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('button', { name: 'Last page' }),
+      screen.getByRole('button', { name: 'Последняя страница' }),
     ).toBeInTheDocument()
   })
 
@@ -152,10 +152,18 @@ describe('Pagination', () => {
     searchParamsMock.get.mockReturnValue(null)
     render(<Pagination fetchedCount={10} totalCount={25} />)
 
-    expect(screen.getByRole('button', { name: 'First page' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Previous page' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Next page' })).not.toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Last page' })).not.toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Первая страница' }),
+    ).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Предыдущая страница' }),
+    ).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Следующая страница' }),
+    ).not.toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Последняя страница' }),
+    ).not.toBeDisabled()
   })
 
   it('disables next and last buttons on the last page', () => {
@@ -166,13 +174,17 @@ describe('Pagination', () => {
     render(<Pagination fetchedCount={10} totalCount={25} />)
 
     expect(
-      screen.getByRole('button', { name: 'First page' }),
+      screen.getByRole('button', { name: 'Первая страница' }),
     ).not.toBeDisabled()
     expect(
-      screen.getByRole('button', { name: 'Previous page' }),
+      screen.getByRole('button', { name: 'Предыдущая страница' }),
     ).not.toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Next page' })).toBeDisabled()
-    expect(screen.getByRole('button', { name: 'Last page' })).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Следующая страница' }),
+    ).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Последняя страница' }),
+    ).toBeDisabled()
   })
 
   it('navigates to next page when next button is clicked', async () => {
@@ -183,7 +195,7 @@ describe('Pagination', () => {
     const user = userEvent.setup()
     render(<Pagination fetchedCount={10} totalCount={50} />)
 
-    await user.click(screen.getByRole('button', { name: 'Next page' }))
+    await user.click(screen.getByRole('button', { name: 'Следующая страница' }))
 
     expect(pushMock).toHaveBeenCalledWith(
       expect.stringContaining('page=3'),
@@ -199,7 +211,9 @@ describe('Pagination', () => {
     const user = userEvent.setup()
     render(<Pagination fetchedCount={10} totalCount={50} />)
 
-    await user.click(screen.getByRole('button', { name: 'Previous page' }))
+    await user.click(
+      screen.getByRole('button', { name: 'Предыдущая страница' }),
+    )
 
     expect(pushMock).toHaveBeenCalledWith(
       expect.stringContaining('page=2'),
@@ -215,7 +229,7 @@ describe('Pagination', () => {
     const user = userEvent.setup()
     render(<Pagination fetchedCount={10} totalCount={50} />)
 
-    await user.click(screen.getByRole('button', { name: 'First page' }))
+    await user.click(screen.getByRole('button', { name: 'Первая страница' }))
 
     expect(pushMock).toHaveBeenCalledWith(
       expect.stringContaining('page=1'),
@@ -228,7 +242,7 @@ describe('Pagination', () => {
     const user = userEvent.setup()
     render(<Pagination fetchedCount={10} totalCount={50} />)
 
-    await user.click(screen.getByRole('button', { name: 'Last page' }))
+    await user.click(screen.getByRole('button', { name: 'Последняя страница' }))
 
     expect(pushMock).toHaveBeenCalledWith(
       expect.stringContaining('page=5'),
