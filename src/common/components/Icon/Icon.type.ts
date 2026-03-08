@@ -11,6 +11,7 @@ export type IconType =
   | 'arrow-left'
   | 'youtube'
   | 'telegram'
+  | 'whatsapp'
   | 'check'
   | 'person'
   | 'phone'

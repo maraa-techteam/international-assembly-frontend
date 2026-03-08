@@ -38,10 +38,10 @@ const days = [
 
 export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
   const normalizedSchedule = days.map((day) => {
-    const slot = schedule.find((s) => s.day === day)
+    const slots = schedule.filter((s) => s.day === day)
     return {
       day,
-      time: slot ? slot.time : '',
+      times: slots.map((s) => s.time),
     }
   })
 
@@ -54,7 +54,6 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
     <div className='flex flex-col justify-center gap-1 py-2'>
       <div className='grid grid-cols-7'>
         {normalizedSchedule.map((slot) => {
-          const time = slot.time ? removeSeconds(slot.time) : ''
           return (
             <div
               key={slot.day}
@@ -62,13 +61,22 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
             >
               <Typography
                 variant='caption'
-                className={cn('text-xs', !slot.time && 'text-gray-600')}
+                className={cn(
+                  'text-xs',
+                  slot.times.length === 0 && 'text-gray-600',
+                )}
               >
                 {getDay(slot.day)}
               </Typography>
-              <Typography variant='caption' className='text-xs'>
-                {time}
-              </Typography>
+              {slot.times.map((time, index) => (
+                <Typography
+                  key={`${slot.day}-${time}-${index}`}
+                  variant='caption'
+                  className='text-xs'
+                >
+                  {removeSeconds(time)}
+                </Typography>
+              ))}
             </div>
           )
         })}

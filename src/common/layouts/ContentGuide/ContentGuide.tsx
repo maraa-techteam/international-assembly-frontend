@@ -66,7 +66,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
                 <LinkComponent
                   icon='arrow-right'
                   text='Подробнее'
-                  href='/'
+                  href={item.href}
                   variant='icon-right'
                   color='contrast'
                   className='self-end'

@@ -6,7 +6,6 @@ const pageData = await fetchPage('about_aa_page')
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]
-  console.log(page.meta_title)
 
   return {
     title: page.meta_title,
