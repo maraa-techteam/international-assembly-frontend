@@ -42,3 +42,68 @@ it('should remove option when it is clicked again', async () => {
 
   expect(mockOnChange).toHaveBeenCalledWith([])
 })
+
+it('should not show search input when options count is 10 or fewer', async () => {
+  const user = userEvent.setup()
+
+  render(
+    <Select
+      options={Array.from({ length: 10 }, (_, i) => `Option ${i + 1}`)}
+      label='Select an option'
+      value={[]}
+      onChange={jest.fn()}
+    />,
+  )
+
+  await user.click(screen.getByText('Select an option'))
+
+  expect(screen.queryByRole('textbox', { name: 'Поиск опций' })).toBeNull()
+})
+
+it('should show search input when options count is more than 10', async () => {
+  const user = userEvent.setup()
+
+  render(
+    <Select
+      options={Array.from({ length: 11 }, (_, i) => `Option ${i + 1}`)}
+      label='Select an option'
+      value={[]}
+      onChange={jest.fn()}
+    />,
+  )
+
+  await user.click(screen.getByText('Select an option'))
+
+  expect(
+    screen.getByRole('textbox', { name: 'Поиск опций' }),
+  ).toBeInTheDocument()
+})
+
+it('should filter options by search query', async () => {
+  const user = userEvent.setup()
+
+  const options = Array.from({ length: 11 }, (_, i) => `Option ${i + 1}`)
+
+  render(
+    <Select
+      options={options}
+      label='Select an option'
+      value={[]}
+      onChange={jest.fn()}
+    />,
+  )
+
+  await user.click(screen.getByText('Select an option'))
+
+  const searchInput = screen.getByRole('textbox', { name: 'Поиск опций' })
+  await user.type(searchInput, 'Option 1')
+
+  // "Option 1", "Option 10", "Option 11" should be visible
+  expect(screen.getByLabelText('Option 1')).toBeInTheDocument()
+  expect(screen.getByLabelText('Option 10')).toBeInTheDocument()
+  expect(screen.getByLabelText('Option 11')).toBeInTheDocument()
+
+  // "Option 2" through "Option 9" should not be visible
+  expect(screen.queryByLabelText('Option 2')).toBeNull()
+  expect(screen.queryByLabelText('Option 9')).toBeNull()
+})

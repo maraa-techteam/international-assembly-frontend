@@ -7,6 +7,8 @@ import { useId, useRef, useState } from 'react'
 
 import { SelectType } from './Select.type'
 
+const SEARCH_THRESHOLD = 10
+
 type SelectProps = SelectType & {
   className?: string
 }
@@ -20,13 +22,20 @@ export function Select({
   textColor,
 }: SelectProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const selectRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(selectRef, () => {
     setIsDropdownOpen(false)
+    setSearchQuery('')
   })
 
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen)
+  const toggleDropdown = () => {
+    if (isDropdownOpen) {
+      setSearchQuery('')
+    }
+    setIsDropdownOpen(!isDropdownOpen)
+  }
 
   const handleSelect = (optionLabel: string) => {
     if (value.includes(optionLabel)) {
@@ -48,6 +57,14 @@ export function Select({
   const id = useId()
   const checkboxId = `${id}-checkbox`
 
+  const showSearch = options.length > SEARCH_THRESHOLD
+  const filteredOptions =
+    showSearch && searchQuery
+      ? options.filter((option) =>
+          option.toLowerCase().includes(searchQuery.toLowerCase()),
+        )
+      : options
+
   return (
     <div
       ref={selectRef}
@@ -56,6 +73,7 @@ export function Select({
           e.preventDefault()
           e.stopPropagation()
           setIsDropdownOpen(false)
+          setSearchQuery('')
         }
       }}
       className={cn('relative flex w-full', className)}
@@ -104,7 +122,19 @@ export function Select({
         hidden={!isDropdownOpen}
         className='absolute top-full z-10 flex max-h-60 w-full flex-col overflow-y-auto rounded-b-3xl bg-white shadow-md'
       >
-        {options.map((option, i) => {
+        {showSearch && (
+          <div className='sticky top-0 bg-white px-4 py-2'>
+            <input
+              type='text'
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder='Поиск...'
+              className='border-primary/40 focus:border-primary w-full rounded-lg border px-3 py-1.5 text-sm outline-none'
+              aria-label='Поиск опций'
+            />
+          </div>
+        )}
+        {filteredOptions.map((option, i) => {
           const isSelected = value.includes(option)
 
           return (
@@ -126,7 +156,7 @@ export function Select({
                 aria-selected={isSelected}
                 className={cn(
                   'hover:bg-light-blue peer-focus-visible:bg-light-blue flex cursor-pointer items-center px-4 py-2 peer-focus-visible:outline-2',
-                  i === options.length - 1 && 'rounded-b-3xl',
+                  i === filteredOptions.length - 1 && 'rounded-b-3xl',
                 )}
               >
                 <span
