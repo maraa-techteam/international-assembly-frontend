@@ -21,6 +21,7 @@ export async function fetchGroup(slug: string) {
           'website',
           'youtube',
           'telegram',
+          'whatsapp',
           'contact',
           'time_zone',
           { schedule_slots: ['day', 'time'] },
