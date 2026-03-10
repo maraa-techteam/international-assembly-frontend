@@ -39,7 +39,7 @@ export function Select({
   const getName = (label: string) =>
     label === 'Страна'
       ? 'country'
-      : label === 'Формат'
+      : label === 'Присутствие'
         ? 'presence'
         : 'schedule_slots'
 
@@ -102,7 +102,7 @@ export function Select({
       <div
         id={`dropdown-menu-${id}`}
         hidden={!isDropdownOpen}
-        className='absolute top-full z-10 flex w-full flex-col rounded-b-3xl bg-white shadow-md'
+        className='absolute top-full z-10 flex max-h-60 w-full flex-col overflow-y-auto rounded-b-3xl bg-white shadow-md'
       >
         {options.map((option, i) => {
           const isSelected = value.includes(option)

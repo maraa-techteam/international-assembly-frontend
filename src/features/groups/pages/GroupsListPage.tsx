@@ -4,6 +4,7 @@ import { Section } from '@/common/layouts'
 import {
   GroupsFilterDashboard,
   GroupsTable,
+  fetchGroupCountries,
   fetchGroups,
 } from '@/features/groups'
 import { Metadata } from 'next'
@@ -26,10 +27,9 @@ export async function GroupsListPage({
 }) {
   const params = await searchParams
   const { data: filteredGroups, totalCount } = await fetchGroups(params)
-  const { data: groups } = await fetchGroups()
   const page = pageData[0]
 
-  const countries = [...new Set(groups.map((group) => group.country))]
+  const countries = await fetchGroupCountries()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
   const schedule = [
     'Понедельник',
