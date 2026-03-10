@@ -34,28 +34,30 @@ export default async function Page(page: PageProps) {
             />
           )}
           <Grid as='nav' className='lg:flex lg:flex-row'>
-            {page.button_left && (
+            {page.button_left?.map((btn, index) => (
               <Button
+                key={btn.link || index}
                 variant='outlined'
                 size='lg'
                 color='primary'
                 as='link'
-                href={page.button_left[0].link}
+                href={btn.link}
               >
-                {page.button_left[0].label}
+                {btn.label}
               </Button>
-            )}
-            {page.button_right && (
+            ))}
+            {page.button_right?.map((btn, index) => (
               <Button
+                key={btn.link || index}
                 variant='contained'
                 size='lg'
                 color='primary'
                 as='link'
-                href={page.button_right[0].link}
+                href={btn.link}
               >
-                {page.button_right[0].label}
+                {btn.label}
               </Button>
-            )}
+            ))}
           </Grid>
         </div>
         {page.image && (
