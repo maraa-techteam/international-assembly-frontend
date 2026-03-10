@@ -2,7 +2,7 @@ import { fetchPage } from '@/common/api/fetchPage'
 import Page from '@/common/pages/Page'
 import { Metadata } from 'next'
 
-const pageData = await fetchPage('twelve_steps_twelve_traditions_page')
+const pageData = await fetchPage('steps_and_traditions_page')
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]

@@ -58,8 +58,8 @@ export default async function Page(page: PageProps) {
             )}
           </Grid>
         </div>
-        <div className='flex h-fit w-full lg:w-auto'>
-          {page.image ? (
+        {page.image && (
+          <div className='flex h-fit w-full lg:w-auto'>
             <Image
               src={getImageUrl(page.image, { width: 400, height: 250 })}
               alt={page.title}
@@ -69,12 +69,8 @@ export default async function Page(page: PageProps) {
               className='w-full max-w-md rounded-lg object-contain object-top'
               priority={false}
             />
-          ) : (
-            <div className='flex h-64 w-full items-center justify-center rounded-lg bg-[#f5f5f5]'>
-              <span className='text-sm text-gray-400'>Картинка не найдена</span>
-            </div>
-          )}
-        </div>
+          </div>
+        )}
       </Section>
       {page.rich_text && (
         <Section className='max-w-200 pt-0 lg:pt-0' color='white'>
