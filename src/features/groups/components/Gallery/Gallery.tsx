@@ -118,13 +118,15 @@ export function Gallery({ images }: GalleryPropstype) {
             role='group'
             aria-label='Навигация по изображениям'
           >
-            <button
-              onClick={handlePrevious}
-              className='hidden h-10 w-10 rotate-180 items-center justify-center rounded-full bg-white/90 shadow-lg transition-colors hover:bg-white md:flex'
-              aria-label='Предыдущее изображение'
-            >
-              <Icon icon='chevron-right' />
-            </button>
+            {images.length > 1 && (
+              <button
+                onClick={handlePrevious}
+                className='hidden h-10 w-10 rotate-180 items-center justify-center rounded-full bg-white/90 shadow-lg transition-colors hover:bg-white md:flex'
+                aria-label='Предыдущее изображение'
+              >
+                <Icon icon='chevron-right' />
+              </button>
+            )}
 
             <div
               className='relative max-w-lg'
@@ -149,35 +151,39 @@ export function Gallery({ images }: GalleryPropstype) {
               </Typography>
             </div>
 
-            <button
-              onClick={handleNext}
-              className='hidden h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-lg transition-colors hover:bg-white md:flex'
-              aria-label='Следующее изображение'
-            >
-              <Icon icon='chevron-right' />
-            </button>
+            {images.length > 1 && (
+              <button
+                onClick={handleNext}
+                className='hidden h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-lg transition-colors hover:bg-white md:flex'
+                aria-label='Следующее изображение'
+              >
+                <Icon icon='chevron-right' />
+              </button>
+            )}
           </div>
 
-          <div
-            className='mt-6 flex gap-2 md:hidden'
-            role='tablist'
-            aria-label='Навигация по изображениям'
-          >
-            {images.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`h-2 w-2 rounded-full transition-all ${
-                  index === currentIndex
-                    ? 'w-6 bg-white'
-                    : 'bg-white/50 hover:bg-white/75'
-                }`}
-                aria-label={`Перейти к изображению ${index + 1}`}
-                aria-selected={index === currentIndex}
-                role='tab'
-              />
-            ))}
-          </div>
+          {images.length > 1 && (
+            <div
+              className='mt-6 flex gap-2 md:hidden'
+              role='tablist'
+              aria-label='Навигация по изображениям'
+            >
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentIndex(index)}
+                  className={`h-2 w-2 rounded-full transition-all ${
+                    index === currentIndex
+                      ? 'w-6 bg-white'
+                      : 'bg-white/50 hover:bg-white/75'
+                  }`}
+                  aria-label={`Перейти к изображению ${index + 1}`}
+                  aria-selected={index === currentIndex}
+                  role='tab'
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </>

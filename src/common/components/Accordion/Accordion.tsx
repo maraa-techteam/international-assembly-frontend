@@ -1,9 +1,9 @@
 import { AccordionType } from './Accordion.type'
 import { AccordionItem } from './components/AccordionItem'
 
-type AccordionItemProps = AccordionType[]
+export type AccordionProps = AccordionType[]
 
-export function Accordion({ items }: { items: AccordionItemProps }) {
+export function Accordion({ items }: { items: AccordionProps }) {
   return (
     <div className='flex flex-col divide-y divide-[#D4DFEB]'>
       {items.map((item) => (

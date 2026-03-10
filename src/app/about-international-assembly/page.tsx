@@ -2,7 +2,7 @@ import { fetchPage } from '@/common/api/fetchPage'
 import Page from '@/common/pages/Page'
 import { Metadata } from 'next'
 
-const pageData = await fetchPage('about_groups_page')
+const pageData = await fetchPage('about_international_assembly_page')
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]
@@ -13,9 +13,8 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function AboutGroups() {
+export default async function AboutInternationalAssembly() {
   const page = pageData[0]
-
   return (
     <>
       <Page {...page} />

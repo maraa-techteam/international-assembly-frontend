@@ -1,4 +1,7 @@
-export const getImageUrl = (src: string) => {
+export const getImageUrl = (
+  src: string,
+  size?: { width: number; height: number },
+) => {
   const directusCmsUrl = process.env.NEXT_PUBLIC_DIRECTUS_CMS_URL
 
   if (!directusCmsUrl) {
@@ -7,5 +10,5 @@ export const getImageUrl = (src: string) => {
     )
   }
 
-  return `https://${directusCmsUrl}/assets/${src}`
+  return `https://${directusCmsUrl}/assets/${src}${size ? `?width=${size.width}&height=${size.height}` : ''}`
 }

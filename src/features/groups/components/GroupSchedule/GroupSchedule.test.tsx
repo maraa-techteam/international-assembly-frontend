@@ -26,6 +26,21 @@ describe('GroupSchedule', () => {
     expect(screen.getByText('19:00')).toBeInTheDocument()
   })
 
+  it('renders multiple times for the same day', () => {
+    render(
+      <GroupSchedule
+        schedule={[
+          { day: 'Вторник', time: '09:36:00' },
+          { day: 'Вторник', time: '16:52:00' },
+        ]}
+        time_zone='Европа/Лондон (UTC+0/+1)'
+      />,
+    )
+
+    expect(screen.getByText('09:36')).toBeInTheDocument()
+    expect(screen.getByText('16:52')).toBeInTheDocument()
+  })
+
   it('renders the time zone', () => {
     render(<GroupSchedule schedule={[]} time_zone='Европа/Лондон (UTC+0/+1)' />)
 

@@ -73,7 +73,6 @@ export function Header({ headerData }: HeaderProps) {
   useEffect(() => {
     setIsMobileMenuActive(false)
     resetSelect()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   // Close the menu with its transition, then navigate once the animation ends

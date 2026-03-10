@@ -138,4 +138,116 @@ test.describe('Common API', () => {
     expect(json.data).toBeDefined()
     expect(Array.isArray(json.data)).toBe(true)
   })
+
+  test('to_professionals_page collection returns valid data', async ({
+    request,
+  }) => {
+    test.skip(
+      !process.env.DIRECTUS_CMS_URL,
+      'DIRECTUS_CMS_URL env var is not set',
+    )
+
+    const response = await request.get(
+      `${BASE_URL}/items/to_professionals_page`,
+      {
+        params: {
+          fields:
+            'meta_title,meta_description,title,text,image,additional_link,button_left,button_right,faq',
+        },
+      },
+    )
+
+    expect(response.ok()).toBeTruthy()
+    const json = await response.json()
+    expect(json.data).toBeDefined()
+    expect(Array.isArray(json.data)).toBe(true)
+  })
+
+  test('useful_links_page collection returns valid data', async ({
+    request,
+  }) => {
+    test.skip(
+      !process.env.DIRECTUS_CMS_URL,
+      'DIRECTUS_CMS_URL env var is not set',
+    )
+
+    const response = await request.get(`${BASE_URL}/items/useful_links_page`, {
+      params: {
+        fields:
+          'meta_title,meta_description,title,text,image,additional_link,button_left,button_right,rich_text,faq',
+      },
+    })
+
+    expect(response.ok()).toBeTruthy()
+    const json = await response.json()
+    expect(json.data).toBeDefined()
+    expect(Array.isArray(json.data)).toBe(true)
+  })
+
+  test('start_the_journey_page collection returns valid data', async ({
+    request,
+  }) => {
+    test.skip(
+      !process.env.DIRECTUS_CMS_URL,
+      'DIRECTUS_CMS_URL env var is not set',
+    )
+
+    const response = await request.get(
+      `${BASE_URL}/items/start_the_journey_page`,
+      {
+        params: {
+          fields:
+            'meta_title,meta_description,title,text,image,additional_link,button_left,button_right,rich_text,faq',
+        },
+      },
+    )
+
+    expect(response.ok()).toBeTruthy()
+    const json = await response.json()
+    expect(json.data).toBeDefined()
+    expect(Array.isArray(json.data)).toBe(true)
+  })
+
+  test('faq_page collection returns valid data', async ({ request }) => {
+    test.skip(
+      !process.env.DIRECTUS_CMS_URL,
+      'DIRECTUS_CMS_URL env var is not set',
+    )
+
+    const response = await request.get(`${BASE_URL}/items/faq_page`, {
+      params: {
+        fields:
+          'meta_title,meta_description,title,text,image,additional_link,button_left,button_right,rich_text,faq',
+      },
+    })
+
+    expect(response.ok()).toBeTruthy()
+    const json = await response.json()
+    expect(json.data).toBeDefined()
+    expect(Array.isArray(json.data)).toBe(true)
+  })
+
+  test('steps_and_traditions_page collection returns valid data', async ({
+    request,
+  }) => {
+    test.skip(
+      !process.env.DIRECTUS_CMS_URL,
+      'DIRECTUS_CMS_URL env var is not set',
+    )
+
+    const response = await request.get(
+      `${BASE_URL}/items/steps_and_traditions_page`,
+      {
+        params: {
+          fields:
+            'meta_title,meta_description,title,text,image,additional_link,button_left,button_right,rich_text,faq',
+        },
+      },
+    )
+
+    expect(response.ok()).toBeTruthy()
+    const json = await response.json()
+    expect(json.data).toBeDefined()
+    expect(Array.isArray(json.data)).toBe(true)
+  })
 })
