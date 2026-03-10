@@ -148,6 +148,10 @@ body {
   min-height: 100vh;
 }
 
+html {
+  background: var(--background);
+}
+
 main {
   flex: 1;
 }

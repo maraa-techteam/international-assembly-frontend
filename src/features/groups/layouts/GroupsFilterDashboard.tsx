@@ -89,12 +89,27 @@ export function GroupsFilterDashboard({
     setDraft((prev) => ({ ...prev, searchValue: value }))
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    const data = new FormData(e.currentTarget)
+    const params = new URLSearchParams()
+    for (const [key, rawValue] of data.entries()) {
+      if (typeof rawValue === 'string' && rawValue !== '') {
+        params.append(key, rawValue)
+      }
+    }
+    const action = variant === 'widget' ? `groups/${pathname}` : pathname
+    const query = params.toString()
+    router.push(query ? `${action}?${query}` : action)
+  }
+
   return (
     <form
       action={variant === 'widget' ? `groups/${pathname}` : pathname}
       method='get'
       id='groups-filter'
-      onSubmit={() => setIsSubmitting(true)}
+      onSubmit={handleSubmit}
       className={cn(
         'bg-light-blue flex w-full flex-col gap-4 p-4 lg:mx-0 lg:rounded-2xl',
         className,
