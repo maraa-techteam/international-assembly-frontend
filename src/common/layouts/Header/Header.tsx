@@ -26,7 +26,6 @@ export function Header({ headerData }: HeaderProps) {
   const router = useRouter()
   const pathname = usePathname()
   const headerRef = useRef<HTMLDivElement>(null)
-  const mobileMenuRef = useRef<HTMLUListElement>(null)
 
   useOnClickOutside(headerRef, () => {
     setIsSearchActive(false)
@@ -75,35 +74,11 @@ export function Header({ headerData }: HeaderProps) {
     resetSelect()
   }, [pathname])
 
-  // Close the menu with its transition, then navigate once the animation ends
+  // Navigate immediately and let the pathname-change effect close the menu
+  // once the destination page has rendered.
   const handleMobileNavClose = (href: string) => {
-    setIsMobileMenuActive(false)
     resetSelect()
-
-    const menuEl = mobileMenuRef.current
-    if (!menuEl) {
-      router.push(href)
-      return
-    }
-
-    let done = false
-
-    const proceed = () => {
-      if (done) return
-      done = true
-      menuEl.removeEventListener('transitionend', onTransitionEnd)
-      router.push(href)
-    }
-
-    const onTransitionEnd = (e: TransitionEvent) => {
-      if (e.target !== menuEl) return
-      proceed()
-    }
-
-    menuEl.addEventListener('transitionend', onTransitionEnd)
-    // Fallback: navigate after 350 ms (50 ms longer than the 300 ms CSS
-    // transition) to guarantee navigation even if transitionend never fires.
-    setTimeout(proceed, 350)
+    router.push(href)
   }
 
   useEffect(() => {
@@ -230,7 +205,6 @@ export function Header({ headerData }: HeaderProps) {
       {/* Mobile menu */}
       <ul
         id='mobile-menu'
-        ref={mobileMenuRef}
         role='menubar'
         className={cn(
           'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
