@@ -1,5 +1,6 @@
 import { getNavigationData } from '@/common/api/fetchNavigation'
 import { getSocials } from '@/common/api/fetchSocials'
+import { TopLoader } from '@/common/components'
 import { Footer, Header, Layout } from '@/common/layouts'
 import { cn } from '@/common/utils/cn'
 import type { Metadata } from 'next'
@@ -53,6 +54,7 @@ export default async function RootLayout({
           'overflow-x-hidden antialiased',
         )}
       >
+        <TopLoader />
         <Header headerData={headerData} />
         <Layout>{children}</Layout>
         <Footer footerData={footerData} socials={socials} />
