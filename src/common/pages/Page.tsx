@@ -59,7 +59,7 @@ export default async function Page(page: PageProps) {
           </Grid>
         </div>
         {page.image && (
-          <div className='flex h-fit w-full lg:w-auto'>
+          <div className='flex h-fit w-full justify-end lg:w-auto'>
             <Image
               src={getImageUrl(page.image, { width: 400, height: 250 })}
               alt={page.title}

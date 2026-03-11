@@ -5,7 +5,7 @@ import { ContentGuide, Grid, Section } from '@/common/layouts'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { ArticleCard } from '@/features/articles'
 import { fetchArticles } from '@/features/articles/api/fetchArticles'
-import { GroupsFilterDashboard } from '@/features/groups'
+import { GroupsFilterDashboard, fetchGroupCountries } from '@/features/groups'
 import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -25,7 +25,7 @@ export default async function Home() {
   const article_cards = await fetchArticles()
   const { data: groups } = await fetchGroups()
 
-  const countries = [...new Set(groups.map((group) => group.country))]
+  const countries = await fetchGroupCountries()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
   const schedule = [
     'Понедельник',
@@ -56,7 +56,13 @@ export default async function Home() {
           >
             Найти группу
           </Button>
-          <Button variant='contained' size='lg' color='primary' as='link'>
+          <Button
+            variant='contained'
+            size='lg'
+            color='primary'
+            href='/about-aa'
+            as='link'
+          >
             Я здесь впервые
           </Button>
         </Grid>
@@ -100,7 +106,7 @@ export default async function Home() {
               size='lg'
               color='primary'
               as='link'
-              href='#'
+              href='/about-aa'
             >
               Подходит ли мне АА?
             </Button>
@@ -109,13 +115,13 @@ export default async function Home() {
               size='lg'
               color='primary'
               as='link'
-              href='#'
+              href='/start-the-journey'
             >
               Начать путь
             </Button>
           </Grid>
         </div>
-        <div className='flex h-fit w-full lg:w-auto'>
+        <div className='flex h-fit w-full justify-end lg:w-auto'>
           <Image
             src={getImageUrl('76877722-f746-4213-a78e-020d5f72fb49')}
             alt='Нужна помощь?'
