@@ -4,6 +4,7 @@ import { Footer, Header, Layout } from '@/common/layouts'
 import { cn } from '@/common/utils/cn'
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Slab } from 'next/font/google'
+import NextTopLoader from 'nextjs-toploader'
 
 import './globals.css'
 
@@ -53,6 +54,11 @@ export default async function RootLayout({
           'overflow-x-hidden antialiased',
         )}
       >
+        <NextTopLoader
+          color='var(--primary)'
+          initialPosition={0.08}
+          showSpinner={false}
+        />
         <Header headerData={headerData} />
         <Layout>{children}</Layout>
         <Footer footerData={footerData} socials={socials} />
