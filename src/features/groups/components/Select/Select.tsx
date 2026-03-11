@@ -149,7 +149,7 @@ export function Select({
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder='Поиск...'
-                  className='border-primary/40 focus:border-primary w-full rounded-lg border px-3 py-1.5 text-sm outline-none'
+                  className='border-primary/40 focus:border-primary w-full rounded-lg border px-3 py-1.5 text-base outline-none'
                   aria-label='Поиск опций'
                 />
               </div>

@@ -1,4 +1,4 @@
-import { act, fireEvent, render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 
 import { Header } from './Header'
 
@@ -41,11 +41,6 @@ const mockHeaderData = [
 beforeEach(() => {
   mockPathname = '/'
   mockRouterPush.mockClear()
-  jest.useFakeTimers()
-})
-
-afterEach(() => {
-  jest.useRealTimers()
 })
 
 describe('Header', () => {
@@ -102,7 +97,7 @@ describe('Header', () => {
     expect(mobileMenu).toHaveClass('duration-300')
   })
 
-  it('closes menu immediately and calls router.push after transition timeout when nav link is clicked', () => {
+  it('calls router.push immediately and menu stays open when nav link is clicked', () => {
     const { container } = render(<Header headerData={mockHeaderData} />)
 
     // Open mobile menu
@@ -114,24 +109,19 @@ describe('Header', () => {
     ) as HTMLElement
     fireEvent.click(navLink)
 
-    // Menu should start closing (isMobileMenuActive=false)
-    expect(screen.getByLabelText('Открыть мобильное меню')).toBeInTheDocument()
-
-    // router.push should NOT have been called yet (waiting for transition)
-    expect(mockRouterPush).not.toHaveBeenCalled()
-
-    // Advance past the 350ms fallback timeout
-    act(() => {
-      jest.advanceTimersByTime(350)
-    })
-
-    // Now router.push should be called with the link href
+    // router.push should be called immediately
     expect(mockRouterPush).toHaveBeenCalledWith('/about')
+
+    // Menu should still be open while navigation is in progress
+    expect(screen.getByLabelText('Закрыть мобильное меню')).toBeInTheDocument()
   })
 
-  it('calls router.push immediately via transitionend when nav link is clicked', () => {
-    const { container } = render(<Header headerData={mockHeaderData} />)
+  it('closes menu after pathname changes following navigation', () => {
+    const { container, rerender } = render(
+      <Header headerData={mockHeaderData} />,
+    )
 
+    // Open mobile menu
     fireEvent.click(screen.getByLabelText('Открыть мобильное меню'))
 
     const mobileMenu = container.querySelector('#mobile-menu') as HTMLElement
@@ -140,17 +130,14 @@ describe('Header', () => {
     ) as HTMLElement
     fireEvent.click(navLink)
 
-    // Simulate the CSS transitionend event on the menu element
-    act(() => {
-      fireEvent.transitionEnd(mobileMenu)
-    })
-
+    // router.push called immediately
     expect(mockRouterPush).toHaveBeenCalledWith('/about')
 
-    // Subsequent timeout should NOT navigate again (done guard)
-    act(() => {
-      jest.advanceTimersByTime(350)
-    })
-    expect(mockRouterPush).toHaveBeenCalledTimes(1)
+    // Simulate the route completing (pathname changes)
+    mockPathname = '/about'
+    rerender(<Header headerData={mockHeaderData} />)
+
+    // Now the menu should be closed
+    expect(screen.getByLabelText('Открыть мобильное меню')).toBeInTheDocument()
   })
 })
