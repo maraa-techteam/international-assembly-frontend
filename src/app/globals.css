@@ -157,9 +157,10 @@ main {
 }
 
 #nprogress .bar {
+  shadow: none;
   background: linear-gradient(
     to right,
-    var(--light-blue),
-    var(--primary)
+    var(--primary),
+    var(--indigo-blue)
   ) !important;
 }

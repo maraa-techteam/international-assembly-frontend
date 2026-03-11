@@ -56,6 +56,8 @@ export default async function RootLayout({
       >
         <NextTopLoader
           color='var(--primary)'
+          shadow='none'
+          height={4}
           initialPosition={0.08}
           showSpinner={false}
         />
