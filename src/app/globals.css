@@ -155,3 +155,11 @@ html {
 main {
   flex: 1;
 }
+
+#nprogress .bar {
+  background: linear-gradient(
+    to right,
+    var(--light-blue),
+    var(--primary)
+  ) !important;
+}
