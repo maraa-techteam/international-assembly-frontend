@@ -14,7 +14,7 @@ export default function GroupsTableItem({
   return (
     <Link
       href={`/groups/${group.slug}`}
-      className='focus:bg-light-blue hover:bg-light-blue flex cursor-pointer flex-col divide-y divide-gray-300'
+      className='focus:bg-light-blue hover:bg-light-blue active:bg-light-blue flex cursor-pointer flex-col divide-y divide-gray-300'
     >
       <div className='over:bg-light-blue grid grid-cols-[0.5fr_0.5fr_0.3fr_1fr] gap-4 px-4'>
         <Typography variant='body' className='truncate py-4'>
