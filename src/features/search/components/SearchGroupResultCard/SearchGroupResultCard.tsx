@@ -20,7 +20,7 @@ export function SearchGroupResultCard({
 }: SearchGroupResultCardProps) {
   return (
     <div
-      className={cn('flex flex-col items-start justify-start gap-2', className)}
+      className={cn('flex flex-col items-start justify-start gap-4', className)}
     >
       <Link href={`/groups/${slug}`}>
         <Typography

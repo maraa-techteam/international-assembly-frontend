@@ -3,6 +3,7 @@ import { cn } from '@/common/utils/cn'
 import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { SearchResultCardType } from './SearchResultCard.type'
 
@@ -17,7 +18,7 @@ export function SearchResultCard({
   className,
 }: SearchResultCardProps) {
   return (
-    <a
+    <Link
       href={`/news-and-events/${slug}`}
       className={cn(
         'inline-flex flex-col items-start justify-start gap-4 lg:flex-row lg:gap-6',
@@ -47,6 +48,6 @@ export function SearchResultCard({
           {perex}
         </Typography>
       </div>
-    </a>
+    </Link>
   )
 }
