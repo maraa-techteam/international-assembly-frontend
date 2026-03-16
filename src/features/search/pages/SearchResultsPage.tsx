@@ -1,4 +1,4 @@
-import { Typography } from '@/common/components'
+import { LinkComponent, Typography } from '@/common/components'
 import { Section } from '@/common/layouts'
 import { fetchSearchResults } from '@/features/search/api/fetchSearchResults'
 import { SearchParams } from 'next/dist/server/request/search-params'
@@ -22,10 +22,16 @@ export async function SearchResultsPage({
 
   return (
     <Section color='white'>
+      <LinkComponent
+        href='/groups'
+        icon='arrow-left'
+        text='Назад'
+        color='foreground'
+        className='self-start'
+        variant='icon-left'
+      />
       <Typography variant='h1' font='roboto'>
-        {query
-          ? `Результаты поиска по запросу: «${query}»`
-          : 'Результаты поиска'}
+        Результаты поиска <span className='text-primary'>{query}</span>
       </Typography>
       {!hasResults ? (
         <Typography variant='body' font='roboto'>

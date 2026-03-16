@@ -10,10 +10,13 @@ export type ArticleSearchResult = {
 export type GroupSearchResult = {
   id: string
   name: string
-  description: string
   country: string
   presence: string
   slug: string
+  website?: string | null
+  youtube?: string | null
+  telegram?: string | null
+  whatsapp?: string | null
 }
 
 /** @deprecated Use ArticleSearchResult instead */

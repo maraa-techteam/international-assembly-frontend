@@ -21,7 +21,17 @@ export async function fetchSearchResults(query: string): Promise<{
       directus.request(
         readItems('groups', {
           search: query,
-          fields: ['id', 'slug', 'name', 'description', 'country', 'presence'],
+          fields: [
+            'id',
+            'slug',
+            'name',
+            'country',
+            'presence',
+            'website',
+            'youtube',
+            'telegram',
+            'whatsapp',
+          ],
         }),
       ),
     ])
