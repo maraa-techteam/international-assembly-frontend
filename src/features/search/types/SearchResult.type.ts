@@ -1,4 +1,4 @@
-export type SearchResult = {
+export type ArticleSearchResult = {
   id: string
   title: string
   perex: string
@@ -6,3 +6,15 @@ export type SearchResult = {
   date_created: string
   slug: string
 }
+
+export type GroupSearchResult = {
+  id: string
+  name: string
+  description: string
+  country: string
+  presence: string
+  slug: string
+}
+
+/** @deprecated Use ArticleSearchResult instead */
+export type SearchResult = ArticleSearchResult

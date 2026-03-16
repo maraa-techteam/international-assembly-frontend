@@ -1,4 +1,7 @@
 export * from './components/SearchResultCard/SearchResultCard'
 export * from './components/SearchResultCard/SearchResultCard.type'
+export * from './components/SearchGroupResultCard/SearchGroupResultCard'
+export * from './components/SearchGroupResultCard/SearchGroupResultCard.type'
+export * from './components/SearchResultSkeleton/SearchResultSkeleton'
 export * from './types/SearchResult.type'
 export * from './pages/SearchResultsPage'
