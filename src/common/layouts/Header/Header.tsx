@@ -68,9 +68,10 @@ export function Header({ headerData }: HeaderProps) {
     })
   }
 
-  // Close the mobile menu on route change (e.g. browser back/forward)
+  // Close the mobile menu and search bar on route change (e.g. browser back/forward)
   useEffect(() => {
     setIsMobileMenuActive(false)
+    toggleSearch(false)
     resetSelect()
   }, [pathname])
 
