@@ -166,6 +166,7 @@ export function Header({ headerData }: HeaderProps) {
         placeholder='Поиск на сайте'
         isExpanded={isSearchActive}
         onToggle={toggleSearch}
+        onSearch={() => toggleSearch(false)}
       />
 
       <div
@@ -277,6 +278,7 @@ export function Header({ headerData }: HeaderProps) {
         )}
         isExpanded={isSearchActive}
         onToggle={toggleSearch}
+        onSearch={() => toggleSearch(false)}
       />
     </header>
   )

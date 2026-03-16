@@ -15,6 +15,7 @@ export function SearchBar({
   className,
   placeholder = 'Поиск на сайте',
   isReseted = false,
+  onSearch,
 }: SearchBarProps) {
   const [searchValue, setSearchValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
@@ -33,8 +34,8 @@ export function SearchBar({
     e.preventDefault()
     const q = searchValue.trim()
     if (!q) return
-
     router.push(`/search?search=${encodeURIComponent(q)}`)
+    if (onSearch) onSearch()
   }
 
   useEffect(() => {
