@@ -136,11 +136,11 @@ export function Select({
         hidden={!isDropdownOpen}
         className='absolute top-full z-10 w-full'
       >
-        <div className='relative'>
+        <div className='relative bg-white'>
           <div
             ref={dropdownListRef}
             onScroll={checkHasMoreBelow}
-            className='no-scrollbar flex max-h-60 w-full flex-col overflow-y-auto rounded-b-3xl bg-white shadow-md'
+            className='no-scrollbar rounded-b-3xlshadow-md flex max-h-60 w-full flex-col overflow-y-auto'
           >
             {showSearch && (
               <div className='sticky top-0 bg-white px-4 py-2'>
