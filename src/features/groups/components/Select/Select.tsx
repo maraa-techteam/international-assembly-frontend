@@ -140,7 +140,7 @@ export function Select({
           <div
             ref={dropdownListRef}
             onScroll={checkHasMoreBelow}
-            className='no-scrollbar rounded-b-3xlshadow-md flex max-h-60 w-full flex-col overflow-y-auto'
+            className='no-scrollbar flex max-h-60 w-full flex-col overflow-y-auto rounded-b-3xl shadow-md'
           >
             {showSearch && (
               <div className='sticky top-0 bg-white px-4 py-2'>
