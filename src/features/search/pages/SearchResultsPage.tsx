@@ -56,9 +56,13 @@ export async function SearchResultsPage({
               <Typography variant='h2' font='roboto'>
                 Группы
               </Typography>
-              <div className='flex flex-col gap-8'>
+              <div className='divide-light-blue flex flex-col gap-8 divide-y'>
                 {groups.map((group) => (
-                  <SearchGroupResultCard key={group.id} {...group} />
+                  <SearchGroupResultCard
+                    className='pb-8'
+                    key={group.id}
+                    {...group}
+                  />
                 ))}
               </div>
             </div>

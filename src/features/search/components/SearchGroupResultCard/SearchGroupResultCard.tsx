@@ -1,4 +1,4 @@
-import { Icon, Label, Typography } from '@/common/components'
+import { Icon, Label, RichTextPreview, Typography } from '@/common/components'
 import { cn } from '@/common/utils/cn'
 import Link from 'next/link'
 
@@ -8,6 +8,7 @@ type SearchGroupResultCardProps = SearchGroupResultCardType
 
 export function SearchGroupResultCard({
   name,
+  description,
   slug,
   country,
   presence,
@@ -19,7 +20,7 @@ export function SearchGroupResultCard({
 }: SearchGroupResultCardProps) {
   return (
     <div
-      className={cn('flex flex-col items-start justify-start gap-4', className)}
+      className={cn('flex flex-col items-start justify-start gap-2', className)}
     >
       <Link href={`/groups/${slug}`}>
         <Typography
@@ -30,6 +31,9 @@ export function SearchGroupResultCard({
           {name}
         </Typography>
       </Link>
+      {description && (
+        <RichTextPreview htmlContent={description} className='rte-clamp' />
+      )}
       {(website || youtube || telegram || whatsapp) && (
         <div className='flex flex-wrap items-start gap-4 rounded-xl'>
           {website && (
@@ -74,9 +78,6 @@ export function SearchGroupResultCard({
           )}
         </div>
       )}
-      <Typography variant='body' font='roboto' className='line-clamp-2'>
-        <strong>Тэги:</strong>
-      </Typography>
       <div className='flex flex-wrap gap-2'>
         {country && <Label className='cursor-default' text={country} />}
         {presence && <Label className='cursor-default' text={presence} />}

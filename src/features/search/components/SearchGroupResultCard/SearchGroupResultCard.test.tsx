@@ -7,6 +7,7 @@ const mockProps: GroupSearchResult = {
   id: '1',
   name: 'Группа анонимных алкоголиков',
   slug: 'gruppa-anonimnykh-alkogolikov',
+  description: '<p>Описание группы</p>',
   country: 'Россия',
   presence: 'очная',
   website: 'https://example.com',
@@ -20,6 +21,26 @@ describe('SearchGroupResultCard component', () => {
     render(<SearchGroupResultCard {...mockProps} />)
 
     expect(screen.getByText('Группа анонимных алкоголиков')).toBeInTheDocument()
+  })
+
+  it('renders description when provided', () => {
+    render(<SearchGroupResultCard {...mockProps} />)
+
+    expect(screen.getByText('Описание группы')).toBeInTheDocument()
+  })
+
+  it('applies rte-clamp class to the description', () => {
+    const { container } = render(<SearchGroupResultCard {...mockProps} />)
+
+    const rtePreviews = container.querySelectorAll('.rte')
+    expect(rtePreviews.length).toBeGreaterThan(0)
+    expect(rtePreviews[0]).toHaveClass('rte-clamp')
+  })
+
+  it('does not render description when it is not provided', () => {
+    render(<SearchGroupResultCard {...mockProps} description={null} />)
+
+    expect(screen.queryByText('Описание группы')).not.toBeInTheDocument()
   })
 
   it('renders country label', () => {
@@ -49,7 +70,7 @@ describe('SearchGroupResultCard component', () => {
   it('renders social links section when at least one link is provided', () => {
     render(<SearchGroupResultCard {...mockProps} />)
 
-    expect(screen.getByText('Дополнительная информация')).toBeInTheDocument()
+    expect(screen.getByText('Веб-сайт')).toBeInTheDocument()
   })
 
   it('renders website link', () => {
@@ -87,9 +108,7 @@ describe('SearchGroupResultCard component', () => {
       />,
     )
 
-    expect(
-      screen.queryByText('Дополнительная информация'),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByText('Веб-сайт')).not.toBeInTheDocument()
   })
 
   it('does not render country label when country is empty', () => {

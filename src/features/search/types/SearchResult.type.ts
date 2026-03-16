@@ -10,6 +10,7 @@ export type ArticleSearchResult = {
 export type GroupSearchResult = {
   id: string
   name: string
+  description?: string | null
   country: string
   presence: string
   slug: string
