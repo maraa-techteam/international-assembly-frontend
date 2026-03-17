@@ -155,14 +155,20 @@ export function IsAaForMePage() {
           <Typography variant='h1' font='roboto'>
             Подходит ли мне АА?
           </Typography>
-          <Typography
-            variant='h2'
-            font='roboto'
-            className={score >= 4 ? 'text-red-500' : 'text-green-600'}
-          >
-            Ваш результат: {score}
-          </Typography>
+
           <div className='flex flex-col gap-4'>
+            <Typography variant='body'>
+              <strong>
+                Ваш результат:{' '}
+                <span
+                  className={score >= 4 ? 'text-red-500' : 'text-green-600'}
+                >
+                  {score}
+                </span>{' '}
+                ответов "ДА"
+              </strong>
+              .
+            </Typography>
             <Typography variant='body'>
               Вы ответили ДА на четыре или более вопросов? Если так, то вы,
               вероятно, попали в беду. Почему мы так считаем? Потому что об этом
