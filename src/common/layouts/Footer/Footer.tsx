@@ -1,4 +1,4 @@
-import { Icon, LinkComponent, Typography } from '@/common/components'
+import { Icon, Typography } from '@/common/components'
 import Image from 'next/image'
 import Link from 'next/link'
 
