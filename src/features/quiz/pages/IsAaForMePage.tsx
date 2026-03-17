@@ -159,13 +159,13 @@ export function IsAaForMePage() {
           <div className='flex flex-col gap-4'>
             <Typography variant='body'>
               <strong>
-                Ваш результат:{' '}
+                Ваш результат:
                 <span
                   className={score >= 4 ? 'text-red-500' : 'text-green-600'}
                 >
-                  {score}
-                </span>{' '}
-                ответов "ДА"
+                  {' ' + score}
+                </span>
+                ответов ДА
               </strong>
               .
             </Typography>
