@@ -19,6 +19,7 @@ export function IsAaForMePage() {
   const question = quizQuestions[currentQuestion]
   const currentAnswer = answers[currentQuestion]
   const isLastQuestion = currentQuestion === totalQuestions - 1
+  const score = answers.filter((a) => a === true).length
 
   function startQuiz() {
     setCurrentQuestion(0)
@@ -153,6 +154,13 @@ export function IsAaForMePage() {
         <>
           <Typography variant='h1' font='roboto'>
             Подходит ли мне АА?
+          </Typography>
+          <Typography
+            variant='h2'
+            font='roboto'
+            className={score >= 4 ? 'text-red-500' : 'text-green-600'}
+          >
+            Ваш результат: {score}
           </Typography>
           <div className='flex flex-col gap-4'>
             <Typography variant='body'>
