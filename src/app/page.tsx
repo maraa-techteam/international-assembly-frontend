@@ -6,7 +6,6 @@ import { getImageUrl } from '@/common/utils/getImageUrl'
 import { ArticleCard } from '@/features/articles'
 import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { GroupsFilterDashboard, fetchGroupCountries } from '@/features/groups'
-import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import { Suspense } from 'react'
@@ -23,7 +22,6 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Home() {
   const frequentlyVisitedLinks = await getFrequentlyVisitedLinks()
   const article_cards = await fetchArticles()
-  const { data: groups } = await fetchGroups()
 
   const countries = await fetchGroupCountries()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
