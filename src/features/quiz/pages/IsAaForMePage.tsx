@@ -59,20 +59,22 @@ export function IsAaForMePage() {
           </Typography>
           <div className='flex flex-col gap-4'>
             <Typography variant='body'>
-              Только вы можете решить, стоит ли вам прийти в АА - может ли это вам помочь.
+              Только вы можете решить, стоит ли вам прийти в АА - может ли это
+              вам помочь.
             </Typography>
             <Typography variant='body'>
-              Мы же пришли в АА потому что, в конце концов, отказались от попыток
-              контролировать свою выпивку. Нам очень не хотелось признать тот факт что мы
-              никогда не сможем пить «нормально». Но от других членов АА мы узнали, что мы
-              просто больные люди (Да мы и сами уже давно об этом догадывались!) Мы
-              обнаружили, что очень много людей, так же как и мы страдают от чувства вины,
-              одиночества и безнадежности. Мы узнали, что эти чувства были вызваны болезнью
+              Мы же пришли в АА потому что, в конце концов, отказались от
+              попыток контролировать свою выпивку. Нам очень не хотелось
+              признать тот факт что мы никогда не сможем пить «нормально». Но от
+              других членов АА мы узнали, что мы просто больные люди (Да мы и
+              сами уже давно об этом догадывались!) Мы обнаружили, что очень
+              много людей, так же как и мы страдают от чувства вины, одиночества
+              и безнадежности. Мы узнали, что эти чувства были вызваны болезнью
               — алкоголизмом.
             </Typography>
             <Typography variant='body'>
-              Для того, чтобы получить ответ на ваш вопрос вы должны ответить честно на
-              следующие 12 вопросов: ДА или НЕТ
+              Для того, чтобы получить ответ на ваш вопрос вы должны ответить
+              честно на следующие 12 вопросов: ДА или НЕТ
             </Typography>
           </div>
           <Button
@@ -96,7 +98,7 @@ export function IsAaForMePage() {
 
       {quizState === 'quiz' && (
         <>
-          <div className='flex items-center justify-between gap-4'>
+          <div className='flex w-full items-center justify-between gap-4'>
             <Typography variant='caption' className='font-medium'>
               Вопрос {currentQuestion + 1}/{totalQuestions}
             </Typography>
@@ -106,18 +108,15 @@ export function IsAaForMePage() {
                 onClick={goBack}
                 className='cursor-pointer p-1 disabled:cursor-not-allowed disabled:opacity-30'
               >
-                <Icon icon='arrow-right' size='md' className='rotate-180 text-foreground' />
+                <Icon icon='arrow-left' size='md' className='text-foreground' />
               </button>
-              <Button
-                variant='outlined'
-                color='primary'
-                size='sm'
+              <button
                 disabled={currentAnswer === null || isLastQuestion}
                 onClick={goForward}
-                className='px-3'
+                className='cursor-pointer p-1 disabled:cursor-not-allowed disabled:opacity-30'
               >
-                <Icon icon='arrow-right' size='md' />
-              </Button>
+                <Icon icon='arrow-left' size='md' className='rotate-180' />
+              </button>
             </div>
           </div>
 
@@ -157,18 +156,18 @@ export function IsAaForMePage() {
           </Typography>
           <div className='flex flex-col gap-4'>
             <Typography variant='body'>
-              Вы ответили ДА на четыре или более вопросов? Если так, то вы, вероятно, попали
-              в беду. Почему мы так считаем? Потому что об этом говорили тысячи людей в АА в
-              течение многих лет.
+              Вы ответили ДА на четыре или более вопросов? Если так, то вы,
+              вероятно, попали в беду. Почему мы так считаем? Потому что об этом
+              говорили тысячи людей в АА в течение многих лет.
             </Typography>
             <Typography variant='body'>
-              И все же только ВЫ можете решить, нужно ли вам АА. Попытайтесь подойти к
-              этому непредвзято. Если вы скажете ДА, мы будем рады показать вам, как мы сами
-              бросили пить. Просто приходите.
+              И все же только ВЫ можете решить, нужно ли вам АА. Попытайтесь
+              подойти к этому непредвзято. Если вы скажете ДА, мы будем рады
+              показать вам, как мы сами бросили пить. Просто приходите.
             </Typography>
             <Typography variant='body'>
-              АА не обещает решить все ваши жизненные проблемы. Но мы можем показать вам,
-              как мы научились жить без выпивки «по одному дню».
+              АА не обещает решить все ваши жизненные проблемы. Но мы можем
+              показать вам, как мы научились жить без выпивки «по одному дню».
             </Typography>
           </div>
           <LinkComponent
@@ -180,7 +179,13 @@ export function IsAaForMePage() {
             variant='icon-left'
           />
           <Grid as='nav' className='lg:flex lg:flex-row'>
-            <Button variant='contained' color='primary' size='lg' as='link' href='/groups'>
+            <Button
+              variant='outlined'
+              color='primary'
+              size='lg'
+              as='link'
+              href='/groups'
+            >
               Найти группу
             </Button>
             <Button
