@@ -50,14 +50,8 @@ export function IsAaForMePage() {
     }
   }
 
-  function restartQuiz() {
-    setCurrentQuestion(0)
-    setAnswers(Array(quizQuestions.length).fill(null))
-    setQuizState('intro')
-  }
-
   return (
-    <Section color='white' className='gap-6'>
+    <Section color='white' className='max-w-300 items-start gap-6'>
       {quizState === 'intro' && (
         <>
           <Typography variant='h1' font='roboto'>
@@ -107,16 +101,13 @@ export function IsAaForMePage() {
               Вопрос {currentQuestion + 1}/{totalQuestions}
             </Typography>
             <div className='flex gap-2'>
-              <Button
-                variant='contained'
-                color='secondary'
-                size='sm'
+              <button
                 disabled={currentQuestion === 0}
                 onClick={goBack}
-                className='px-3'
+                className='cursor-pointer p-1 disabled:cursor-not-allowed disabled:opacity-30'
               >
                 <Icon icon='arrow-right' size='md' className='rotate-180 text-foreground' />
-              </Button>
+              </button>
               <Button
                 variant='outlined'
                 color='primary'
@@ -202,15 +193,6 @@ export function IsAaForMePage() {
               Начать путь
             </Button>
           </Grid>
-          <Button
-            variant='outlined'
-            color='primary'
-            size='lg'
-            className='w-full lg:max-w-75'
-            onClick={restartQuiz}
-          >
-            Пройти заново
-          </Button>
         </>
       )}
     </Section>
