@@ -132,7 +132,7 @@ export function IsAaForMePage() {
               variant={currentAnswer === true ? 'contained' : 'outlined'}
               color='primary'
               size='lg'
-              className='w-full lg:max-w-75'
+              className='focus:bg-light-blue active:bg-light-blue w-full lg:max-w-75'
               onClick={() => handleAnswer(true)}
             >
               Да
@@ -141,7 +141,7 @@ export function IsAaForMePage() {
               variant={currentAnswer === false ? 'contained' : 'outlined'}
               color='primary'
               size='lg'
-              className='w-full lg:max-w-75'
+              className='focus:bg-light-blue active:bg-light-blue w-full lg:max-w-75'
               onClick={() => handleAnswer(false)}
             >
               Нет
@@ -163,7 +163,7 @@ export function IsAaForMePage() {
                 <span
                   className={score >= 4 ? 'text-red-500' : 'text-green-600'}
                 >
-                  {' ' + score}
+                  {' ' + score + ' '}
                 </span>
                 ответов ДА
               </strong>
@@ -194,6 +194,7 @@ export function IsAaForMePage() {
           />
           <Grid as='nav' className='lg:flex lg:flex-row'>
             <Button
+              className='focus:bg-light-blue active:bg-light-blue'
               variant='outlined'
               color='primary'
               size='lg'
