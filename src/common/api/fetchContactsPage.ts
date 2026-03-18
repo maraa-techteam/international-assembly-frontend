@@ -6,7 +6,13 @@ export async function fetchContactsPage() {
   try {
     const raw = await directus.request(
       readItems('contacts_page', {
-        fields: ['meta_title', 'meta_description', 'title', 'text'],
+        fields: [
+          'meta_title',
+          'meta_description',
+          'title',
+          'text',
+          'secretary_email',
+        ],
       }),
     )
     return raw.map((item) => {
@@ -15,6 +21,7 @@ export async function fetchContactsPage() {
         meta_description: item.meta_description,
         title: item.title,
         text: item.text,
+        secretary_email: item.secretary_email,
       }
     })
   } catch (error) {
