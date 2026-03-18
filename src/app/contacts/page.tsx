@@ -1,4 +1,5 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
+import { ContactForm } from '@/features/contacts/components/ContactForm/ContactForm'
 import { RichTextPreview, Section, Typography } from '@/ui'
 import { Metadata } from 'next'
 
@@ -27,6 +28,7 @@ export default async function Contacts() {
           <Typography variant='h1'>{page.title}</Typography>
           <RichTextPreview htmlContent={page.text} />
         </div>
+        <ContactForm />
       </Section>
     </>
   )
