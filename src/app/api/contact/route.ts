@@ -1,7 +1,6 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
-import { Resend } from 'resend'
-
 import { NextRequest, NextResponse } from 'next/server'
+import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -58,12 +57,11 @@ export async function POST(request: NextRequest) {
     const safeSubject = escapeHtml(subject.trim())
     const safeMessage = escapeHtml(message.trim()).replace(/\n/g, '<br>')
 
-    const fromEmail =
-      process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
+    const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
 
     await resend.emails.send({
-      from: fromEmail,
-      to: secretaryEmail,
+      from: `Международная Ассамблея <${fromEmail}>`,
+      to: [secretaryEmail],
       subject: subject.trim(),
       replyTo: email.trim(),
       html: `<p><strong>От:</strong> ${safeName} (${safeEmail})</p><p><strong>Тема:</strong> ${safeSubject}</p><p><strong>Сообщение:</strong></p><p>${safeMessage}</p>`,
@@ -71,9 +69,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch {
-    return NextResponse.json(
-      { error: 'Failed to send email' },
-      { status: 500 },
-    )
+    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
   }
 }
