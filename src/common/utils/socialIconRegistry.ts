@@ -1,8 +1,10 @@
-export type SocialPlatform = 'youtube' | 'telegram' | 'whatsapp'
+export type InlinePlatform = 'youtube' | 'telegram' | 'whatsapp'
+export type BlockPlatform = 'phone' | 'website'
+export type SocialPlatform = InlinePlatform | BlockPlatform
 
 type PlatformEntry = {
   domains: string[]
-  platform: SocialPlatform
+  platform: InlinePlatform
 }
 
 const PLATFORM_REGISTRY: PlatformEntry[] = [
@@ -14,7 +16,7 @@ const PLATFORM_REGISTRY: PlatformEntry[] = [
   { domains: ['wa.me', 'whatsapp.com'], platform: 'whatsapp' },
 ]
 
-export function detectSocialPlatform(href: string): SocialPlatform | null {
+export function detectSocialPlatform(href: string): InlinePlatform | null {
   let hostname: string
 
   try {
@@ -31,5 +33,14 @@ export function detectSocialPlatform(href: string): SocialPlatform | null {
     }
   }
 
+  return null
+}
+
+// Detects links that should only receive an icon when they are standalone in a
+// block element (i.e. the sole content of a <p> tag).
+export function detectBlockPlatform(href: string): BlockPlatform | null {
+  if (href.startsWith('tel:')) return 'phone'
+  if (/^https?:\/\//i.test(href) && !detectSocialPlatform(href))
+    return 'website'
   return null
 }

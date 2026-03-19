@@ -109,7 +109,8 @@ describe('enrichLinksWithIcons', () => {
     })
 
     it('handles links with href using single quotes', () => {
-      const html = "<a href='https://t.me/group'>Telegram</a>"
+      const url = 'https://t.me/group'
+      const html = `<a href='${url}'>Telegram</a>`
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('rte-social-icon')
@@ -135,6 +136,73 @@ describe('enrichLinksWithIcons', () => {
 
     it('returns empty string unchanged', () => {
       expect(enrichLinksWithIcons('')).toBe('')
+    })
+  })
+
+  describe('phone and website icons (block-level only)', () => {
+    it('injects a phone icon for a standalone tel: link', () => {
+      const html = '<p><a href="tel:+1234567890">+1234567890</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).toContain('rte-social-icon')
+    })
+
+    it('injects a website icon for a standalone external link', () => {
+      const html = '<p><a href="https://example.com">Visit us</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).toContain('rte-social-icon')
+    })
+
+    it('does NOT inject a phone icon when the tel: link is inline in a paragraph', () => {
+      const html =
+        '<p>Call us at <a href="tel:+1234567890">+1234567890</a> anytime</p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('does NOT inject a website icon when the external link is inline in a paragraph', () => {
+      const html =
+        '<p>See our <a href="https://example.com">website</a> for more.</p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('places the phone icon before the link text', () => {
+      const html = '<p><a href="tel:+1234567890">Call now</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      const iconIndex = result.indexOf('rte-social-icon')
+      const textIndex = result.indexOf('Call now')
+
+      expect(iconIndex).toBeLessThan(textIndex)
+    })
+
+    it('preserves <p> attributes when injecting a block-level icon', () => {
+      const html =
+        '<p class="contact"><a href="tel:+1234567890">+1234567890</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).toContain('class="contact"')
+      expect(result).toContain('rte-social-icon')
+    })
+
+    it('tolerates leading and trailing whitespace inside <p>', () => {
+      const html = '<p>  <a href="tel:+1234567890">Call</a>  </p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).toContain('rte-social-icon')
+    })
+
+    it('does NOT inject a website icon for a social platform standalone link (social icon already added)', () => {
+      const html = '<p><a href="https://t.me/group">Telegram</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      // Social icon injected in step 1; block step should not double-inject
+      const iconCount = (result.match(/rte-social-icon/g) ?? []).length
+      expect(iconCount).toBe(1)
     })
   })
 })

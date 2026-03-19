@@ -1,4 +1,4 @@
-import { detectSocialPlatform } from './socialIconRegistry'
+import { detectBlockPlatform, detectSocialPlatform } from './socialIconRegistry'
 
 describe('detectSocialPlatform', () => {
   describe('YouTube', () => {
@@ -92,6 +92,54 @@ describe('detectSocialPlatform', () => {
       expect(detectSocialPlatform('https://t.me/channel#message1')).toBe(
         'telegram',
       )
+    })
+  })
+})
+
+describe('detectBlockPlatform', () => {
+  describe('phone', () => {
+    it('detects tel: links', () => {
+      expect(detectBlockPlatform('tel:+1234567890')).toBe('phone')
+    })
+
+    it('detects tel: links without country code', () => {
+      expect(detectBlockPlatform('tel:0441234567')).toBe('phone')
+    })
+  })
+
+  describe('website', () => {
+    it('detects external https links', () => {
+      expect(detectBlockPlatform('https://example.com')).toBe('website')
+    })
+
+    it('detects external http links', () => {
+      expect(detectBlockPlatform('http://example.org')).toBe('website')
+    })
+
+    it('detects external links with paths and query params', () => {
+      expect(
+        detectBlockPlatform('https://example.com/page?utm_source=email'),
+      ).toBe('website')
+    })
+  })
+
+  describe('exclusions', () => {
+    it('returns null for known social platform links', () => {
+      expect(detectBlockPlatform('https://t.me/mygroup')).toBeNull()
+      expect(detectBlockPlatform('https://wa.me/123')).toBeNull()
+      expect(detectBlockPlatform('https://youtube.com/watch?v=x')).toBeNull()
+    })
+
+    it('returns null for relative paths', () => {
+      expect(detectBlockPlatform('/about')).toBeNull()
+    })
+
+    it('returns null for anchor-only hrefs', () => {
+      expect(detectBlockPlatform('#section')).toBeNull()
+    })
+
+    it('returns null for empty string', () => {
+      expect(detectBlockPlatform('')).toBeNull()
     })
   })
 })

@@ -57,9 +57,35 @@ describe('RichTextPreview', () => {
       expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
     })
 
-    it('does not inject an icon for an unknown link', () => {
+    it('does not inject an icon for an unknown link that is inline in a paragraph', () => {
       const { container } = render(
-        <RichTextPreview htmlContent='<p><a href="https://example.com">Visit</a></p>' />,
+        <RichTextPreview htmlContent='<p>Check out <a href="https://example.com">this site</a> for more.</p>' />,
+      )
+
+      expect(
+        container.querySelector('.rte-social-icon'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('injects a website icon for a standalone external link', () => {
+      const { container } = render(
+        <RichTextPreview htmlContent='<p><a href="https://example.com">Visit us</a></p>' />,
+      )
+
+      expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
+    })
+
+    it('injects a phone icon for a standalone tel: link', () => {
+      const { container } = render(
+        <RichTextPreview htmlContent='<p><a href="tel:+1234567890">Call us</a></p>' />,
+      )
+
+      expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
+    })
+
+    it('does not inject a phone icon when the tel: link is inline', () => {
+      const { container } = render(
+        <RichTextPreview htmlContent='<p>Call us at <a href="tel:+1234567890">+1234567890</a> anytime.</p>' />,
       )
 
       expect(
