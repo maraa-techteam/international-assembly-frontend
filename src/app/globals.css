@@ -74,6 +74,14 @@
       color: var(--color-secondary);
     }
 
+    a .rte-social-icon {
+      display: inline;
+      vertical-align: middle;
+      width: 1em;
+      height: 1em;
+      margin-right: 0.25em;
+    }
+
     h1 {
       font-size: 48px;
       font-weight: 700;

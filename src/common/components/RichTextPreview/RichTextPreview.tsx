@@ -1,4 +1,5 @@
 import { cn } from '@/common/utils/cn'
+import { enrichLinksWithIcons } from '@/common/utils/enrichLinksWithIcons'
 import sanitizeHtml from 'sanitize-html'
 
 import { RichTextPreviewType } from './RichTextPreview.type'
@@ -35,7 +36,7 @@ export function RichTextPreview({
   return (
     <div
       className={cn('rte', className)}
-      dangerouslySetInnerHTML={{ __html: cleanHtml }}
+      dangerouslySetInnerHTML={{ __html: enrichLinksWithIcons(cleanHtml) }}
     />
   )
 }
