@@ -19,7 +19,7 @@ const inputClasses =
 const labelClasses = 'sr-only'
 
 const errorInputClasses =
-  'border-red-500 focus:border-red-500 focus:ring-red-500/20'
+  'border-red-500/20 focus:border-red-500/20 focus:ring-red-500/20'
 
 export function ContactForm({ className }: { className?: string }) {
   const [formData, setFormData] = useState<FormState>({
@@ -98,7 +98,7 @@ export function ContactForm({ className }: { className?: string }) {
           className={cn(inputClasses, errors.name && errorInputClasses)}
         />
         {errors.name && (
-          <span className='text-sm text-red-500'>{errors.name}</span>
+          <span className='text-sm text-red-400'>{errors.name}</span>
         )}
       </div>
 
@@ -112,7 +112,7 @@ export function ContactForm({ className }: { className?: string }) {
           className={cn(inputClasses, errors.email && errorInputClasses)}
         />
         {errors.email && (
-          <span className='text-sm text-red-500'>{errors.email}</span>
+          <span className='text-sm text-red-400'>{errors.email}</span>
         )}
       </div>
 
@@ -126,7 +126,7 @@ export function ContactForm({ className }: { className?: string }) {
           className={cn(inputClasses, errors.subject && errorInputClasses)}
         />
         {errors.subject && (
-          <span className='text-sm text-red-500'>{errors.subject}</span>
+          <span className='text-sm text-red-400'>{errors.subject}</span>
         )}
       </div>
 
@@ -144,17 +144,17 @@ export function ContactForm({ className }: { className?: string }) {
           )}
         />
         {errors.message && (
-          <span className='text-sm text-red-500'>{errors.message}</span>
+          <span className='text-sm text-red-400'>{errors.message}</span>
         )}
       </div>
 
       {status === 'success' && (
-        <Typography variant='caption' className='text-green-600'>
+        <Typography variant='caption' className='text-green-700'>
           Сообщение успешно отправлено!
         </Typography>
       )}
       {status === 'error' && (
-        <Typography variant='caption' className='text-red-500'>
+        <Typography variant='caption' className='text-red-400'>
           Произошла ошибка. Попробуйте ещё раз.
         </Typography>
       )}
