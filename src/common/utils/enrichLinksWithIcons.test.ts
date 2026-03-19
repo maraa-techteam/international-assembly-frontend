@@ -1,9 +1,9 @@
 import { enrichLinksWithIcons } from './enrichLinksWithIcons'
 
 describe('enrichLinksWithIcons', () => {
-  describe('icon injection', () => {
-    it('injects an icon into a telegram link', () => {
-      const html = '<a href="https://t.me/mygroup">Join Telegram</a>'
+  describe('icon injection (block/standalone links only)', () => {
+    it('injects an icon into a standalone telegram link', () => {
+      const html = '<p><a href="https://t.me/mygroup">Join Telegram</a></p>'
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('rte-social-icon')
@@ -11,17 +11,17 @@ describe('enrichLinksWithIcons', () => {
       expect(result).toContain('Join Telegram')
     })
 
-    it('injects an icon into a youtube link', () => {
+    it('injects an icon into a standalone youtube link', () => {
       const html =
-        '<a href="https://www.youtube.com/watch?v=abc">Watch video</a>'
+        '<p><a href="https://www.youtube.com/watch?v=abc">Watch video</a></p>'
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('rte-social-icon')
       expect(result).toContain('Watch video')
     })
 
-    it('injects an icon into a whatsapp link', () => {
-      const html = '<a href="https://wa.me/1234567890">Contact us</a>'
+    it('injects an icon into a standalone whatsapp link', () => {
+      const html = '<p><a href="https://wa.me/1234567890">Contact us</a></p>'
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('rte-social-icon')
@@ -29,7 +29,7 @@ describe('enrichLinksWithIcons', () => {
     })
 
     it('places the icon before the link text', () => {
-      const html = '<a href="https://t.me/mygroup">Join Telegram</a>'
+      const html = '<p><a href="https://t.me/mygroup">Join Telegram</a></p>'
       const result = enrichLinksWithIcons(html)
 
       const iconIndex = result.indexOf('rte-social-icon')
@@ -37,9 +37,70 @@ describe('enrichLinksWithIcons', () => {
 
       expect(iconIndex).toBeLessThan(textIndex)
     })
+
+    it('injects a phone icon for a standalone tel: link', () => {
+      const html = '<p><a href="tel:+1234567890">+1234567890</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).toContain('rte-social-icon')
+    })
+
+    it('injects a website icon for a standalone external link', () => {
+      const html = '<p><a href="https://example.com">Visit us</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).toContain('rte-social-icon')
+    })
   })
 
-  describe('non-social links', () => {
+  describe('inline links — no icons', () => {
+    it('does NOT inject an icon for a social link inline in a paragraph', () => {
+      const html =
+        '<p>Join us on <a href="https://t.me/mygroup">Telegram</a> today</p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('does NOT inject an icon for an inline whatsapp link', () => {
+      const html =
+        '<p>Message us on <a href="https://wa.me/123">WhatsApp</a>.</p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('does NOT inject an icon for an inline youtube link', () => {
+      const html =
+        '<p>Watch the <a href="https://youtube.com/watch?v=x">video</a> here.</p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('does NOT inject a phone icon when the tel: link is inline', () => {
+      const html =
+        '<p>Call us at <a href="tel:+1234567890">+1234567890</a> anytime</p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('does NOT inject a website icon when the external link is inline', () => {
+      const html =
+        '<p>See our <a href="https://example.com">website</a> for more.</p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('does not modify bare <a> links (not inside a <p>)', () => {
+      const html = '<a href="https://t.me/mygroup">Join Telegram</a>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).toBe(html)
+    })
+
     it('does not modify links to unknown domains', () => {
       const html = '<a href="https://example.com">Visit us</a>'
       const result = enrichLinksWithIcons(html)
@@ -63,35 +124,34 @@ describe('enrichLinksWithIcons', () => {
   })
 
   describe('multiple links in the same HTML', () => {
-    it('processes all social links in a paragraph', () => {
+    it('does NOT inject icons for multiple social links in a single paragraph', () => {
       const html =
         '<p><a href="https://t.me/g1">Telegram</a> and <a href="https://wa.me/123">WhatsApp</a></p>'
+      const result = enrichLinksWithIcons(html)
+
+      expect(result).not.toContain('rte-social-icon')
+    })
+
+    it('injects exactly one icon per standalone social link', () => {
+      const html =
+        '<p><a href="https://t.me/g1">Telegram</a></p><p><a href="https://wa.me/123">WhatsApp</a></p>'
       const result = enrichLinksWithIcons(html)
 
       const iconCount = (result.match(/rte-social-icon/g) ?? []).length
       expect(iconCount).toBe(2)
     })
-
-    it('only adds icons to social links, not unknown ones', () => {
-      const html =
-        '<p><a href="https://t.me/g">Telegram</a> and <a href="https://example.com">Other</a></p>'
-      const result = enrichLinksWithIcons(html)
-
-      const iconCount = (result.match(/rte-social-icon/g) ?? []).length
-      expect(iconCount).toBe(1)
-    })
   })
 
   describe('SVG accessibility attributes', () => {
     it('marks the injected icon as aria-hidden', () => {
-      const html = '<a href="https://t.me/mygroup">Telegram</a>'
+      const html = '<p><a href="https://t.me/mygroup">Telegram</a></p>'
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('aria-hidden="true"')
     })
 
     it('includes the proper SVG viewBox', () => {
-      const html = '<a href="https://t.me/mygroup">Telegram</a>'
+      const html = '<p><a href="https://t.me/mygroup">Telegram</a></p>'
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('viewBox="0 -960 960 960"')
@@ -99,85 +159,30 @@ describe('enrichLinksWithIcons', () => {
   })
 
   describe('links with extra attributes', () => {
-    it('handles links with target and rel attributes', () => {
+    it('handles standalone links with target and rel attributes', () => {
       const html =
-        '<a href="https://t.me/group" target="_blank" rel="noopener noreferrer">Telegram</a>'
+        '<p><a href="https://t.me/group" target="_blank" rel="noopener noreferrer">Telegram</a></p>'
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('rte-social-icon')
       expect(result).toContain('target="_blank"')
     })
 
-    it('handles links with href using single quotes', () => {
+    it('handles standalone links with href using single quotes', () => {
       const url = 'https://t.me/group'
-      const html = `<a href='${url}'>Telegram</a>`
+      const html = `<p><a href='${url}'>Telegram</a></p>`
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('rte-social-icon')
     })
 
-    it('handles links with class attributes', () => {
+    it('handles standalone links with class attributes', () => {
       const html =
-        '<a href="https://youtube.com/watch?v=x" class="link">Video</a>'
+        '<p><a href="https://youtube.com/watch?v=x" class="link">Video</a></p>'
       const result = enrichLinksWithIcons(html)
 
       expect(result).toContain('rte-social-icon')
       expect(result).toContain('class="link"')
-    })
-  })
-
-  describe('passthrough content', () => {
-    it('returns plain text unchanged', () => {
-      const html = '<p>Hello world</p>'
-      const result = enrichLinksWithIcons(html)
-
-      expect(result).toBe(html)
-    })
-
-    it('returns empty string unchanged', () => {
-      expect(enrichLinksWithIcons('')).toBe('')
-    })
-  })
-
-  describe('phone and website icons (block-level only)', () => {
-    it('injects a phone icon for a standalone tel: link', () => {
-      const html = '<p><a href="tel:+1234567890">+1234567890</a></p>'
-      const result = enrichLinksWithIcons(html)
-
-      expect(result).toContain('rte-social-icon')
-    })
-
-    it('injects a website icon for a standalone external link', () => {
-      const html = '<p><a href="https://example.com">Visit us</a></p>'
-      const result = enrichLinksWithIcons(html)
-
-      expect(result).toContain('rte-social-icon')
-    })
-
-    it('does NOT inject a phone icon when the tel: link is inline in a paragraph', () => {
-      const html =
-        '<p>Call us at <a href="tel:+1234567890">+1234567890</a> anytime</p>'
-      const result = enrichLinksWithIcons(html)
-
-      expect(result).not.toContain('rte-social-icon')
-    })
-
-    it('does NOT inject a website icon when the external link is inline in a paragraph', () => {
-      const html =
-        '<p>See our <a href="https://example.com">website</a> for more.</p>'
-      const result = enrichLinksWithIcons(html)
-
-      expect(result).not.toContain('rte-social-icon')
-    })
-
-    it('places the phone icon before the link text', () => {
-      const html = '<p><a href="tel:+1234567890">Call now</a></p>'
-      const result = enrichLinksWithIcons(html)
-
-      const iconIndex = result.indexOf('rte-social-icon')
-      const textIndex = result.indexOf('Call now')
-
-      expect(iconIndex).toBeLessThan(textIndex)
     })
 
     it('preserves <p> attributes when injecting a block-level icon', () => {
@@ -195,14 +200,18 @@ describe('enrichLinksWithIcons', () => {
 
       expect(result).toContain('rte-social-icon')
     })
+  })
 
-    it('does NOT inject a website icon for a social platform standalone link (social icon already added)', () => {
-      const html = '<p><a href="https://t.me/group">Telegram</a></p>'
+  describe('passthrough content', () => {
+    it('returns plain text unchanged', () => {
+      const html = '<p>Hello world</p>'
       const result = enrichLinksWithIcons(html)
 
-      // Social icon injected in step 1; block step should not double-inject
-      const iconCount = (result.match(/rte-social-icon/g) ?? []).length
-      expect(iconCount).toBe(1)
+      expect(result).toBe(html)
+    })
+
+    it('returns empty string unchanged', () => {
+      expect(enrichLinksWithIcons('')).toBe('')
     })
   })
 })

@@ -57,6 +57,16 @@ describe('RichTextPreview', () => {
       expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
     })
 
+    it('does not inject an icon for a social link that is inline in a paragraph', () => {
+      const { container } = render(
+        <RichTextPreview htmlContent='<p>Join us on <a href="https://t.me/mygroup">Telegram</a> today.</p>' />,
+      )
+
+      expect(
+        container.querySelector('.rte-social-icon'),
+      ).not.toBeInTheDocument()
+    })
+
     it('does not inject an icon for an unknown link that is inline in a paragraph', () => {
       const { container } = render(
         <RichTextPreview htmlContent='<p>Check out <a href="https://example.com">this site</a> for more.</p>' />,

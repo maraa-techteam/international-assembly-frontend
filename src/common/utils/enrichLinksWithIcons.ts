@@ -24,22 +24,12 @@ function buildIconSvg(platform: SocialPlatform): string {
 }
 
 export function enrichLinksWithIcons(html: string): string {
-  // Step 1: inject social icons into ALL matching social links (inline or block).
-  let result = html.replace(/<a(\s[^>]*)>/gi, (match, attrs: string) => {
-    const hrefMatch = /href=["']([^"']+)["']/i.exec(attrs)
-    if (!hrefMatch) return match
-
-    const platform = detectSocialPlatform(hrefMatch[1])
-    if (!platform) return match
-
-    return `${match}${buildIconSvg(platform)}`
-  })
-
-  // Step 2: inject phone/website icons only when the link is the sole content
-  // of a <p> element (i.e. it is on its own row).
+  // Icons are only injected when a link is the sole content of a <p> element
+  // (i.e. it is on its own row). Inline links mixed with other text are left
+  // untouched regardless of their platform.
   // Note: nested <a> tags are not possible here because sanitize-html strips
   // them before this function is called, so the lazy [\s\S]*? pattern is safe.
-  result = result.replace(
+  return html.replace(
     /<p([^>]*)>\s*(<a(\s[^>]*)>)([\s\S]*?)<\/a>\s*<\/p>/gi,
     (
       match,
@@ -51,12 +41,16 @@ export function enrichLinksWithIcons(html: string): string {
       const hrefMatch = /href=["']([^"']+)["']/i.exec(aAttrs)
       if (!hrefMatch) return match
 
-      const platform = detectBlockPlatform(hrefMatch[1])
+      // Reject paragraphs that contain more than one link (content between the
+      // first <a> open tag and the closing </a> of the whole match would include
+      // an extra </a> or <a tag).
+      if (/<a[\s>]/i.test(content) || content.includes('</a>')) return match
+
+      const platform =
+        detectSocialPlatform(hrefMatch[1]) ?? detectBlockPlatform(hrefMatch[1])
       if (!platform) return match
 
       return `<p${pAttrs}>${openTag}${buildIconSvg(platform)}${content}</a></p>`
     },
   )
-
-  return result
 }
