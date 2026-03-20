@@ -71,17 +71,64 @@ describe('SearchBar - Toggle behavior', () => {
     const input = screen.getByPlaceholderText(/поиск на сайте/i)
     expect(document.activeElement).toBe(input)
   })
+})
 
-  it('calls onToggle(false) when collapsing', async () => {
-    const user = userEvent.setup({ delay: null })
+describe('SearchBar - Clear button behavior', () => {
+  it('does not show clear button when input is empty', () => {
+    render(<SearchBar isExpanded={true} onToggle={jest.fn()} />)
+
+    expect(
+      screen.queryByRole('button', { name: /очистить строку поиска/i }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows clear button when input has a value', async () => {
+    render(<SearchBar isExpanded={true} onToggle={jest.fn()} />)
+    const user = userEvent.setup()
+
+    await user.type(screen.getByPlaceholderText(/поиск на сайте/i), 'Hello')
+
+    expect(
+      screen.getByRole('button', { name: /очистить строку поиска/i }),
+    ).toBeInTheDocument()
+  })
+
+  it('clears the input value when clear button is clicked', async () => {
+    render(<SearchBar isExpanded={true} onToggle={jest.fn()} />)
+    const user = userEvent.setup()
+    const input = screen.getByPlaceholderText(/поиск на сайте/i)
+
+    await user.type(input, 'Hello')
+    await user.click(
+      screen.getByRole('button', { name: /очистить строку поиска/i }),
+    )
+
+    expect(input).toHaveValue('')
+  })
+
+  it('keeps the input focused after clicking the clear button', async () => {
+    render(<SearchBar isExpanded={true} onToggle={jest.fn()} />)
+    const user = userEvent.setup()
+    const input = screen.getByPlaceholderText(/поиск на сайте/i)
+
+    await user.type(input, 'Hello')
+    await user.click(
+      screen.getByRole('button', { name: /очистить строку поиска/i }),
+    )
+
+    expect(document.activeElement).toBe(input)
+  })
+
+  it('does not call onToggle when clear button is clicked', async () => {
+    const onToggleMock = jest.fn()
     render(<SearchBar isExpanded={true} onToggle={onToggleMock} />)
+    const user = userEvent.setup()
 
-    // there are multiple buttons in expanded state; use aria-label for the close button
-    const closeButton = screen.getByRole('button', {
-      name: /закрыть строку поиска/i,
-    })
-    await user.click(closeButton)
+    await user.type(screen.getByPlaceholderText(/поиск на сайте/i), 'Hello')
+    await user.click(
+      screen.getByRole('button', { name: /очистить строку поиска/i }),
+    )
 
-    expect(onToggleMock).toHaveBeenCalledWith(false)
+    expect(onToggleMock).not.toHaveBeenCalled()
   })
 })
