@@ -30,6 +30,11 @@ export function SearchBar({
     }
   }
 
+  const handleClear = () => {
+    setSearchValue('')
+    inputRef.current?.focus()
+  }
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const q = searchValue.trim()
@@ -78,8 +83,19 @@ export function SearchBar({
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder={placeholder}
-              className='font-roboto border-border focus:border-primary focus:ring-primary/20 z-0 h-12 w-full rounded-full border-none bg-gray-100 pr-4 pl-12 text-base transition-all duration-300 ease-in-out outline-none focus:ring-2'
+              className='font-roboto border-border focus:border-primary focus:ring-primary/20 z-0 h-12 w-full rounded-full border-none bg-gray-100 pr-10 pl-12 text-base transition-all duration-300 ease-in-out outline-none focus:ring-2 lg:pr-16'
             />
+
+            {searchValue && (
+              <button
+                type='button'
+                onClick={handleClear}
+                aria-label='Очистить строку поиска'
+                className='absolute top-1/2 right-3 flex h-6 w-6 -translate-y-1/2 transform items-center justify-center text-gray-600 transition-colors duration-200 lg:right-10'
+              >
+                <Icon icon='close' className='text-foreground' size='md' />
+              </button>
+            )}
 
             <button
               type='button'
