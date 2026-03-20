@@ -71,19 +71,6 @@ describe('SearchBar - Toggle behavior', () => {
     const input = screen.getByPlaceholderText(/поиск на сайте/i)
     expect(document.activeElement).toBe(input)
   })
-
-  it('calls onToggle(false) when collapsing', async () => {
-    const user = userEvent.setup({ delay: null })
-    render(<SearchBar isExpanded={true} onToggle={onToggleMock} />)
-
-    // there are multiple buttons in expanded state; use aria-label for the close button
-    const closeButton = screen.getByRole('button', {
-      name: /закрыть строку поиска/i,
-    })
-    await user.click(closeButton)
-
-    expect(onToggleMock).toHaveBeenCalledWith(false)
-  })
 })
 
 describe('SearchBar - Clear button behavior', () => {

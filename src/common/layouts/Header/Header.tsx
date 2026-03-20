@@ -138,24 +138,6 @@ export function Header({ headerData }: HeaderProps) {
             alt='Логотип АА'
           />
         </Link>
-
-        {(!isMobileMenuActive || !isSearchActive) && (
-          <button
-            aria-expanded={isSearchActive}
-            aria-controls='search-input'
-            aria-label={
-              isSearchActive ? 'Закрыть строку поиска' : 'Открыть строку поиска'
-            }
-            onClick={() =>
-              !isMobileMenuActive
-                ? setIsSearchActive(false)
-                : setIsMobileMenuActive((prev) => !prev)
-            }
-            className={cn('hidden', isSearchActive && 'block lg:hidden')}
-          >
-            <Icon icon='close' className='text-contrast' size='md' />
-          </button>
-        )}
       </div>
 
       <SearchBar
