@@ -1,20 +1,19 @@
-import { Typography } from '@/common/components'
+import { LinkComponent, Typography } from '@/common/components'
 import { Section } from '@/common/layouts/Section/Section'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
-import Link from 'next/link'
 
 import { fetchLiteratureItem } from '../api/fetchLiteratureItem'
 
 type LiteratureDetailPageProps = {
-  params: Promise<{ id: string }>
+  params: Promise<{ slug: string }>
 }
 
 export async function LiteratureDetailPage({
   params,
 }: LiteratureDetailPageProps) {
-  const { id } = await params
-  const item = await fetchLiteratureItem(id)
+  const { slug } = await params
+  const item = await fetchLiteratureItem(slug)
 
   if (!item) {
     return (
@@ -22,19 +21,72 @@ export async function LiteratureDetailPage({
         <Typography variant='h1' font='roboto'>
           Материал не найден
         </Typography>
-        <Link href='/literature' className='text-primary underline'>
-          ← Вернуться к литературе
-        </Link>
+        <LinkComponent
+          href='/literature'
+          icon='arrow-left'
+          text='Назад'
+          color='foreground'
+          className='self-start'
+          variant='icon-left'
+        />
       </Section>
     )
   }
 
   return (
-    <Section color='white'>
-      <Link href='/literature' className='text-primary underline'>
-        ← Вернуться к литературе
-      </Link>
+    <Section className='max-w-250' color='white'>
+      <LinkComponent
+        href='/literature'
+        icon='arrow-left'
+        text='Назад'
+        color='foreground'
+        className='self-start'
+        variant='icon-left'
+      />
       <div className='flex flex-col gap-6 lg:flex-row'>
+        <div className='flex flex-col gap-3'>
+          <Typography variant='h1' font='roboto'>
+            {item.title}
+          </Typography>
+          {item.subtitle && (
+            <Typography variant='body' className='text-gray-500'>
+              {item.subtitle}
+            </Typography>
+          )}
+          {item.price !== null && item.price !== undefined && (
+            <div className='bg-indigo-blue w-fit rounded-full px-4 py-2'>
+              <Typography variant='body' className='font-bold text-white'>
+                {item.price} {item.currency}
+              </Typography>
+            </div>
+          )}
+          {item.description && (
+            <Typography variant='body'>{item.description}</Typography>
+          )}
+          <div className='bg-light-blue flex flex-col items-start gap-4 rounded-2xl p-4'>
+            <Typography variant='h3'>Купить</Typography>
+            <Typography variant='body'>
+              Для покупки контактируйте довереное лицо:
+            </Typography>
+            <LinkComponent
+              text={'+1234567890'}
+              icon='phone'
+              href='tel:+1234567890'
+              variant={'icon-left'}
+            />
+            <LinkComponent
+              text={'email@email.com'}
+              href={'mailto:example@example.com'}
+              icon='email'
+              variant={'icon-left'}
+            />
+          </div>
+          {item.is_approved && (
+            <Typography variant='caption' className='text-primary'>
+              Одобрено конференцией
+            </Typography>
+          )}
+        </div>
         <div className='w-full lg:max-w-xs'>
           {item.cover_image ? (
             <Image
@@ -49,67 +101,6 @@ export async function LiteratureDetailPage({
             <div className='flex aspect-[3/4] w-full items-center justify-center rounded-lg bg-[#f5f5f5]'>
               <span className='text-sm text-gray-400'>Обложка не найдена</span>
             </div>
-          )}
-        </div>
-        <div className='flex flex-col gap-3'>
-          <Typography variant='h1' font='roboto'>
-            {item.title}
-          </Typography>
-          {item.subtitle && (
-            <Typography variant='body' className='text-gray-500'>
-              {item.subtitle}
-            </Typography>
-          )}
-          {item.is_approved && (
-            <span className='border-primary text-primary inline-flex w-fit items-center rounded-full border px-4 py-1 text-sm'>
-              Одобрено
-            </span>
-          )}
-          {item.description && (
-            <Typography variant='body'>{item.description}</Typography>
-          )}
-          <dl className='flex flex-col gap-2 text-sm'>
-            {item.author && (
-              <div className='flex gap-2'>
-                <dt className='font-bold'>Автор:</dt>
-                <dd>{item.author}</dd>
-              </div>
-            )}
-            {item.isbn && (
-              <div className='flex gap-2'>
-                <dt className='font-bold'>ISBN:</dt>
-                <dd>{item.isbn}</dd>
-              </div>
-            )}
-            {item.edition_name && (
-              <div className='flex gap-2'>
-                <dt className='font-bold'>Издание:</dt>
-                <dd>{item.edition_name}</dd>
-              </div>
-            )}
-            {item.page_count && (
-              <div className='flex gap-2'>
-                <dt className='font-bold'>Страниц:</dt>
-                <dd>{item.page_count}</dd>
-              </div>
-            )}
-            {item.binding_type && (
-              <div className='flex gap-2'>
-                <dt className='font-bold'>Переплёт:</dt>
-                <dd>{item.binding_type}</dd>
-              </div>
-            )}
-            {item.language && (
-              <div className='flex gap-2'>
-                <dt className='font-bold'>Язык:</dt>
-                <dd>{item.language}</dd>
-              </div>
-            )}
-          </dl>
-          {item.price !== null && item.price !== undefined && (
-            <Typography variant='h3' font='roboto' className='text-primary'>
-              {item.price} {item.currency}
-            </Typography>
           )}
         </div>
       </div>

@@ -18,7 +18,11 @@ export default async function Contacts() {
   const page = pageData[0]
   return (
     <>
-      <Section className='flex flex-col' alignment='start' color='white'>
+      <Section
+        className='flex max-w-250 flex-col'
+        alignment='start'
+        color='white'
+      >
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
           <Typography variant='h1'>{page.title}</Typography>
           <RichTextPreview htmlContent={page.text} />

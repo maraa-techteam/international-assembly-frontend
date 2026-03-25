@@ -7,12 +7,9 @@ import Link from 'next/link'
 import { LiteratureCardType } from './LiteratureCard.type'
 
 export function LiteratureCard({
-  id,
+  slug,
   title,
   subtitle,
-  author,
-  edition_name,
-  page_count,
   price,
   currency,
   cover_image,
@@ -20,9 +17,9 @@ export function LiteratureCard({
 }: LiteratureCardType) {
   return (
     <Link
-      href={`/literature/${id}`}
+      href={`/literature/${slug}`}
       className={cn(
-        'flex flex-col gap-3 rounded-lg border border-[#e5e7eb] p-4 transition-shadow hover:shadow-md',
+        'border-primary-grey flex flex-col gap-3 rounded-lg border p-4 shadow-md transition-shadow hover:shadow-lg',
         className,
       )}
     >
@@ -32,7 +29,7 @@ export function LiteratureCard({
           alt={title}
           width={300}
           height={400}
-          className='aspect-[3/4] w-full rounded-md object-cover'
+          className='aspect-[3/4] w-full max-w-75 rounded-md object-cover'
           priority={false}
         />
       ) : (
@@ -40,34 +37,24 @@ export function LiteratureCard({
           <span className='text-sm text-gray-400'>Обложка не найдена</span>
         </div>
       )}
-      <div className='flex flex-col gap-1'>
-        <Typography variant='h3' font='roboto' className='line-clamp-2'>
-          {title}
-        </Typography>
-        {subtitle && (
-          <Typography variant='body' className='line-clamp-2 text-gray-500'>
-            {subtitle}
+      <div className='flex h-full flex-col justify-between gap-2'>
+        <div className='flex flex-col'>
+          <Typography variant='h3' font='roboto' className='line-clamp-2'>
+            {title}
           </Typography>
-        )}
-        {author && (
-          <Typography variant='caption' className='text-gray-500'>
-            {author}
-          </Typography>
-        )}
-        {edition_name && (
-          <Typography variant='caption' className='text-gray-400'>
-            {edition_name}
-          </Typography>
-        )}
-        {page_count && (
-          <Typography variant='caption' className='text-gray-400'>
-            {page_count} стр.
-          </Typography>
-        )}
+          {subtitle && (
+            <Typography variant='caption' className='text-gray-400'>
+              {subtitle}
+            </Typography>
+          )}
+        </div>
+
         {price !== null && price !== undefined && (
-          <Typography variant='body' className='text-primary font-bold'>
-            {price} {currency}
-          </Typography>
+          <div className='bg-indigo-blue w-fit rounded-full px-4 py-2'>
+            <Typography variant='body' className='font-bold text-white'>
+              {price} {currency}
+            </Typography>
+          </div>
         )}
       </div>
     </Link>

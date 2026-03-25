@@ -7,6 +7,7 @@ export type LiteratureItemType =
 
 export type LiteratureItem = {
   id: string
+  slug: string
   isbn: string | null
   title: string
   subtitle: string | null

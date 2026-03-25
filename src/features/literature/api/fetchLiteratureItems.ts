@@ -10,6 +10,7 @@ export async function fetchLiteratureItems(): Promise<LiteratureItem[]> {
         fields: [
           'id',
           'isbn',
+          'slug',
           'title',
           'subtitle',
           'description',
@@ -28,6 +29,7 @@ export async function fetchLiteratureItems(): Promise<LiteratureItem[]> {
     )
     return raw.map((item) => ({
       id: item.id,
+      slug: item.slug,
       isbn: item.isbn ?? null,
       title: item.title,
       subtitle: item.subtitle ?? null,

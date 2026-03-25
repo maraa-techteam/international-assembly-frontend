@@ -4,14 +4,15 @@ import directus from '../../../common/lib/directus'
 import { LiteratureItem } from '../types/LiteratureItem.type'
 
 export async function fetchLiteratureItem(
-  id: string,
+  slug: string,
 ): Promise<LiteratureItem | null> {
   try {
     const raw = await directus.request(
       readItems('literature_items', {
-        filter: { id: { _eq: id } },
+        filter: { slug: { _eq: slug } },
         fields: [
           'id',
+          'slug',
           'isbn',
           'title',
           'subtitle',
@@ -37,6 +38,7 @@ export async function fetchLiteratureItem(
     return {
       id: item.id,
       isbn: item.isbn ?? null,
+      slug: item.slug,
       title: item.title,
       subtitle: item.subtitle ?? null,
       description: item.description ?? null,
@@ -53,7 +55,7 @@ export async function fetchLiteratureItem(
     }
   } catch (error) {
     throw new Error(
-      `Failed to fetch literature item with id "${id}": ${error instanceof Error ? error.message : String(error)}`,
+      `Failed to fetch literature item with slug "${slug}": ${error instanceof Error ? error.message : String(error)}`,
     )
   }
 }

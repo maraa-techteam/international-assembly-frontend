@@ -1,12 +1,12 @@
 import {
-  SocialPlatform,
+  Platform,
   detectBlockPlatform,
   detectSocialPlatform,
 } from './socialIconRegistry'
 
 // SVG path data mirroring the social icons defined in Icon.tsx.
 // The viewBox for all icons is "0 -960 960 960".
-const SOCIAL_ICON_PATHS: Record<SocialPlatform, string> = {
+const SOCIAL_ICON_PATHS: Record<Platform, string> = {
   youtube:
     '<path transform="translate(0, -960) scale(40)" d="M14.0037 11.7913L11.1963 10.4813C10.9513 10.3675 10.75 10.495 10.75 10.7662V13.2338C10.75 13.505 10.9513 13.6325 11.1963 13.5188L14.0025 12.2087C14.2488 12.0938 14.2487 11.9063 14.0037 11.7913ZM12 0C5.3725 0 0 5.3725 0 12C0 18.6275 5.3725 24 12 24C18.6275 24 24 18.6275 24 12C24 5.3725 18.6275 0 12 0ZM12 16.875C5.8575 16.875 5.75 16.3213 5.75 12C5.75 7.67875 5.8575 7.125 12 7.125C18.1425 7.125 18.25 7.67875 18.25 12C18.25 16.3213 18.1425 16.875 12 16.875Z" fill="currentColor" />',
   telegram:
@@ -17,9 +17,11 @@ const SOCIAL_ICON_PATHS: Record<SocialPlatform, string> = {
     '<path fill="currentColor" d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z" />',
   website:
     '<path fill="currentColor" d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z" />',
+  email:
+    '<path fill="currentColor" d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm320-280L160-640v400h640v-400L480-440Zm0-80 320-200H160l320 200ZM160-640v-80 480-400Z" />',
 }
 
-function buildIconSvg(platform: SocialPlatform): string {
+function buildIconSvg(platform: Platform): string {
   return `<svg aria-hidden="true" viewBox="0 -960 960 960" class="rte-social-icon" fill="none" xmlns="http://www.w3.org/2000/svg">${SOCIAL_ICON_PATHS[platform]}</svg>`
 }
 
