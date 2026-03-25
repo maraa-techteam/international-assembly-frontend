@@ -5,26 +5,30 @@ import { cn } from '@/common/utils/cn'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useMemo, useTransition } from 'react'
 
-const PAGE_SIZE = 10
 const VISIBLE_PAGES = 3
 
 type PaginationProps = {
   fetchedCount: number
   totalCount: number
+  pageSize?: number
 }
 
-export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
+export function Pagination({
+  fetchedCount,
+  totalCount,
+  pageSize = 10,
+}: PaginationProps) {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
   const [isPending, startTransition] = useTransition()
 
   const currentLimit = parseInt(
-    searchParams.get('limit') || String(PAGE_SIZE),
+    searchParams.get('limit') || String(pageSize),
     10,
   )
   const currentPage = parseInt(searchParams.get('page') || '1', 10)
-  const totalPages = Math.ceil(totalCount / PAGE_SIZE)
+  const totalPages = Math.ceil(totalCount / pageSize)
 
   const visiblePages = useMemo(() => {
     if (totalPages <= VISIBLE_PAGES) {
@@ -44,7 +48,7 @@ export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
   }, [currentPage, totalPages])
 
   const handleLoadMore = () => {
-    const nextLimit = currentLimit + PAGE_SIZE
+    const nextLimit = currentLimit + pageSize
 
     const params = new URLSearchParams(searchParams.toString())
     params.set('limit', nextLimit.toString())
@@ -60,7 +64,7 @@ export function Pagination({ fetchedCount, totalCount }: PaginationProps) {
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(searchParams.toString())
     params.set('page', page.toString())
-    params.set('limit', String(PAGE_SIZE))
+    params.set('limit', String(pageSize))
 
     startTransition(() => {
       router.push(`${pathname}?${params.toString()}`, { scroll: false })

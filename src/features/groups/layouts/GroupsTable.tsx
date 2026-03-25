@@ -23,7 +23,7 @@ export function GroupsTable({ groups }: GroupsTableProps) {
             'border-primary flex min-w-300 flex-col overflow-hidden rounded-2xl border-2 lg:min-w-full'
           }
         >
-          <div className='bg-primary grid grid-cols-[0.5fr_0.5fr_0.3fr_1fr] gap-4 px-4'>
+          <div className='bg-primary grid grid-cols-[0.3fr_0.2fr_0.2fr_0.4fr] gap-4 px-4 lg:grid-cols-[0.5fr_0.3fr_0.3fr_1fr]'>
             <Typography className='py-4' variant='caption'>
               Название группы
             </Typography>

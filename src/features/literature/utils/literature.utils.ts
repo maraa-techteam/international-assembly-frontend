@@ -3,7 +3,7 @@ import {
   LiteratureItemType,
 } from '../types/LiteratureItem.type'
 
-export const LITERATURE_ITEM_TYPES: LiteratureItemType[] = [
+export const literatureItemTypes: LiteratureItemType[] = [
   'book',
   'brochure',
   'booklet',
@@ -11,7 +11,7 @@ export const LITERATURE_ITEM_TYPES: LiteratureItemType[] = [
   'workbook',
 ]
 
-export const LITERATURE_CATEGORY_LABELS: Record<LiteratureItemType, string> = {
+export const literatureCategoryLabels: Record<LiteratureItemType, string> = {
   book: 'Книги',
   brochure: 'Брошюры',
   booklet: 'Буклеты',
@@ -19,12 +19,32 @@ export const LITERATURE_CATEGORY_LABELS: Record<LiteratureItemType, string> = {
   workbook: 'Рабочие тетради',
 }
 
+/** URL slug for each item type, e.g. book → "books" */
+export const literatureCategorySlugs: Record<LiteratureItemType, string> = {
+  book: 'books',
+  brochure: 'brochures',
+  booklet: 'booklets',
+  leaflet: 'leaflets',
+  workbook: 'workbooks',
+}
+
+/** Reverse mapping: URL slug → item type, e.g. "books" → book */
+export const literatureSlugToType: Record<
+  string,
+  LiteratureItemType | undefined
+> = Object.fromEntries(
+  Object.entries(literatureCategorySlugs).map(([type, slug]) => [
+    slug,
+    type as LiteratureItemType,
+  ]),
+)
+
 export function groupLiteratureByType(
   items: LiteratureItem[],
 ): Record<LiteratureItemType, LiteratureItem[]> {
   const grouped = {} as Record<LiteratureItemType, LiteratureItem[]>
 
-  for (const type of LITERATURE_ITEM_TYPES) {
+  for (const type of literatureItemTypes) {
     grouped[type] = []
   }
 

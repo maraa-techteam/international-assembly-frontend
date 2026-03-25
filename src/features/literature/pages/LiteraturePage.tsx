@@ -4,9 +4,9 @@ import { Section } from '@/common/layouts/Section/Section'
 import { fetchLiteratureItems } from '../api/fetchLiteratureItems'
 import { LiteratureSection } from '../components/LiteratureSection/LiteratureSection'
 import {
-  LITERATURE_CATEGORY_LABELS,
-  LITERATURE_ITEM_TYPES,
   groupLiteratureByType,
+  literatureCategoryLabels,
+  literatureItemTypes,
 } from '../utils/literature.utils'
 
 export async function LiteraturePage() {
@@ -15,7 +15,7 @@ export async function LiteraturePage() {
 
   return (
     <>
-      <Section color='white'>
+      <Section className='max-w-200' color='white'>
         <Typography variant='h1' font='roboto'>
           Литература
         </Typography>
@@ -25,13 +25,14 @@ export async function LiteraturePage() {
         </Typography>
       </Section>
       <Section color='white' className='gap-10'>
-        {LITERATURE_ITEM_TYPES.map((type) => {
+        {literatureItemTypes.map((type) => {
           const sectionItems = grouped[type]
           if (sectionItems.length === 0) return null
           return (
             <LiteratureSection
               key={type}
-              label={LITERATURE_CATEGORY_LABELS[type]}
+              type={type}
+              label={literatureCategoryLabels[type]}
               items={sectionItems}
             />
           )
