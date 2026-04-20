@@ -134,13 +134,13 @@ export function Select({
       <div
         id={`dropdown-menu-${id}`}
         hidden={!isDropdownOpen}
-        className='absolute top-full z-10 w-full overflow-hidden rounded-b-3xl bg-white'
+        className='absolute top-full z-10 w-full overflow-hidden rounded-b-3xl bg-white shadow-md'
       >
-        <div className='relative bg-white'>
+        <div className='no-scroll relative max-h-60 overflow-y-auto rounded-b-3xl'>
           <div
             ref={dropdownListRef}
             onScroll={checkHasMoreBelow}
-            className='no-scrollbar flex max-h-60 w-full flex-col overflow-y-auto rounded-b-3xl shadow-md'
+            className='flex w-full flex-col'
           >
             {showSearch && (
               <div className='sticky top-0 bg-white px-4 py-2'>
@@ -172,6 +172,15 @@ export function Select({
                   />
                   <label
                     htmlFor={`${checkboxId}-${option}`}
+                    onMouseDown={() => {
+                      const el = dropdownListRef.current
+                      console.log(el)
+                      if (!el) return
+                      const top = el.scrollTop
+                      requestAnimationFrame(() => {
+                        el.scrollTop = top
+                      })
+                    }}
                     role='option'
                     aria-selected={isSelected}
                     className={cn(
