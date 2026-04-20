@@ -16,3 +16,4 @@ export type IconType =
   | 'person'
   | 'phone'
   | 'website'
+  | 'email'

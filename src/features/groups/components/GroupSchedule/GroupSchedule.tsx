@@ -52,7 +52,7 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
 
   return (
     <div className='flex flex-col justify-center gap-1 py-2'>
-      <div className='grid grid-cols-7'>
+      <div className='flex justify-between'>
         {normalizedSchedule.map((slot) => {
           return (
             <div

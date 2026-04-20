@@ -134,7 +134,7 @@ export function Select({
       <div
         id={`dropdown-menu-${id}`}
         hidden={!isDropdownOpen}
-        className='absolute top-full z-10 w-full'
+        className='absolute top-full z-10 w-full overflow-hidden rounded-b-3xl bg-white'
       >
         <div className='relative bg-white'>
           <div
