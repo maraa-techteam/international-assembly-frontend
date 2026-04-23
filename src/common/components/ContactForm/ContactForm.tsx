@@ -125,7 +125,9 @@ export function ContactForm({
         payload.set('email', formData.email)
         payload.set('message', formData.message)
 
-        const subject = includeSubject ? formData.subject : presetSubject
+        const subject = includeSubject
+          ? formData.subject || presetSubject
+          : presetSubject
         if (subject) {
           payload.set('subject', subject)
         }
