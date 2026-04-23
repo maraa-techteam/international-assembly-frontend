@@ -1,7 +1,7 @@
 import { cn } from '@/common/utils/cn'
+import { Label } from '@/ui'
 
 import { ServiceType } from '../../types/Service.type'
-import { ServiceLabel } from '../ServiceLabel/ServiceLabel'
 
 type ServiceLabelsProps = {
   service: Pick<
@@ -23,7 +23,20 @@ export function ServiceLabels({ service, className }: ServiceLabelsProps) {
   return (
     <div className={cn('flex flex-wrap items-center gap-2', className)}>
       {labels.map((label) => (
-        <ServiceLabel key={label} text={label} />
+        <Label
+          className='bg-white'
+          key={label}
+          icon={
+            service.required_sobriety_time === label
+              ? 'sobriety'
+              : service.engagement.includes(label)
+                ? 'clock'
+                : service.category.includes(label)
+                  ? 'service'
+                  : undefined
+          }
+          text={label}
+        />
       ))}
     </div>
   )

@@ -261,21 +261,28 @@ export function ContactForm({
           <label className={labelClasses} htmlFor={fileInputId}>
             PDF-файл
           </label>
-          <input
-            id={fileInputId}
-            ref={fileInputRef}
-            type='file'
-            accept='application/pdf,.pdf'
-            onChange={(e) => {
-              const selectedFile = e.target.files?.[0] ?? null
-              handleFileChange(selectedFile)
-            }}
-            className={cn(
-              inputClasses,
-              'file:bg-primary/10 file:text-primary file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:px-3 file:py-1',
-              errors.file && errorInputClasses,
-            )}
-          />
+          <div className='relative'>
+            <input
+              id={fileInputId}
+              ref={fileInputRef}
+              type='file'
+              accept='application/pdf,.pdf'
+              onChange={(e) => {
+                const selectedFile = e.target.files?.[0] ?? null
+                handleFileChange(selectedFile)
+              }}
+              className='hidden'
+            />
+            <label
+              htmlFor={fileInputId}
+              className='inline-flex cursor-pointer items-center gap-2'
+            >
+              <Icon icon='add' className='text-primary' />
+              <Typography className='text-primary' variant='caption'>
+                Прикрепить документ
+              </Typography>
+            </label>
+          </div>
           {errors.file && (
             <span className='text-sm text-red-400'>{errors.file}</span>
           )}

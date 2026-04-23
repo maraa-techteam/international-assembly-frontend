@@ -1,7 +1,6 @@
 export * from './api/fetchService'
 export * from './api/fetchServices'
 export * from './components/ServiceCard/ServiceCard'
-export * from './components/ServiceLabel/ServiceLabel'
 export * from './components/ServiceLabels/ServiceLabels'
 export * from './pages/ServiceDetailPage'
 export * from './pages/ServicesListPage'

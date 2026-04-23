@@ -31,35 +31,35 @@ export async function POST(request: NextRequest) {
       !message.trim()
     ) {
       return NextResponse.json(
-        { error: 'All required fields must be provided' },
+        { error: 'Все обязательные поля должны быть заполнены' },
         { status: 400 },
       )
     }
 
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
+        { error: 'Неверный адрес электронной почты' },
         { status: 400 },
       )
     }
 
     if (!(file instanceof File)) {
       return NextResponse.json(
-        { error: 'PDF file is required' },
+        { error: 'Форма принимает только PDF файлы' },
         { status: 400 },
       )
     }
 
     if (!isPdfFile(file)) {
       return NextResponse.json(
-        { error: 'Only PDF files are allowed' },
+        { error: 'Форма принимает только PDF файлы' },
         { status: 400 },
       )
     }
 
     if (file.size > maxUploadFileSizeInBytes) {
       return NextResponse.json(
-        { error: 'File size exceeds allowed limit' },
+        { error: 'Размер файла превышает допустимый лимит' },
         { status: 400 },
       )
     }
@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
     const pageData = await fetchContactsPage()
     if (!pageData.length || !pageData[0]?.secretary_email) {
       return NextResponse.json(
-        { error: 'Recipient email not configured' },
+        { error: 'Адрес электронной почты получателя не настроен' },
         { status: 500 },
       )
     }
@@ -105,7 +105,13 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Failed to process service application request:', error)
-    return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
+    console.error(
+      'Не удалось обработать запрос на подачу заявки на служение:',
+      error,
+    )
+    return NextResponse.json(
+      { error: 'Не удалось отправить электронное письмо' },
+      { status: 500 },
+    )
   }
 }
