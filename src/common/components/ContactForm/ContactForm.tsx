@@ -115,9 +115,10 @@ export function ContactForm({
     try {
       let response: Response
       const subjectValue = formData.subject.trim()
+      const presetOrEmpty = presetSubject || ''
       const resolvedSubject = includeSubject
-        ? subjectValue || presetSubject || ''
-        : presetSubject || ''
+        ? subjectValue || presetOrEmpty
+        : presetOrEmpty
 
       if (includeFileUpload) {
         const payload = new FormData()
@@ -271,7 +272,7 @@ export function ContactForm({
             }}
             className={cn(
               inputClasses,
-              'file:bg-primary/10 file:text-primary cursor-pointer file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:px-3 file:py-1',
+              'file:bg-primary/10 file:text-primary file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:px-3 file:py-1',
               errors.file && errorInputClasses,
             )}
           />
