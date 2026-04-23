@@ -2,7 +2,7 @@
 
 import { Button, Icon, Loader, Typography } from '@/common/components'
 import { cn } from '@/common/utils/cn'
-import { useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 
 type FormState = {
   name: string
@@ -58,6 +58,12 @@ export function ContactForm({
   const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState<SubmitStatus>('idle')
   const fileInputRef = useRef<HTMLInputElement | null>(null)
+  const idPrefix = useId()
+  const nameInputId = `${idPrefix}-name`
+  const emailInputId = `${idPrefix}-email`
+  const subjectInputId = `${idPrefix}-subject`
+  const messageInputId = `${idPrefix}-message`
+  const fileInputId = `${idPrefix}-file`
 
   const validate = (): FormErrors => {
     const newErrors: FormErrors = {}
@@ -177,11 +183,11 @@ export function ContactForm({
       )}
     >
       <div className='flex flex-col gap-1'>
-        <label className={labelClasses} htmlFor='contact-form-name'>
+        <label className={labelClasses} htmlFor={nameInputId}>
           Ваше имя
         </label>
         <input
-          id='contact-form-name'
+          id={nameInputId}
           type='text'
           value={formData.name}
           onChange={(e) => handleChange('name', e.target.value)}
@@ -194,11 +200,11 @@ export function ContactForm({
       </div>
 
       <div className='flex flex-col gap-1'>
-        <label className={labelClasses} htmlFor='contact-form-email'>
+        <label className={labelClasses} htmlFor={emailInputId}>
           Ваш e-mail
         </label>
         <input
-          id='contact-form-email'
+          id={emailInputId}
           type='email'
           value={formData.email}
           onChange={(e) => handleChange('email', e.target.value)}
@@ -212,11 +218,11 @@ export function ContactForm({
 
       {includeSubject && (
         <div className='flex flex-col gap-1'>
-          <label className={labelClasses} htmlFor='contact-form-subject'>
+          <label className={labelClasses} htmlFor={subjectInputId}>
             Тема
           </label>
           <input
-            id='contact-form-subject'
+            id={subjectInputId}
             type='text'
             value={formData.subject}
             onChange={(e) => handleChange('subject', e.target.value)}
@@ -230,11 +236,11 @@ export function ContactForm({
       )}
 
       <div className='flex flex-col gap-1'>
-        <label className={labelClasses} htmlFor='contact-form-message'>
+        <label className={labelClasses} htmlFor={messageInputId}>
           Сообщение
         </label>
         <textarea
-          id='contact-form-message'
+          id={messageInputId}
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
           placeholder='Ваше сообщение'
@@ -252,11 +258,11 @@ export function ContactForm({
 
       {includeFileUpload && (
         <div className='flex flex-col gap-1'>
-          <label className={labelClasses} htmlFor='contact-form-file'>
+          <label className={labelClasses} htmlFor={fileInputId}>
             PDF-файл
           </label>
           <input
-            id='contact-form-file'
+            id={fileInputId}
             ref={fileInputRef}
             type='file'
             accept='application/pdf,.pdf'

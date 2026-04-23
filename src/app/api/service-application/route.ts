@@ -1,4 +1,5 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
+import { buildContactEmailHtml } from '@/common/utils/contactEmailTemplate'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
@@ -6,15 +7,6 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const maxFileSizeInBytes = 5 * 1024 * 1024
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-}
 
 function sanitizeFilename(filename: string): string {
   const trimmed = filename.trim()
@@ -96,12 +88,9 @@ export async function POST(request: NextRequest) {
 
     const secretaryEmail = pageData[0].secretary_email
 
-    const safeName = escapeHtml(name.trim())
-    const safeEmail = escapeHtml(email.trim())
-    const safeMessage = escapeHtml(message.trim()).replace(/\n/g, '<br>')
-    const safeSubject =
+    const normalizedSubject =
       typeof subject === 'string' && subject.trim()
-        ? escapeHtml(subject.trim())
+        ? subject.trim()
         : 'Заявка на служение'
 
     const fileBuffer = Buffer.from(await file.arrayBuffer())
@@ -111,9 +100,14 @@ export async function POST(request: NextRequest) {
     await resend.emails.send({
       from: `Международная Ассамблея <${fromEmail}>`,
       to: [secretaryEmail],
-      subject: safeSubject,
+      subject: normalizedSubject,
       replyTo: email.trim(),
-      html: `<p><strong>От:</strong> ${safeName} (${safeEmail})</p><p><strong>Тема:</strong> ${safeSubject}</p><p><strong>Сообщение:</strong></p><p>${safeMessage}</p>`,
+      html: buildContactEmailHtml({
+        name,
+        email,
+        subject: normalizedSubject,
+        message,
+      }),
       attachments: [
         {
           filename: safeFilename,
@@ -123,7 +117,8 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ success: true })
-  } catch {
+  } catch (error) {
+    console.error('Failed to process service application request:', error)
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
   }
 }
