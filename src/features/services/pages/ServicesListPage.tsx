@@ -6,13 +6,12 @@ import { SearchParams } from 'next/dist/server/request/search-params'
 import { fetchServices } from '../api/fetchServices'
 import { ServiceCard } from '../components/ServiceCard/ServiceCard'
 
-const pageData = await fetchServicesPage()
-
 export async function ServicesListPage({
   searchParams,
 }: {
   searchParams: SearchParams
 }) {
+  const pageData = await fetchServicesPage()
   const page = pageData[0]
   const { data: services, totalCount } = await fetchServices(await searchParams)
 

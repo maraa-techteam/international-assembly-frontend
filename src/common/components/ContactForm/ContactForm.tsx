@@ -116,8 +116,8 @@ export function ContactForm({
       let response: Response
       const subjectValue = formData.subject.trim()
       const resolvedSubject = includeSubject
-        ? subjectValue || (presetSubject ?? '')
-        : (presetSubject ?? '')
+        ? subjectValue || presetSubject || ''
+        : presetSubject || ''
 
       if (includeFileUpload) {
         const payload = new FormData()
