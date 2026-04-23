@@ -79,50 +79,6 @@ it('should show search input when options count is more than 10', async () => {
   ).toBeInTheDocument()
 })
 
-it('should show gradient overlay when dropdown list overflows', async () => {
-  const user = userEvent.setup()
-
-  render(
-    <Select
-      options={Array.from({ length: 11 }, (_, i) => `Option ${i + 1}`)}
-      label='Select an option'
-      value={[]}
-      onChange={jest.fn()}
-    />,
-  )
-
-  await user.click(screen.getByText('Select an option'))
-
-  // Find the scrollable container through the DOM
-  const dropdownMenu = document.querySelector('[id^="dropdown-menu"]')
-  const scrollContainer = dropdownMenu?.querySelector(
-    '[class*="overflow-y-auto"]',
-  ) as HTMLElement | null
-
-  if (scrollContainer) {
-    Object.defineProperty(scrollContainer, 'scrollHeight', {
-      value: 400,
-      configurable: true,
-    })
-    Object.defineProperty(scrollContainer, 'clientHeight', {
-      value: 240,
-      configurable: true,
-    })
-    Object.defineProperty(scrollContainer, 'scrollTop', {
-      value: 0,
-      configurable: true,
-    })
-
-    // Trigger scroll event to update gradient state
-    act(() => {
-      scrollContainer.dispatchEvent(new Event('scroll'))
-    })
-  }
-
-  // The gradient overlay should be present
-  expect(screen.getByTestId('scroll-gradient')).toBeInTheDocument()
-})
-
 it('should hide gradient overlay when scrolled to the bottom', async () => {
   const user = userEvent.setup()
 

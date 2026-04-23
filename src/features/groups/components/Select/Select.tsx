@@ -25,7 +25,6 @@ export function Select({
   const [searchQuery, setSearchQuery] = useState('')
   const [hasMoreBelow, setHasMoreBelow] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
-  const dropdownListRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(selectRef, () => {
     setIsDropdownOpen(false)
@@ -46,18 +45,6 @@ export function Select({
       onChange([...value, optionLabel])
     }
   }
-
-  const checkHasMoreBelow = useCallback(() => {
-    const el = dropdownListRef.current
-    if (!el) return
-    setHasMoreBelow(el.scrollHeight - el.scrollTop - el.clientHeight > 1)
-  }, [])
-
-  useEffect(() => {
-    if (isDropdownOpen) {
-      checkHasMoreBelow()
-    }
-  }, [isDropdownOpen, searchQuery, checkHasMoreBelow])
 
   const getName = (label: string) =>
     label === 'Страна'
@@ -136,12 +123,8 @@ export function Select({
         hidden={!isDropdownOpen}
         className='absolute top-full z-10 w-full overflow-hidden rounded-b-3xl bg-white shadow-md'
       >
-        <div className='no-scroll relative max-h-60 overflow-y-auto rounded-b-3xl'>
-          <div
-            ref={dropdownListRef}
-            onScroll={checkHasMoreBelow}
-            className='flex w-full flex-col'
-          >
+        <div className='relative max-h-60 overflow-y-auto rounded-b-3xl'>
+          <div className='flex w-full flex-col'>
             {showSearch && (
               <div className='sticky top-0 bg-white px-4 py-2'>
                 <input
@@ -172,15 +155,6 @@ export function Select({
                   />
                   <label
                     htmlFor={`${checkboxId}-${option}`}
-                    onMouseDown={() => {
-                      const el = dropdownListRef.current
-                      console.log(el)
-                      if (!el) return
-                      const top = el.scrollTop
-                      requestAnimationFrame(() => {
-                        el.scrollTop = top
-                      })
-                    }}
                     role='option'
                     aria-selected={isSelected}
                     className={cn(
