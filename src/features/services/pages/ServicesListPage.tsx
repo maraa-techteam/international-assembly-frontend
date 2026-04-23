@@ -1,4 +1,3 @@
-import { fetchServicesPage } from '@/common/api/fetchServicesPage'
 import { Pagination, RichTextPreview, Typography } from '@/common/components'
 import { Section } from '@/common/layouts'
 import { SearchParams } from 'next/dist/server/request/search-params'
@@ -11,18 +10,17 @@ export async function ServicesListPage({
 }: {
   searchParams: SearchParams
 }) {
-  const pageData = await fetchServicesPage()
-  const page = pageData[0]
-  const { data: services, totalCount } = await fetchServices(await searchParams)
+  const services = await fetchServices()
 
   return (
     <Section color='white' className='w-full lg:max-w-250'>
       <Typography variant='h1' font='roboto'>
-        {page?.title ?? 'Служения'}
+        Служения
       </Typography>
-      {page?.text && <RichTextPreview htmlContent={page.text} />}
-
-      {totalCount === 0 ? (
+      <Typography variant='body'>
+        Здесь вы можете найти актуальные вакансии на служения.
+      </Typography>
+      {services.length === 0 ? (
         <Typography variant='body' className='text-gray-500'>
           Служения пока отсутствуют.
         </Typography>
@@ -36,7 +34,7 @@ export async function ServicesListPage({
           <Pagination
             fetchedCount={services.length}
             pageSize={10}
-            totalCount={totalCount}
+            totalCount={services.length}
           />
         </>
       )}

@@ -1,4 +1,4 @@
-import { Typography } from '@/common/components'
+import { Icon, Typography } from '@/common/components'
 import Link from 'next/link'
 
 import { ServiceType } from '../../types/Service.type'
@@ -24,13 +24,16 @@ export function ServiceCard({
       <Typography variant='h3' font='roboto'>
         {name}
       </Typography>
-      <ServiceLabels
-        service={{
-          category,
-          engagement,
-          required_sobriety_time,
-        }}
-      />
+      <div className='flex items-end justify-between'>
+        <ServiceLabels
+          service={{
+            category,
+            engagement,
+            required_sobriety_time,
+          }}
+        />
+        <Icon icon='arrow-right' className='text-primary' />
+      </div>
     </Link>
   )
 }

@@ -33,20 +33,9 @@ export async function fetchService(slug: string): Promise<ServiceType | null> {
       id: item.id,
       name: item.name,
       description: item.description,
-      category: Array.isArray(item.category)
-        ? item.category.filter(
-            (value): value is string => typeof value === 'string',
-          )
-        : [],
-      required_sobriety_time:
-        typeof item.required_sobriety_time === 'string'
-          ? item.required_sobriety_time
-          : null,
-      engagement: Array.isArray(item.engagement)
-        ? item.engagement.filter(
-            (value): value is string => typeof value === 'string',
-          )
-        : [],
+      category: item.category,
+      required_sobriety_time: item.required_sobriety_time,
+      engagement: item.engagement,
       slug: item.slug,
     }
   } catch (error) {

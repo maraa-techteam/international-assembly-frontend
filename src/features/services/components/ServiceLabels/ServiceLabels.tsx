@@ -1,4 +1,5 @@
 import { cn } from '@/common/utils/cn'
+import { Typography } from '@/ui'
 
 import { ServiceType } from '../../types/Service.type'
 
@@ -22,12 +23,13 @@ export function ServiceLabels({ service, className }: ServiceLabelsProps) {
   return (
     <div className={cn('flex flex-wrap items-center gap-2', className)}>
       {labels.map((label) => (
-        <span
+        <Typography
+          variant='caption'
           key={label}
-          className='text-foreground inline-flex rounded-full bg-white px-3 py-1 text-sm'
+          className='text-primary inline-flex rounded-full bg-white px-4 py-2'
         >
           {label}
-        </span>
+        </Typography>
       ))}
     </div>
   )
