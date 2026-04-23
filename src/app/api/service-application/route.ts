@@ -1,30 +1,16 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
 import { buildContactEmailHtml } from '@/common/utils/contactEmailTemplate'
+import {
+  isPdfFile,
+  maxUploadFileSizeInBytes,
+  sanitizePdfFilename,
+} from '@/common/utils/fileUploadValidation'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-const maxFileSizeInBytes = 5 * 1024 * 1024
-
-function sanitizeFilename(filename: string): string {
-  const safeSource = filename.trim() || 'attachment'
-  const filenameWithoutPath = safeSource.split(/[/\\]/).pop() || 'attachment'
-  const filenameWithoutExtension = filenameWithoutPath.replace(/\.pdf$/i, '')
-  const safeBaseName = filenameWithoutExtension
-    .replace(/[^\p{L}\p{N}_-]/gu, '_')
-    .replace(/_+/g, '_')
-    .replace(/^_+|_+$/g, '')
-
-  return `${safeBaseName || 'attachment'}.pdf`
-}
-
-function isPdfFile(file: File): boolean {
-  return (
-    file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
-  )
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -71,7 +57,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    if (file.size > maxFileSizeInBytes) {
+    if (file.size > maxUploadFileSizeInBytes) {
       return NextResponse.json(
         { error: 'File size exceeds allowed limit' },
         { status: 400 },
@@ -95,7 +81,7 @@ export async function POST(request: NextRequest) {
 
     const fileBuffer = Buffer.from(await file.arrayBuffer())
     const base64FileContent = fileBuffer.toString('base64')
-    const safeFilename = sanitizeFilename(file.name)
+    const safeFilename = sanitizePdfFilename(file.name)
     const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
 
     await resend.emails.send({

@@ -2,6 +2,10 @@
 
 import { Button, Icon, Loader, Typography } from '@/common/components'
 import { cn } from '@/common/utils/cn'
+import {
+  isPdfFile,
+  maxUploadFileSizeInBytes,
+} from '@/common/utils/fileUploadValidation'
 import { useId, useRef, useState } from 'react'
 
 type FormState = {
@@ -25,8 +29,6 @@ type ContactFormProps = {
   presetSubject?: string
 }
 
-const maxFileSizeInBytes = 5 * 1024 * 1024
-
 const inputClasses =
   'w-full rounded-xl border border-primary/20 bg-white px-4 py-3 text-base text-foreground placeholder-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors'
 
@@ -34,12 +36,6 @@ const labelClasses = 'sr-only'
 
 const errorInputClasses =
   'border-red-500/20 focus:border-red-500/20 focus:ring-red-500/20'
-
-function isPdfFile(file: File): boolean {
-  return (
-    file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
-  )
-}
 
 export function ContactForm({
   className,
@@ -83,7 +79,7 @@ export function ContactForm({
         newErrors.file = 'Добавьте PDF-файл'
       } else if (!isPdfFile(file)) {
         newErrors.file = 'Разрешены только PDF-файлы'
-      } else if (file.size > maxFileSizeInBytes) {
+      } else if (file.size > maxUploadFileSizeInBytes) {
         newErrors.file = 'Размер файла не должен превышать 5 МБ'
       }
     }
@@ -118,6 +114,10 @@ export function ContactForm({
 
     try {
       let response: Response
+      const subjectValue = formData.subject.trim()
+      const resolvedSubject = includeSubject
+        ? subjectValue || (presetSubject ?? '')
+        : (presetSubject ?? '')
 
       if (includeFileUpload) {
         const payload = new FormData()
@@ -125,12 +125,8 @@ export function ContactForm({
         payload.set('email', formData.email)
         payload.set('message', formData.message)
 
-        const subjectValue = formData.subject.trim()
-        const subject = includeSubject
-          ? subjectValue || (presetSubject ?? '')
-          : (presetSubject ?? '')
-        if (subject) {
-          payload.set('subject', subject)
+        if (resolvedSubject) {
+          payload.set('subject', resolvedSubject)
         }
 
         if (file) {
@@ -144,7 +140,7 @@ export function ContactForm({
       } else {
         const payload = includeSubject
           ? formData
-          : { ...formData, subject: presetSubject ?? '' }
+          : { ...formData, subject: resolvedSubject }
 
         response = await fetch(endpoint, {
           method: 'POST',
