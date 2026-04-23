@@ -9,15 +9,15 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 const maxFileSizeInBytes = 5 * 1024 * 1024
 
 function sanitizeFilename(filename: string): string {
-  const trimmed = filename.trim()
-  const baseName = trimmed || 'attachment.pdf'
-  const safe = baseName.replace(/[^a-zA-Z0-9._-]/g, '_')
+  const safeSource = filename.trim() || 'attachment'
+  const filenameWithoutPath = safeSource.split(/[/\\]/).pop() || 'attachment'
+  const filenameWithoutExtension = filenameWithoutPath.replace(/\.pdf$/i, '')
+  const safeBaseName = filenameWithoutExtension
+    .replace(/[^a-zA-Z0-9_-]/g, '_')
+    .replace(/_+/g, '_')
+    .replace(/^_+|_+$/g, '')
 
-  if (safe.toLowerCase().endsWith('.pdf')) {
-    return safe
-  }
-
-  return `${safe}.pdf`
+  return `${safeBaseName || 'attachment'}.pdf`
 }
 
 function isPdfFile(file: File): boolean {
