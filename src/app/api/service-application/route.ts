@@ -13,7 +13,7 @@ function sanitizeFilename(filename: string): string {
   const filenameWithoutPath = safeSource.split(/[/\\]/).pop() || 'attachment'
   const filenameWithoutExtension = filenameWithoutPath.replace(/\.pdf$/i, '')
   const safeBaseName = filenameWithoutExtension
-    .replace(/[^a-zA-Z0-9_-]/g, '_')
+    .replace(/[^\p{L}\p{N}_-]/gu, '_')
     .replace(/_+/g, '_')
     .replace(/^_+|_+$/g, '')
 
