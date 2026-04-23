@@ -2,7 +2,7 @@
 
 import { Button, Icon, Loader, Typography } from '@/common/components'
 import { cn } from '@/common/utils/cn'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 type FormState = {
   name: string
@@ -11,7 +11,21 @@ type FormState = {
   message: string
 }
 
+type FormErrors = Partial<FormState> & {
+  file?: string
+}
+
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error'
+
+type ContactFormProps = {
+  className?: string
+  endpoint?: string
+  includeSubject?: boolean
+  includeFileUpload?: boolean
+  presetSubject?: string
+}
+
+const maxFileSizeInBytes = 5 * 1024 * 1024
 
 const inputClasses =
   'w-full rounded-xl border border-primary/20 bg-white px-4 py-3 text-base text-foreground placeholder-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none transition-colors'
@@ -21,26 +35,53 @@ const labelClasses = 'sr-only'
 const errorInputClasses =
   'border-red-500/20 focus:border-red-500/20 focus:ring-red-500/20'
 
-export function ContactForm({ className }: { className?: string }) {
+function isPdfFile(file: File): boolean {
+  return (
+    file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf')
+  )
+}
+
+export function ContactForm({
+  className,
+  endpoint = '/api/contact',
+  includeSubject = true,
+  includeFileUpload = false,
+  presetSubject,
+}: ContactFormProps) {
   const [formData, setFormData] = useState<FormState>({
     name: '',
     email: '',
-    subject: '',
+    subject: presetSubject ?? '',
     message: '',
   })
-  const [errors, setErrors] = useState<Partial<FormState>>({})
+  const [file, setFile] = useState<File | null>(null)
+  const [errors, setErrors] = useState<FormErrors>({})
   const [status, setStatus] = useState<SubmitStatus>('idle')
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
 
-  const validate = (): Partial<FormState> => {
-    const newErrors: Partial<FormState> = {}
+  const validate = (): FormErrors => {
+    const newErrors: FormErrors = {}
     if (!formData.name.trim()) newErrors.name = 'Введите ваше имя'
     if (!formData.email.trim()) {
       newErrors.email = 'Введите ваш e-mail'
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
       newErrors.email = 'Введите корректный e-mail'
     }
-    if (!formData.subject.trim()) newErrors.subject = 'Введите тему'
+    if (includeSubject && !formData.subject.trim()) {
+      newErrors.subject = 'Введите тему'
+    }
     if (!formData.message.trim()) newErrors.message = 'Введите сообщение'
+
+    if (includeFileUpload) {
+      if (!file) {
+        newErrors.file = 'Добавьте PDF-файл'
+      } else if (!isPdfFile(file)) {
+        newErrors.file = 'Разрешены только PDF-файлы'
+      } else if (file.size > maxFileSizeInBytes) {
+        newErrors.file = 'Размер файла не должен превышать 5 МБ'
+      }
+    }
+
     return newErrors
   }
 
@@ -51,23 +92,70 @@ export function ContactForm({ className }: { className?: string }) {
     }
   }
 
+  const handleFileChange = (selectedFile: File | null) => {
+    setFile(selectedFile)
+    if (errors.file) {
+      setErrors((prev) => ({ ...prev, file: undefined }))
+    }
+  }
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+
     const validationErrors = validate()
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
       return
     }
+
     setStatus('loading')
+
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData),
-      })
+      let response: Response
+
+      if (includeFileUpload) {
+        const payload = new FormData()
+        payload.set('name', formData.name)
+        payload.set('email', formData.email)
+        payload.set('message', formData.message)
+
+        const subject = includeSubject ? formData.subject : presetSubject
+        if (subject) {
+          payload.set('subject', subject)
+        }
+
+        if (file) {
+          payload.set('file', file)
+        }
+
+        response = await fetch(endpoint, {
+          method: 'POST',
+          body: payload,
+        })
+      } else {
+        const payload = includeSubject
+          ? formData
+          : { ...formData, subject: presetSubject ?? '' }
+
+        response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        })
+      }
+
       if (response.ok) {
         setStatus('success')
-        setFormData({ name: '', email: '', subject: '', message: '' })
+        setFormData({
+          name: '',
+          email: '',
+          subject: presetSubject ?? '',
+          message: '',
+        })
+        setFile(null)
+        if (fileInputRef.current) {
+          fileInputRef.current.value = ''
+        }
         setErrors({})
       } else {
         setStatus('error')
@@ -89,8 +177,11 @@ export function ContactForm({ className }: { className?: string }) {
       )}
     >
       <div className='flex flex-col gap-1'>
-        <label className={labelClasses}>Ваше имя</label>
+        <label className={labelClasses} htmlFor='contact-form-name'>
+          Ваше имя
+        </label>
         <input
+          id='contact-form-name'
           type='text'
           value={formData.name}
           onChange={(e) => handleChange('name', e.target.value)}
@@ -103,8 +194,11 @@ export function ContactForm({ className }: { className?: string }) {
       </div>
 
       <div className='flex flex-col gap-1'>
-        <label className={labelClasses}>Ваш e-mail</label>
+        <label className={labelClasses} htmlFor='contact-form-email'>
+          Ваш e-mail
+        </label>
         <input
+          id='contact-form-email'
           type='email'
           value={formData.email}
           onChange={(e) => handleChange('email', e.target.value)}
@@ -116,23 +210,31 @@ export function ContactForm({ className }: { className?: string }) {
         )}
       </div>
 
-      <div className='flex flex-col gap-1'>
-        <label className={labelClasses}>Тема</label>
-        <input
-          type='text'
-          value={formData.subject}
-          onChange={(e) => handleChange('subject', e.target.value)}
-          placeholder='Тема сообщения'
-          className={cn(inputClasses, errors.subject && errorInputClasses)}
-        />
-        {errors.subject && (
-          <span className='text-sm text-red-400'>{errors.subject}</span>
-        )}
-      </div>
+      {includeSubject && (
+        <div className='flex flex-col gap-1'>
+          <label className={labelClasses} htmlFor='contact-form-subject'>
+            Тема
+          </label>
+          <input
+            id='contact-form-subject'
+            type='text'
+            value={formData.subject}
+            onChange={(e) => handleChange('subject', e.target.value)}
+            placeholder='Тема сообщения'
+            className={cn(inputClasses, errors.subject && errorInputClasses)}
+          />
+          {errors.subject && (
+            <span className='text-sm text-red-400'>{errors.subject}</span>
+          )}
+        </div>
+      )}
 
       <div className='flex flex-col gap-1'>
-        <label className={labelClasses}>Сообщение</label>
+        <label className={labelClasses} htmlFor='contact-form-message'>
+          Сообщение
+        </label>
         <textarea
+          id='contact-form-message'
           value={formData.message}
           onChange={(e) => handleChange('message', e.target.value)}
           placeholder='Ваше сообщение'
@@ -147,6 +249,32 @@ export function ContactForm({ className }: { className?: string }) {
           <span className='text-sm text-red-400'>{errors.message}</span>
         )}
       </div>
+
+      {includeFileUpload && (
+        <div className='flex flex-col gap-1'>
+          <label className={labelClasses} htmlFor='contact-form-file'>
+            PDF-файл
+          </label>
+          <input
+            id='contact-form-file'
+            ref={fileInputRef}
+            type='file'
+            accept='application/pdf,.pdf'
+            onChange={(e) => {
+              const selectedFile = e.target.files?.[0] ?? null
+              handleFileChange(selectedFile)
+            }}
+            className={cn(
+              inputClasses,
+              'file:bg-primary/10 file:text-primary cursor-pointer file:mr-4 file:cursor-pointer file:rounded-lg file:border-0 file:px-3 file:py-1',
+              errors.file && errorInputClasses,
+            )}
+          />
+          {errors.file && (
+            <span className='text-sm text-red-400'>{errors.file}</span>
+          )}
+        </div>
+      )}
 
       {status === 'success' && (
         <Typography variant='caption' className='text-green-700'>
