@@ -1,15 +1,10 @@
-import { Pagination, RichTextPreview, Typography } from '@/common/components'
+import { Pagination, Typography } from '@/common/components'
 import { Section } from '@/common/layouts'
-import { SearchParams } from 'next/dist/server/request/search-params'
 
 import { fetchServices } from '../api/fetchServices'
 import { ServiceCard } from '../components/ServiceCard/ServiceCard'
 
-export async function ServicesListPage({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}) {
+export async function ServicesListPage() {
   const services = await fetchServices()
 
   return (

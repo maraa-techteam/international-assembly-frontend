@@ -1,10 +1,12 @@
 import { ServicesListPage } from '@/features/services'
-import { SearchParams } from 'next/dist/server/request/search-params'
+import { Metadata } from 'next'
 
-export default async function Page({
-  searchParams,
-}: {
-  searchParams: SearchParams
-}) {
-  return <ServicesListPage searchParams={searchParams} />
+export const metadata: Metadata = {
+  title: 'Служения',
+  description:
+    'Список актуальных служений Международной Ассамблеи: направления, вовлеченность и требования к сроку трезвости.',
+}
+
+export default async function Page() {
+  return <ServicesListPage />
 }
