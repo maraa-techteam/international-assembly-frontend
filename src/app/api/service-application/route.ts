@@ -45,14 +45,14 @@ export async function POST(request: NextRequest) {
 
     if (!(file instanceof File)) {
       return NextResponse.json(
-        { error: 'Форма принимает только PDF файлы' },
+        { error: 'Необходимо прикрепить PDF-файл' },
         { status: 400 },
       )
     }
 
     if (!isPdfFile(file)) {
       return NextResponse.json(
-        { error: 'Форма принимает только PDF файлы' },
+        { error: 'Форма принимает только PDF-файлы' },
         { status: 400 },
       )
     }
