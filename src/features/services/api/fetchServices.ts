@@ -29,7 +29,7 @@ export async function fetchServices(): Promise<ServiceType[]> {
     }))
   } catch (error) {
     throw new Error(
-      `Failed to fetch literature items: ${error instanceof Error ? error.message : String(error)}`,
+      `Failed to fetch services: ${error instanceof Error ? error.message : String(error)}`,
     )
   }
 }
