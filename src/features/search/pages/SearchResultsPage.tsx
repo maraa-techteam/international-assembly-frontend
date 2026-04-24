@@ -5,6 +5,7 @@ import { SearchParams } from 'next/dist/server/request/search-params'
 
 import { SearchGroupResultCard } from '../components/SearchGroupResultCard/SearchGroupResultCard'
 import { SearchResultCard } from '../components/SearchResultCard/SearchResultCard'
+import { SearchServiceResultCard } from '../components/SearchServiceResultCard/SearchServiceResultCard'
 
 export async function SearchResultsPage({
   searchParams,
@@ -14,12 +15,15 @@ export async function SearchResultsPage({
   const params = await searchParams
   const query = typeof params.search === 'string' ? params.search : ''
 
-  const { articles, groups } = query
+  const { articles, groups, literature, services } = query
     ? await fetchSearchResults(query)
-    : { articles: [], groups: [] }
+    : { articles: [], groups: [], literature: [], services: [] }
 
-  const hasResults = articles.length > 0 || groups.length > 0
-
+  const hasResults =
+    articles.length > 0 ||
+    groups.length > 0 ||
+    literature.length > 0 ||
+    services.length > 0
   return (
     <Section color='white'>
       <LinkComponent
@@ -46,7 +50,11 @@ export async function SearchResultsPage({
               </Typography>
               <div className='flex flex-col gap-8'>
                 {articles.map((article) => (
-                  <SearchResultCard key={article.id} {...article} />
+                  <SearchResultCard
+                    url={`/news-and-events/${article.slug}`}
+                    key={article.id}
+                    {...article}
+                  />
                 ))}
               </div>
             </div>
@@ -62,6 +70,40 @@ export async function SearchResultsPage({
                     className='pb-8'
                     key={group.id}
                     {...group}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          {literature.length > 0 && (
+            <div className='flex flex-col gap-4'>
+              <Typography variant='h2' font='roboto'>
+                Литература
+              </Typography>
+              <div className='flex flex-col gap-8'>
+                {literature.map((item) => (
+                  <SearchResultCard
+                    url={`/literature/${item.slug}`}
+                    perex={item.description}
+                    image={item.cover_image}
+                    key={item.id}
+                    {...item}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          {services.length > 0 && (
+            <div className='flex flex-col gap-4'>
+              <Typography variant='h2' font='roboto'>
+                Служения
+              </Typography>
+              <div className='divide-light-blue flex flex-col gap-8 divide-y'>
+                {services.map((service) => (
+                  <SearchServiceResultCard
+                    className='pb-8'
+                    key={service.id}
+                    {...service}
                   />
                 ))}
               </div>

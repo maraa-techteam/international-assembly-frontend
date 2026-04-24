@@ -47,7 +47,7 @@ export async function GroupsListPage({
         <Typography variant='h1'>{page.title}</Typography>
       </Section>
       <Section className='px-0 lg:max-w-250 lg:pt-0 lg:pr-0' color='white'>
-        <Suspense fallback={null}>
+        <Suspense>
           <GroupsFilterDashboard
             dropdownOptions={{
               country: countries,

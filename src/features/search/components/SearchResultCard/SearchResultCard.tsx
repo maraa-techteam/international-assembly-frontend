@@ -13,15 +13,15 @@ export function SearchResultCard({
   title,
   image,
   perex,
-  slug,
+  url,
   date_created,
   className,
 }: SearchResultCardProps) {
   return (
     <Link
-      href={`/news-and-events/${slug}`}
+      href={url}
       className={cn(
-        'inline-flex flex-col items-start justify-start gap-4 lg:flex-row lg:gap-6',
+        'inline-flex max-w-200 flex-col items-start justify-start gap-4 lg:flex-row lg:gap-6',
         className,
       )}
     >
@@ -40,7 +40,7 @@ export function SearchResultCard({
         </div>
       )}
       <div className='flex flex-col items-start justify-start gap-2'>
-        <Label text={formatDate(date_created)} />
+        {date_created && <Label text={formatDate(date_created)} />}
         <Typography variant='h3' font='roboto' className='line-clamp-2'>
           {title}
         </Typography>

@@ -1,9 +1,9 @@
 export type ArticleSearchResult = {
   id: string
   title: string
-  perex: string
+  perex?: string | null
   image: string | null
-  date_created: string
+  date_created?: string
   slug: string
 }
 
@@ -20,5 +20,22 @@ export type GroupSearchResult = {
   whatsapp?: string | null
 }
 
-/** @deprecated Use ArticleSearchResult instead */
-export type SearchResult = ArticleSearchResult
+export type LiteratureSearchResult = {
+  id: string
+  title: string
+  subtitle?: string | null
+  author?: string | null
+  cover_image: string | null
+  description?: string | null
+  slug: string
+}
+
+export type ServiceSearchResult = {
+  id: string
+  name: string
+  description: string
+  category: string[]
+  required_sobriety_time: string | null
+  engagement: string[]
+  slug: string
+}

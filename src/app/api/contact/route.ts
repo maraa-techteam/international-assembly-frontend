@@ -1,19 +1,11 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
+import { buildContactEmailHtml } from '@/common/utils/contactEmailTemplate'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-
-function escapeHtml(text: string): string {
-  return text
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,11 +44,6 @@ export async function POST(request: NextRequest) {
     }
     const secretaryEmail = pageData[0].secretary_email
 
-    const safeName = escapeHtml(name.trim())
-    const safeEmail = escapeHtml(email.trim())
-    const safeSubject = escapeHtml(subject.trim())
-    const safeMessage = escapeHtml(message.trim()).replace(/\n/g, '<br>')
-
     const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
 
     await resend.emails.send({
@@ -64,11 +51,17 @@ export async function POST(request: NextRequest) {
       to: [secretaryEmail],
       subject: subject.trim(),
       replyTo: email.trim(),
-      html: `<p><strong>От:</strong> ${safeName} (${safeEmail})</p><p><strong>Тема:</strong> ${safeSubject}</p><p><strong>Сообщение:</strong></p><p>${safeMessage}</p>`,
+      html: buildContactEmailHtml({
+        name,
+        email,
+        subject,
+        message,
+      }),
     })
 
     return NextResponse.json({ success: true })
-  } catch {
+  } catch (error) {
+    console.error('Failed to process contact form request:', error)
     return NextResponse.json({ error: 'Failed to send email' }, { status: 500 })
   }
 }

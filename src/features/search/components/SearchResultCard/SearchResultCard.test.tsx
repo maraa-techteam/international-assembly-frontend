@@ -1,8 +1,8 @@
 import { formatDate } from '@/common/utils/dateFormatter'
 import { render, screen } from '@testing-library/react'
 
-import { SearchResult } from '../../types/SearchResult.type'
 import { SearchResultCard } from './SearchResultCard'
+import { SearchResultCardType } from './SearchResultCard.type'
 
 jest.mock('@/common/utils/getImageUrl', () => ({
   getImageUrl: (src: string) => `https://example.com/${src}`,
@@ -23,13 +23,14 @@ jest.mock('next/image', () => ({
   }) => <img src={src} alt={alt} width={width} height={height} />,
 }))
 
-const mockProps: SearchResult = {
+const mockProps: SearchResultCardType = {
   id: '1',
   title: 'Заголовок результата поиска',
   slug: 'zagolovok-rezultata-poiska',
   perex: 'Краткое описание найденного материала',
   date_created: '2024-01-15T00:00:00.000Z',
   image: '/test-image.jpg',
+  url: '/news-and-events/zagolovok-rezultata-poiska',
 }
 
 describe('SearchResultCard component', () => {

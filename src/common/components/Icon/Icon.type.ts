@@ -1,4 +1,5 @@
 export type IconType =
+  | 'add'
   | 'arrow-right'
   | 'chevron-down'
   | 'search'
@@ -17,3 +18,6 @@ export type IconType =
   | 'phone'
   | 'website'
   | 'email'
+  | 'service'
+  | 'clock'
+  | 'sobriety'

@@ -141,7 +141,7 @@ export default async function Home() {
             или онлайн.
           </Typography>
         </div>
-        <Suspense fallback={null}>
+        <Suspense>
           <GroupsFilterDashboard
             dropdownOptions={{
               country: countries,

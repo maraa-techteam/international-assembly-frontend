@@ -47,7 +47,7 @@ export function LiteratureSection({
           className='text-primary flex items-center justify-end'
         >
           Смотреть все
-          <Icon icon='arrow-right' size='sm' className='ml-2' />
+          <Icon icon='arrow-right' size='md' className='ml-2' />
         </Link>
       )}
     </div>
