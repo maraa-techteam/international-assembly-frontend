@@ -29,3 +29,13 @@ export type LiteratureSearchResult = {
   description?: string | null
   slug: string
 }
+
+export type ServiceSearchResult = {
+  id: string
+  name: string
+  description: string
+  category: string[]
+  required_sobriety_time: string | null
+  engagement: string[]
+  slug: string
+}
