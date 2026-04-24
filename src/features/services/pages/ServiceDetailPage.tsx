@@ -5,12 +5,24 @@ import {
   Typography,
 } from '@/common/components'
 import { Section } from '@/common/layouts'
+import { Metadata } from 'next'
 
 import { fetchService } from '../api/fetchService'
 import { ServiceLabels } from '../components/ServiceLabels/ServiceLabels'
 
 type ServiceDetailPageProps = {
   params: Promise<{ slug: string }>
+}
+
+export default async function generateMetadata({
+  params,
+}: ServiceDetailPageProps): Promise<Metadata> {
+  const { slug } = await params
+  const service = await fetchService(slug)
+  return {
+    title: service?.name,
+    description: 'Узнайте больше о служении и подайте заявку на участие в нем.',
+  }
 }
 
 export async function ServiceDetailPage({ params }: ServiceDetailPageProps) {

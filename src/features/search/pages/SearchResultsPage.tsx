@@ -14,12 +14,12 @@ export async function SearchResultsPage({
   const params = await searchParams
   const query = typeof params.search === 'string' ? params.search : ''
 
-  const { articles, groups } = query
+  const { articles, groups, literature } = query
     ? await fetchSearchResults(query)
-    : { articles: [], groups: [] }
+    : { articles: [], groups: [], literature: [] }
 
-  const hasResults = articles.length > 0 || groups.length > 0
-
+  const hasResults =
+    articles.length > 0 || groups.length > 0 || literature.length > 0
   return (
     <Section color='white'>
       <LinkComponent
@@ -46,7 +46,11 @@ export async function SearchResultsPage({
               </Typography>
               <div className='flex flex-col gap-8'>
                 {articles.map((article) => (
-                  <SearchResultCard key={article.id} {...article} />
+                  <SearchResultCard
+                    url={`/articles/${article.slug}`}
+                    key={article.id}
+                    {...article}
+                  />
                 ))}
               </div>
             </div>
@@ -62,6 +66,24 @@ export async function SearchResultsPage({
                     className='pb-8'
                     key={group.id}
                     {...group}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+          {literature.length > 0 && (
+            <div className='flex flex-col gap-4'>
+              <Typography variant='h2' font='roboto'>
+                Литература
+              </Typography>
+              <div className='flex flex-col gap-8'>
+                {literature.map((item) => (
+                  <SearchResultCard
+                    url={`/literature/${item.slug}`}
+                    perex={item.description}
+                    image={item.cover_image}
+                    key={item.id}
+                    {...item}
                   />
                 ))}
               </div>

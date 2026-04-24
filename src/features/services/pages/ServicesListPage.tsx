@@ -1,8 +1,18 @@
 import { Pagination, Typography } from '@/common/components'
 import { Section } from '@/common/layouts'
+import { Metadata } from 'next'
+import { Suspense } from 'react'
 
 import { fetchServices } from '../api/fetchServices'
 import { ServiceCard } from '../components/ServiceCard/ServiceCard'
+
+export default async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'Служения',
+    description:
+      'Узнайте больше о служениях и подайте заявку на участие в них.',
+  }
+}
 
 export async function ServicesListPage() {
   const services = await fetchServices()
@@ -26,11 +36,13 @@ export async function ServicesListPage() {
               <ServiceCard key={service.id} {...service} />
             ))}
           </div>
-          <Pagination
-            fetchedCount={services.length}
-            pageSize={10}
-            totalCount={services.length}
-          />
+          <Suspense>
+            <Pagination
+              fetchedCount={services.length}
+              pageSize={10}
+              totalCount={services.length}
+            />
+          </Suspense>
         </>
       )}
     </Section>

@@ -1,7 +1,7 @@
 import { formatDate } from '@/common/utils/dateFormatter'
 import { render, screen } from '@testing-library/react'
 
-import { SearchResult } from '../../types/SearchResult.type'
+import { ArticleSearchResult as SearchResult } from '../../types/SearchResult.type'
 import { SearchResultCard } from './SearchResultCard'
 
 jest.mock('@/common/utils/getImageUrl', () => ({
