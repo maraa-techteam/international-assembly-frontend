@@ -3,7 +3,7 @@
 import { Icon, Typography } from '@/common/components'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
 import { cn } from '@/common/utils/cn'
-import { useCallback, useEffect, useId, useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 
 import { SelectType } from './Select.type'
 
@@ -23,7 +23,6 @@ export function Select({
 }: SelectProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
-  const [hasMoreBelow, setHasMoreBelow] = useState(false)
   const selectRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(selectRef, () => {
@@ -187,14 +186,6 @@ export function Select({
               )
             })}
           </div>
-
-          {hasMoreBelow && (
-            <div
-              data-testid='scroll-gradient'
-              aria-hidden='true'
-              className='pointer-events-none absolute right-0 bottom-0 left-0 h-12 rounded-b-3xl bg-gradient-to-t from-white to-transparent'
-            />
-          )}
         </div>
       </div>
     </div>

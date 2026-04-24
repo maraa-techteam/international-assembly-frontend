@@ -1,4 +1,19 @@
 import { ServiceDetailPage } from '@/features/services'
+import { fetchService } from '@/features/services/api/fetchService'
+import { Metadata } from 'next'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const service = await fetchService(slug)
+  return {
+    title: service?.name ?? 'Служение',
+    description: 'Узнайте больше о служении и подайте заявку на участие в нем.',
+  }
+}
 
 export default async function Page({
   params,
