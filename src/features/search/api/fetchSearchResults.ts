@@ -5,15 +5,17 @@ import {
   ArticleSearchResult,
   GroupSearchResult,
   LiteratureSearchResult,
+  ServiceSearchResult,
 } from '../types/SearchResult.type'
 
 export async function fetchSearchResults(query: string): Promise<{
   articles: ArticleSearchResult[]
   groups: GroupSearchResult[]
   literature: LiteratureSearchResult[]
+  services: ServiceSearchResult[]
 }> {
   try {
-    const [articles, groups, literature] = await Promise.all([
+    const [articles, groups, literature, services] = await Promise.all([
       directus.request(
         readItems('article', {
           search: query,
@@ -58,12 +60,32 @@ export async function fetchSearchResults(query: string): Promise<{
           ],
         }),
       ),
+      directus.request(
+        readItems('services', {
+          filter: {
+            _or: [
+              { name: { _icontains: query } },
+              { description: { _icontains: query } },
+            ],
+          },
+          fields: [
+            'id',
+            'slug',
+            'name',
+            'description',
+            'category',
+            'required_sobriety_time',
+            'engagement',
+          ],
+        }),
+      ),
     ])
 
     return {
       articles: articles as ArticleSearchResult[],
       groups: groups as GroupSearchResult[],
       literature: literature as LiteratureSearchResult[],
+      services: services as ServiceSearchResult[],
     }
   } catch (error) {
     throw new Error(
