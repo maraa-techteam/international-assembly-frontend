@@ -4,7 +4,7 @@ import { type VariantProps, cva } from 'class-variance-authority'
 import { SectionType } from './Section.type'
 
 const sectionVariants = cva(
-  'px-4 py-6 gap-4 md:gap-6 flex flex-col lg:px-18 lg:py-6',
+  'px-4 py-6 gap-4 max-w-360 w-full md:gap-6 flex flex-col lg:px-18 lg:py-6',
   {
     variants: {
       color: {

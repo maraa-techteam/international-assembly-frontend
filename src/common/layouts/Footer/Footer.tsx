@@ -12,7 +12,7 @@ export function Footer({ footerData, socials }: FooterProps) {
 
   return (
     <footer className='bg-primary flex flex-col gap-4 p-4 lg:px-18 lg:py-12'>
-      <div className='flex w-full flex-col gap-4 lg:flex-row lg:gap-32'>
+      <div className='mx-auto flex w-full max-w-360 flex-col justify-between gap-4 lg:flex-row lg:gap-32'>
         <div className='flex w-fit flex-col items-start gap-5'>
           <Link className='flex content-center items-center' href='/'>
             <Image

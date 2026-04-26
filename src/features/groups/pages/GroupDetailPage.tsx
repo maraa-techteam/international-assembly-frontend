@@ -45,7 +45,7 @@ export async function GroupDetailPage({
       />
       <Typography variant='h1'>{group?.name}</Typography>
       <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
-        <Typography className='text-sm font-bold' variant='h2'>
+        <Typography className='font-bold lg:text-[16px]' variant='h2'>
           Описание группы
         </Typography>
         <RichTextPreview
@@ -53,7 +53,7 @@ export async function GroupDetailPage({
         />
       </div>
       <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
-        <Typography className='text-sm font-bold' variant='h2'>
+        <Typography className='font-bold lg:text-[16px]' variant='h2'>
           Место проведения
         </Typography>
         {group?.address && (
@@ -71,7 +71,7 @@ export async function GroupDetailPage({
       </div>
       <Grid>
         <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
-          <Typography className='text-sm font-bold' variant='h2'>
+          <Typography className='font-bold lg:text-[16px]' variant='h2'>
             Расписание группы
           </Typography>
           <GroupSchedule
@@ -80,31 +80,41 @@ export async function GroupDetailPage({
           />
         </div>
         {group?.contact && group.contact.length > 0 && (
-          <div className='divide-primary border-primary flex flex-col gap-4 divide-y rounded-xl border-1 p-4'>
-            {group?.contact?.map(
-              (contactItem: { name: string; phone: string }, index: number) => {
-                return (
-                  <div
-                    key={contactItem.phone + '_' + contactItem.name}
-                    className={cn(
-                      'flex flex-col gap-4 pb-4',
-                      index === group.contact.length - 1 && 'pb-0',
-                    )}
-                  >
-                    <div className='flex flex-row gap-4'>
-                      <Icon className='text-primary' icon='person' />
-                      <Typography variant='body'>{contactItem.name}</Typography>
+          <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
+            <Typography className='font-bold lg:text-[16px]' variant='h2'>
+              Контакты
+            </Typography>
+            <div className='divide-primary divide-y'>
+              {group?.contact?.map(
+                (
+                  contactItem: { name: string; phone: string },
+                  index: number,
+                ) => {
+                  return (
+                    <div
+                      key={contactItem.phone + '_' + contactItem.name}
+                      className={cn(
+                        'flex flex-col gap-4 pb-4',
+                        index === group.contact.length - 1 && 'pb-0',
+                      )}
+                    >
+                      <div className='flex flex-row gap-4'>
+                        <Icon className='text-primary' icon='person' />
+                        <Typography variant='body'>
+                          {contactItem.name}
+                        </Typography>
+                      </div>
+                      <div className='flex flex-row gap-4'>
+                        <Icon className='text-primary' icon='phone' />
+                        <Typography variant='body'>
+                          {contactItem.phone}
+                        </Typography>
+                      </div>
                     </div>
-                    <div className='flex flex-row gap-4'>
-                      <Icon className='text-primary' icon='phone' />
-                      <Typography variant='body'>
-                        {contactItem.phone}
-                      </Typography>
-                    </div>
-                  </div>
-                )
-              },
-            )}
+                  )
+                },
+              )}
+            </div>
           </div>
         )}
       </Grid>
@@ -113,7 +123,7 @@ export async function GroupDetailPage({
         group?.telegram ||
         group?.whatsapp) && (
         <div className='border-primary flex flex-col items-start gap-4 rounded-xl border-1 p-4'>
-          <Typography className='text-[20px] font-bold' variant='h2'>
+          <Typography className='font-bold lg:text-[16px]' variant='h2'>
             Дополнительная информация
           </Typography>
           {group?.website && (

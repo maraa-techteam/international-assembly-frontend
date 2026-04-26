@@ -38,7 +38,7 @@ export default async function Home() {
     <>
       <Section
         color='white'
-        className='gap-8 py-10 text-center lg:gap-15 lg:py-39'
+        className='mx-auto gap-8 py-10 text-center lg:gap-15 lg:px-0 lg:py-39'
       >
         <Typography variant='h1' className='lg:text-5xl' font='roboto'>
           Проблемы с алкоголем?
@@ -65,16 +65,22 @@ export default async function Home() {
           </Button>
         </Grid>
       </Section>
-      <Section color='primary' className='items-start overflow-x-hidden'>
-        <Typography variant='h2' font='roboto'>
-          Все что вас интересует
-        </Typography>
-        {!!frequentlyVisitedLinks.length && (
-          <ContentGuide data={frequentlyVisitedLinks} />
-        )}
-      </Section>
+      <div className='bg-primary'>
+        <Section
+          color='primary'
+          className='mx-auto w-full items-center overflow-x-hidden lg:px-0'
+        >
+          <Typography variant='h2' font='roboto'>
+            Все что вас интересует
+          </Typography>
+          {!!frequentlyVisitedLinks.length && (
+            <ContentGuide data={frequentlyVisitedLinks} />
+          )}
+        </Section>
+      </div>
+
       <Section
-        className='flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr]'
+        className='mx-auto flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr] lg:px-0'
         alignment='start'
         color='white'
       >
@@ -131,29 +137,36 @@ export default async function Home() {
           />
         </div>
       </Section>
-      <Section color='primary'>
-        <div className='flex flex-col gap-2'>
-          <Typography variant='h2' font='roboto'>
-            Поиск русскоязычных групп
-          </Typography>
-          <Typography variant='body'>
-            Найдите русскоязычные группы Анонимных Алкоголиков в вашем городе
-            или онлайн.
-          </Typography>
-        </div>
-        <Suspense>
-          <GroupsFilterDashboard
-            dropdownOptions={{
-              country: countries,
-              presence: presence,
-              schedule: schedule,
-            }}
-            variant='widget'
-            className='bg-primary max-w-200 p-0'
-          />
-        </Suspense>
-      </Section>
-      <Section alignment='center' color='white'>
+      <div className='bg-primary'>
+        <Section
+          className='mx-auto min-h-100 justify-center lg:px-0'
+          color='primary'
+        >
+          <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-2'>
+              <Typography variant='h2' font='roboto'>
+                Поиск русскоязычных групп
+              </Typography>
+              <Typography variant='body'>
+                Найдите русскоязычные группы Анонимных Алкоголиков в вашем
+                городе или онлайн.
+              </Typography>
+            </div>
+            <Suspense>
+              <GroupsFilterDashboard
+                dropdownOptions={{
+                  country: countries,
+                  presence: presence,
+                  schedule: schedule,
+                }}
+                variant='widget'
+                className='bg-primary max-w-200 p-0'
+              />
+            </Suspense>
+          </div>
+        </Section>
+      </div>
+      <Section className='mx-auto lg:px-0' alignment='center' color='white'>
         <Typography variant='h2' font='roboto'>
           Новости и события
         </Typography>
