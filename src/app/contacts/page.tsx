@@ -19,15 +19,15 @@ export default async function Contacts() {
   return (
     <>
       <Section
-        className='flex max-w-250 flex-col'
+        className='flex flex-col lg:grid lg:grid-cols-[minmax(0,800px)_minmax(300px,360px)]'
         alignment='start'
         color='white'
       >
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
           <Typography variant='h1'>{page.title}</Typography>
           <RichTextPreview htmlContent={page.text} />
+          <ContactForm />
         </div>
-        <ContactForm />
       </Section>
     </>
   )

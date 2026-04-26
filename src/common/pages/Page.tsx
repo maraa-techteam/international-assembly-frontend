@@ -16,7 +16,7 @@ export default async function Page(page: PageProps) {
   return (
     <>
       <Section
-        className='flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr]'
+        className='flex flex-col lg:grid lg:grid-cols-[minmax(0,800px)_minmax(300px,360px)]'
         alignment='start'
         color='white'
       >
@@ -59,32 +59,28 @@ export default async function Page(page: PageProps) {
           </Grid>
         </div>
         {page.image && (
-          <div className='flex h-fit w-full justify-end lg:w-auto'>
+          <div className='flex h-fit w-full justify-end'>
             <Image
               src={getImageUrl(page.image, { width: 400, height: 250 })}
               alt={page.title}
               width={400}
               height={250}
               sizes='(max-width: 640px) 100vw, 600px'
-              className='w-full max-w-md rounded-lg object-contain object-top'
+              className='w-full rounded-lg object-contain object-top'
               priority={false}
             />
           </div>
         )}
       </Section>
-      {page.rich_text && (
-        <Section className='max-w-200 pt-0 lg:pt-0' color='white'>
-          <RichTextPreview htmlContent={page.rich_text} />
-        </Section>
-      )}
-      {page.faq && (
-        <Section
-          className='pt-0 lg:grid lg:grid-cols-[1fr_0.5fr] lg:pt-0'
-          color='white'
-        >
-          <Accordion items={page.faq} />
-        </Section>
-      )}
+
+      <Section
+        className='pt-0 pr-0 lg:grid lg:grid-cols-[minmax(0,800px)_minmax(300px,360px)] lg:pt-0'
+        color='white'
+      >
+        {page.rich_text && <RichTextPreview htmlContent={page.rich_text} />}
+
+        {page.faq && <Accordion items={page.faq} />}
+      </Section>
     </>
   )
 }

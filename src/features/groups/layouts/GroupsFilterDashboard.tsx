@@ -72,6 +72,7 @@ export function GroupsFilterDashboard({
 
     if (isAllEmpty) {
       router.push(pathname)
+      return
     }
 
     setDraft(nextState)
@@ -118,8 +119,8 @@ export function GroupsFilterDashboard({
       {variant !== 'widget' && (
         <Search
           placeholder='Введите название группы'
-          value={appliedFilters.searchValue}
-          onDebouncedChange={handleSearchChange}
+          value={draft.searchValue}
+          onChange={handleSearchChange}
         />
       )}
       <Grid columns={3}>

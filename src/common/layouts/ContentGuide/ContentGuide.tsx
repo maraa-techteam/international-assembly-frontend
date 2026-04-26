@@ -33,7 +33,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
     })
   }
   return (
-    <div className='flex h-full w-full flex-col gap-4 lg:gap-6'>
+    <div className='flex h-full min-h-75 w-full flex-col justify-between gap-4 lg:gap-6'>
       <div className='flex w-full snap-x snap-mandatory flex-row gap-4 overflow-x-auto'>
         {activeItems.map((button, i) => {
           return (
@@ -52,29 +52,27 @@ export function ContentGuide({ data }: ContentGuideProps) {
         })}
       </div>
 
-      <div className='flex flex-col gap-4 lg:gap-6'>
-        {activeItems.map(
-          (item, i) =>
-            activeItems[i].isActive && (
-              <div
-                className='flex flex-col justify-between gap-4'
-                key={item.name}
-              >
-                <Typography variant='body' font='roboto'>
-                  {item.description}
-                </Typography>
-                <LinkComponent
-                  icon='arrow-right'
-                  text='Подробнее'
-                  href={item.href}
-                  variant='icon-right'
-                  color='contrast'
-                  className='self-end'
-                />
-              </div>
-            ),
-        )}
-      </div>
+      {activeItems.map(
+        (item, i) =>
+          activeItems[i].isActive && (
+            <div
+              className='flex flex-1 flex-col justify-between gap-4'
+              key={item.name}
+            >
+              <Typography className='max-w-200' variant='body' font='roboto'>
+                {item.description}
+              </Typography>
+              <LinkComponent
+                icon='arrow-right'
+                text='Подробнее'
+                href={item.href}
+                variant='icon-right'
+                color='contrast'
+                className='self-end'
+              />
+            </div>
+          ),
+      )}
     </div>
   )
 }

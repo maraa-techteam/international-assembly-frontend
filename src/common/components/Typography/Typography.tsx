@@ -6,7 +6,7 @@ import { TypographyType } from './Typography.type'
 const typographyVariants = cva('text-contrast wrap-break-word', {
   variants: {
     variant: {
-      h1: 'text-2xl font-bold lg:text-4xl',
+      h1: 'text-2xl font-bold lg:text-[32px]',
       h2: 'text-lg font-bold lg:text-3xl',
       h3: 'text-base font-bold lg:text-lg',
       body: 'text-base font-normal',
