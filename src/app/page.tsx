@@ -68,7 +68,7 @@ export default async function Home() {
       <div className='bg-primary'>
         <Section
           color='primary'
-          className='mx-auto w-full items-center overflow-x-hidden lg:px-0'
+          className='mx-auto w-full items-start overflow-x-hidden lg:px-0'
         >
           <Typography variant='h2' font='roboto'>
             Все что вас интересует
@@ -80,7 +80,7 @@ export default async function Home() {
       </div>
 
       <Section
-        className='mx-auto flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr] lg:px-0'
+        className='mx-auto flex flex-col lg:grid lg:grid-cols-[1fr_0.5fr] lg:px-0 lg:py-12'
         alignment='start'
         color='white'
       >
@@ -166,7 +166,11 @@ export default async function Home() {
           </div>
         </Section>
       </div>
-      <Section className='mx-auto lg:px-0' alignment='center' color='white'>
+      <Section
+        className='mx-auto lg:px-0 lg:py-12'
+        alignment='center'
+        color='white'
+      >
         <Typography variant='h2' font='roboto'>
           Новости и события
         </Typography>
