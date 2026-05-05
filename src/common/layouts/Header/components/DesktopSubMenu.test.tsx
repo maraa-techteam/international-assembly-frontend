@@ -82,6 +82,6 @@ describe('DesktopSubMenu', () => {
 
     const item1Link = screen.getByText('Item 1').closest('a')
 
-    expect(item1Link).toHaveClass('bg-primary', 'text-white')
+    expect(item1Link).toHaveClass('bg-indigo-blue', 'text-white')
   })
 })
