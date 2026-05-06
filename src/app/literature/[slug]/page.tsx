@@ -16,7 +16,7 @@ export async function generateMetadata({
   const page = await fetchLiteratureItem(slug)
 
   return {
-    title: page?.title + ' | Международная Ассамблея АА',
+    title: page?.title + ' | Литература АА',
     description: page?.description,
   }
 }

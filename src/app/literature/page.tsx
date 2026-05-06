@@ -7,7 +7,7 @@ const pageData = await fetchLiteraturePage()
 export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]
   return {
-    title: page.meta_title + ' | Международная Ассамблея АА',
+    title: page.meta_title + ' | Литература АА',
     description: page.meta_description,
   }
 }

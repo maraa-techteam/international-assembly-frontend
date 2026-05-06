@@ -1,12 +1,18 @@
+import { fetchQuizPage } from '@/common/api/fetchQuizPage'
 import { IsAaForMePage } from '@/features/quiz'
 import { Metadata } from 'next'
 
+const pageData = await fetchQuizPage()
 export const metadata: Metadata = {
-  title: 'Подходит ли мне АА?',
-  description:
-    'Ответьте честно на 12 вопросов и узнайте, может ли Анонимные Алкоголики помочь вам.',
+  title: pageData[0]?.meta_title,
+  description: pageData[0]?.meta_description,
 }
 
 export default function Page() {
-  return <IsAaForMePage />
+  return (
+    <IsAaForMePage
+      title={pageData[0]?.meta_title}
+      text={pageData[0]?.meta_description}
+    />
+  )
 }

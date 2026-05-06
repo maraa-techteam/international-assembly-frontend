@@ -1,20 +1,11 @@
 import { LinkComponent, Typography } from '@/common/components'
 import { Section } from '@/common/layouts'
 import { fetchSearchResults } from '@/features/search/api/fetchSearchResults'
-import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface'
 import { SearchParams } from 'next/dist/server/request/search-params'
 
 import { SearchGroupResultCard } from '../components/SearchGroupResultCard/SearchGroupResultCard'
 import { SearchResultCard } from '../components/SearchResultCard/SearchResultCard'
 import { SearchServiceResultCard } from '../components/SearchServiceResultCard/SearchServiceResultCard'
-
-export async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: 'Результаты поиска | Международная Ассамблея АА',
-    description:
-      'Результаты поиска по вашему запросу на сайте Международной Ассамблеи АА.',
-  }
-}
 
 export async function SearchResultsPage({
   searchParams,

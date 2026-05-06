@@ -1,6 +1,12 @@
 'use client'
 
-import { Button, Icon, LinkComponent, Typography } from '@/common/components'
+import {
+  Button,
+  Icon,
+  LinkComponent,
+  RichTextPreview,
+  Typography,
+} from '@/common/components'
 import { Grid, Section } from '@/common/layouts'
 import { useState } from 'react'
 
@@ -8,7 +14,13 @@ import { quizQuestions } from '../data/questions'
 
 type QuizState = 'intro' | 'quiz' | 'result'
 
-export function IsAaForMePage() {
+export function IsAaForMePage({
+  title,
+  text,
+}: {
+  title: string
+  text: string
+}) {
   const [quizState, setQuizState] = useState<QuizState>('intro')
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<(boolean | null)[]>(
@@ -56,27 +68,10 @@ export function IsAaForMePage() {
       {quizState === 'intro' && (
         <>
           <Typography variant='h1' font='roboto'>
-            Подходит ли мне АА?
+            {title}
           </Typography>
           <div className='flex flex-col gap-4'>
-            <Typography variant='body'>
-              Только вы можете решить, стоит ли вам прийти в АА - может ли это
-              вам помочь.
-            </Typography>
-            <Typography variant='body'>
-              Мы же пришли в АА потому что, в конце концов, отказались от
-              попыток контролировать свою выпивку. Нам очень не хотелось
-              признать тот факт что мы никогда не сможем пить «нормально». Но от
-              других членов АА мы узнали, что мы просто больные люди (Да мы и
-              сами уже давно об этом догадывались!) Мы обнаружили, что очень
-              много людей, так же как и мы страдают от чувства вины, одиночества
-              и безнадежности. Мы узнали, что эти чувства были вызваны болезнью
-              — алкоголизмом.
-            </Typography>
-            <Typography variant='body'>
-              Для того, чтобы получить ответ на ваш вопрос вы должны ответить
-              честно на следующие 12 вопросов: ДА или НЕТ
-            </Typography>
+            <RichTextPreview htmlContent={text} />
           </div>
           <Button
             variant='contained'
