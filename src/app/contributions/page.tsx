@@ -1,6 +1,6 @@
 import {
-  fetchContributionsPage,
   type ContributionsProvider,
+  fetchContributionsPage,
 } from '@/common/api/fetchContributionsPage'
 import { RichTextPreview, Section, Typography } from '@/ui'
 import { Metadata } from 'next'
@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Contributions() {
   const page = pageData[0]
-
+  console.log(page)
   return (
     <>
       <Section alignment='start' color='white'>
@@ -28,7 +28,7 @@ export default async function Contributions() {
           {page.provider.map((provider: ContributionsProvider) => (
             <div
               key={provider.id}
-              className='flex flex-col gap-2 rounded-lg bg-primary p-4 lg:p-6'
+              className='bg-primary flex flex-col gap-2 rounded-lg p-4 lg:p-6'
             >
               <Typography variant='h3' className='text-white'>
                 {provider.name}

@@ -29,9 +29,7 @@ export async function fetchContributionsPage() {
           'meta_description',
           'title',
           'text',
-          {
-            provider: ['id', 'name', 'url', 'description', 'account'],
-          },
+          'provider',
         ],
       }),
     )
