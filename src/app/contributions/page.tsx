@@ -2,7 +2,7 @@ import {
   type ContributionsProvider,
   fetchContributionsPage,
 } from '@/common/api/fetchContributionsPage'
-import { RichTextPreview, Section, Typography } from '@/ui'
+import { Button, RichTextPreview, Section, Typography } from '@/ui'
 import { Metadata } from 'next'
 
 const pageData = await fetchContributionsPage()
@@ -11,14 +11,13 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]
 
   return {
-    title: page.meta_title,
+    title: page.meta_title + ' | Международная Ассамблея АА',
     description: page.meta_description,
   }
 }
 
 export default async function Contributions() {
   const page = pageData[0]
-  console.log(page)
   return (
     <>
       <Section alignment='start' className='lg:pb-12' color='white'>
@@ -28,7 +27,7 @@ export default async function Contributions() {
           {page.provider.map((provider: ContributionsProvider) => (
             <div
               key={provider.id}
-              className='bg-primary flex flex-col gap-2 rounded-lg p-4 lg:p-6'
+              className='bg-primary flex min-h-45 max-w-85 flex-col gap-2 rounded-lg p-4 lg:p-6'
             >
               <Typography variant='h3' className='text-white'>
                 {provider.name}
@@ -44,14 +43,26 @@ export default async function Contributions() {
                 </Typography>
               )}
               {provider.url && (
-                <a
-                  href={provider.url}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='text-white underline'
-                >
-                  {provider.url}
-                </a>
+                <>
+                  <a
+                    href={provider.url}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='text-white underline'
+                  >
+                    {provider.url}
+                  </a>
+                  <Button
+                    as='link'
+                    href={provider.url}
+                    variant='contained'
+                    className='mt-2'
+                    size={'lg'}
+                    color={'white'}
+                  >
+                    Внести пожертвование
+                  </Button>
+                </>
               )}
             </div>
           ))}

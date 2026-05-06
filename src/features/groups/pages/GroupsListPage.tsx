@@ -7,24 +7,15 @@ import {
   fetchGroupCountries,
   fetchGroups,
 } from '@/features/groups'
-import { Metadata } from 'next'
 import { SearchParams } from 'next/dist/server/request/search-params'
 import { Suspense } from 'react'
-
-const pageData = await fetchGroupsPage()
-
-export default async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: pageData[0].meta_title,
-    description: pageData[0].meta_description,
-  }
-}
 
 export async function GroupsListPage({
   searchParams,
 }: {
   searchParams: SearchParams
 }) {
+  const pageData = await fetchGroupsPage()
   const params = await searchParams
   const { data: filteredGroups, totalCount } = await fetchGroups(params)
   const page = pageData[0]

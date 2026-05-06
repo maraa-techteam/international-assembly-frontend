@@ -1,9 +1,25 @@
 import {
   LiteratureCategoryPage,
   LiteratureDetailPage,
+  fetchLiteratureItem,
   literatureSlugToType,
 } from '@/features/literature'
+import { Metadata } from 'next'
 import { SearchParams } from 'next/dist/server/request/search-params'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const page = await fetchLiteratureItem(slug)
+
+  return {
+    title: page?.title + ' | Международная Ассамблея АА',
+    description: page?.description,
+  }
+}
 
 export default async function Page({
   params,

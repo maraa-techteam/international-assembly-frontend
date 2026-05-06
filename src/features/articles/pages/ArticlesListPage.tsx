@@ -3,18 +3,9 @@ import { RichTextPreview, Typography } from '@/common/components'
 import { Section } from '@/common/layouts'
 import { Grid } from '@/common/layouts/Grid/Grid'
 import { ArticleCard, fetchArticles } from '@/features/articles'
-import { Metadata } from 'next'
-
-const pageData = await fetchNewsAndEventsPage()
-
-export default async function generateMetadata(): Promise<Metadata> {
-  return {
-    title: pageData[0].meta_title,
-    description: pageData[0].meta_description,
-  }
-}
 
 export async function ArticlesListPage() {
+  const pageData = await fetchNewsAndEventsPage()
   const articles = await fetchArticles()
   const page = pageData[0]
 

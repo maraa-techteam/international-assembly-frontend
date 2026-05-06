@@ -3,7 +3,6 @@ import { Grid, Section } from '@/common/layouts'
 import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { Article, ArticleCard, fetchArticle } from '@/features/articles'
-import { Metadata } from 'next'
 import Image from 'next/image'
 
 type RelatedArticleJunction = {
@@ -23,19 +22,6 @@ type RelatedArticleData = {
   content: string
   perex: string
   related_articles: number[]
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
-  const { slug } = await params
-  const article = await fetchArticle(slug)
-  return {
-    title: article?.title,
-    description: article?.perex,
-  }
 }
 
 export async function ArticleDetailPage({

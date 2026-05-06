@@ -10,7 +10,7 @@ export async function generateMetadata({
   const { slug } = await params
   const service = await fetchService(slug)
   return {
-    title: service?.name ?? 'Служение',
+    title: (service?.name ?? 'Служение') + ' | Международная Ассамблея АА',
     description: 'Узнайте больше о служении и подайте заявку на участие в нем.',
   }
 }

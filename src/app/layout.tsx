@@ -46,7 +46,7 @@ export default async function RootLayout({
     (item) => item.showInFooter,
   )
   return (
-    <html lang='en'>
+    <html lang='ru'>
       <body
         className={cn(
           robotoSlab.variable,
