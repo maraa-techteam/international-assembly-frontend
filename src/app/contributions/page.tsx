@@ -21,7 +21,7 @@ export default async function Contributions() {
   console.log(page)
   return (
     <>
-      <Section alignment='start' color='white'>
+      <Section alignment='start' className='lg:pb-12' color='white'>
         <Typography variant='h1'>{page.title}</Typography>
         <RichTextPreview htmlContent={page.text} />
         <div className='flex flex-col gap-4 lg:flex-row'>
