@@ -10,8 +10,12 @@ export async function generateMetadata({
   const page = await fetchArticle(slug)
 
   return {
+    metadataBase: new URL(process.env.PRODUCTION_FRONTEND_URL || ''),
     title: page?.title + ' | Международная Ассамблея АА',
     description: page?.description,
+    alternates: {
+      canonical: `/news-and-events/${slug}`,
+    },
   }
 }
 

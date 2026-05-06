@@ -9,9 +9,13 @@ export async function generateMetadata({
   const { slug } = await params
   const group = await fetchGroup(slug)
   return {
+    metadataBase: new URL(process.env.PRODUCTION_FRONTEND_URL || ''),
     title: (group?.name ?? 'Группа') + ' | Группа АА',
     description:
       group?.description ?? 'Узнайте больше о группе и её деятельности.',
+    alternates: {
+      canonical: `/groups/${slug}`,
+    },
   }
 }
 

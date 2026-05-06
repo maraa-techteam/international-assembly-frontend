@@ -7,8 +7,12 @@ const pageData = await fetchLiteraturePage()
 export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]
   return {
+    metadataBase: new URL(process.env.PRODUCTION_FRONTEND_URL || ''),
     title: page.meta_title + ' | Литература АА',
     description: page.meta_description,
+    alternates: {
+      canonical: '/literature',
+    },
   }
 }
 

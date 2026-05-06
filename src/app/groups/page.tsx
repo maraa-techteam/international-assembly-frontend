@@ -7,8 +7,12 @@ const pageData = await fetchGroupsPage()
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
+    metadataBase: new URL(process.env.PRODUCTION_FRONTEND_URL || ''),
     title: pageData[0].meta_title + ' | Группы АА',
     description: pageData[0].meta_description,
+    alternates: {
+      canonical: '/groups',
+    },
   }
 }
 

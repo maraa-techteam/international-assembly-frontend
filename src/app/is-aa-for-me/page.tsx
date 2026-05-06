@@ -3,9 +3,15 @@ import { IsAaForMePage } from '@/features/quiz'
 import { Metadata } from 'next'
 
 const pageData = await fetchQuizPage()
-export const metadata: Metadata = {
-  title: pageData[0]?.meta_title,
-  description: pageData[0]?.meta_description,
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    metadataBase: new URL(process.env.PRODUCTION_FRONTEND_URL || ''),
+    title: pageData[0]?.meta_title,
+    description: pageData[0]?.meta_description,
+    alternates: {
+      canonical: '/is-aa-for-me',
+    },
+  }
 }
 
 export default function Page() {

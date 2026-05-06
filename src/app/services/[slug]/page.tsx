@@ -10,8 +10,12 @@ export async function generateMetadata({
   const { slug } = await params
   const service = await fetchService(slug)
   return {
+    metadataBase: new URL(process.env.PRODUCTION_FRONTEND_URL || ''),
     title: (service?.name ?? 'Служение') + ' | Международная Ассамблея АА',
     description: 'Узнайте больше о служении и подайте заявку на участие в нем.',
+    alternates: {
+      canonical: `/services/${slug}`,
+    },
   }
 }
 
