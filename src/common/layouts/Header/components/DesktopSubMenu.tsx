@@ -49,8 +49,8 @@ export function DesktopSubMenu({
               onClick={onSelect}
               href={item.href}
               className={cn(
-                'hover:bg-primary flex flex-col rounded-full px-3 py-4 whitespace-nowrap last:mb-0 hover:text-white',
-                item.isActive ? 'bg-primary text-white' : 'text-inherit',
+                'hover:bg-indigo-blue flex flex-col rounded-full px-3 py-4 whitespace-nowrap last:mb-0 hover:text-white',
+                item.isActive ? 'bg-indigo-blue text-white' : 'text-inherit',
               )}
               onMouseEnter={() => selectItem(i)}
             >

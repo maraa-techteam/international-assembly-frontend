@@ -74,7 +74,7 @@ export default async function Page(page: PageProps) {
       </Section>
 
       <Section
-        className='pt-0 lg:grid lg:grid-cols-[minmax(0,800px)_minmax(300px,360px)] lg:pt-0'
+        className='pt-0 pb-12 lg:grid lg:grid-cols-[minmax(0,800px)_minmax(300px,360px)] lg:pt-0 lg:pb-24'
         color='white'
       >
         {page.rich_text && <RichTextPreview htmlContent={page.rich_text} />}
