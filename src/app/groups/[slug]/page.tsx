@@ -1,4 +1,4 @@
-import { GroupDetailPage, fetchGroup } from '@/features/groups'
+import { GroupDetailPage, fetchGroup, fetchGroups } from '@/features/groups'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -16,6 +16,17 @@ export async function generateMetadata({
       canonical: `/groups/${slug}`,
     },
   }
+}
+
+// Next.js will invalidate the cache when a
+// request comes in, at most once every 60 seconds.
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const { data: groups } = await fetchGroups()
+  return groups.map((group) => ({
+    slug: group.slug,
+  }))
 }
 
 export default async function Page({

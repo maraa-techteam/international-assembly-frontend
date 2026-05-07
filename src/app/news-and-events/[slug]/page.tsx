@@ -1,4 +1,8 @@
-import { ArticleDetailPage, fetchArticle } from '@/features/articles'
+import {
+  ArticleDetailPage,
+  fetchArticle,
+  fetchArticles,
+} from '@/features/articles'
 import { Metadata } from 'next'
 
 export async function generateMetadata({
@@ -16,6 +20,15 @@ export async function generateMetadata({
       canonical: `/news-and-events/${slug}`,
     },
   }
+}
+
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const articles = await fetchArticles()
+  return articles.map((article) => ({
+    slug: article.slug,
+  }))
 }
 
 export default async function Page({

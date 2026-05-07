@@ -2,6 +2,7 @@ import {
   LiteratureCategoryPage,
   LiteratureDetailPage,
   fetchLiteratureItem,
+  fetchLiteratureItems,
   literatureSlugToType,
 } from '@/features/literature'
 import { Metadata } from 'next'
@@ -22,6 +23,15 @@ export async function generateMetadata({
       canonical: `/literature/${slug}`,
     },
   }
+}
+
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const items = await fetchLiteratureItems()
+  return items.map((item) => ({
+    slug: item.slug,
+  }))
 }
 
 export default async function Page({

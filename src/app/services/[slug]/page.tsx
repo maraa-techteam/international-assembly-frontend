@@ -1,4 +1,4 @@
-import { ServiceDetailPage } from '@/features/services'
+import { ServiceDetailPage, fetchServices } from '@/features/services'
 import { fetchService } from '@/features/services/api/fetchService'
 import { Metadata } from 'next'
 
@@ -16,6 +16,15 @@ export async function generateMetadata({
       canonical: `/services/${slug}`,
     },
   }
+}
+
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const services = await fetchServices()
+  return services.map((service) => ({
+    slug: service.slug,
+  }))
 }
 
 export default async function Page({
