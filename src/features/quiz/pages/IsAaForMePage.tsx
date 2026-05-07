@@ -102,6 +102,7 @@ export function IsAaForMePage({
               <button
                 disabled={currentQuestion === 0}
                 onClick={goBack}
+                aria-label='Предыдущий вопрос'
                 className='cursor-pointer p-1 disabled:cursor-not-allowed disabled:opacity-30'
               >
                 <Icon icon='arrow-left' size='md' className='text-foreground' />
@@ -109,6 +110,7 @@ export function IsAaForMePage({
               <button
                 disabled={currentAnswer === null || isLastQuestion}
                 onClick={goForward}
+                aria-label='Следующий вопрос'
                 className='cursor-pointer p-1 disabled:cursor-not-allowed disabled:opacity-30'
               >
                 <Icon icon='arrow-left' size='md' className='rotate-180' />

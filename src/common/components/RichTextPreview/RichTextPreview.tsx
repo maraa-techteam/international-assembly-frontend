@@ -20,7 +20,6 @@ export function RichTextPreview({
       'li',
       'strong',
       'em',
-      'h1',
       'h2',
       'h3',
       'h4',
