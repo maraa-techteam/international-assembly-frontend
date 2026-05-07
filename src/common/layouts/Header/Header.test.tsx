@@ -47,8 +47,8 @@ describe('Header', () => {
   it('renders navigation items', () => {
     render(<Header headerData={mockHeaderData} />)
 
-    const navItems = screen.getAllByRole('menubar')[0]
-    expect(navItems).toBeInTheDocument()
+    const nav = screen.getByRole('navigation', { name: 'Основная навигация' })
+    expect(nav).toBeInTheDocument()
   })
 
   it('renders logo', () => {
@@ -104,9 +104,7 @@ describe('Header', () => {
     fireEvent.click(screen.getByLabelText('Открыть мобильное меню'))
 
     const mobileMenu = container.querySelector('#mobile-menu') as HTMLElement
-    const navLink = mobileMenu.querySelector(
-      'a[role="menuitem"]',
-    ) as HTMLElement
+    const navLink = mobileMenu.querySelector('a') as HTMLElement
     fireEvent.click(navLink)
 
     // router.push should be called immediately
@@ -125,9 +123,7 @@ describe('Header', () => {
     fireEvent.click(screen.getByLabelText('Открыть мобильное меню'))
 
     const mobileMenu = container.querySelector('#mobile-menu') as HTMLElement
-    const navLink = mobileMenu.querySelector(
-      'a[role="menuitem"]',
-    ) as HTMLElement
+    const navLink = mobileMenu.querySelector('a') as HTMLElement
     fireEvent.click(navLink)
 
     // router.push called immediately

@@ -36,7 +36,7 @@ export async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
   }
 
   return (
-    <Section color='white' className='w-full lg:max-w-250'>
+    <Section color='white' className='w-full lg:max-w-250 lg:pb-12'>
       <LinkComponent
         href='/services'
         icon='arrow-left'

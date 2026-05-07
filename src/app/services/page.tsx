@@ -1,11 +1,18 @@
+import { fetchServicesPage } from '@/common/api/fetchServicesPage'
 import { ServicesListPage } from '@/features/services'
 import { Metadata } from 'next'
 
+const pageData = await fetchServicesPage()
+
 export async function generateMetadata(): Promise<Metadata> {
+  const page = pageData[0]
+
   return {
-    title: 'Служения',
-    description:
-      'Узнайте больше о служениях и подайте заявку на участие в них.',
+    title: page.meta_title + ' | Международная Ассамблея АА',
+    description: page.meta_description,
+    alternates: {
+      canonical: '/services',
+    },
   }
 }
 

@@ -1,9 +1,12 @@
 import { readItems } from '@directus/sdk'
+import { cache } from 'react'
 
 import directus from '../../../common/lib/directus'
 import { ServiceType } from '../types/Service.type'
 
-export async function fetchService(slug: string): Promise<ServiceType | null> {
+export const fetchService = cache(async function fetchService(
+  slug: string,
+): Promise<ServiceType | null> {
   try {
     const raw = await directus.request(
       readItems('services', {
@@ -43,4 +46,4 @@ export async function fetchService(slug: string): Promise<ServiceType | null> {
       `Failed to fetch service with slug "${slug}": ${error instanceof Error ? error.message : String(error)}`,
     )
   }
-}
+})

@@ -1,4 +1,5 @@
-import { Typography } from '@/common/components'
+import { fetchLiteraturePage } from '@/common/api/fetchLiteraturePage'
+import { RichTextPreview, Typography } from '@/common/components'
 import { Section } from '@/common/layouts/Section/Section'
 
 import { fetchLiteratureItems } from '../api/fetchLiteratureItems'
@@ -10,6 +11,8 @@ import {
 } from '../utils/literature.utils'
 
 export async function LiteraturePage() {
+  const pageData = await fetchLiteraturePage()
+  const page = pageData[0]
   const items = await fetchLiteratureItems()
   const grouped = groupLiteratureByType(items)
 
@@ -17,14 +20,11 @@ export async function LiteraturePage() {
     <>
       <Section className='max-w-200' color='white'>
         <Typography variant='h1' font='roboto'>
-          Литература
+          {page?.title ?? 'Литература'}
         </Typography>
-        <Typography variant='body'>
-          Официальная литература Анонимных Алкоголиков: книги, брошюры и другие
-          материалы программы выздоровления.
-        </Typography>
+        <RichTextPreview htmlContent={page?.text ?? ''} />
       </Section>
-      <Section color='white' className='gap-10'>
+      <Section color='white' className='gap-10 lg:pb-12'>
         {literatureItemTypes.map((type) => {
           const sectionItems = grouped[type]
           if (sectionItems.length === 0) return null

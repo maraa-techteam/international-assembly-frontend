@@ -8,8 +8,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]
 
   return {
-    title: page.meta_title,
+    title: page.meta_title + ' | Международная Ассамблея АА',
     description: page.meta_description,
+    alternates: {
+      canonical: '/to-professionals',
+    },
   }
 }
 

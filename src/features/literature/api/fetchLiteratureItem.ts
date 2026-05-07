@@ -1,9 +1,10 @@
 import { readItems } from '@directus/sdk'
+import { cache } from 'react'
 
 import directus from '../../../common/lib/directus'
 import { LiteratureItem } from '../types/LiteratureItem.type'
 
-export async function fetchLiteratureItem(
+export const fetchLiteratureItem = cache(async function fetchLiteratureItem(
   slug: string,
 ): Promise<LiteratureItem | null> {
   try {
@@ -58,4 +59,4 @@ export async function fetchLiteratureItem(
       `Failed to fetch literature item with slug "${slug}": ${error instanceof Error ? error.message : String(error)}`,
     )
   }
-}
+})

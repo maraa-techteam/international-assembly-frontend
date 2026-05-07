@@ -39,7 +39,6 @@ export function NavItem({
               }
             : undefined
         }
-        role='menuitem'
         href={href}
         className={cn(baseClasses)}
         tabIndex={isFocusable ? 0 : -1}
@@ -52,7 +51,6 @@ export function NavItem({
     <button
       aria-haspopup
       aria-expanded={isActive}
-      role='menuitem'
       tabIndex={isFocusable ? 0 : -1}
       onClick={() => {
         toggleSelect()

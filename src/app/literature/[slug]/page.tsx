@@ -1,9 +1,38 @@
 import {
   LiteratureCategoryPage,
   LiteratureDetailPage,
+  fetchLiteratureItem,
+  fetchLiteratureItems,
   literatureSlugToType,
 } from '@/features/literature'
+import { Metadata } from 'next'
 import { SearchParams } from 'next/dist/server/request/search-params'
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>
+}): Promise<Metadata> {
+  const { slug } = await params
+  const page = await fetchLiteratureItem(slug)
+
+  return {
+    title: page?.title + ' | Литература АА',
+    description: page?.description,
+    alternates: {
+      canonical: `/literature/${slug}`,
+    },
+  }
+}
+
+export const revalidate = 60
+
+export async function generateStaticParams() {
+  const items = await fetchLiteratureItems()
+  return items.map((item) => ({
+    slug: item.slug,
+  }))
+}
 
 export default async function Page({
   params,

@@ -1,8 +1,9 @@
 import { readItems } from '@directus/sdk'
+import { cache } from 'react'
 
 import directus from '../../../common/lib/directus'
 
-export async function fetchGroup(slug: string) {
+export const fetchGroup = cache(async function fetchGroup(slug: string) {
   try {
     const raw = await directus.request(
       readItems('groups', {
@@ -36,4 +37,4 @@ export async function fetchGroup(slug: string) {
       `Failed to fetch group with slug "${slug}": ${error instanceof Error ? error.message : String(error)}`,
     )
   }
-}
+})

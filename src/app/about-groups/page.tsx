@@ -8,8 +8,14 @@ export async function generateMetadata(): Promise<Metadata> {
   const page = pageData[0]
 
   return {
-    title: page.meta_title,
+    metadataBase: new URL(
+      process.env.PRODUCTION_FRONTEND_URL || 'http://localhost:3000',
+    ),
+    title: page.meta_title + ' | Международная Ассамблея АА',
     description: page.meta_description,
+    alternates: {
+      canonical: '/about-groups',
+    },
   }
 }
 

@@ -24,7 +24,7 @@ export function ServiceLabels({ service, className }: ServiceLabelsProps) {
     <div className={cn('flex flex-wrap items-center gap-2', className)}>
       {labels.map((label) => (
         <Label
-          className='bg-white'
+          className='cursor-default bg-white'
           key={label}
           icon={
             service.required_sobriety_time === label

@@ -1,6 +1,14 @@
 import { LinkComponent, Typography } from '@/common/components'
 import { Section } from '@/common/layouts'
 
+export async function generateMetadata() {
+  return {
+    title: 'Страница не найдена | Международная Ассамблея АА',
+    description:
+      'К сожалению, запрашиваемая страница не найдена на сайте Международной Ассамблеи АА.',
+  }
+}
+
 export default function NotFound() {
   return (
     <>

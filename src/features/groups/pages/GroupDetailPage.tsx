@@ -7,23 +7,9 @@ import {
 import { Grid, Section } from '@/common/layouts'
 import { cn } from '@/common/utils/cn'
 import { GroupSchedule, fetchGroup } from '@/features/groups'
-import { Metadata } from 'next'
 import Link from 'next/dist/client/link'
 
 import { Gallery } from '../components/Gallery/Gallery'
-
-export default async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>
-}): Promise<Metadata> {
-  const { slug } = await params
-  const group = await fetchGroup(slug)
-  return {
-    title: group?.name,
-    description: group?.description,
-  }
-}
 
 export async function GroupDetailPage({
   params,

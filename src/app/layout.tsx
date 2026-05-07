@@ -19,6 +19,9 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.PRODUCTION_FRONTEND_URL || 'http://localhost:3000',
+  ),
   title:
     'Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков',
   description:
@@ -46,7 +49,7 @@ export default async function RootLayout({
     (item) => item.showInFooter,
   )
   return (
-    <html lang='en'>
+    <html lang='ru'>
       <body
         className={cn(
           robotoSlab.variable,

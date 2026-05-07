@@ -1,8 +1,9 @@
 import { readItems } from '@directus/sdk'
+import { cache } from 'react'
 
 import directus from '../../../common/lib/directus'
 
-export async function fetchArticle(slug: string) {
+export const fetchArticle = cache(async function fetchArticle(slug: string) {
   try {
     const raw = await directus.request(
       readItems('article', {
@@ -37,4 +38,4 @@ export async function fetchArticle(slug: string) {
       `Failed to fetch article with slug "${slug}": ${error instanceof Error ? error.message : String(error)}`,
     )
   }
-}
+})
