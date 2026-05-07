@@ -16,7 +16,6 @@ export async function generateMetadata({
   const page = await fetchLiteratureItem(slug)
 
   return {
-    metadataBase: new URL(process.env.PRODUCTION_FRONTEND_URL || ''),
     title: page?.title + ' | Литература АА',
     description: page?.description,
     alternates: {

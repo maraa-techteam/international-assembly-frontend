@@ -19,6 +19,9 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.PRODUCTION_FRONTEND_URL || 'http://localhost:3000',
+  ),
   title:
     'Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков',
   description:
