@@ -1,6 +1,6 @@
 import { fetchNewsAndEventsPage } from '@/common/api/fetchNewsAndEventsPage'
 import { ArticlesListPage } from '@/features/articles'
-import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface'
+import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await fetchNewsAndEventsPage()

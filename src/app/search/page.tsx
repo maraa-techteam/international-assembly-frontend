@@ -1,5 +1,5 @@
 import { SearchResultsPage } from '@/features/search'
-import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface'
+import type { Metadata } from 'next'
 import { SearchParams } from 'next/dist/server/request/search-params'
 
 export async function generateMetadata(): Promise<Metadata> {

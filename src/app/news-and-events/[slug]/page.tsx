@@ -10,8 +10,8 @@ export async function generateMetadata({
   const page = await fetchArticle(slug)
 
   return {
-    title: page?.title + ' | Международная Ассамблея АА',
-    description: page?.description,
+    title: `${page?.title ?? 'Новости и события'} | Международная Ассамблея АА`,
+    description: page?.perex,
     alternates: {
       canonical: `/news-and-events/${slug}`,
     },

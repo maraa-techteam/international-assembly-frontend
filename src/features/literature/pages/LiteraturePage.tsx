@@ -12,6 +12,7 @@ import {
 
 export async function LiteraturePage() {
   const pageData = await fetchLiteraturePage()
+  const page = pageData[0]
   const items = await fetchLiteratureItems()
   const grouped = groupLiteratureByType(items)
 
@@ -19,9 +20,9 @@ export async function LiteraturePage() {
     <>
       <Section className='max-w-200' color='white'>
         <Typography variant='h1' font='roboto'>
-          {pageData[0].title}
+          {page?.title ?? 'Литература'}
         </Typography>
-        <RichTextPreview htmlContent={pageData[0].text} />
+        <RichTextPreview htmlContent={page?.text ?? ''} />
       </Section>
       <Section color='white' className='gap-10 lg:pb-12'>
         {literatureItemTypes.map((type) => {
