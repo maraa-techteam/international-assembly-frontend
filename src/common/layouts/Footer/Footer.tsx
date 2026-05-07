@@ -16,7 +16,7 @@ export function Footer({ footerData, socials }: FooterProps) {
         <div className='flex w-fit flex-col items-start gap-5'>
           <Link className='flex content-center items-center' href='/'>
             <Image
-              src='/logo.svg'
+              src='images/logo.svg'
               width={230}
               height={54}
               className='min-w-57.5 shrink-0'

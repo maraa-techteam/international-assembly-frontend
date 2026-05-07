@@ -131,7 +131,7 @@ export function Header({ headerData }: HeaderProps) {
       <div className='flex flex-row items-center justify-between'>
         <Link className='flex content-center items-center' href='/'>
           <Image
-            src='/logo_colorized.svg'
+            src='images/logo_colorized.svg'
             width={230}
             height={54}
             className='min-w-57.5 shrink-0'
