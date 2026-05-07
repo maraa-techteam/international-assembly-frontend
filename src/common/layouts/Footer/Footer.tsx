@@ -12,7 +12,7 @@ export function Footer({ footerData, socials }: FooterProps) {
 
   return (
     <footer className='bg-primary flex flex-col gap-4 p-4 lg:px-18 lg:py-12'>
-      <div className='mx-auto flex w-full max-w-360 flex-col justify-between gap-4 lg:flex-row lg:gap-32'>
+      <div className='flex w-full flex-col justify-between gap-4 lg:flex-row lg:gap-32'>
         <div className='flex w-fit flex-col items-start gap-5'>
           <Link className='flex content-center items-center' href='/'>
             <Image
@@ -25,27 +25,27 @@ export function Footer({ footerData, socials }: FooterProps) {
               }
             />
           </Link>
-        <nav aria-label='Социальные сети'>
-          <ul className='flex flex-row items-center justify-center gap-4'>
-            {socials.map((item) => {
-              return (
-                <li key={item.name}>
-                  <Link
-                    href={item.href}
-                    target='_blank'
-                    aria-label={item.name}
-                    className='flex items-center gap-2 text-white'
-                  >
-                    <Icon icon={item.icon} />
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
+          <nav aria-label='Социальные сети'>
+            <ul className='flex flex-row items-center justify-center gap-4'>
+              {socials.map((item) => {
+                return (
+                  <li key={item.name}>
+                    <Link
+                      href={item.href}
+                      target='_blank'
+                      aria-label={item.name}
+                      className='flex items-center gap-2 text-white'
+                    >
+                      <Icon icon={item.icon} />
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
         </div>
 
-        <nav aria-label='Навигация'>
+        <nav className='w-full max-w-360' aria-label='Навигация'>
           <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
             {footerData.map((item) => (
               <FooterNavItem
