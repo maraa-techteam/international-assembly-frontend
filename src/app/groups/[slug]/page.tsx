@@ -1,5 +1,5 @@
 import { GroupDetailPage, fetchGroup } from '@/features/groups'
-import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface'
+import type { Metadata } from 'next'
 
 export async function generateMetadata({
   params,
