@@ -1,7 +1,8 @@
 import { fetchGroupsPage } from '@/common/api/fetchGroupsPage'
 import { GroupsListPage } from '@/features/groups'
-import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface'
-import { SearchParams } from 'next/dist/server/request/search-params'
+import type { Metadata } from 'next'
+
+type SearchParams = Record<string, string | string[] | undefined>
 
 const pageData = await fetchGroupsPage()
 
