@@ -14,10 +14,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function Page() {
-  return (
-    <IsAaForMePage
-      title={pageData[0]?.meta_title}
-      text={pageData[0]?.meta_description}
-    />
-  )
+  return <IsAaForMePage title={pageData[0]?.title} text={pageData[0]?.text} />
 }
