@@ -190,6 +190,7 @@ export function Header({ headerData }: HeaderProps) {
       <nav
         id='mobile-menu'
         aria-label='Мобильное меню'
+        aria-hidden={!isMobileMenuActive}
         className={cn(
           'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
           isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
