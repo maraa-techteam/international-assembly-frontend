@@ -187,71 +187,72 @@ export function Header({ headerData }: HeaderProps) {
       </div>
 
       {/* Mobile menu */}
-      <ul
+      <nav
         id='mobile-menu'
-        role='menubar'
+        aria-label='Мобильное меню'
         className={cn(
           'absolute top-20 right-0 flex h-dvh w-full flex-col bg-white transition-transform duration-300 lg:hidden',
           isMobileMenuActive ? 'translate-x-0' : 'translate-x-full',
         )}
       >
-        {navigation.map((item, i) => {
-          return (
-            <li role='none' className='relative' key={item.name}>
-              <NavItem
-                onNavigate={
-                  !item.subNav.length ? handleMobileNavClose : undefined
-                }
-                isFocusable={isMobileMenuActive}
-                href={item.href}
-                name={item.name}
-                isActive={item.isActive}
-                toggleSelect={() => toggleSelect(i)}
-                subNav={item.subNav}
-              />
-              {item.subNav.length > 0 && (
-                <MobileSubMenu
-                  onNavigate={handleMobileNavClose}
-                  isActive={item.isActive}
-                  activeItems={item.subNav.map((subItem, j) => ({
-                    ...subItem,
-                    isActive: j === 0 ? true : false,
-                  }))}
-                  toggleSelect={() => toggleSelect(i)}
-                />
-              )}
-            </li>
-          )
-        })}
-      </ul>
-
-      {/* Desktop menu */}
-      {!isSearchActive && (
-        <ul
-          role='menubar'
-          className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'
-        >
+        <ul>
           {navigation.map((item, i) => {
             return (
-              <li role='none' className='relative' key={item.name}>
+              <li className='relative' key={item.name}>
                 <NavItem
-                  isFocusable={true}
+                  onNavigate={
+                    !item.subNav.length ? handleMobileNavClose : undefined
+                  }
+                  isFocusable={isMobileMenuActive}
                   href={item.href}
                   name={item.name}
                   isActive={item.isActive}
                   toggleSelect={() => toggleSelect(i)}
                   subNav={item.subNav}
                 />
-                {item.isActive && item.subNav.length > 0 && (
-                  <DesktopSubMenu
-                    onSelect={resetSelect}
-                    navigationData={item.subNav}
+                {item.subNav.length > 0 && (
+                  <MobileSubMenu
+                    onNavigate={handleMobileNavClose}
+                    isActive={item.isActive}
+                    activeItems={item.subNav.map((subItem, j) => ({
+                      ...subItem,
+                      isActive: j === 0 ? true : false,
+                    }))}
+                    toggleSelect={() => toggleSelect(i)}
                   />
                 )}
               </li>
             )
           })}
         </ul>
+      </nav>
+
+      {/* Desktop menu */}
+      {!isSearchActive && (
+        <nav aria-label='Основная навигация'>
+          <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
+            {navigation.map((item, i) => {
+              return (
+                <li className='relative' key={item.name}>
+                  <NavItem
+                    isFocusable={true}
+                    href={item.href}
+                    name={item.name}
+                    isActive={item.isActive}
+                    toggleSelect={() => toggleSelect(i)}
+                    subNav={item.subNav}
+                  />
+                  {item.isActive && item.subNav.length > 0 && (
+                    <DesktopSubMenu
+                      onSelect={resetSelect}
+                      navigationData={item.subNav}
+                    />
+                  )}
+                </li>
+              )
+            })}
+          </ul>
+        </nav>
       )}
       <SearchBar
         className={cn(

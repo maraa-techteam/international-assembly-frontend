@@ -25,16 +25,15 @@ export function Footer({ footerData, socials }: FooterProps) {
               }
             />
           </Link>
-          <ul
-            role='menubar'
-            className='flex flex-row items-center justify-center gap-4'
-          >
+        <nav aria-label='Социальные сети'>
+          <ul className='flex flex-row items-center justify-center gap-4'>
             {socials.map((item) => {
               return (
-                <li role='menuitem' key={item.name}>
+                <li key={item.name}>
                   <Link
                     href={item.href}
                     target='_blank'
+                    aria-label={item.name}
                     className='flex items-center gap-2 text-white'
                   >
                     <Icon icon={item.icon} />
@@ -43,20 +42,20 @@ export function Footer({ footerData, socials }: FooterProps) {
               )
             })}
           </ul>
+        </nav>
         </div>
 
-        <ul
-          role='menubar'
-          className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'
-        >
-          {footerData.map((item) => (
-            <FooterNavItem
-              key={item.name}
-              name={item.name}
-              subNav={item.subNav}
-            />
-          ))}
-        </ul>
+        <nav aria-label='Навигация'>
+          <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
+            {footerData.map((item) => (
+              <FooterNavItem
+                key={item.name}
+                name={item.name}
+                subNav={item.subNav}
+              />
+            ))}
+          </ul>
+        </nav>
       </div>
 
       <div className='h-[1px] w-full bg-white opacity-40' />
