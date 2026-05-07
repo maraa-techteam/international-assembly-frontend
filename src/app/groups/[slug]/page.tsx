@@ -18,12 +18,10 @@ export async function generateMetadata({
   }
 }
 
-// Next.js will invalidate the cache when a
-// request comes in, at most once every 60 seconds.
 export const revalidate = 60
 
 export async function generateStaticParams() {
-  const { data: groups } = await fetchGroups()
+  const { data: groups } = await fetchGroups({ limit: '-1' })
   return groups.map((group) => ({
     slug: group.slug,
   }))
