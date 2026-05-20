@@ -82,7 +82,7 @@ export async function POST(request: NextRequest) {
     const fileBuffer = Buffer.from(await file.arrayBuffer())
     const base64FileContent = fileBuffer.toString('base64')
     const safeFilename = sanitizePdfFilename(file.name)
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
+    const fromEmail = process.env.RESEND_FROM_EMAIL
 
     await resend.emails.send({
       from: `Международная Ассамблея <${fromEmail}>`,

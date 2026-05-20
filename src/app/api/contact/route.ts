@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     }
     const secretaryEmail = pageData[0].secretary_email
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
+    const fromEmail = process.env.RESEND_FROM_EMAIL
 
     await resend.emails.send({
       from: `Международная Ассамблея <${fromEmail}>`,
