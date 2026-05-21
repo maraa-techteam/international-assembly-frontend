@@ -19,16 +19,19 @@
     "test:e2e": "playwright test",
     "test:e2e:api": "playwright test --project=api",
     "test:e2e:ui": "playwright test --ui",
-    "prepare": "husky"
+    "prepare": "husky",
+    "email": "email dev"
   },
   "dependencies": {
     "@directus/sdk": "^20.1.0",
     "@tailwindcss/cli": "^4.1.14",
     "class-variance-authority": "^0.7.1",
+    "create-email": "^1.2.5",
     "next": "16.1.0",
     "nextjs-toploader": "^3.9.17",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-email": "^6.1.5",
     "resend": "^6.9.4",
     "sanitize-html": "^2.17.0"
   },
@@ -37,6 +40,7 @@
     "@commitlint/config-conventional": "^20.0.0",
     "@eslint/eslintrc": "^3",
     "@playwright/test": "^1.55.1",
+    "@react-email/ui": "6.1.5",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",

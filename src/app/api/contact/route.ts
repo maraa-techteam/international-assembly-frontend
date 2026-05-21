@@ -1,7 +1,8 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
-import { buildContactEmailHtml } from '@/common/utils/contactEmailTemplate'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+
+import { ReactEmail } from '../../../../emails/ReactEmail'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -44,19 +45,14 @@ export async function POST(request: NextRequest) {
     }
     const secretaryEmail = pageData[0].secretary_email
 
-    const fromEmail = process.env.RESEND_FROM_EMAIL ?? 'onboarding@resend.dev'
+    const fromEmail = process.env.RESEND_FROM_EMAIL
 
     await resend.emails.send({
       from: `Международная Ассамблея <${fromEmail}>`,
       to: [secretaryEmail],
       subject: subject.trim(),
       replyTo: email.trim(),
-      html: buildContactEmailHtml({
-        name,
-        email,
-        subject,
-        message,
-      }),
+      react: ReactEmail({ name, email, subject, message }),
     })
 
     return NextResponse.json({ success: true })
