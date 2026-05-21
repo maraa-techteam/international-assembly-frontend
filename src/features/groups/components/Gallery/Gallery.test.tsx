@@ -27,12 +27,15 @@ jest.mock('@/common/hooks/useEscapeClose', () => ({
   useEscapeClose: jest.fn(),
 }))
 
-jest.mock('@/common/components', () => ({
+jest.mock('@/common/components/Icon/Icon', () => ({
   Icon: () => <div />,
+}))
+
+jest.mock('@/common/components/Typography/Typography', () => ({
   Typography: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }))
 
-jest.mock('@/common/layouts', () => ({
+jest.mock('@/common/layouts/Grid/Grid', () => ({
   Grid: ({ children }: { children: ReactNode }) => <ul>{children}</ul>,
 }))
 
