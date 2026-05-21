@@ -1,12 +1,12 @@
 'use client'
 
 import { Button } from '@/common/components/Button/Button'
+import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
 import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
-import { Typography } from '@/common/components/Typography/Typography'
-import { Grid } from '@/common/layouts/Grid/Grid'
-import { Section } from '@/common/layouts/Section/Section'
+import { Section } from '@/common/components/Section/Section'
+import Typography from '@/common/components/Typography/Typography'
 import { useState } from 'react'
 
 import { quizQuestions } from '../data/questions'

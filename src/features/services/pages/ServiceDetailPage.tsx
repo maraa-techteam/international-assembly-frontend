@@ -1,8 +1,8 @@
 import { ContactForm } from '@/common/components/ContactForm/ContactForm'
 import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
-import { Section } from '@/common/layouts/Section/Section'
 
 import { fetchService } from '../api/fetchService'
 import { ServiceLabels } from '../components/ServiceLabels/ServiceLabels'

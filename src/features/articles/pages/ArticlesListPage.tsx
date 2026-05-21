@@ -1,8 +1,8 @@
 import { fetchNewsAndEventsPage } from '@/common/api/fetchNewsAndEventsPage'
+import { Grid } from '@/common/components/Grid/Grid'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
-import { Typography } from '@/common/components/Typography/Typography'
-import { Grid } from '@/common/layouts/Grid/Grid'
-import { Section } from '@/common/layouts/Section/Section'
+import { Section } from '@/common/components/Section/Section'
+import Typography from '@/common/components/Typography/Typography'
 import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 

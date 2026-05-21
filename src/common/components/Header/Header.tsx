@@ -1,12 +1,12 @@
 'use client'
 
+import { DesktopSubMenu } from '@/common/components/Header/components/DesktopSubMenu'
+import { MobileSubMenu } from '@/common/components/Header/components/MobileSubMenu'
+import { NavItem } from '@/common/components/Header/components/NavItem'
 import { Icon } from '@/common/components/Icon/Icon'
 import { SearchBar } from '@/common/components/SearchBar/SearchBar'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
-import { DesktopSubMenu } from '@/common/layouts/Header/components/DesktopSubMenu'
-import { MobileSubMenu } from '@/common/layouts/Header/components/MobileSubMenu'
-import { NavItem } from '@/common/layouts/Header/components/NavItem'
 import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
 import Image from 'next/image'
@@ -143,8 +143,9 @@ export function Header({ headerData }: HeaderProps) {
 
       <SearchBar
         className={cn(
-          'flex lg:hidden lg:max-w-125 lg:rounded-xl',
+          'flex lg:hidden lg:rounded-xl',
           isMobileMenuActive && 'hidden',
+          isSearchActive && 'lg:max-w-125',
         )}
         placeholder='Поиск на сайте'
         isExpanded={isSearchActive}
@@ -259,7 +260,8 @@ export function Header({ headerData }: HeaderProps) {
       <SearchBar
         className={cn(
           isMobileMenuActive && 'hidden',
-          'hidden lg:flex lg:max-w-125 lg:rounded-xl',
+          'hidden lg:flex lg:rounded-xl',
+          isSearchActive && 'lg:max-w-125',
         )}
         isExpanded={isSearchActive}
         onToggle={toggleSearch}

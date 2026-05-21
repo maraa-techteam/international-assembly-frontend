@@ -1,7 +1,7 @@
 import { fetchServicesPage } from '@/common/api/fetchServicesPage'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
-import { Section } from '@/common/layouts/Section/Section'
 
 import { fetchServices } from '../api/fetchServices'
 import { ServiceCard } from '../components/ServiceCard/ServiceCard'

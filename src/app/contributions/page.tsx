@@ -4,8 +4,8 @@ import {
 } from '@/common/api/fetchContributionsPage'
 import { Button } from '@/common/components/Button/Button'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
-import { Section } from '@/common/layouts/Section/Section'
 import { Metadata } from 'next'
 
 const pageData = await fetchContributionsPage()

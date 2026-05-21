@@ -1,9 +1,9 @@
 'use client'
 
+import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Typography } from '@/common/components/Typography/Typography'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
-import { Grid } from '@/common/layouts/Grid/Grid'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { ImageType } from '@/features/groups/components/Gallery/Gallery.type'
 import Image from 'next/image'

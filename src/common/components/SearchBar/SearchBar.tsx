@@ -50,7 +50,11 @@ export function SearchBar({
   return (
     <div
       role='search'
-      className={cn('relative flex w-full items-center justify-end', className)}
+      className={cn(
+        'relative flex w-fit items-center justify-end',
+        isExpanded && 'w-full',
+        className,
+      )}
     >
       <div
         className={cn(

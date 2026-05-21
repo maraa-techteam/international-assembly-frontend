@@ -1,7 +1,7 @@
 import { fetchGroupsPage } from '@/common/api/fetchGroupsPage'
 import { Pagination } from '@/common/components/Pagination/Pagination'
+import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
-import { Section } from '@/common/layouts/Section/Section'
 import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
 import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import { GroupsFilterDashboard } from '@/features/groups/components/GroupsFilterDashboard'

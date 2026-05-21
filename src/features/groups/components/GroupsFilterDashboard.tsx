@@ -1,11 +1,11 @@
 'use client'
 
 import { Button } from '@/common/components/Button/Button'
+import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Loader } from '@/common/components/Loader/Loader'
 import { Select } from '@/common/components/Select/Select'
 import { Typography } from '@/common/components/Typography/Typography'
-import { Grid } from '@/common/layouts/Grid/Grid'
 import { cn } from '@/common/utils/cn'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
