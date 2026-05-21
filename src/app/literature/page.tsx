@@ -1,5 +1,5 @@
 import { fetchLiteraturePage } from '@/common/api/fetchLiteraturePage'
-import { LiteraturePage } from '@/features/literature'
+import { LiteraturePage } from '@/features/literature/pages/LiteraturePage'
 import { Metadata } from 'next'
 
 const pageData = await fetchLiteraturePage()

@@ -1,4 +1,4 @@
-import { Typography } from '@/common/components'
+import { Typography } from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
 
 import { GroupScheduleType } from './GroupSchedule.type'

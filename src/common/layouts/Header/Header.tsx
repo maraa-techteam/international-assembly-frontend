@@ -1,6 +1,7 @@
 'use client'
 
-import { Icon, SearchBar } from '@/common/components'
+import { Icon } from '@/common/components/Icon/Icon'
+import { SearchBar } from '@/common/components/SearchBar/SearchBar'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
 import { DesktopSubMenu } from '@/common/layouts/Header/components/DesktopSubMenu'

@@ -1,4 +1,4 @@
-import { Typography } from '@/common/components'
+import { Typography } from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
 import { ServiceLabels } from '@/features/services/components/ServiceLabels/ServiceLabels'
 import Link from 'next/link'

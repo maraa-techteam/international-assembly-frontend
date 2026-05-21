@@ -1,4 +1,6 @@
-import { GroupDetailPage, fetchGroup, fetchGroups } from '@/features/groups'
+import { fetchGroup } from '@/features/groups/api/fetchGroup'
+import { fetchGroups } from '@/features/groups/api/fetchGroups'
+import { GroupDetailPage } from '@/features/groups/pages/GroupDetailPage'
 import type { Metadata } from 'next'
 
 export async function generateMetadata({

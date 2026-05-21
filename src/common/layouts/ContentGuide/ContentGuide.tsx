@@ -1,6 +1,8 @@
 'use client'
 
-import { Button, LinkComponent, Typography } from '@/common/components'
+import { Button } from '@/common/components/Button/Button'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Typography } from '@/common/components/Typography/Typography'
 import {
   SecondTierNavigationType,
   TransformedSecondTierNavigationType,

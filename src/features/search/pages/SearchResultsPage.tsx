@@ -1,5 +1,6 @@
-import { LinkComponent, Typography } from '@/common/components'
-import { Section } from '@/common/layouts'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Typography } from '@/common/components/Typography/Typography'
+import { Section } from '@/common/layouts/Section/Section'
 import { fetchSearchResults } from '@/features/search/api/fetchSearchResults'
 import { SearchParams } from 'next/dist/server/request/search-params'
 

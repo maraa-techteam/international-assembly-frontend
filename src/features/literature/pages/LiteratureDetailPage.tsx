@@ -1,4 +1,5 @@
-import { LinkComponent, Typography } from '@/common/components'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Typography } from '@/common/components/Typography/Typography'
 import { Section } from '@/common/layouts/Section/Section'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'

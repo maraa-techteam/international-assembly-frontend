@@ -1,4 +1,7 @@
-import { Icon, Label, RichTextPreview, Typography } from '@/common/components'
+import { Icon } from '@/common/components/Icon/Icon'
+import { Label } from '@/common/components/Label/Label'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Typography } from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
 import Link from 'next/link'
 

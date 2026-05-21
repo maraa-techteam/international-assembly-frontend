@@ -1,8 +1,6 @@
-import {
-  ArticleDetailPage,
-  fetchArticle,
-  fetchArticles,
-} from '@/features/articles'
+import { fetchArticle } from '@/features/articles/api/fetchArticle'
+import { fetchArticles } from '@/features/articles/api/fetchArticles'
+import { ArticleDetailPage } from '@/features/articles/pages/ArticleDetailPage'
 import { Metadata } from 'next'
 
 export async function generateMetadata({

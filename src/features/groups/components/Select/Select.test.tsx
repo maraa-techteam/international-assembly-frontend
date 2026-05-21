@@ -1,4 +1,4 @@
-import { Select } from '@/common/components'
+import { Select } from '@/features/groups/components/Select/Select'
 import { act, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 

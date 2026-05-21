@@ -1,6 +1,8 @@
 'use client'
 
-import { Button, Icon, Loader } from '@/common/components'
+import { Button } from '@/common/components/Button/Button'
+import { Icon } from '@/common/components/Icon/Icon'
+import { Loader } from '@/common/components/Loader/Loader'
 import { cn } from '@/common/utils/cn'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useMemo, useTransition } from 'react'

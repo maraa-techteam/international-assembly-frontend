@@ -1,12 +1,12 @@
-import {
-  Icon,
-  LinkComponent,
-  RichTextPreview,
-  Typography,
-} from '@/common/components'
-import { Grid, Section } from '@/common/layouts'
+import { Icon } from '@/common/components/Icon/Icon'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Typography } from '@/common/components/Typography/Typography'
+import { Grid } from '@/common/layouts/Grid/Grid'
+import { Section } from '@/common/layouts/Section/Section'
 import { cn } from '@/common/utils/cn'
-import { GroupSchedule, fetchGroup } from '@/features/groups'
+import { fetchGroup } from '@/features/groups/api/fetchGroup'
+import { GroupSchedule } from '@/features/groups/components/GroupSchedule/GroupSchedule'
 import Link from 'next/dist/client/link'
 
 import { Gallery } from '../components/Gallery/Gallery'

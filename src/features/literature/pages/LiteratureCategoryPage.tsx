@@ -1,4 +1,6 @@
-import { LinkComponent, Pagination, Typography } from '@/common/components'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Pagination } from '@/common/components/Pagination/Pagination'
+import { Typography } from '@/common/components/Typography/Typography'
 import { Grid } from '@/common/layouts/Grid/Grid'
 import { Section } from '@/common/layouts/Section/Section'
 import { SearchParams } from 'next/dist/server/request/search-params'

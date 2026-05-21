@@ -1,5 +1,5 @@
 import { fetchNewsAndEventsPage } from '@/common/api/fetchNewsAndEventsPage'
-import { ArticlesListPage } from '@/features/articles'
+import { ArticlesListPage } from '@/features/articles/pages/ArticlesListPage'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {

@@ -1,13 +1,12 @@
 'use client'
 
-import {
-  Button,
-  Icon,
-  LinkComponent,
-  RichTextPreview,
-  Typography,
-} from '@/common/components'
-import { Grid, Section } from '@/common/layouts'
+import { Button } from '@/common/components/Button/Button'
+import { Icon } from '@/common/components/Icon/Icon'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Typography } from '@/common/components/Typography/Typography'
+import { Grid } from '@/common/layouts/Grid/Grid'
+import { Section } from '@/common/layouts/Section/Section'
 import { useState } from 'react'
 
 import { quizQuestions } from '../data/questions'

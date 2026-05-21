@@ -1,6 +1,9 @@
 'use client'
 
-import { Button, Icon, Loader, Typography } from '@/common/components'
+import { Button } from '@/common/components/Button/Button'
+import { Icon } from '@/common/components/Icon/Icon'
+import { Loader } from '@/common/components/Loader/Loader'
+import { Typography } from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
 import {
   isPdfFile,

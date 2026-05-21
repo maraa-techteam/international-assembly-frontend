@@ -1,8 +1,13 @@
-import { Label, RichTextPreview, Typography } from '@/common/components'
-import { Grid, Section } from '@/common/layouts'
+import { Label } from '@/common/components/Label/Label'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Typography } from '@/common/components/Typography/Typography'
+import { Grid } from '@/common/layouts/Grid/Grid'
+import { Section } from '@/common/layouts/Section/Section'
 import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'
-import { Article, ArticleCard, fetchArticle } from '@/features/articles'
+import { fetchArticle } from '@/features/articles/api/fetchArticle'
+import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
+import { Article } from '@/features/articles/types/Article.type'
 import Image from 'next/image'
 
 type RelatedArticleJunction = {

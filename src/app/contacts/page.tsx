@@ -1,6 +1,8 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
 import { ContactForm } from '@/common/components/ContactForm/ContactForm'
-import { RichTextPreview, Section, Typography } from '@/ui'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Typography } from '@/common/components/Typography/Typography'
+import { Section } from '@/common/layouts/Section/Section'
 import { Metadata } from 'next'
 
 const pageData = await fetchContactsPage()

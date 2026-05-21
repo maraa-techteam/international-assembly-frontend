@@ -1,4 +1,4 @@
-import { SearchResultsPage } from '@/features/search'
+import { SearchResultsPage } from '@/features/search/pages/SearchResultsPage'
 import type { Metadata } from 'next'
 import { SearchParams } from 'next/dist/server/request/search-params'
 

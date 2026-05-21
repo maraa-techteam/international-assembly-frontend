@@ -1,6 +1,6 @@
 'use client'
 
-import { Icon } from '@/common/components'
+import { Icon } from '@/common/components/Icon/Icon'
 import { cn } from '@/common/utils/cn'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'

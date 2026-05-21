@@ -1,5 +1,5 @@
 import { fetchGroupsPage } from '@/common/api/fetchGroupsPage'
-import { GroupsListPage } from '@/features/groups'
+import { GroupsListPage } from '@/features/groups/pages/GroupsListPage'
 import type { Metadata } from 'next'
 
 type SearchParams = Record<string, string | string[] | undefined>

@@ -1,5 +1,5 @@
+import { Icon } from '@/common/components/Icon/Icon'
 import { cn } from '@/common/utils/cn'
-import { Icon } from '@/ui'
 
 import { LabelType } from './Label.type'
 

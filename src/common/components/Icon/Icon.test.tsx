@@ -1,4 +1,4 @@
-import { Icon } from '@/common/components'
+import { Icon } from '@/common/components/Icon/Icon'
 import { render, screen } from '@testing-library/react'
 
 describe('Icon component', () => {

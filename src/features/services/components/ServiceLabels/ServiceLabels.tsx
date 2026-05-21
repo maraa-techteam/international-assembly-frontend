@@ -1,5 +1,5 @@
+import { Label } from '@/common/components/Label/Label'
 import { cn } from '@/common/utils/cn'
-import { Label } from '@/ui'
 
 import { ServiceType } from '../../types/Service.type'
 
