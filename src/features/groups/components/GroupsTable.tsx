@@ -1,7 +1,7 @@
 import { Typography } from '@/common/components/Typography/Typography'
 
-import GroupsTableItem from '../components/GroupsTableItem/GroupTableItem'
 import { GroupType } from '../types/Group.type'
+import GroupsTableItem from './GroupsTableItem/GroupTableItem'
 
 type GroupsTableProps = {
   groups: GroupType[]

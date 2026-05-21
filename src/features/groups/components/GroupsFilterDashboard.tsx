@@ -3,15 +3,15 @@
 import { Button } from '@/common/components/Button/Button'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Loader } from '@/common/components/Loader/Loader'
+import { Select } from '@/common/components/Select/Select'
 import { Typography } from '@/common/components/Typography/Typography'
 import { Grid } from '@/common/layouts/Grid/Grid'
 import { cn } from '@/common/utils/cn'
-import { Select } from '@/features/groups/components/Select/Select'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useMemo, useState } from 'react'
 
-import { Search } from '../components/Search/Search'
+import { Search } from './Search/Search'
 
 type FilterOptions = {
   country: string[]
