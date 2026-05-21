@@ -1,5 +1,4 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
-import { buildContactEmailHtml } from '@/common/utils/contactEmailTemplate'
 import {
   isPdfFile,
   maxUploadFileSizeInBytes,
@@ -7,6 +6,8 @@ import {
 } from '@/common/utils/fileUploadValidation'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
+
+import { ReactEmail } from '../../../../emails/ReactEmail'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -89,12 +90,7 @@ export async function POST(request: NextRequest) {
       to: [secretaryEmail],
       subject: normalizedSubject,
       replyTo: email.trim(),
-      html: buildContactEmailHtml({
-        name,
-        email,
-        subject: normalizedSubject,
-        message,
-      }),
+      react: ReactEmail({ name, email, subject: normalizedSubject, message }),
       attachments: [
         {
           filename: safeFilename,
