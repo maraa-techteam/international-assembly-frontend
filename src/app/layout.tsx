@@ -8,7 +8,7 @@ import type { Metadata } from 'next'
 import { Roboto, Roboto_Slab } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 
-import '../styles/globals.css'
+import '../globals.css'
 
 const robotoSlab = Roboto_Slab({
   variable: '--font-roboto-slab',
