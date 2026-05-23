@@ -35,7 +35,7 @@ jest.mock('@/common/components/Typography/Typography', () => ({
   Typography: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }))
 
-jest.mock('@/common/layouts/Grid/Grid', () => ({
+jest.mock('@/common/components/Grid/Grid', () => ({
   Grid: ({ children }: { children: ReactNode }) => <ul>{children}</ul>,
 }))
 
