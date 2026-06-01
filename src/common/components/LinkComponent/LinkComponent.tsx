@@ -1,5 +1,5 @@
+import { Icon } from '@/common/components/Icon/Icon'
 import { cn } from '@/common/utils/cn'
-import { Icon } from '@/ui'
 import { type VariantProps, cva } from 'class-variance-authority'
 import Link from 'next/link'
 

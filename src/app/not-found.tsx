@@ -1,5 +1,6 @@
-import { LinkComponent, Typography } from '@/common/components'
-import { Section } from '@/common/layouts'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Section } from '@/common/components/Section/Section'
+import { Typography } from '@/common/components/Typography/Typography'
 
 export async function generateMetadata() {
   return {

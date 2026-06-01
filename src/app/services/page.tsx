@@ -1,5 +1,5 @@
 import { fetchServicesPage } from '@/common/api/fetchServicesPage'
-import { ServicesListPage } from '@/features/services'
+import { ServicesListPage } from '@/features/services/pages/ServicesListPage'
 import { Metadata } from 'next'
 
 const pageData = await fetchServicesPage()

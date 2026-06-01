@@ -1,4 +1,4 @@
-import { SearchBar } from '@/common/components'
+import { SearchBar } from '@/common/components/SearchBar/SearchBar'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 

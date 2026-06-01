@@ -1,5 +1,5 @@
 import { fetchQuizPage } from '@/common/api/fetchQuizPage'
-import { IsAaForMePage } from '@/features/quiz'
+import { IsAaForMePage } from '@/features/quiz/pages/IsAaForMePage'
 import { Metadata } from 'next'
 
 const pageData = await fetchQuizPage()

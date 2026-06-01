@@ -1,12 +1,13 @@
-import { LinkComponent, Pagination, Typography } from '@/common/components'
-import { Grid } from '@/common/layouts/Grid/Grid'
-import { Section } from '@/common/layouts/Section/Section'
+import { Grid } from '@/common/components/Grid/Grid'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Pagination } from '@/common/components/Pagination/Pagination'
+import { Section } from '@/common/components/Section/Section'
+import Typography from '@/common/components/Typography/Typography'
+import { fetchLiteratureItemsByType } from '@/features/literature/api/fetchLiteratureItemsByType'
+import { LiteratureCard } from '@/features/literature/components/LiteratureCard/LiteratureCard'
+import { LiteratureItemType } from '@/features/literature/types/LiteratureItem.type'
+import { literatureCategoryLabels } from '@/features/literature/utils/literature.utils'
 import { SearchParams } from 'next/dist/server/request/search-params'
-
-import { fetchLiteratureItemsByType } from '../api/fetchLiteratureItemsByType'
-import { LiteratureCard } from '../components/LiteratureCard/LiteratureCard'
-import { LiteratureItemType } from '../types/LiteratureItem.type'
-import { literatureCategoryLabels } from '../utils/literature.utils'
 
 type LiteratureCategoryPageProps = {
   type: LiteratureItemType

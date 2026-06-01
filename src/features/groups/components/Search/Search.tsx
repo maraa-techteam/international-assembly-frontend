@@ -1,4 +1,4 @@
-import { Icon } from '@/common/components'
+import { Icon } from '@/common/components/Icon/Icon'
 import { cn } from '@/common/utils/cn'
 
 export function Search({

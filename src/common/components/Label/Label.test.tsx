@@ -1,4 +1,4 @@
-import { Label } from '@/common/components'
+import { Label } from '@/common/components/Label/Label'
 import { render, screen } from '@testing-library/react'
 
 it('should render label text', () => {

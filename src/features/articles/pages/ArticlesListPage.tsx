@@ -1,8 +1,10 @@
 import { fetchNewsAndEventsPage } from '@/common/api/fetchNewsAndEventsPage'
-import { RichTextPreview, Typography } from '@/common/components'
-import { Section } from '@/common/layouts'
-import { Grid } from '@/common/layouts/Grid/Grid'
-import { ArticleCard, fetchArticles } from '@/features/articles'
+import { Grid } from '@/common/components/Grid/Grid'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Section } from '@/common/components/Section/Section'
+import Typography from '@/common/components/Typography/Typography'
+import { fetchArticles } from '@/features/articles/api/fetchArticles'
+import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 
 export async function ArticlesListPage() {
   const pageData = await fetchNewsAndEventsPage()

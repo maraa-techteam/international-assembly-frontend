@@ -1,4 +1,5 @@
-import { Button, Icon } from '@/common/components'
+import { Button } from '@/common/components/Button/Button'
+import { Icon } from '@/common/components/Icon/Icon'
 import Typography from '@/common/components/Typography/Typography'
 import { render, screen } from '@testing-library/react'
 

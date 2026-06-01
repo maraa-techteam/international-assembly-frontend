@@ -1,4 +1,5 @@
-import { RichTextPreview, Typography } from '@/common/components'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Typography } from '@/common/components/Typography/Typography'
 
 import { AccordionType } from '../Accordion.type'
 

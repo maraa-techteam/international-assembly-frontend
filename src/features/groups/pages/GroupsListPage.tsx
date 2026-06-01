@@ -1,12 +1,11 @@
 import { fetchGroupsPage } from '@/common/api/fetchGroupsPage'
-import { Pagination, Typography } from '@/common/components'
-import { Section } from '@/common/layouts'
-import {
-  GroupsFilterDashboard,
-  GroupsTable,
-  fetchGroupCountries,
-  fetchGroups,
-} from '@/features/groups'
+import { Pagination } from '@/common/components/Pagination/Pagination'
+import { Section } from '@/common/components/Section/Section'
+import { Typography } from '@/common/components/Typography/Typography'
+import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
+import { fetchGroups } from '@/features/groups/api/fetchGroups'
+import { GroupsFilterDashboard } from '@/features/groups/components/GroupsFilterDashboard'
+import { GroupsTable } from '@/features/groups/components/GroupsTable'
 import { SearchParams } from 'next/dist/server/request/search-params'
 import { Suspense } from 'react'
 

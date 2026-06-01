@@ -1,15 +1,14 @@
-import {
-  Icon,
-  LinkComponent,
-  RichTextPreview,
-  Typography,
-} from '@/common/components'
-import { Grid, Section } from '@/common/layouts'
+import { Grid } from '@/common/components/Grid/Grid'
+import { Icon } from '@/common/components/Icon/Icon'
+import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Section } from '@/common/components/Section/Section'
+import Typography from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
-import { GroupSchedule, fetchGroup } from '@/features/groups'
+import { fetchGroup } from '@/features/groups/api/fetchGroup'
+import { Gallery } from '@/features/groups/components/Gallery/Gallery'
+import { GroupSchedule } from '@/features/groups/components/GroupSchedule/GroupSchedule'
 import Link from 'next/dist/client/link'
-
-import { Gallery } from '../components/Gallery/Gallery'
 
 export async function GroupDetailPage({
   params,

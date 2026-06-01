@@ -1,5 +1,6 @@
-import { ServiceDetailPage, fetchServices } from '@/features/services'
 import { fetchService } from '@/features/services/api/fetchService'
+import { fetchServices } from '@/features/services/api/fetchServices'
+import { ServiceDetailPage } from '@/features/services/pages/ServiceDetailPage'
 import { Metadata } from 'next'
 
 export async function generateMetadata({

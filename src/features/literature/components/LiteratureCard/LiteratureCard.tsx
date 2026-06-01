@@ -1,4 +1,4 @@
-import { Typography } from '@/common/components'
+import { Typography } from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'

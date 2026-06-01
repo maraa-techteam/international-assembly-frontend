@@ -1,12 +1,14 @@
 import { getNavigationData } from '@/common/api/fetchNavigation'
 import { getSocials } from '@/common/api/fetchSocials'
-import { Footer, Header, Layout } from '@/common/layouts'
+import { Footer } from '@/common/components/Footer/Footer'
+import { Header } from '@/common/components/Header/Header'
+import { Layout } from '@/common/components/Layout/Layout'
 import { cn } from '@/common/utils/cn'
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Slab } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
 
-import '../styles/globals.css'
+import '../globals.css'
 
 const robotoSlab = Roboto_Slab({
   variable: '--font-roboto-slab',

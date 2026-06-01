@@ -1,4 +1,5 @@
-import { Label, Typography } from '@/common/components'
+import { Label } from '@/common/components/Label/Label'
+import { Typography } from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
 import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'

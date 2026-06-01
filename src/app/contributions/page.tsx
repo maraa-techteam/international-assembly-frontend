@@ -2,7 +2,10 @@ import {
   type ContributionsProvider,
   fetchContributionsPage,
 } from '@/common/api/fetchContributionsPage'
-import { Button, RichTextPreview, Section, Typography } from '@/ui'
+import { Button } from '@/common/components/Button/Button'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Section } from '@/common/components/Section/Section'
+import { Typography } from '@/common/components/Typography/Typography'
 import { Metadata } from 'next'
 
 const pageData = await fetchContributionsPage()

@@ -1,6 +1,7 @@
 'use client'
 
-import { Icon, Typography } from '@/common/components'
+import { Icon } from '@/common/components/Icon/Icon'
+import { Typography } from '@/common/components/Typography/Typography'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
 import { cn } from '@/common/utils/cn'
 import { useId, useRef, useState } from 'react'

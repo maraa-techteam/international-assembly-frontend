@@ -1,10 +1,8 @@
-import {
-  LiteratureCategoryPage,
-  LiteratureDetailPage,
-  fetchLiteratureItem,
-  fetchLiteratureItems,
-  literatureSlugToType,
-} from '@/features/literature'
+import { fetchLiteratureItem } from '@/features/literature/api/fetchLiteratureItem'
+import { fetchLiteratureItems } from '@/features/literature/api/fetchLiteratureItems'
+import { LiteratureCategoryPage } from '@/features/literature/pages/LiteratureCategoryPage'
+import { LiteratureDetailPage } from '@/features/literature/pages/LiteratureDetailPage'
+import { literatureSlugToType } from '@/features/literature/utils/literature.utils'
 import { Metadata } from 'next'
 import { SearchParams } from 'next/dist/server/request/search-params'
 

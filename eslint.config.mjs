@@ -17,12 +17,27 @@ const eslintConfig = [
     },
   }),
   {
+    settings: {
+      'import/resolver': {
+        typescript: {
+          alwaysTryTypes: true,
+          project: './tsconfig.json',
+        },
+      },
+    },
+    rules: {
+      'import/no-cycle': 'error',
+    },
+  },
+  {
     ignores: [
       'node_modules/**',
       '.next/**',
       'out/**',
       'build/**',
       'next-env.d.ts',
+      'playwright-report/**',
+      'test-results/**',
     ],
   },
 ]

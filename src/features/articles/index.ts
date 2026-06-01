@@ -1,7 +1,0 @@
-export * from './components/ArticleCard/ArticleCard'
-export * from './api/fetchArticles'
-export * from './api/fetchArticle'
-export * from './components/ArticleCard/ArticleCard.type'
-export * from './types/Article.type'
-export * from './pages/ArticleDetailPage'
-export * from './pages/ArticlesListPage'

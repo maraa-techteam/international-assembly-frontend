@@ -1,4 +1,4 @@
-import { AccordionProps } from '@/ui'
+import { AccordionProps } from '@/common/components/Accordion/Accordion'
 
 import { IconType } from '../components/Icon/Icon.type'
 

@@ -1,6 +1,7 @@
 import { fetchLiteraturePage } from '@/common/api/fetchLiteraturePage'
-import { RichTextPreview, Typography } from '@/common/components'
-import { Section } from '@/common/layouts/Section/Section'
+import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
+import { Section } from '@/common/components/Section/Section'
+import { Typography } from '@/common/components/Typography/Typography'
 
 import { fetchLiteratureItems } from '../api/fetchLiteratureItems'
 import { LiteratureSection } from '../components/LiteratureSection/LiteratureSection'

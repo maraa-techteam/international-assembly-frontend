@@ -1,6 +1,6 @@
 'use client'
 
-import { Typography } from '@/common/components'
+import { Typography } from '@/common/components/Typography/Typography'
 import { TransformedSecondTierNavigationType } from '@/common/types/SecondTierNavigation'
 import { cn } from '@/common/utils/cn'
 import Link from 'next/link'
