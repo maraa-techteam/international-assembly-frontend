@@ -3,7 +3,7 @@ import { fetchHomePage } from '@/common/api/fetchHomePage'
 import { Button } from '@/common/components/Button/Button'
 import { ContentGuide } from '@/common/components/ContentGuide/ContentGuide'
 import { Grid } from '@/common/components/Grid/Grid'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
@@ -13,6 +13,7 @@ import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
 import { GroupsFilterDashboard } from '@/features/groups/components/GroupsFilterDashboard'
 import { Metadata } from 'next'
 import Image from 'next/image'
+import Link from 'next/link'
 import { Suspense } from 'react'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -104,14 +105,13 @@ export default async function Home() {
               может помочь.
             </Typography>
           </div>
-          <LinkComponent
-            icon='telegram'
-            isUnderlined
-            color='primary'
-            text='Связаться с сообществом'
+          <Link
             href='https://t.me/@QSAAbot'
-            variant='icon-left'
-          />
+            className='text-primary flex flex-row items-center gap-4 underline'
+          >
+            <Icon icon='telegram' />
+            Связаться с сообществом
+          </Link>
           <Grid as='nav' className='lg:flex lg:flex-row'>
             <Button
               variant='outlined'

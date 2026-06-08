@@ -1,5 +1,5 @@
+import { BackButton } from '@/common/components/BackButton/BackButton'
 import { ContactForm } from '@/common/components/ContactForm/ContactForm'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
@@ -21,28 +21,14 @@ export async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
         <Typography variant='h1' font='roboto'>
           Служение не найдено
         </Typography>
-        <LinkComponent
-          href='/services'
-          icon='arrow-left'
-          text='Назад'
-          color='foreground'
-          className='self-start'
-          variant='icon-left'
-        />
+        <BackButton className='self-start' />
       </Section>
     )
   }
 
   return (
     <Section color='white' className='w-full lg:max-w-250 lg:pb-12'>
-      <LinkComponent
-        href='/services'
-        icon='arrow-left'
-        text='Назад'
-        color='foreground'
-        className='self-start'
-        variant='icon-left'
-      />
+      <BackButton className='self-start' />
       <Typography variant='h1' font='roboto'>
         {service.name}
       </Typography>

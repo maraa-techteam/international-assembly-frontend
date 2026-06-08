@@ -6,6 +6,7 @@ import { NavItem } from '@/common/components/Header/components/NavItem'
 import { Icon } from '@/common/components/Icon/Icon'
 import { SearchBar } from '@/common/components/SearchBar/SearchBar'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
+import { useIsMobile } from '@/common/hooks/useMobile'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
 import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
@@ -13,6 +14,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+
+import { Button } from '../Button/Button'
 
 type HeaderProps = { headerData: TransformedNavigationType[] }
 
@@ -120,6 +123,8 @@ export function Header({ headerData }: HeaderProps) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [isMobileMenuActive, isSearchActive])
 
+  const isMobile = useIsMobile()
+
   return (
     <header
       ref={headerRef}
@@ -139,54 +144,69 @@ export function Header({ headerData }: HeaderProps) {
             alt='Логотип АА'
           />
         </Link>
-      </div>
-
-      <SearchBar
-        className={cn(
-          'flex lg:hidden lg:rounded-xl',
-          isMobileMenuActive && 'hidden',
-          isSearchActive && 'lg:max-w-125',
-        )}
-        placeholder='Поиск на сайте'
-        isExpanded={isSearchActive}
-        onToggle={toggleSearch}
-        onSearch={() => toggleSearch(false)}
-      />
-
-      <div
-        className={cn(
-          'flex flex-row items-center justify-end gap-2',
-          isSearchActive ? 'w-full' : 'w-fit',
-        )}
-      >
-        {/* Hamburger menu toggle */}
-        {isMobileMenuActive ? (
-          <button
-            aria-expanded={isMobileMenuActive}
-            aria-controls='mobile-menu'
-            aria-haspopup
-            aria-label='Закрыть мобильное меню'
-            onClick={() => {
-              resetSelect()
-              setIsMobileMenuActive((prev) => !prev)
-            }}
-            className={cn('block lg:hidden')}
+        {isSearchActive && isMobile && (
+          <Button
+            onClick={() => toggleSearch(false)}
+            variant={'outlined'}
+            size={'sm'}
+            color={'white'}
+            className='p-0 text-black'
           >
-            <Icon icon='close' className='text-contrast' size='md' />
-          </button>
-        ) : (
-          <button
-            aria-expanded={isMobileMenuActive}
-            aria-controls='mobile-menu'
-            aria-haspopup
-            aria-label='Открыть мобильное меню'
-            onClick={() => setIsMobileMenuActive((prev) => !prev)}
-            className={cn('block lg:hidden', isSearchActive && 'hidden')}
-          >
-            <Icon icon='hamburger' className='text-contrast' size='md' />
-          </button>
+            <Icon icon='close' />
+          </Button>
         )}
       </div>
+      {isMobile && (
+        <div className='flex gap-4'>
+          <SearchBar
+            className={cn(
+              'flex lg:hidden lg:rounded-xl',
+              isMobileMenuActive && 'hidden',
+              isSearchActive && 'lg:max-w-125',
+            )}
+            placeholder='Поиск на сайте'
+            isExpanded={isSearchActive}
+            onToggle={toggleSearch}
+            onSearch={() => toggleSearch(false)}
+          />
+          {!isSearchActive && (
+            <div
+              className={cn(
+                'flex flex-row items-center justify-end gap-2',
+                isSearchActive ? 'w-full' : 'w-fit',
+              )}
+            >
+              {/* Hamburger menu toggle */}
+              {isMobileMenuActive ? (
+                <button
+                  aria-expanded={isMobileMenuActive}
+                  aria-controls='mobile-menu'
+                  aria-haspopup
+                  aria-label='Закрыть мобильное меню'
+                  onClick={() => {
+                    resetSelect()
+                    setIsMobileMenuActive((prev) => !prev)
+                  }}
+                  className={cn('block lg:hidden')}
+                >
+                  <Icon icon='close' className='text-contrast' size='md' />
+                </button>
+              ) : (
+                <button
+                  aria-expanded={isMobileMenuActive}
+                  aria-controls='mobile-menu'
+                  aria-haspopup
+                  aria-label='Открыть мобильное меню'
+                  onClick={() => setIsMobileMenuActive((prev) => !prev)}
+                  className={cn('block lg:hidden', isSearchActive && 'hidden')}
+                >
+                  <Icon icon='hamburger' className='text-contrast' size='md' />
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Mobile menu */}
       <nav
@@ -229,9 +249,8 @@ export function Header({ headerData }: HeaderProps) {
           })}
         </ul>
       </nav>
-
       {/* Desktop menu */}
-      {!isSearchActive && (
+      {!isSearchActive && !isMobile && (
         <nav aria-label='Основная навигация'>
           <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
             {navigation.map((item, i) => {

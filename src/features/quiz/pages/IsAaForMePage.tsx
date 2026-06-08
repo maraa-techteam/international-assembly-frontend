@@ -3,10 +3,10 @@
 import { Button } from '@/common/components/Button/Button'
 import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
+import Link from 'next/link'
 import { useState } from 'react'
 
 import { quizQuestions } from '../data/questions'
@@ -180,14 +180,13 @@ export function IsAaForMePage({
               показать вам, как мы научились жить без выпивки «по одному дню».
             </Typography>
           </div>
-          <LinkComponent
-            icon='telegram'
-            isUnderlined
-            color='primary'
-            text='Связаться с сообществом'
+          <Link
             href='https://t.me/@QSAAbot'
-            variant='icon-left'
-          />
+            className='text-primary flex flex-row items-center gap-4 underline'
+          >
+            <Icon icon='telegram' />
+            Связаться с сообществом
+          </Link>
           <Grid as='nav' className='lg:flex lg:flex-row'>
             <Button
               className='focus:bg-light-blue active:bg-light-blue'

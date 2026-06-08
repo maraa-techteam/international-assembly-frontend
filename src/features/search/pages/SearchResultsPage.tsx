@@ -1,4 +1,4 @@
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { BackButton } from '@/common/components/BackButton/BackButton'
 import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
 import { fetchSearchResults } from '@/features/search/api/fetchSearchResults'
@@ -27,14 +27,7 @@ export async function SearchResultsPage({
     services.length > 0
   return (
     <Section color='white'>
-      <LinkComponent
-        href='/groups'
-        icon='arrow-left'
-        text='Назад'
-        color='foreground'
-        className='self-start'
-        variant='icon-left'
-      />
+      <BackButton className='self-start' />
       <Typography variant='h1' font='roboto'>
         Результаты поиска <span className='text-primary'>{query}</span>
       </Typography>

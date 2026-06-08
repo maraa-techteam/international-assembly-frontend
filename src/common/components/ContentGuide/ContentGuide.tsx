@@ -1,12 +1,13 @@
 'use client'
 
 import { Button } from '@/common/components/Button/Button'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Icon } from '@/common/components/Icon/Icon'
 import { Typography } from '@/common/components/Typography/Typography'
 import {
   SecondTierNavigationType,
   TransformedSecondTierNavigationType,
 } from '@/common/types/SecondTierNavigation'
+import Link from 'next/link'
 import { useState } from 'react'
 
 type ContentGuideProps = {
@@ -64,14 +65,13 @@ export function ContentGuide({ data }: ContentGuideProps) {
               <Typography className='max-w-200' variant='body' font='roboto'>
                 {item.description}
               </Typography>
-              <LinkComponent
-                icon='arrow-right'
-                text='Подробнее'
+              <Link
                 href={item.href}
-                variant='icon-right'
-                color='contrast'
-                className='self-end'
-              />
+                className='text-contrast flex flex-row items-center gap-4 self-end'
+              >
+                Подробнее
+                <Icon icon='arrow-right' />
+              </Link>
             </div>
           ),
       )}

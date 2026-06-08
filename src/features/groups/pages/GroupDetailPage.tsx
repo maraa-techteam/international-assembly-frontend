@@ -1,6 +1,6 @@
+import { BackButton } from '@/common/components/BackButton/BackButton'
 import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
@@ -20,14 +20,7 @@ export async function GroupDetailPage({
 
   return (
     <Section color='white' className='w-full lg:max-w-200'>
-      <LinkComponent
-        href='/groups'
-        icon='arrow-left'
-        text='Назад'
-        color='foreground'
-        className='self-start'
-        variant='icon-left'
-      />
+      <BackButton className='self-start' />
       <Typography variant='h1'>{group?.name}</Typography>
       <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
         <Typography className='font-bold lg:text-[16px]' variant='h2'>

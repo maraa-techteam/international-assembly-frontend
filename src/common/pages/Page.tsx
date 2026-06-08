@@ -1,12 +1,13 @@
 import { Accordion } from '@/common/components/Accordion/Accordion'
 import { Button } from '@/common/components/Button/Button'
 import { Grid } from '@/common/components/Grid/Grid'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { Icon } from '@/common/components/Icon/Icon'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { PageType } from './Page.type'
 
@@ -23,14 +24,13 @@ export default async function Page(page: PageProps) {
           <Typography variant='h1'>{page.title}</Typography>
           <RichTextPreview htmlContent={page.text} />
           {page.additional_link && (
-            <LinkComponent
-              icon={page.additional_link.icon}
-              isUnderlined
-              color='primary'
-              text={page.additional_link.text}
+            <Link
               href={page.additional_link.href}
-              variant='icon-left'
-            />
+              className='text-primary flex flex-row items-center gap-4 underline'
+            >
+              <Icon icon={page.additional_link.icon} />
+              {page.additional_link.text}
+            </Link>
           )}
           <Grid as='nav' className='lg:flex lg:flex-row'>
             {page.button_left?.length && (
