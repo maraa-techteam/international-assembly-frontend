@@ -281,7 +281,7 @@ export function ContactForm({
               className='inline-flex cursor-pointer items-center gap-2'
             >
               <Icon icon='add' className='text-primary' />
-              <Typography className='text-primary' variant='caption'>
+              <Typography className='text-primary' variant='body'>
                 Прикрепить документ
               </Typography>
             </label>
@@ -293,12 +293,12 @@ export function ContactForm({
       )}
 
       {status === 'success' && (
-        <Typography variant='caption' className='text-green-700'>
+        <Typography variant='body' className='text-green-700'>
           Сообщение успешно отправлено!
         </Typography>
       )}
       {status === 'error' && (
-        <Typography variant='caption' className='text-red-400'>
+        <Typography variant='body' className='text-red-400'>
           Произошла ошибка. Попробуйте ещё раз.
         </Typography>
       )}
@@ -312,7 +312,7 @@ export function ContactForm({
           size='sm'
           disabled={status === 'loading'}
         >
-          <Typography variant='caption' className='font-medium' font='roboto'>
+          <Typography variant='body' className='font-medium'>
             Отправить
           </Typography>
           {status === 'loading' ? (

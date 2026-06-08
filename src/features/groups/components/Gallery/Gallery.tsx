@@ -85,7 +85,7 @@ export function Gallery({ images }: GalleryPropstype) {
               onClick={() => handleImageClick(image.id)}
               className='absolute h-full w-full cursor-pointer'
             >
-              <Typography variant='caption' className='sr-only'>
+              <Typography variant='body' className='sr-only'>
                 Открыть изображение
               </Typography>
             </button>
@@ -143,7 +143,7 @@ export function Gallery({ images }: GalleryPropstype) {
                 className='rounded-lg object-cover shadow-2xl'
               />
               <Typography
-                variant='caption'
+                variant='body'
                 className='sr-only'
                 aria-live='polite'
                 aria-atomic='true'

@@ -27,9 +27,7 @@ export function LiteratureSection({
 
   return (
     <div className='flex flex-col gap-4'>
-      <Typography variant='h2' font='roboto'>
-        {label}
-      </Typography>
+      <Typography variant='h2'>{label}</Typography>
 
       {/* Mobile: horizontal scroll with snap; Desktop: 4-column grid */}
       <div className='flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 lg:grid lg:grid-cols-4 lg:overflow-x-visible lg:pb-0'>

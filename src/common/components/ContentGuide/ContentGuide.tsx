@@ -62,7 +62,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
               className='flex flex-1 flex-col justify-between gap-4'
               key={item.name}
             >
-              <Typography className='max-w-200' variant='body' font='roboto'>
+              <Typography className='max-w-200' variant='body'>
                 {item.description}
               </Typography>
               <Link

@@ -60,7 +60,7 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
               className='flex flex-col items-center justify-center'
             >
               <Typography
-                variant='caption'
+                variant='body'
                 className={cn(
                   'text-xs',
                   slot.times.length === 0 && 'text-gray-600',
@@ -71,7 +71,7 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
               {slot.times.map((time, index) => (
                 <Typography
                   key={`${slot.day}-${time}-${index}`}
-                  variant='caption'
+                  variant='body'
                   className='text-xs'
                 >
                   {removeSeconds(time)}
@@ -82,7 +82,7 @@ export function GroupSchedule({ schedule, time_zone }: GroupScheduleProps) {
         })}
       </div>
       <Typography
-        variant='caption'
+        variant='body'
         className='self-end text-right text-xs text-gray-600'
       >
         {time_zone}

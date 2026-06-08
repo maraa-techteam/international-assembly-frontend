@@ -61,11 +61,7 @@ export function Footer({ footerData, socials }: FooterProps) {
 
       <div className='h-[1px] w-full bg-white opacity-40' />
 
-      <Typography
-        variant='body'
-        className='text-contrast text-sm opacity-40'
-        font='roboto'
-      >
+      <Typography variant='body' className='text-contrast text-sm opacity-40'>
         {`© ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков`}
       </Typography>
     </footer>

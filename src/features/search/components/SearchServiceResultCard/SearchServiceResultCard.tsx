@@ -21,16 +21,12 @@ export function SearchServiceResultCard({
       className={cn('flex flex-col items-start justify-start gap-4', className)}
     >
       <Link href={`/services/${slug}`}>
-        <Typography
-          variant='h3'
-          font='roboto'
-          className='text-primary line-clamp-2'
-        >
+        <Typography variant='h3' className='text-primary line-clamp-2'>
           {name}
         </Typography>
       </Link>
       {description && (
-        <Typography variant='body' font='roboto' className='line-clamp-3'>
+        <Typography variant='body' className='line-clamp-3'>
           {description}
         </Typography>
       )}

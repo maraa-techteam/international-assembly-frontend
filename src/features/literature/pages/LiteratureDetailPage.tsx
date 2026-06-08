@@ -21,9 +21,7 @@ export async function LiteratureDetailPage({
   if (!item) {
     return (
       <Section color='white'>
-        <Typography variant='h1' font='roboto'>
-          Материал не найден
-        </Typography>
+        <Typography variant='h1'>Материал не найден</Typography>
         <BackButton className='self-start' />
       </Section>
     )
@@ -34,9 +32,7 @@ export async function LiteratureDetailPage({
       <BackButton className='self-start' />
       <div className='flex flex-col gap-6 lg:flex-row'>
         <div className='flex flex-col gap-3'>
-          <Typography variant='h1' font='roboto'>
-            {item.title}
-          </Typography>
+          <Typography variant='h1'>{item.title}</Typography>
           {item.subtitle && (
             <Typography variant='body' className='text-gray-500'>
               {item.subtitle}
@@ -53,7 +49,7 @@ export async function LiteratureDetailPage({
             <Typography variant='body'>{item.description}</Typography>
           )}
           {item.is_approved && (
-            <Typography variant='caption' className='text-primary'>
+            <Typography variant='body' className='text-primary'>
               Одобрено конференцией
             </Typography>
           )}

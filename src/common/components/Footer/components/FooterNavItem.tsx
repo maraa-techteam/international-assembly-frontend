@@ -15,7 +15,6 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
       <Typography
         variant='body'
         className='text-contrast hidden text-sm font-bold lg:inline-block'
-        font='roboto'
       >
         {name}
       </Typography>
@@ -26,7 +25,6 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
               <Typography
                 variant='body'
                 className='text-contrast text-sm text-nowrap'
-                font='roboto'
               >
                 {sub.name}
               </Typography>
@@ -43,7 +41,6 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
           <Typography
             variant='body'
             className='text-contrast text-sm font-bold'
-            font='roboto'
           >
             {name}
           </Typography>
@@ -59,7 +56,6 @@ export function FooterNavItem({ name, subNav }: FooterNavItemProps) {
                 <Typography
                   variant='body'
                   className='text-contrast text-sm text-nowrap'
-                  font='roboto'
                 >
                   {sub.name}
                 </Typography>

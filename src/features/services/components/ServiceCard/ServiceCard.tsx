@@ -22,9 +22,7 @@ export function ServiceCard({
       href={`/services/${slug}`}
       className='bg-light-blue hover:bg-light-blue/80 flex w-full flex-col gap-4 rounded-2xl p-4 transition-colors lg:p-6'
     >
-      <Typography variant='h3' font='roboto'>
-        {name}
-      </Typography>
+      <Typography variant='h3'>{name}</Typography>
       <div className='flex items-end justify-between'>
         <ServiceLabels
           service={{

@@ -49,7 +49,7 @@ export default async function Home() {
         color='white'
         className='mx-auto gap-8 py-10 text-center lg:gap-15 lg:py-39'
       >
-        <Typography variant='h1' className='lg:text-5xl' font='roboto'>
+        <Typography variant='h1' className='lg:text-5xl'>
           Проблемы с алкоголем?
           <span className='text-primary'> Есть решение.</span>
         </Typography>
@@ -79,9 +79,7 @@ export default async function Home() {
           color='primary'
           className='mx-auto w-full items-start overflow-x-hidden lg:py-12'
         >
-          <Typography variant='h2' font='roboto'>
-            Все что вас интересует
-          </Typography>
+          <Typography variant='h2'>Все что вас интересует</Typography>
           {!!frequentlyVisitedLinks.length && (
             <ContentGuide data={frequentlyVisitedLinks} />
           )}
@@ -95,9 +93,7 @@ export default async function Home() {
       >
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
           <div className='flex flex-col gap-2'>
-            <Typography variant='h2' font='roboto'>
-              Нужна помощь?
-            </Typography>
+            <Typography variant='h2'>Нужна помощь?</Typography>
             <Typography variant='body'>
               А.А. уже более 80 лет помогает алкоголикам выздороветь. Программа
               выздоровления АА построена на простом принципе: один алкоголик
@@ -149,9 +145,7 @@ export default async function Home() {
         <Section className='mx-auto min-h-100 justify-center' color='primary'>
           <div className='flex flex-col gap-4'>
             <div className='flex flex-col gap-2'>
-              <Typography variant='h2' font='roboto'>
-                Поиск русскоязычных групп
-              </Typography>
+              <Typography variant='h2'>Поиск русскоязычных групп</Typography>
               <Typography variant='body'>
                 Найдите русскоязычные группы Анонимных Алкоголиков в вашем
                 городе или онлайн.
@@ -172,9 +166,7 @@ export default async function Home() {
         </Section>
       </div>
       <Section className='mx-auto lg:py-12' alignment='center' color='white'>
-        <Typography variant='h2' font='roboto'>
-          Новости и события
-        </Typography>
+        <Typography variant='h2'>Новости и события</Typography>
         <Grid isScrollable columns={2} gap={6}>
           {article_cards.slice(0, 2).map((card) => {
             return (

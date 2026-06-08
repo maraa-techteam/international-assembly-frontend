@@ -70,9 +70,7 @@ export async function ArticleDetailPage({
       </Section>
       {relatedArticles.length > 0 && (
         <Section alignment='center' color='white'>
-          <Typography variant='h2' font='roboto'>
-            Могло бы вас заинтересовать
-          </Typography>
+          <Typography variant='h2'>Могло бы вас заинтересовать</Typography>
           <Grid isScrollable columns={2} gap={6}>
             {relatedArticles.map((card: Article) => {
               return (

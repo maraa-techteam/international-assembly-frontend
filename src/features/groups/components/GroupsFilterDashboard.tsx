@@ -165,7 +165,7 @@ export function GroupsFilterDashboard({
             size='sm'
             type='submit'
           >
-            <Typography variant='caption' className='font-medium' font='roboto'>
+            <Typography variant='body' className='font-medium'>
               Поиск
             </Typography>
             {isSubmitting ? (
@@ -211,7 +211,7 @@ export function GroupsFilterDashboard({
             className='group w-full gap-3 lg:max-w-75'
             size='sm'
           >
-            <Typography variant='caption' className='font-medium' font='roboto'>
+            <Typography variant='body' className='font-medium'>
               Поиск
             </Typography>
             {isSubmitting ? (

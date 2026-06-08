@@ -14,9 +14,7 @@ export async function ArticlesListPage() {
   return (
     <>
       <Section color='white'>
-        <Typography variant='h1' font='roboto'>
-          {page.title}
-        </Typography>
+        <Typography variant='h1'>{page.title}</Typography>
         <RichTextPreview htmlContent={page.text} />
         <ArticleCard
           isHighlighted

@@ -18,9 +18,7 @@ export async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
   if (!service) {
     return (
       <Section color='white'>
-        <Typography variant='h1' font='roboto'>
-          Служение не найдено
-        </Typography>
+        <Typography variant='h1'>Служение не найдено</Typography>
         <BackButton className='self-start' />
       </Section>
     )
@@ -29,9 +27,7 @@ export async function ServiceDetailPage({ params }: ServiceDetailPageProps) {
   return (
     <Section color='white' className='w-full lg:max-w-250 lg:pb-12'>
       <BackButton className='self-start' />
-      <Typography variant='h1' font='roboto'>
-        {service.name}
-      </Typography>
+      <Typography variant='h1'>{service.name}</Typography>
       <ServiceLabels service={service} />
       <RichTextPreview htmlContent={service.description} />
       <ContactForm

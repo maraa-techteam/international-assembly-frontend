@@ -26,11 +26,7 @@ export function SearchGroupResultCard({
       className={cn('flex flex-col items-start justify-start gap-4', className)}
     >
       <Link href={`/groups/${slug}`}>
-        <Typography
-          variant='h3'
-          font='roboto'
-          className='text-primary line-clamp-2'
-        >
+        <Typography variant='h3' className='text-primary line-clamp-2'>
           {name}
         </Typography>
       </Link>

@@ -37,7 +37,7 @@ export function MobileSubMenu({
             size='md'
             className='text-foreground flex lg:hidden'
           />
-          <Typography variant='caption' className='font-normal' font='roboto'>
+          <Typography variant='body' className='font-normal'>
             Назад
           </Typography>
         </button>
@@ -57,11 +57,7 @@ export function MobileSubMenu({
               'hover:bg-primary group flex flex-row justify-between px-3 py-4 whitespace-nowrap last:mb-0',
             )}
           >
-            <Typography
-              className='group-hover:text-white'
-              variant='caption'
-              font='roboto'
-            >
+            <Typography className='group-hover:text-white' variant='body'>
               {item.name}
             </Typography>
             <Icon

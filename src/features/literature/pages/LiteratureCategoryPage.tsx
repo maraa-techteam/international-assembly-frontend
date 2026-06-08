@@ -28,9 +28,7 @@ export async function LiteratureCategoryPage({
   return (
     <Section color='white'>
       <BackButton className='self-start' />
-      <Typography variant='h1' font='roboto'>
-        {label}
-      </Typography>
+      <Typography variant='h1'>{label}</Typography>
       {totalCount === 0 ? (
         <Typography variant='body' className='text-gray-500'>
           В этой категории пока нет материалов.

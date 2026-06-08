@@ -10,16 +10,10 @@ const typographyVariants = cva('text-contrast wrap-break-word', {
       h2: 'text-lg font-bold lg:text-3xl',
       h3: 'text-base font-bold lg:text-lg',
       body: 'text-base font-normal',
-      caption: 'text-base font-normal',
-    },
-    font: {
-      roboto: 'font-roboto',
-      slab: 'font-slab',
     },
   },
   defaultVariants: {
     variant: 'body',
-    font: 'roboto',
   },
 })
 
@@ -27,15 +21,13 @@ type TypographyProps = TypographyType & { className?: string }
 
 export function Typography({
   variant = 'body',
-  font = 'roboto',
   children,
   className,
 }: TypographyProps) {
-  const Component =
-    variant === 'caption' ? 'span' : variant === 'body' ? 'p' : variant
+  const Component = variant === 'body' ? 'p' : variant
 
   return (
-    <Component className={cn(typographyVariants({ variant, font }), className)}>
+    <Component className={cn(typographyVariants({ variant }), className)}>
       {children}
     </Component>
   )
