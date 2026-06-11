@@ -1,6 +1,9 @@
 'use client'
 
 import { Button } from '@/common/components/Button/Button'
+import { Field } from '@/common/components/ContactForm/components/Field'
+import { FileField } from '@/common/components/ContactForm/components/FileField'
+import { submitContactForm } from '@/common/components/ContactForm/contactFormApi'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Loader } from '@/common/components/Loader/Loader'
 import { Typography } from '@/common/components/Typography/Typography'
@@ -11,13 +14,6 @@ import {
 } from '@/common/utils/fileUploadValidation'
 import { useId, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
-
-import { EmailField } from './components/EmailField'
-import { FileField } from './components/FileField'
-import { MessageField } from './components/MessageField'
-import { NameField } from './components/NameField'
-import { SubjectField } from './components/SubjectField'
-import { submitContactForm } from './contactFormApi'
 
 type FormValues = {
   name: string
@@ -128,14 +124,16 @@ export function ContactForm({
         className,
       )}
     >
-      <NameField
+      <Field
         id={nameInputId}
+        variant='name'
         registration={register('name', { required: 'Введите ваше имя' })}
         error={errors.name?.message}
       />
 
-      <EmailField
+      <Field
         id={emailInputId}
+        variant='email'
         registration={register('email', {
           required: 'Введите ваш e-mail',
           pattern: {
@@ -147,15 +145,17 @@ export function ContactForm({
       />
 
       {includeSubject && (
-        <SubjectField
+        <Field
           id={subjectInputId}
+          variant='subject'
           registration={register('subject', { required: 'Введите тему' })}
           error={errors.subject?.message}
         />
       )}
 
-      <MessageField
+      <Field
         id={messageInputId}
+        variant='message'
         registration={register('message', { required: 'Введите сообщение' })}
         error={errors.message?.message}
       />
