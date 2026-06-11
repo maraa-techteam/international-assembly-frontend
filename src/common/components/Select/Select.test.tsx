@@ -9,6 +9,7 @@ it('should call onChange when option is selected', async () => {
   render(
     <Select
       options={['Option 1', 'Option 2']}
+      displayLabel='Выберите опцию'
       label='Select an option'
       value={[]}
       onChange={mockOnChange}
@@ -16,7 +17,7 @@ it('should call onChange when option is selected', async () => {
   )
 
   // open dropdown
-  await user.click(screen.getByText('Select an option'))
+  await user.click(screen.getByText('Выберите опцию'))
 
   // select "Option 2"
   await user.click(screen.getByLabelText('Option 2'))

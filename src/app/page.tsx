@@ -10,7 +10,7 @@ import { getImageUrl } from '@/common/utils/getImageUrl'
 import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
-import { GroupsFilterDashboard } from '@/features/groups/components/GroupsFilterDashboard'
+import { GroupSearchWidget } from '@/features/groups/components/GroupSearchWidget/GroupSearchWidget'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -34,15 +34,6 @@ export default async function Home() {
 
   const countries = await fetchGroupCountries()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
-  const schedule = [
-    'Понедельник',
-    'Вторник',
-    'Среда',
-    'Четверг',
-    'Пятница',
-    'Суббота',
-    'Воскресенье',
-  ]
   return (
     <>
       <Section
@@ -152,13 +143,11 @@ export default async function Home() {
               </Typography>
             </div>
             <Suspense>
-              <GroupsFilterDashboard
+              <GroupSearchWidget
                 dropdownOptions={{
                   country: countries,
                   presence: presence,
-                  schedule: schedule,
                 }}
-                variant='widget'
                 className='bg-primary max-w-200 p-0'
               />
             </Suspense>
