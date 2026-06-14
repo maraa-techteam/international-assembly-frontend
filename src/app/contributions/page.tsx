@@ -44,7 +44,7 @@ export default async function Contributions() {
                 </Typography>
               )}
               {provider.account && (
-                <Typography variant='caption' className='text-white'>
+                <Typography variant='body' className='text-white'>
                   {provider.account}
                 </Typography>
               )}

@@ -16,6 +16,7 @@ type SelectProps = SelectType & {
 
 export function Select({
   label,
+  displayLabel,
   options,
   value,
   onChange,
@@ -45,13 +46,6 @@ export function Select({
       onChange([...value, optionLabel])
     }
   }
-
-  const getName = (label: string) =>
-    label === 'Страна'
-      ? 'country'
-      : label === 'Формат'
-        ? 'presence'
-        : 'schedule_slots'
 
   const selectedCount = value.length
 
@@ -96,9 +90,9 @@ export function Select({
             'font-roboto w-full cursor-pointer appearance-none bg-white px-4 py-3 pr-12 text-left whitespace-nowrap transition-colors',
             textColor,
           )}
-          variant='caption'
+          variant='body'
         >
-          {label}
+          {displayLabel ?? label}
         </Typography>
 
         {selectedCount > 0 && (
@@ -144,7 +138,7 @@ export function Select({
                 <div key={option}>
                   <input
                     tabIndex={0}
-                    name={getName(label)}
+                    name={label}
                     id={`${checkboxId}-${option}`}
                     type='checkbox'
                     checked={isSelected}

@@ -24,16 +24,16 @@ export function GroupsTable({ groups }: GroupsTableProps) {
           }
         >
           <div className='bg-primary grid grid-cols-[0.3fr_0.2fr_0.2fr_0.4fr] gap-4 px-4 lg:grid-cols-[0.5fr_0.3fr_0.3fr_1fr]'>
-            <Typography className='py-4' variant='caption'>
+            <Typography className='py-4' variant='body'>
               Название группы
             </Typography>
-            <Typography className='py-4' variant='caption'>
+            <Typography className='py-4' variant='body'>
               Страна
             </Typography>
-            <Typography className='py-4' variant='caption'>
+            <Typography className='py-4' variant='body'>
               Формат
             </Typography>
-            <Typography className='py-4' variant='caption'>
+            <Typography className='py-4' variant='body'>
               Расписание
             </Typography>
           </div>

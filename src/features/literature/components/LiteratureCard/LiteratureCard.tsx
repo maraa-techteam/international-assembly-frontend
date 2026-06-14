@@ -39,11 +39,11 @@ export function LiteratureCard({
       )}
       <div className='flex h-full flex-col justify-between gap-2'>
         <div className='flex flex-col'>
-          <Typography variant='h3' font='roboto' className='line-clamp-2'>
+          <Typography variant='h3' className='line-clamp-2'>
             {title}
           </Typography>
           {subtitle && (
-            <Typography variant='caption' className='text-gray-400'>
+            <Typography variant='body' className='text-gray-400'>
               {subtitle}
             </Typography>
           )}

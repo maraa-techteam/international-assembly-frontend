@@ -42,10 +42,10 @@ export function SearchResultCard({
       )}
       <div className='flex flex-col items-start justify-start gap-2'>
         {date_created && <Label text={formatDate(date_created)} />}
-        <Typography variant='h3' font='roboto' className='line-clamp-2'>
+        <Typography variant='h3' className='line-clamp-2'>
           {title}
         </Typography>
-        <Typography variant='body' font='roboto' className='line-clamp-3'>
+        <Typography variant='body' className='line-clamp-3'>
           {perex}
         </Typography>
       </div>

@@ -54,11 +54,7 @@ export function DesktopSubMenu({
               )}
               onMouseEnter={() => selectItem(i)}
             >
-              <Typography
-                variant='body'
-                font='roboto'
-                className='font-normal text-inherit'
-              >
+              <Typography variant='body' className='font-normal text-inherit'>
                 {item.name}
               </Typography>
             </Link>
@@ -68,12 +64,7 @@ export function DesktopSubMenu({
       <div className='hidden flex-col p-4 lg:flex'>
         {navigationData.map((item, i) => {
           return (
-            <Typography
-              variant='body'
-              font='roboto'
-              className='text-sm'
-              key={item.name}
-            >
+            <Typography variant='body' className='text-sm' key={item.name}>
               {activeItems[i].isActive && item.description}
             </Typography>
           )

@@ -1,8 +1,10 @@
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { BackButton } from '@/common/components/BackButton/BackButton'
+import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
+import Link from 'next/link'
 
 import { fetchLiteratureItem } from '../api/fetchLiteratureItem'
 
@@ -19,36 +21,18 @@ export async function LiteratureDetailPage({
   if (!item) {
     return (
       <Section color='white'>
-        <Typography variant='h1' font='roboto'>
-          Материал не найден
-        </Typography>
-        <LinkComponent
-          href='/literature'
-          icon='arrow-left'
-          text='Назад'
-          color='foreground'
-          className='self-start'
-          variant='icon-left'
-        />
+        <Typography variant='h1'>Материал не найден</Typography>
+        <BackButton className='self-start' />
       </Section>
     )
   }
 
   return (
     <Section className='max-w-250' color='white'>
-      <LinkComponent
-        href='/literature'
-        icon='arrow-left'
-        text='Назад'
-        color='foreground'
-        className='self-start'
-        variant='icon-left'
-      />
+      <BackButton className='self-start' />
       <div className='flex flex-col gap-6 lg:flex-row'>
         <div className='flex flex-col gap-3'>
-          <Typography variant='h1' font='roboto'>
-            {item.title}
-          </Typography>
+          <Typography variant='h1'>{item.title}</Typography>
           {item.subtitle && (
             <Typography variant='body' className='text-gray-500'>
               {item.subtitle}
@@ -65,7 +49,7 @@ export async function LiteratureDetailPage({
             <Typography variant='body'>{item.description}</Typography>
           )}
           {item.is_approved && (
-            <Typography variant='caption' className='text-primary'>
+            <Typography variant='body' className='text-primary'>
               Одобрено конференцией
             </Typography>
           )}
@@ -74,18 +58,20 @@ export async function LiteratureDetailPage({
             <Typography variant='body'>
               Для покупки контактируйте довереное лицо: Анатолий Б.
             </Typography>
-            <LinkComponent
-              text={'+491701295235'}
-              icon='phone'
+            <Link
               href='tel:+491701295235'
-              variant={'icon-left'}
-            />
-            <LinkComponent
-              text={'secretarymaraa@gmail.com'}
-              href={'mailto:secretarymaraa@gmail.com'}
-              icon='email'
-              variant={'icon-left'}
-            />
+              className='text-contrast flex flex-row items-center gap-4'
+            >
+              <Icon icon='phone' />
+              +491701295235
+            </Link>
+            <Link
+              href='mailto:secretarymaraa@gmail.com'
+              className='text-contrast flex flex-row items-center gap-4'
+            >
+              <Icon icon='email' />
+              secretarymaraa@gmail.com
+            </Link>
           </div>
         </div>
         <div className='w-full lg:max-w-xs'>

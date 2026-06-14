@@ -20,9 +20,7 @@ export async function LiteraturePage() {
   return (
     <>
       <Section className='max-w-200' color='white'>
-        <Typography variant='h1' font='roboto'>
-          {page?.title ?? 'Литература'}
-        </Typography>
+        <Typography variant='h1'>{page?.title ?? 'Литература'}</Typography>
         <RichTextPreview htmlContent={page?.text ?? ''} />
       </Section>
       <Section color='white' className='gap-10 lg:pb-12'>

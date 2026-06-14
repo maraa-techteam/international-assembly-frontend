@@ -3,10 +3,10 @@
 import { Button } from '@/common/components/Button/Button'
 import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
+import Link from 'next/link'
 import { useState } from 'react'
 
 import { quizQuestions } from '../data/questions'
@@ -66,9 +66,7 @@ export function IsAaForMePage({
     <Section color='white' className='max-w-300 items-start gap-6'>
       {quizState === 'intro' && (
         <>
-          <Typography variant='h1' font='roboto'>
-            {title}
-          </Typography>
+          <Typography variant='h1'>{title}</Typography>
           <div className='flex flex-col gap-4'>
             <RichTextPreview htmlContent={text} />
           </div>
@@ -79,7 +77,7 @@ export function IsAaForMePage({
             className='group w-full gap-3 lg:max-w-75'
             onClick={startQuiz}
           >
-            <Typography variant='caption' className='font-medium' font='roboto'>
+            <Typography variant='body' className='font-medium'>
               Начать
             </Typography>
             <Icon
@@ -94,7 +92,7 @@ export function IsAaForMePage({
       {quizState === 'quiz' && (
         <>
           <div className='flex w-full items-center justify-between gap-4'>
-            <Typography variant='caption' className='font-medium'>
+            <Typography variant='body' className='font-medium'>
               Вопрос {currentQuestion + 1}/{totalQuestions}
             </Typography>
             <div className='flex gap-2'>
@@ -117,9 +115,7 @@ export function IsAaForMePage({
             </div>
           </div>
 
-          <Typography variant='h2' font='roboto'>
-            {question.question}
-          </Typography>
+          <Typography variant='h2'>{question.question}</Typography>
 
           <Typography variant='body'>{question.description}</Typography>
 
@@ -148,9 +144,7 @@ export function IsAaForMePage({
 
       {quizState === 'result' && (
         <>
-          <Typography variant='h1' font='roboto'>
-            Подходит ли мне АА?
-          </Typography>
+          <Typography variant='h1'>Подходит ли мне АА?</Typography>
 
           <div className='flex flex-col gap-4'>
             <Typography variant='body'>
@@ -180,14 +174,13 @@ export function IsAaForMePage({
               показать вам, как мы научились жить без выпивки «по одному дню».
             </Typography>
           </div>
-          <LinkComponent
-            icon='telegram'
-            isUnderlined
-            color='primary'
-            text='Связаться с сообществом'
+          <Link
             href='https://t.me/@QSAAbot'
-            variant='icon-left'
-          />
+            className='text-primary flex flex-row items-center gap-4 underline'
+          >
+            <Icon icon='telegram' />
+            Связаться с сообществом
+          </Link>
           <Grid as='nav' className='lg:flex lg:flex-row'>
             <Button
               className='focus:bg-light-blue active:bg-light-blue'

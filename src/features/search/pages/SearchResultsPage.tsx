@@ -1,4 +1,4 @@
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
+import { BackButton } from '@/common/components/BackButton/BackButton'
 import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
 import { fetchSearchResults } from '@/features/search/api/fetchSearchResults'
@@ -27,28 +27,19 @@ export async function SearchResultsPage({
     services.length > 0
   return (
     <Section color='white'>
-      <LinkComponent
-        href='/groups'
-        icon='arrow-left'
-        text='Назад'
-        color='foreground'
-        className='self-start'
-        variant='icon-left'
-      />
-      <Typography variant='h1' font='roboto'>
+      <BackButton className='self-start' />
+      <Typography variant='h1'>
         Результаты поиска <span className='text-primary'>{query}</span>
       </Typography>
       {!hasResults ? (
-        <Typography variant='body' font='roboto'>
+        <Typography variant='body'>
           По вашему запросу ничего не найдено.
         </Typography>
       ) : (
         <div className='flex flex-col gap-12'>
           {articles.length > 0 && (
             <div className='flex flex-col gap-4'>
-              <Typography variant='h2' font='roboto'>
-                Статьи
-              </Typography>
+              <Typography variant='h2'>Статьи</Typography>
               <div className='flex flex-col gap-8'>
                 {articles.map((article) => (
                   <SearchResultCard
@@ -62,9 +53,7 @@ export async function SearchResultsPage({
           )}
           {groups.length > 0 && (
             <div className='flex flex-col gap-4'>
-              <Typography variant='h2' font='roboto'>
-                Группы
-              </Typography>
+              <Typography variant='h2'>Группы</Typography>
               <div className='divide-light-blue flex flex-col gap-8 divide-y'>
                 {groups.map((group) => (
                   <SearchGroupResultCard
@@ -78,9 +67,7 @@ export async function SearchResultsPage({
           )}
           {literature.length > 0 && (
             <div className='flex flex-col gap-4'>
-              <Typography variant='h2' font='roboto'>
-                Литература
-              </Typography>
+              <Typography variant='h2'>Литература</Typography>
               <div className='flex flex-col gap-8'>
                 {literature.map((item) => (
                   <SearchResultCard
@@ -96,9 +83,7 @@ export async function SearchResultsPage({
           )}
           {services.length > 0 && (
             <div className='flex flex-col gap-4'>
-              <Typography variant='h2' font='roboto'>
-                Служения
-              </Typography>
+              <Typography variant='h2'>Служения</Typography>
               <div className='divide-light-blue flex flex-col gap-8 divide-y'>
                 {services.map((service) => (
                   <SearchServiceResultCard

@@ -41,13 +41,27 @@ const mockHeaderData = [
 beforeEach(() => {
   mockPathname = '/'
   mockRouterPush.mockClear()
+  Object.defineProperty(window, 'innerWidth', {
+    writable: true,
+    configurable: true,
+    value: 375,
+  })
+  Object.defineProperty(window, 'matchMedia', {
+    writable: true,
+    value: jest.fn((query) => ({
+      matches: window.innerWidth < 768,
+      media: query,
+      addEventListener: jest.fn(),
+      removeEventListener: jest.fn(),
+    })),
+  })
 })
 
 describe('Header', () => {
   it('renders navigation items', () => {
     render(<Header headerData={mockHeaderData} />)
 
-    const nav = screen.getByRole('navigation', { name: 'Основная навигация' })
+    const nav = screen.getByLabelText('Мобильное меню')
     expect(nav).toBeInTheDocument()
   })
 

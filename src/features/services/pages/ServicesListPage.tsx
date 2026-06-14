@@ -12,9 +12,7 @@ export async function ServicesListPage() {
 
   return (
     <Section color='white' className='w-full lg:max-w-250 lg:pb-12'>
-      <Typography variant='h1' font='roboto'>
-        {pageData[0]?.title}
-      </Typography>
+      <Typography variant='h1'>{pageData[0]?.title}</Typography>
       <RichTextPreview
         htmlContent={pageData[0]?.text}
         className='mt-4 lg:max-w-200'

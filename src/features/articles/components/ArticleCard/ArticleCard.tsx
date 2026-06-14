@@ -50,11 +50,10 @@ export function ArticleCard({
           <Typography
             variant={isHighlighted ? 'h2' : 'h3'}
             className={cn('line-clamp-2')}
-            font='roboto'
           >
             {title}
           </Typography>
-          <Typography variant='body' className='line-clamp-3' font='roboto'>
+          <Typography variant='body' className='line-clamp-3'>
             {perex}
           </Typography>
         </div>

@@ -1,5 +1,5 @@
+import { BackButton } from '@/common/components/BackButton/BackButton'
 import { Grid } from '@/common/components/Grid/Grid'
-import { LinkComponent } from '@/common/components/LinkComponent/LinkComponent'
 import { Pagination } from '@/common/components/Pagination/Pagination'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
@@ -27,17 +27,8 @@ export async function LiteratureCategoryPage({
 
   return (
     <Section color='white'>
-      <LinkComponent
-        href='/literature'
-        icon='arrow-left'
-        text='Назад'
-        color='foreground'
-        className='self-start'
-        variant='icon-left'
-      />
-      <Typography variant='h1' font='roboto'>
-        {label}
-      </Typography>
+      <BackButton className='self-start' />
+      <Typography variant='h1'>{label}</Typography>
       {totalCount === 0 ? (
         <Typography variant='body' className='text-gray-500'>
           В этой категории пока нет материалов.

@@ -59,9 +59,8 @@ export function NavItem({
       className={cn(baseClasses)}
     >
       <Typography
-        variant='caption'
+        variant='body'
         className='lg:group-hover:text-foreground font-medium group-hover:text-white lg:font-normal'
-        font='roboto'
       >
         {name}
       </Typography>
