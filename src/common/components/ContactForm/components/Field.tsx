@@ -15,7 +15,6 @@ export const errorInputClasses =
   'border-red-500/20 focus:border-red-500/20 focus:ring-red-500/20'
 
 export function Field({ id, variant, registration, error }: Props) {
-  const Component = variant === 'message' ? 'textarea' : 'input'
   const label =
     variant === 'name'
       ? 'Ваше имя'
@@ -29,14 +28,25 @@ export function Field({ id, variant, registration, error }: Props) {
       <label className='sr-only' htmlFor={id}>
         {label}
       </label>
-      <Component
-        id={id}
-        type='text'
-        placeholder={label}
-        className={cn(inputClasses, error && errorInputClasses)}
-        {...registration}
-      />
+      {variant === 'message' ? (
+        <textarea
+          id={id}
+          rows={5}
+          placeholder={label}
+          className={cn(inputClasses, 'resize-none', error && errorInputClasses)}
+          {...registration}
+        />
+      ) : (
+        <input
+          id={id}
+          type={variant === 'email' ? 'email' : 'text'}
+          placeholder={label}
+          className={cn(inputClasses, error && errorInputClasses)}
+          {...registration}
+        />
+      )}
       {error && <span className='text-sm text-red-400'>{error}</span>}
     </div>
   )
+
 }
