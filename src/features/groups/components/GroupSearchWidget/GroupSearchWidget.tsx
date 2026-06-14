@@ -73,13 +73,12 @@ export function GroupSearchWidget({
       }
     }
     const query = params.toString()
-    router.push(query ? `/groups?${query}` : '/groups')
+    router.push(query ? `groups/${pathname}?${query}` : `groups/${pathname}`)
+  }
 
   return (
     <form
-      action={`groups/${pathname}`}
-      method='get'
-      id='groups-filter'
+      action='/groups'
       onSubmit={handleSubmit}
       className={cn(
         'bg-light-blue flex w-full flex-col gap-4 p-4 lg:mx-0 lg:rounded-2xl',
