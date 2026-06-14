@@ -28,7 +28,9 @@ export default async function Page(page: PageProps) {
               href={page.additional_link.href}
               className='text-primary flex flex-row items-center gap-4 underline'
             >
-              <Icon icon={page.additional_link.icon} />
+              {page.additional_link.icon && (
+                <Icon icon={page.additional_link.icon} />
+              )}
               {page.additional_link.text}
             </Link>
           )}
