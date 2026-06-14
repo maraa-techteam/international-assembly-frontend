@@ -33,7 +33,11 @@ export function Field({ id, variant, registration, error }: Props) {
           id={id}
           rows={5}
           placeholder={label}
-          className={cn(inputClasses, 'resize-none', error && errorInputClasses)}
+          className={cn(
+            inputClasses,
+            'resize-none',
+            error && errorInputClasses,
+          )}
           {...registration}
         />
       ) : (
@@ -48,5 +52,4 @@ export function Field({ id, variant, registration, error }: Props) {
       {error && <span className='text-sm text-red-400'>{error}</span>}
     </div>
   )
-
 }
