@@ -73,7 +73,7 @@ export function GroupSearchWidget({
       }
     }
     const query = params.toString()
-    router.push(query ? `groups/?${query}` : `groups/`)
+    router.push(query ? `groups/?${query}` : 'groups/')
   }
 
   return (
