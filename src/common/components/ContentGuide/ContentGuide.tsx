@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/common/components/Button/Button'
-import { SecondTierNavigationType } from '@/common/components/Header/data'
+import type { SecondTierNavigationType } from '@/common/components/Header/data'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Typography } from '@/common/components/Typography/Typography'
 import Link from 'next/link'
