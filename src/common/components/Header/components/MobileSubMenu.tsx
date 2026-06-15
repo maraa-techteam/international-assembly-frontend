@@ -1,12 +1,13 @@
 import { Icon } from '@/common/components/Icon/Icon'
 import { Typography } from '@/common/components/Typography/Typography'
-import { TransformedSecondTierNavigationType } from '@/common/types/SecondTierNavigation'
 import { cn } from '@/common/utils/cn'
 import Link from 'next/link'
 
+import { SecondTierNavigationType } from '../data'
+
 type MobileSubMenuPropsType = {
   isActive: boolean
-  activeItems: TransformedSecondTierNavigationType
+  activeItems: SecondTierNavigationType[]
   toggleSelect: () => void
   onNavigate: (href: string) => void
 }

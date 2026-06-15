@@ -1,4 +1,3 @@
-import { TransformedNavigationType } from '@/common/types/Navigation'
 import { Socials } from '@/common/types/Socials'
 
 export type FooterNavItemType = {
@@ -12,6 +11,6 @@ export type FooterNavItemType = {
 }
 
 export type FooterType = {
-  footerData: TransformedNavigationType[]
+  footerData: FooterNavItemType[]
   socials: Socials[]
 }
