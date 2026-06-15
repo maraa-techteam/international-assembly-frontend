@@ -1,29 +1,28 @@
 'use client'
 
+import { Button } from '@/common/components/Button/Button'
 import { DesktopSubMenu } from '@/common/components/Header/components/DesktopSubMenu'
 import { MobileSubMenu } from '@/common/components/Header/components/MobileSubMenu'
 import { NavItem } from '@/common/components/Header/components/NavItem'
+import { headerNavigationData } from '@/common/components/Header/data'
 import { Icon } from '@/common/components/Icon/Icon'
 import { SearchBar } from '@/common/components/SearchBar/SearchBar'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { useIsMobile } from '@/common/hooks/useMobile'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
-import { TransformedNavigationType } from '@/common/types/Navigation'
 import { cn } from '@/common/utils/cn'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 
-import { Button } from '../Button/Button'
-
-type HeaderProps = { headerData: TransformedNavigationType[] }
+type HeaderProps = { headerData: typeof headerNavigationData }
 
 export function Header({ headerData }: HeaderProps) {
   const [isSearchActive, setIsSearchActive] = useState<boolean>(false)
   const [isMobileMenuActive, setIsMobileMenuActive] = useState<boolean>(false)
   const [navigation, setNavigation] =
-    useState<TransformedNavigationType[]>(headerData)
+    useState<typeof headerNavigationData>(headerData)
 
   const [hidden, setHidden] = useState(false)
 

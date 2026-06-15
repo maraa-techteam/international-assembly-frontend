@@ -1,0 +1,142 @@
+export type SecondTierNavigationType = {
+  name: string
+  href: string
+  description: string
+  isFrequentlyVisited: boolean
+}
+
+export type NavigationType = {
+  name: string
+  href: string
+  isActive: boolean
+  subNav: SecondTierNavigationType[]
+}
+
+const aboutSubNav: SecondTierNavigationType[] = [
+  {
+    name: 'Что такое МА? ',
+    href: '/about-international-assembly',
+    description:
+      'Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных  Алкоголиков – это самостоятельная структура обслуживания АА, состоящая из представителей отдельных групп АА и региональных комитетов совместно с постоянно  действующим комитетом (ПКМА',
+    isFrequentlyVisited: false,
+  },
+  {
+    name: 'Новости и события',
+    href: '/news-and-events',
+    description:
+      'На этой странице доступны новости и события из мира Международной Ассамблеи Общего Обслуживания Русскоязычных АА.',
+    isFrequentlyVisited: false,
+  },
+  {
+    name: 'Полезные ссылки',
+    href: '/useful-links',
+    description:
+      'На этой странице собраны полезные ссылки для русскоязычного сообщества Анонимных Алкоголиков. Здесь вы найдете официальные ресурсы АА, сайты служб и комитетов, материалы о программе «Двенадцать Шагов» и «Двенадцать Традиций».',
+    isFrequentlyVisited: false,
+  },
+  {
+    name: 'Добровольное пожертвование',
+    href: '/contributions',
+    description:
+      'Добровольные пожертвования являются важной частью поддержки служения в сообществе Анонимных Алкоголиков. Благодаря вкладам членов сообщества становится возможной работа служб, проведение мероприятий, поддержка информационных ресурсов и развития.',
+    isFrequentlyVisited: false,
+  },
+  {
+    name: 'Контакты',
+    href: '/contacts',
+    description:
+      'На этой странице вы найдете контактную информацию Международной Ассамблеи по Общему Обслуживанию русскоязычных Анонимных Алкоголиков.',
+    isFrequentlyVisited: true,
+  },
+  {
+    name: 'Для профессионалов',
+    href: '/to-professionals',
+    description:
+      'Этот раздел предназначен для специалистов, которые в своей профессиональной деятельности сталкиваются с проблемой алкоголизма и работают с людьми, нуждающимися в поддержке и выздоровлении.',
+    isFrequentlyVisited: false,
+  },
+]
+
+const newcomersSubNav: SecondTierNavigationType[] = [
+  {
+    name: 'Начать путь',
+    href: '/start-the-journey',
+    description: 'Ответы на самые частые вопросы новичков и членов АА.',
+    isFrequentlyVisited: true,
+  },
+  {
+    name: 'Что такое АА?',
+    href: '/about-aa',
+    description:
+      'Анонимные Алкоголики® - это Содружество, объединяющее мужчин и женщин,  которые делятся друг с другом своим опытом, силами и надеждами с целью  помочь себе и другим избавиться от алкоголизма.',
+    isFrequentlyVisited: true,
+  },
+  {
+    name: 'Ответы на вопросы',
+    href: '/faq',
+    description: 'Ответы на самые частые вопросы новичков и членов АА.',
+    isFrequentlyVisited: false,
+  },
+  {
+    name: 'Подходит ли мне АА?',
+    href: '/is-aa-for-me',
+    description:
+      'Мы же пришли в АА потому что, в конце концов, отказались от попыток  контролировать свою выпивку. Нам очень не хотелось признать тот факт что мы никогда не сможем пить «нормально».',
+    isFrequentlyVisited: true,
+  },
+]
+
+const groupsSubNav: SecondTierNavigationType[] = [
+  {
+    name: 'О группах',
+    href: '/about-groups',
+    description:
+      'Подробная информация о том, что такое группы и зачем они нужны.',
+    isFrequentlyVisited: true,
+  },
+  {
+    name: 'Найти группу',
+    href: '/groups',
+    description:
+      'Выберите страну, формат встречи — онлайн, офлайн или гибрид — и день недели, чтобы найти подходящую группу Анонимных Алкоголиков. Используйте фильтры, чтобы быстрее подобрать собрание в удобное для вас время и в нужном формате.',
+    isFrequentlyVisited: false,
+  },
+]
+
+export const headerNavigationData: NavigationType[] = [
+  { name: 'О нас', href: '/', isActive: false, subNav: aboutSubNav },
+  { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
+  {
+    name: 'Группы АА',
+    href: '/about-groups',
+    isActive: false,
+    subNav: groupsSubNav,
+  },
+  { name: 'Литература', href: '/literature', isActive: false, subNav: [] },
+  { name: 'Служения', href: '/services', isActive: false, subNav: [] },
+]
+
+export const footerNavigationData: NavigationType[] = [
+  { name: 'О нас', href: '/', isActive: false, subNav: aboutSubNav },
+  { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
+  {
+    name: 'Группы АА',
+    href: '/about-groups',
+    isActive: false,
+    subNav: groupsSubNav,
+  },
+  {
+    name: 'Контакты',
+    href: '/',
+    isActive: false,
+    subNav: [
+      {
+        name: 'Написать админу',
+        href: '/contacts',
+        description:
+          'Здесь вы сможете оставить вопрос или предложение админу сайта.',
+        isFrequentlyVisited: false,
+      },
+    ],
+  },
+]
