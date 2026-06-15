@@ -1,14 +1,16 @@
-import { getNavigationData } from '@/common/api/fetchNavigation'
 import { getSocials } from '@/common/api/fetchSocials'
 import { Footer } from '@/common/components/Footer/Footer'
 import { Header } from '@/common/components/Header/Header'
+import {
+  footerNavigationData,
+  headerNavigationData,
+} from '@/common/components/Header/data'
 import { Layout } from '@/common/components/Layout/Layout'
 import { cn } from '@/common/utils/cn'
+import '@/globals.css'
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Slab } from 'next/font/google'
 import NextTopLoader from 'nextjs-toploader'
-
-import '../globals.css'
 
 const robotoSlab = Roboto_Slab({
   variable: '--font-roboto-slab',
@@ -35,21 +37,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const navigationData = await getNavigationData()
   const socials = await getSocials()
-  const transformedNavigationData = navigationData.map((item) => {
-    return {
-      ...item,
-      isActive: false,
-    }
-  })
-
-  const headerData = transformedNavigationData.filter(
-    (item) => item.showInHeader,
-  )
-  const footerData = transformedNavigationData.filter(
-    (item) => item.showInFooter,
-  )
   return (
     <html lang='ru'>
       <body
@@ -66,9 +54,9 @@ export default async function RootLayout({
           initialPosition={0.08}
           showSpinner={false}
         />
-        <Header headerData={headerData} />
+        <Header headerData={headerNavigationData} />
         <Layout>{children}</Layout>
-        <Footer footerData={footerData} socials={socials} />
+        <Footer footerData={footerNavigationData} socials={socials} />
       </body>
     </html>
   )

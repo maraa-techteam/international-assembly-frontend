@@ -4,10 +4,12 @@ import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { literatureCategorySlugs } from '../../utils/literature.utils'
 import { LiteratureCardType } from './LiteratureCard.type'
 
 export function LiteratureCard({
   slug,
+  item_type,
   title,
   subtitle,
   price,
@@ -15,9 +17,10 @@ export function LiteratureCard({
   cover_image,
   className,
 }: LiteratureCardType) {
+  const categorySlug = literatureCategorySlugs[item_type]
   return (
     <Link
-      href={`/literature/${slug}`}
+      href={`/literature/${categorySlug}/${slug}`}
       className={cn(
         'border-primary-grey flex flex-col gap-3 rounded-lg border p-4 shadow-md transition-shadow hover:shadow-lg',
         className,

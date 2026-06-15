@@ -17,8 +17,6 @@ const mockFooterData: TransformedNavigationType[] = [
       },
     ],
     isActive: false,
-    showInFooter: true,
-    showInHeader: true,
   },
 
   {
@@ -39,8 +37,6 @@ const mockFooterData: TransformedNavigationType[] = [
       },
     ],
     isActive: false,
-    showInFooter: true,
-    showInHeader: true,
   },
 ]
 
