@@ -15,6 +15,7 @@ export function ContentGuide({ data }: ContentGuideProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeItem = data[activeIndex]
 
+  if (!activeItem) return null
   return (
     <div className='flex h-full min-h-75 w-full flex-col justify-between gap-4 lg:gap-6'>
       <div className='flex w-full snap-x snap-mandatory flex-row gap-4 overflow-x-auto'>
