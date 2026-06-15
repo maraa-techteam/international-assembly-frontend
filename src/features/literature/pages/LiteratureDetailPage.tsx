@@ -9,13 +9,12 @@ import Link from 'next/link'
 import { fetchLiteratureItem } from '../api/fetchLiteratureItem'
 
 type LiteratureDetailPageProps = {
-  params: Promise<{ slug: string }>
+  slug: string
 }
 
 export async function LiteratureDetailPage({
-  params,
+  slug,
 }: LiteratureDetailPageProps) {
-  const { slug } = await params
   const item = await fetchLiteratureItem(slug)
 
   if (!item) {
