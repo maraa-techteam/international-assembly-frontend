@@ -1,9 +1,9 @@
-export type LiteratureItemType =
-  | 'book'
-  | 'brochure'
-  | 'booklet'
-  | 'leaflet'
-  | 'workbook'
+export type LiteratureCategory =
+  | 'books'
+  | 'brochures'
+  | 'booklets'
+  | 'leaflets'
+  | 'workbooks'
 
 export type LiteratureItem = {
   id: string
@@ -12,7 +12,7 @@ export type LiteratureItem = {
   title: string
   subtitle: string | null
   description: string | null
-  item_type: LiteratureItemType
+  category: LiteratureCategory
   language: string | null
   binding_type: string | null
   page_count: number | null

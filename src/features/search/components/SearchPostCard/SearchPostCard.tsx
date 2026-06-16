@@ -6,18 +6,16 @@ import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { SearchResultCardType } from './SearchResultCard.type'
+import { SearchPostCardProps } from './SearchPostCard.type'
 
-type SearchResultCardProps = SearchResultCardType
-
-export function SearchResultCard({
+export function SearchPostCard({
   title,
   image,
   perex,
   url,
   date_created,
   className,
-}: SearchResultCardProps) {
+}: SearchPostCardProps) {
   return (
     <Link
       href={url}

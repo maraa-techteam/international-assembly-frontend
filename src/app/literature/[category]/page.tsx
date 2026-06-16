@@ -1,5 +1,5 @@
 import { LiteratureCategoryPage } from '@/features/literature/pages/LiteratureCategoryPage'
-import { LiteratureItemType } from '@/features/literature/types/LiteratureItem.type'
+import { LiteratureCategory } from '@/features/literature/types/LiteratureItem.type'
 import {
   literatureCategoryLabels,
   literatureCategorySlugs,
@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 // Invert literatureCategorySlugs at module level: { books: 'book', ... }
 const slugToType = Object.fromEntries(
   Object.entries(literatureCategorySlugs).map(([type, slug]) => [slug, type]),
-) as Record<string, LiteratureItemType>
+) as Record<string, LiteratureCategory>
 
 export async function generateMetadata({
   params,

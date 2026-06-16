@@ -1,26 +1,26 @@
-import { LiteratureItemType } from '../types/LiteratureItem.type'
+import { LiteratureCategory } from '../types/LiteratureItem.type'
 
-export const literatureItemTypes: LiteratureItemType[] = [
-  'book',
-  'brochure',
-  'booklet',
-  'leaflet',
-  'workbook',
+export const LiteratureCategorys: LiteratureCategory[] = [
+  'books',
+  'brochures',
+  'booklets',
+  'leaflets',
+  'workbooks',
 ]
 
-export const literatureCategoryLabels: Record<LiteratureItemType, string> = {
-  book: 'Книги',
-  brochure: 'Брошюры',
-  booklet: 'Буклеты',
-  leaflet: 'Флаеры',
-  workbook: 'Рабочие тетради',
+export const literatureCategoryLabels: Record<LiteratureCategory, string> = {
+  books: 'Книги',
+  brochures: 'Брошюры',
+  booklets: 'Буклеты',
+  leaflets: 'Флаеры',
+  workbooks: 'Рабочие тетради',
 }
 
 /** URL slug for each item type, e.g. book → "books" */
-export const literatureCategorySlugs: Record<LiteratureItemType, string> = {
-  book: 'books',
-  brochure: 'brochures',
-  booklet: 'booklets',
-  leaflet: 'leaflets',
-  workbook: 'workbooks',
+export const literatureCategorySlugs: Record<LiteratureCategory, string> = {
+  books: 'books',
+  brochures: 'brochures',
+  booklets: 'booklets',
+  leaflets: 'leaflets',
+  workbooks: 'workbooks',
 }

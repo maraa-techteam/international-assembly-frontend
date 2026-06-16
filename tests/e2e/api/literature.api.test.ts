@@ -32,7 +32,7 @@ test.describe('Literature API', () => {
     const response = await request.get(`${BASE_URL}/items/literature_items`, {
       params: {
         fields:
-          'id,slug,title,subtitle,item_type,language,author,cover_image,price,currency',
+          'id,slug,title,subtitle,category,language,author,cover_image,price,currency',
         limit: '5',
       },
     })
@@ -75,7 +75,7 @@ test.describe('Literature API', () => {
         params: {
           'filter[slug][_eq]': slug,
           fields:
-            'id,slug,isbn,title,subtitle,description,item_type,language,binding_type,page_count,price,currency,author,cover_image',
+            'id,slug,isbn,title,subtitle,description,category,language,binding_type,page_count,price,currency,author,cover_image',
         },
       })
 
@@ -110,7 +110,7 @@ test.describe('Literature API', () => {
     expect(json.data.length).toBe(0)
   })
 
-  test('literature_items collection supports item_type filter', async ({
+  test('literature_items collection supports category filter', async ({
     request,
   }) => {
     test.skip(
@@ -120,8 +120,8 @@ test.describe('Literature API', () => {
 
     const response = await request.get(`${BASE_URL}/items/literature_items`, {
       params: {
-        'filter[item_type][_eq]': 'book',
-        fields: 'id,slug,title,item_type',
+        'filter[category][_eq]': 'book',
+        fields: 'id,slug,title,category',
         limit: '5',
       },
     })
@@ -131,7 +131,7 @@ test.describe('Literature API', () => {
     expect(json.data).toBeDefined()
     expect(Array.isArray(json.data)).toBe(true)
     if (json.data.length > 0) {
-      expect(json.data[0]).toHaveProperty('item_type')
+      expect(json.data[0]).toHaveProperty('category')
     }
   })
 
