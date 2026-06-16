@@ -71,7 +71,7 @@ export async function SearchResultsPage({
               <div className='flex flex-col gap-8'>
                 {literature.map((item) => (
                   <SearchResultCard
-                    url={`/literature/${item.slug}`}
+                    url={`/literature/${item.category}/${item.slug}`}
                     perex={item.description}
                     image={item.cover_image}
                     key={item.id}
