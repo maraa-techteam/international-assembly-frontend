@@ -5,12 +5,12 @@ import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { fetchLiteratureItemsByType } from '@/features/literature/api/fetchLiteratureItemsByType'
 import { LiteratureCard } from '@/features/literature/components/LiteratureCard/LiteratureCard'
-import { LiteratureItemType } from '@/features/literature/types/LiteratureItem.type'
+import { LiteratureCategory } from '@/features/literature/types/LiteratureItem.type'
 import { literatureCategoryLabels } from '@/features/literature/utils/literature.utils'
 import { SearchParams } from 'next/dist/server/request/search-params'
 
 type LiteratureCategoryPageProps = {
-  type: LiteratureItemType
+  type: LiteratureCategory
   searchParams: SearchParams
 }
 

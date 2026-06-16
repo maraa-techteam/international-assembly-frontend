@@ -3,7 +3,7 @@ import { LiteratureItem } from '../../types/LiteratureItem.type'
 export type LiteratureCardType = Pick<
   LiteratureItem,
   | 'slug'
-  | 'item_type'
+  | 'category'
   | 'title'
   | 'subtitle'
   | 'price'

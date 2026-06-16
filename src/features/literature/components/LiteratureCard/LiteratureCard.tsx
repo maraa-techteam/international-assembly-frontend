@@ -9,7 +9,7 @@ import { LiteratureCardType } from './LiteratureCard.type'
 
 export function LiteratureCard({
   slug,
-  item_type,
+  category,
   title,
   subtitle,
   price,
@@ -17,7 +17,7 @@ export function LiteratureCard({
   cover_image,
   className,
 }: LiteratureCardType) {
-  const categorySlug = literatureCategorySlugs[item_type]
+  const categorySlug = literatureCategorySlugs[category]
   return (
     <Link
       href={`/literature/${categorySlug}/${slug}`}

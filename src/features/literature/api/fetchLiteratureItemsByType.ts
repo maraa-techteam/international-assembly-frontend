@@ -3,20 +3,20 @@ import { SearchParams } from 'next/dist/server/request/search-params'
 
 import directus from '../../../common/lib/directus'
 import {
+  LiteratureCategory,
   LiteratureItem,
-  LiteratureItemType,
 } from '../types/LiteratureItem.type'
 
 const PAGE_SIZE = 10
 
 export async function fetchLiteratureItemsByType(
-  type: LiteratureItemType,
+  type: LiteratureCategory,
   params?: SearchParams,
 ): Promise<{ data: LiteratureItem[]; totalCount: number }> {
   const page = params?.page ? parseInt(params.page as string) : 1
   const limit = params?.limit ? parseInt(params.limit as string) : PAGE_SIZE
 
-  const filter = { item_type: { _eq: type } }
+  const filter = { category: { _eq: type } }
 
   try {
     const [raw, countResult] = await Promise.all([
@@ -32,7 +32,7 @@ export async function fetchLiteratureItemsByType(
             'title',
             'subtitle',
             'description',
-            'item_type',
+            'category',
             'language',
             'binding_type',
             'page_count',
@@ -62,7 +62,7 @@ export async function fetchLiteratureItemsByType(
       title: item.title,
       subtitle: item.subtitle ?? null,
       description: item.description ?? null,
-      item_type: item.item_type,
+      category: item.category,
       language: item.language ?? null,
       binding_type: item.binding_type ?? null,
       page_count: item.page_count ?? null,

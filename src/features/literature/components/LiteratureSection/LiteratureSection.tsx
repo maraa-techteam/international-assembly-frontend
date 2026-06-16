@@ -3,8 +3,8 @@ import { Typography } from '@/common/components/Typography/Typography'
 import Link from 'next/link'
 
 import {
+  LiteratureCategory,
   LiteratureItem,
-  LiteratureItemType,
 } from '../../types/LiteratureItem.type'
 import { literatureCategorySlugs } from '../../utils/literature.utils'
 import { LiteratureCard } from '../LiteratureCard/LiteratureCard'
@@ -13,7 +13,7 @@ const MAX_VISIBLE = 4
 
 type LiteratureSectionProps = {
   label: string
-  type: LiteratureItemType
+  type: LiteratureCategory
   items: LiteratureItem[]
 }
 

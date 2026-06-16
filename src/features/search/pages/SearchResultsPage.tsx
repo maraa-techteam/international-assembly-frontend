@@ -5,7 +5,8 @@ import { fetchSearchResults } from '@/features/search/api/fetchSearchResults'
 import { SearchParams } from 'next/dist/server/request/search-params'
 
 import { SearchGroupResultCard } from '../components/SearchGroupResultCard/SearchGroupResultCard'
-import { SearchResultCard } from '../components/SearchResultCard/SearchResultCard'
+import { SearchLiteratureCard } from '../components/SearchLiteratureCard/SearchLiteratureCard'
+import { SearchPostCard } from '../components/SearchPostCard/SearchPostCard'
 import { SearchServiceResultCard } from '../components/SearchServiceResultCard/SearchServiceResultCard'
 
 export async function SearchResultsPage({
@@ -25,6 +26,7 @@ export async function SearchResultsPage({
     groups.length > 0 ||
     literature.length > 0 ||
     services.length > 0
+
   return (
     <Section color='white'>
       <BackButton className='self-start' />
@@ -42,7 +44,7 @@ export async function SearchResultsPage({
               <Typography variant='h2'>Статьи</Typography>
               <div className='flex flex-col gap-8'>
                 {articles.map((article) => (
-                  <SearchResultCard
+                  <SearchPostCard
                     url={`/news-and-events/${article.slug}`}
                     key={article.id}
                     {...article}
@@ -70,10 +72,8 @@ export async function SearchResultsPage({
               <Typography variant='h2'>Литература</Typography>
               <div className='flex flex-col gap-8'>
                 {literature.map((item) => (
-                  <SearchResultCard
+                  <SearchLiteratureCard
                     url={`/literature/${item.category}/${item.slug}`}
-                    perex={item.description}
-                    image={item.cover_image}
                     key={item.id}
                     {...item}
                   />

@@ -57,6 +57,7 @@ export async function fetchSearchResults(query: string): Promise<{
             'author',
             'cover_image',
             'description',
+            'category',
           ],
         }),
       ),
@@ -80,7 +81,6 @@ export async function fetchSearchResults(query: string): Promise<{
         }),
       ),
     ])
-
     return {
       articles: articles as ArticleSearchResult[],
       groups: groups as GroupSearchResult[],

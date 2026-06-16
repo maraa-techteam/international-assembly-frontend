@@ -1,3 +1,5 @@
+import { LiteratureCategory } from '@/features/literature/types/LiteratureItem.type'
+
 export type ArticleSearchResult = {
   id: string
   title: string
@@ -27,6 +29,7 @@ export type LiteratureSearchResult = {
   author?: string | null
   cover_image: string | null
   description?: string | null
+  category: LiteratureCategory
   slug: string
 }
 

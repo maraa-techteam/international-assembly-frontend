@@ -1,8 +1,8 @@
 import { formatDate } from '@/common/utils/dateFormatter'
 import { render, screen } from '@testing-library/react'
 
-import { SearchResultCard } from './SearchResultCard'
-import { SearchResultCardType } from './SearchResultCard.type'
+import { SearchPostCard } from './SearchPostCard'
+import { SearchPostCardProps } from './SearchPostCard.type'
 
 jest.mock('@/common/utils/getImageUrl', () => ({
   getImageUrl: (src: string) => `https://example.com/${src}`,
@@ -23,7 +23,7 @@ jest.mock('next/image', () => ({
   }) => <img src={src} alt={alt} width={width} height={height} />,
 }))
 
-const mockProps: SearchResultCardType = {
+const mockProps: SearchPostCardProps = {
   id: '1',
   title: 'Заголовок результата поиска',
   slug: 'zagolovok-rezultata-poiska',
@@ -33,15 +33,15 @@ const mockProps: SearchResultCardType = {
   url: '/news-and-events/zagolovok-rezultata-poiska',
 }
 
-describe('SearchResultCard component', () => {
+describe('SearchPostCard component', () => {
   it('renders title', () => {
-    render(<SearchResultCard {...mockProps} />)
+    render(<SearchPostCard {...mockProps} />)
 
     expect(screen.getByText('Заголовок результата поиска')).toBeInTheDocument()
   })
 
   it('renders perex text', () => {
-    render(<SearchResultCard {...mockProps} />)
+    render(<SearchPostCard {...mockProps} />)
 
     expect(
       screen.getByText('Краткое описание найденного материала'),
@@ -49,7 +49,7 @@ describe('SearchResultCard component', () => {
   })
 
   it('renders published date', () => {
-    render(<SearchResultCard {...mockProps} />)
+    render(<SearchPostCard {...mockProps} />)
 
     expect(
       screen.getByText(formatDate('2024-01-15T00:00:00.000Z')),
@@ -57,7 +57,7 @@ describe('SearchResultCard component', () => {
   })
 
   it('renders image when image prop is provided', () => {
-    render(<SearchResultCard {...mockProps} />)
+    render(<SearchPostCard {...mockProps} />)
 
     const image = screen.getByAltText('Заголовок результата поиска')
     expect(image).toBeInTheDocument()
@@ -65,13 +65,13 @@ describe('SearchResultCard component', () => {
   })
 
   it('renders placeholder when there is no image', () => {
-    render(<SearchResultCard {...mockProps} image={null} />)
+    render(<SearchPostCard {...mockProps} image={null} />)
 
     expect(screen.getByText('Картинка не найдена')).toBeInTheDocument()
   })
 
   it('links to the correct article page', () => {
-    render(<SearchResultCard {...mockProps} />)
+    render(<SearchPostCard {...mockProps} />)
 
     const link = screen.getByRole('link')
     expect(link).toHaveAttribute(

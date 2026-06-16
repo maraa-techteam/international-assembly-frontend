@@ -6,14 +6,14 @@ import { Typography } from '@/common/components/Typography/Typography'
 import { fetchLiteratureItemsByType } from '../api/fetchLiteratureItemsByType'
 import { LiteratureSection } from '../components/LiteratureSection/LiteratureSection'
 import {
+  LiteratureCategorys,
   literatureCategoryLabels,
-  literatureItemTypes,
 } from '../utils/literature.utils'
 
 export async function LiteraturePage() {
   const [pageData, ...groups] = await Promise.all([
     fetchLiteraturePage(),
-    ...literatureItemTypes.map((type) => fetchLiteratureItemsByType(type)),
+    ...LiteratureCategorys.map((type) => fetchLiteratureItemsByType(type)),
   ])
 
   const page = pageData[0]
@@ -25,7 +25,7 @@ export async function LiteraturePage() {
         <RichTextPreview htmlContent={page?.text ?? ''} />
       </Section>
       <Section color='white' className='gap-10 lg:pb-12'>
-        {literatureItemTypes.map((type, i) => {
+        {LiteratureCategorys.map((type, i) => {
           const { data: items } = groups[i]
           if (items.length === 0) return null
           return (
