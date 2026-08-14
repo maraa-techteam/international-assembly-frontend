@@ -72,13 +72,6 @@ describe('Header', () => {
     expect(logo).toBeInTheDocument()
   })
 
-  it('renders search bar with placeholder', () => {
-    render(<Header headerData={mockHeaderData} />)
-
-    const searchBar = screen.getAllByRole('search')[0]
-    expect(searchBar).toBeInTheDocument()
-  })
-
   it('renders mobile menu toggler only on mobile', () => {
     render(<Header headerData={mockHeaderData} />)
 

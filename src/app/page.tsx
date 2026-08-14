@@ -7,14 +7,10 @@ import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
-import { fetchArticles } from '@/features/articles/api/fetchArticles'
-import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
-import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
-import { GroupSearchWidget } from '@/features/groups/components/GroupSearchWidget/GroupSearchWidget'
+import { isLaunchRoute } from '@/config/launchRoutes'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Suspense } from 'react'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await fetchHomePage()
@@ -29,11 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  const frequentlyVisitedLinks = await getFrequentlyVisitedLinks()
-  const article_cards = await fetchArticles()
-
-  const countries = await fetchGroupCountries()
-  const presence = ['Онлайн', 'Офлайн', 'Гибрид']
+  // The CMS still lists links to sections that are not part of the launch
+  // scope, so drop anything that does not resolve to a live route.
+  const frequentlyVisitedLinks = (await getFrequentlyVisitedLinks()).filter(
+    (link) => isLaunchRoute(link.href),
+  )
   return (
     <>
       <Section
@@ -50,9 +46,9 @@ export default async function Home() {
             size='lg'
             color='primary'
             as='link'
-            href='/groups'
+            href='/start-the-journey'
           >
-            Найти группу
+            Начать путь
           </Button>
           <Button
             variant='contained'
@@ -105,7 +101,7 @@ export default async function Home() {
               size='lg'
               color='primary'
               as='link'
-              href='/about-aa'
+              href='/is-aa-for-me'
             >
               Подходит ли мне АА?
             </Button>
@@ -131,46 +127,6 @@ export default async function Home() {
             priority={false}
           />
         </div>
-      </Section>
-      <div className='bg-primary'>
-        <Section className='mx-auto min-h-100 justify-center' color='primary'>
-          <div className='flex flex-col gap-4'>
-            <div className='flex flex-col gap-2'>
-              <Typography variant='h2'>Поиск русскоязычных групп</Typography>
-              <Typography variant='body'>
-                Найдите русскоязычные группы Анонимных Алкоголиков в вашем
-                городе или онлайн.
-              </Typography>
-            </div>
-            <Suspense>
-              <GroupSearchWidget
-                dropdownOptions={{
-                  country: countries,
-                  presence: presence,
-                }}
-                className='bg-primary max-w-200 p-0'
-              />
-            </Suspense>
-          </div>
-        </Section>
-      </div>
-      <Section className='mx-auto lg:py-12' alignment='center' color='white'>
-        <Typography variant='h2'>Новости и события</Typography>
-        <Grid isScrollable columns={2} gap={6}>
-          {article_cards.slice(0, 2).map((card) => {
-            return (
-              <ArticleCard
-                key={card.id}
-                slug={card.slug}
-                title={card.title}
-                perex={card.perex}
-                image={card.image}
-                date_created={card.date_created}
-                id={card.id}
-              />
-            )
-          })}
-        </Grid>
       </Section>
     </>
   )

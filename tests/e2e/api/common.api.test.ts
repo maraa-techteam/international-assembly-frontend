@@ -81,64 +81,6 @@ test.describe('Common API', () => {
     }
   })
 
-  test('groups_page collection returns valid data', async ({ request }) => {
-    test.skip(
-      !process.env.DIRECTUS_CMS_URL,
-      'DIRECTUS_CMS_URL env var is not set',
-    )
-
-    const response = await request.get(`${BASE_URL}/items/groups_page`, {
-      params: { fields: 'meta_title,meta_description,title' },
-    })
-
-    expect(response.ok()).toBeTruthy()
-    const json = await response.json()
-    expect(json.data).toBeDefined()
-    expect(Array.isArray(json.data)).toBe(true)
-  })
-
-  test('news_and_events_page collection returns valid data', async ({
-    request,
-  }) => {
-    test.skip(
-      !process.env.DIRECTUS_CMS_URL,
-      'DIRECTUS_CMS_URL env var is not set',
-    )
-
-    const response = await request.get(
-      `${BASE_URL}/items/news_and_events_page`,
-      {
-        params: { fields: 'meta_title,meta_description,title,text' },
-      },
-    )
-
-    expect(response.ok()).toBeTruthy()
-    const json = await response.json()
-    expect(json.data).toBeDefined()
-    expect(Array.isArray(json.data)).toBe(true)
-  })
-
-  test('about_groups_page collection returns valid data', async ({
-    request,
-  }) => {
-    test.skip(
-      !process.env.DIRECTUS_CMS_URL,
-      'DIRECTUS_CMS_URL env var is not set',
-    )
-
-    const response = await request.get(`${BASE_URL}/items/about_groups_page`, {
-      params: {
-        fields:
-          'meta_title,meta_description,title,text,image,additional_link,button_left,button_right,faq',
-      },
-    })
-
-    expect(response.ok()).toBeTruthy()
-    const json = await response.json()
-    expect(json.data).toBeDefined()
-    expect(Array.isArray(json.data)).toBe(true)
-  })
-
   test('to_professionals_page collection returns valid data', async ({
     request,
   }) => {
@@ -156,27 +98,6 @@ test.describe('Common API', () => {
         },
       },
     )
-
-    expect(response.ok()).toBeTruthy()
-    const json = await response.json()
-    expect(json.data).toBeDefined()
-    expect(Array.isArray(json.data)).toBe(true)
-  })
-
-  test('useful_links_page collection returns valid data', async ({
-    request,
-  }) => {
-    test.skip(
-      !process.env.DIRECTUS_CMS_URL,
-      'DIRECTUS_CMS_URL env var is not set',
-    )
-
-    const response = await request.get(`${BASE_URL}/items/useful_links_page`, {
-      params: {
-        fields:
-          'meta_title,meta_description,title,text,image,additional_link,button_left,button_right,rich_text,faq',
-      },
-    })
 
     expect(response.ok()).toBeTruthy()
     const json = await response.json()

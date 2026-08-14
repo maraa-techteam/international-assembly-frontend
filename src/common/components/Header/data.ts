@@ -21,34 +21,6 @@ const aboutSubNav: SecondTierNavigationType[] = [
     isFrequentlyVisited: false,
   },
   {
-    name: 'Новости и события',
-    href: '/news-and-events',
-    description:
-      'На этой странице доступны новости и события из мира Международной Ассамблеи Общего Обслуживания Русскоязычных АА.',
-    isFrequentlyVisited: false,
-  },
-  {
-    name: 'Полезные ссылки',
-    href: '/useful-links',
-    description:
-      'На этой странице собраны полезные ссылки для русскоязычного сообщества Анонимных Алкоголиков. Здесь вы найдете официальные ресурсы АА, сайты служб и комитетов, материалы о программе «Двенадцать Шагов» и «Двенадцать Традиций».',
-    isFrequentlyVisited: false,
-  },
-  {
-    name: 'Добровольное пожертвование',
-    href: '/contributions',
-    description:
-      'Добровольные пожертвования являются важной частью поддержки служения в сообществе Анонимных Алкоголиков. Благодаря вкладам членов сообщества становится возможной работа служб, проведение мероприятий, поддержка информационных ресурсов и развития.',
-    isFrequentlyVisited: false,
-  },
-  {
-    name: 'Контакты',
-    href: '/contacts',
-    description:
-      'На этой странице вы найдете контактную информацию Международной Ассамблеи по Общему Обслуживанию русскоязычных Анонимных Алкоголиков.',
-    isFrequentlyVisited: true,
-  },
-  {
     name: 'Для профессионалов',
     href: '/to-professionals',
     description:
@@ -72,6 +44,13 @@ const newcomersSubNav: SecondTierNavigationType[] = [
     isFrequentlyVisited: true,
   },
   {
+    name: '12 шагов и 12 традиций',
+    href: '/12-steps-12-traditions',
+    description:
+      'Двенадцать Шагов — это программа выздоровления от алкоголизма, а Двенадцать Традиций — принципы, на которых строится единство групп Анонимных Алкоголиков.',
+    isFrequentlyVisited: false,
+  },
+  {
     name: 'Ответы на вопросы',
     href: '/faq',
     description: 'Ответы на самые частые вопросы новичков и членов АА.',
@@ -86,57 +65,12 @@ const newcomersSubNav: SecondTierNavigationType[] = [
   },
 ]
 
-const groupsSubNav: SecondTierNavigationType[] = [
-  {
-    name: 'О группах',
-    href: '/about-groups',
-    description:
-      'Подробная информация о том, что такое группы и зачем они нужны.',
-    isFrequentlyVisited: true,
-  },
-  {
-    name: 'Найти группу',
-    href: '/groups',
-    description:
-      'Выберите страну, формат встречи — онлайн, офлайн или гибрид — и день недели, чтобы найти подходящую группу Анонимных Алкоголиков. Используйте фильтры, чтобы быстрее подобрать собрание в удобное для вас время и в нужном формате.',
-    isFrequentlyVisited: false,
-  },
-]
-
 export const headerNavigationData: NavigationType[] = [
   { name: 'О нас', href: '/', isActive: false, subNav: aboutSubNav },
   { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
-  {
-    name: 'Группы АА',
-    href: '/about-groups',
-    isActive: false,
-    subNav: groupsSubNav,
-  },
-  { name: 'Литература', href: '/literature', isActive: false, subNav: [] },
-  { name: 'Служения', href: '/services', isActive: false, subNav: [] },
 ]
 
 export const footerNavigationData: NavigationType[] = [
   { name: 'О нас', href: '/', isActive: false, subNav: aboutSubNav },
   { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
-  {
-    name: 'Группы АА',
-    href: '/about-groups',
-    isActive: false,
-    subNav: groupsSubNav,
-  },
-  {
-    name: 'Контакты',
-    href: '/',
-    isActive: false,
-    subNav: [
-      {
-        name: 'Написать админу',
-        href: '/contacts',
-        description:
-          'Здесь вы сможете оставить вопрос или предложение админу сайта.',
-        isFrequentlyVisited: false,
-      },
-    ],
-  },
 ]
