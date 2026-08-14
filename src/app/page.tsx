@@ -6,7 +6,6 @@ import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
-import { getImageUrl } from '@/common/utils/getImageUrl'
 import { isLaunchRoute } from '@/config/launchRoutes'
 import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
@@ -82,10 +81,16 @@ export default async function Home() {
           <div className='flex flex-col gap-2'>
             <Typography variant='h2'>Нужна помощь?</Typography>
             <Typography variant='body'>
-              А.А. уже более 80 лет помогает алкоголикам выздороветь. Программа
-              выздоровления АА построена на простом принципе: один алкоголик
-              делится с другим. Если ваше пьянство выходит из-под контроля, АА
-              может помочь.
+              В Анонимных Алкоголиках мы всегда рады прийти на помощь любому
+              алкоголику, который к нам обратится. Прямо сейчас вы можете
+              позвонить по номеру нашей круглосуточной горячей линии или
+              связаться с нами в социальных сетях. В АА Вы всегда найдёте
+              поддержку и понимание!
+            </Typography>
+            <Typography className='font-bold' variant='body'>
+              «Если где-то кто-то в беде, и ему нужна наша помощь, АА всегда
+              будет рядом. И я отвечаю за это». («Декларация ответственности
+              АА», 1965 г.)
             </Typography>
           </div>
           <Link
@@ -118,10 +123,10 @@ export default async function Home() {
         </div>
         <div className='flex h-fit w-full justify-end lg:w-auto'>
           <Image
-            src={getImageUrl('76877722-f746-4213-a78e-020d5f72fb49')}
+            src='/images/need-help.png'
             alt='Нужна помощь?'
-            width={500}
-            height={400}
+            width={1280}
+            height={720}
             sizes='(max-width: 640px) 100vw, 600px'
             className='w-full max-w-md rounded-lg object-contain object-top'
             priority={false}
