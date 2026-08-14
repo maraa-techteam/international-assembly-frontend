@@ -52,3 +52,6 @@ node_modules/
 # IDEs and editors
 /.idea
 .vscode/*
+
+# generated sitemap (emitted by src/app/sitemap.ts at build time)
+/public/sitemap*.xml

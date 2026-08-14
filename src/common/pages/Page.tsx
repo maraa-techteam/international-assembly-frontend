@@ -6,6 +6,7 @@ import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPre
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
+import { isLaunchRoute } from '@/config/launchRoutes'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -13,6 +14,20 @@ import { PageType } from './Page.type'
 
 type PageProps = PageType
 export default async function Page(page: PageProps) {
+  // CTAs and the additional link are authored in the CMS and still point at
+  // sections that are not part of the launch scope, so drop the ones that
+  // would lead to a 404.
+  const buttonLeft = page.button_left?.filter((button) =>
+    isLaunchRoute(button.link),
+  )
+  const buttonRight = page.button_right?.filter((button) =>
+    isLaunchRoute(button.link),
+  )
+  const additionalLink =
+    page.additional_link && isLaunchRoute(page.additional_link.href)
+      ? page.additional_link
+      : undefined
+
   return (
     <>
       <Section
@@ -23,38 +38,36 @@ export default async function Page(page: PageProps) {
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
           <Typography variant='h1'>{page.title}</Typography>
           <RichTextPreview htmlContent={page.text} />
-          {page.additional_link && (
+          {additionalLink && (
             <Link
-              href={page.additional_link.href}
+              href={additionalLink.href}
               className='text-primary flex flex-row items-center gap-4 underline'
             >
-              {page.additional_link.icon && (
-                <Icon icon={page.additional_link.icon} />
-              )}
-              {page.additional_link.text}
+              {additionalLink.icon && <Icon icon={additionalLink.icon} />}
+              {additionalLink.text}
             </Link>
           )}
           <Grid as='nav' className='lg:flex lg:flex-row'>
-            {page.button_left?.length && (
+            {!!buttonLeft?.length && (
               <Button
                 variant='outlined'
                 size='lg'
                 color='primary'
                 as='link'
-                href={page.button_left[0].link}
+                href={buttonLeft[0].link}
               >
-                {page.button_left[0].label}
+                {buttonLeft[0].label}
               </Button>
             )}
-            {page.button_right?.length && (
+            {!!buttonRight?.length && (
               <Button
                 variant='contained'
                 size='lg'
                 color='primary'
                 as='link'
-                href={page.button_right[0].link}
+                href={buttonRight[0].link}
               >
-                {page.button_right[0].label}
+                {buttonRight[0].label}
               </Button>
             )}
           </Grid>

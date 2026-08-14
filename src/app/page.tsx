@@ -8,6 +8,7 @@ import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import { isLaunchRoute } from '@/config/launchRoutes'
+import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -15,13 +16,12 @@ import Link from 'next/link'
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await fetchHomePage()
   const page = pageData[0]
-  return {
-    title: page.meta_title + ' | Международная Ассамблея АА',
-    description: page.meta_description,
-    alternates: {
-      canonical: '/',
-    },
-  }
+  return buildPageMetadata({
+    title: page?.meta_title,
+    description: page?.meta_description,
+    path: '/',
+    fallbackTitle: 'Проблемы с алкоголем? Есть решение',
+  })
 }
 
 export default async function Home() {

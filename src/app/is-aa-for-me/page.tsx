@@ -1,16 +1,17 @@
 import { fetchQuizPage } from '@/common/api/fetchQuizPage'
+import { buildPageMetadata } from '@/config/seo'
 import { IsAaForMePage } from '@/features/quiz/pages/IsAaForMePage'
 import { Metadata } from 'next'
 
 const pageData = await fetchQuizPage()
+
 export async function generateMetadata(): Promise<Metadata> {
-  return {
+  return buildPageMetadata({
     title: pageData[0]?.meta_title,
     description: pageData[0]?.meta_description,
-    alternates: {
-      canonical: '/is-aa-for-me',
-    },
-  }
+    path: '/is-aa-for-me',
+    fallbackTitle: 'Подходит ли мне АА?',
+  })
 }
 
 export default function Page() {

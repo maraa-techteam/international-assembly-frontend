@@ -188,9 +188,9 @@ export function IsAaForMePage({
               color='primary'
               size='lg'
               as='link'
-              href='/groups'
+              href='/about-aa'
             >
-              Найти группу
+              Что такое АА?
             </Button>
             <Button
               variant='contained'

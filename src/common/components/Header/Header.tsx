@@ -203,30 +203,32 @@ export function Header({ headerData }: HeaderProps) {
       </nav>
       {/* Desktop menu */}
       {!isMobile && (
-        <nav aria-label='Основная навигация'>
-          <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
-            {navigation.map((item, i) => {
-              return (
-                <li className='relative' key={item.name}>
-                  <NavItem
-                    isFocusable={true}
-                    href={item.href}
-                    name={item.name}
-                    isActive={item.isActive}
-                    toggleSelect={() => toggleSelect(i)}
-                    subNav={item.subNav}
-                  />
-                  {item.isActive && item.subNav.length > 0 && (
-                    <DesktopSubMenu
-                      onSelect={resetSelect}
-                      navigationData={item.subNav}
+        <div className='flex w-full items-center justify-center'>
+          <nav aria-label='Основная навигация'>
+            <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
+              {navigation.map((item, i) => {
+                return (
+                  <li className='relative' key={item.name}>
+                    <NavItem
+                      isFocusable={true}
+                      href={item.href}
+                      name={item.name}
+                      isActive={item.isActive}
+                      toggleSelect={() => toggleSelect(i)}
+                      subNav={item.subNav}
                     />
-                  )}
-                </li>
-              )
-            })}
-          </ul>
-        </nav>
+                    {item.isActive && item.subNav.length > 0 && (
+                      <DesktopSubMenu
+                        onSelect={resetSelect}
+                        navigationData={item.subNav}
+                      />
+                    )}
+                  </li>
+                )
+              })}
+            </ul>
+          </nav>
+        </div>
       )}
     </header>
   )

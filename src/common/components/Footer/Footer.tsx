@@ -47,7 +47,7 @@ export function Footer({ footerData, socials }: FooterProps) {
         </div>
 
         <nav className='w-full max-w-360' aria-label='Навигация'>
-          <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-between'>
+          <ul className='flex w-full flex-col gap-2 lg:flex-row lg:justify-end lg:gap-8'>
             {footerData.map((item) => (
               <FooterNavItem
                 key={item.name}
