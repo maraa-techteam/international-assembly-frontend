@@ -8,7 +8,7 @@ import { FooterNavItem } from './components/FooterNavItem'
 
 type FooterProps = FooterType
 
-export function Footer({ footerData, socials }: FooterProps) {
+export function Footer({ footerData }: FooterProps) {
   const date = new Date()
 
   return (
@@ -28,20 +28,26 @@ export function Footer({ footerData, socials }: FooterProps) {
           </Link>
           <nav aria-label='Социальные сети'>
             <ul className='flex flex-row items-center justify-center gap-4'>
-              {socials.map((item) => {
-                return (
-                  <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      target='_blank'
-                      aria-label={item.name}
-                      className='flex items-center gap-2 text-white'
-                    >
-                      <Icon icon={item.icon} />
-                    </Link>
-                  </li>
-                )
-              })}
+              <li>
+                <Link
+                  href={'https://www.youtube.com/@МеждународнаяАссамблея'}
+                  target='_blank'
+                  aria-label={'youtube'}
+                  className='flex items-center gap-2 text-white'
+                >
+                  <Icon icon={'youtube'} />
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href={'https://t.me/QSAAbot'}
+                  target='_blank'
+                  aria-label={'telegram'}
+                  className='flex items-center gap-2 text-white'
+                >
+                  <Icon icon={'telegram'} />
+                </Link>
+              </li>
             </ul>
           </nav>
         </div>

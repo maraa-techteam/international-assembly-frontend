@@ -12,5 +12,4 @@ export type FooterNavItemType = {
 
 export type FooterType = {
   footerData: FooterNavItemType[]
-  socials: Socials[]
 }

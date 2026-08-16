@@ -82,7 +82,7 @@ export default async function RootLayout({
         />
         <Header headerData={headerNavigationData} />
         <Layout>{children}</Layout>
-        <Footer footerData={footerNavigationData} socials={socials} />
+        <Footer footerData={footerNavigationData} />
       </body>
     </html>
   )
