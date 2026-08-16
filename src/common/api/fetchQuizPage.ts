@@ -1,13 +1,22 @@
-import { readItems } from '@directus/sdk'
+import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
+import { readItems, withOptions } from '@directus/sdk'
 
 import directus from '../lib/directus'
 
 export async function fetchQuizPage() {
   try {
     const raw = await directus.request(
-      readItems('quiz_page', {
-        fields: ['meta_title', 'meta_description', 'title', 'text'],
-      }),
+      withOptions(
+        readItems('quiz_page', {
+          fields: ['meta_title', 'meta_description', 'title', 'text'],
+        }),
+        {
+          next: {
+            revalidate: CMS_REVALIDATE_SECONDS,
+            tags: ['cms', 'cms:quiz_page'],
+          },
+        },
+      ),
     )
     return raw.map((item) => {
       return {

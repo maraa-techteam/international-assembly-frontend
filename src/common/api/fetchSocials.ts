@@ -1,13 +1,22 @@
-import { readItems } from '@directus/sdk'
+import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
+import { readItems, withOptions } from '@directus/sdk'
 
 import directus from '../lib/directus'
 
 export async function getSocials() {
   try {
     const raw = await directus.request(
-      readItems('social_media', {
-        fields: ['name', 'href', 'icon'],
-      }),
+      withOptions(
+        readItems('social_media', {
+          fields: ['name', 'href', 'icon'],
+        }),
+        {
+          next: {
+            revalidate: CMS_REVALIDATE_SECONDS,
+            tags: ['cms', 'cms:social_media'],
+          },
+        },
+      ),
     )
     return raw.map((item) => {
       return {

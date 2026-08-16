@@ -3,17 +3,19 @@ import { buildPageMetadata } from '@/config/seo'
 import { IsAaForMePage } from '@/features/quiz/pages/IsAaForMePage'
 import { Metadata } from 'next'
 
-const pageData = await fetchQuizPage()
-
 export async function generateMetadata(): Promise<Metadata> {
+  const [page] = await fetchQuizPage()
+
   return buildPageMetadata({
-    title: pageData[0]?.meta_title,
-    description: pageData[0]?.meta_description,
+    title: page?.meta_title,
+    description: page?.meta_description,
     path: '/is-aa-for-me',
     fallbackTitle: 'Подходит ли мне АА?',
   })
 }
 
-export default function Page() {
-  return <IsAaForMePage title={pageData[0]?.title} text={pageData[0]?.text} />
+export default async function Page() {
+  const [page] = await fetchQuizPage()
+
+  return <IsAaForMePage title={page?.title} text={page?.text} />
 }

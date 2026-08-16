@@ -3,10 +3,8 @@ import Page from '@/common/pages/Page'
 import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
 
-const pageData = await fetchPage('to_professionals_page')
-
 export async function generateMetadata(): Promise<Metadata> {
-  const page = pageData[0]
+  const [page] = await fetchPage('to_professionals_page')
 
   return buildPageMetadata({
     title: page.meta_title,
@@ -17,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ToProfessionals() {
-  const page = pageData[0]
+  const [page] = await fetchPage('to_professionals_page')
 
   return (
     <>

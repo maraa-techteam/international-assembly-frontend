@@ -47,6 +47,17 @@ export const metadata: Metadata = {
   },
 }
 
+/**
+ * ISR window for the whole site: every route below this layout is prerendered
+ * and regenerated in the background at most once a minute, so CMS edits go live
+ * without a redeploy. The lowest `revalidate` in a route's segment tree wins, so
+ * an individual page can opt into a shorter window, never a longer one.
+ *
+ * Next requires this to be a statically analyzable literal — it cannot import
+ * CMS_REVALIDATE_SECONDS from src/config/isr.ts. Keep the two in sync.
+ */
+export const revalidate = 60
+
 export default async function RootLayout({
   children,
 }: Readonly<{

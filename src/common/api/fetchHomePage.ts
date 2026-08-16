@@ -1,13 +1,22 @@
-import { readItems } from '@directus/sdk'
+import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
+import { readItems, withOptions } from '@directus/sdk'
 
 import directus from '../lib/directus'
 
 export async function fetchHomePage() {
   try {
     const raw = await directus.request(
-      readItems('home_page', {
-        fields: ['meta_title', 'meta_description'],
-      }),
+      withOptions(
+        readItems('home_page', {
+          fields: ['meta_title', 'meta_description'],
+        }),
+        {
+          next: {
+            revalidate: CMS_REVALIDATE_SECONDS,
+            tags: ['cms', 'cms:home_page'],
+          },
+        },
+      ),
     )
     return raw.map((item) => {
       return {
