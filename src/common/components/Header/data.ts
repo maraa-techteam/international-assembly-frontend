@@ -21,6 +21,13 @@ const aboutSubNav: SecondTierNavigationType[] = [
     isFrequentlyVisited: false,
   },
   {
+    name: 'Контакты',
+    href: '/contacts',
+    description:
+      'На этой странице вы найдете контактную информацию Международной Ассамблеи по Общему Обслуживанию русскоязычных Анонимных Алкоголиков.',
+    isFrequentlyVisited: true,
+  },
+  {
     name: 'Для профессионалов',
     href: '/to-professionals',
     description:
@@ -70,7 +77,34 @@ export const headerNavigationData: NavigationType[] = [
   { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
 ]
 
+/**
+ * Links surfaced in the "Все что вас интересует" guide on the home page.
+ *
+ * These used to come from the `sub_nav` collection in Directus, but navigation
+ * is hardcoded here since the nav refactor and the collection no longer exists
+ * in the CMS. Deriving the list from the same entries keeps the guide and the
+ * menus from drifting apart.
+ */
+export const frequentlyVisitedLinks: SecondTierNavigationType[] = [
+  ...aboutSubNav,
+  ...newcomersSubNav,
+].filter((link) => link.isFrequentlyVisited)
+
 export const footerNavigationData: NavigationType[] = [
   { name: 'О нас', href: '/', isActive: false, subNav: aboutSubNav },
   { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
+  {
+    name: 'Контакты',
+    href: '/',
+    isActive: false,
+    subNav: [
+      {
+        name: 'Написать админу',
+        href: '/contacts',
+        description:
+          'Здесь вы сможете оставить вопрос или предложение админу сайта.',
+        isFrequentlyVisited: false,
+      },
+    ],
+  },
 ]

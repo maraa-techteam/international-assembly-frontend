@@ -1,10 +1,10 @@
 /**
  * Routes that are live in the initial launch scope.
  *
- * The remaining sections (groups, literature, news, services, contacts,
- * contributions, useful links) are removed from this branch until their content
- * is ready. CMS-driven link lists are filtered against this list so that editors
- * cannot surface a link to a page that does not exist yet.
+ * The remaining sections (groups, literature, news, services, contributions,
+ * useful links) are removed from this branch until their content is ready.
+ * CMS-driven link lists are filtered against this list so that editors cannot
+ * surface a link to a page that does not exist yet.
  */
 export const LAUNCH_ROUTES = [
   '/',
@@ -15,6 +15,7 @@ export const LAUNCH_ROUTES = [
   '/faq',
   '/is-aa-for-me',
   '/12-steps-12-traditions',
+  '/contacts',
 ] as const
 
 export function isLaunchRoute(href: string): boolean {

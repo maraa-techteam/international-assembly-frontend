@@ -1,12 +1,11 @@
-import { getFrequentlyVisitedLinks } from '@/common/api/fetchFrequentlyVisitedLinks'
 import { fetchHomePage } from '@/common/api/fetchHomePage'
 import { Button } from '@/common/components/Button/Button'
 import { ContentGuide } from '@/common/components/ContentGuide/ContentGuide'
 import { Grid } from '@/common/components/Grid/Grid'
+import { frequentlyVisitedLinks } from '@/common/components/Header/data'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
-import { isLaunchRoute } from '@/config/launchRoutes'
 import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -24,11 +23,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  // The CMS still lists links to sections that are not part of the launch
-  // scope, so drop anything that does not resolve to a live route.
-  const frequentlyVisitedLinks = (await getFrequentlyVisitedLinks()).filter(
-    (link) => isLaunchRoute(link.href),
-  )
   return (
     <>
       <Section

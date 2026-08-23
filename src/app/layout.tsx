@@ -1,4 +1,3 @@
-import { getSocials } from '@/common/api/fetchSocials'
 import { Footer } from '@/common/components/Footer/Footer'
 import { Header } from '@/common/components/Header/Header'
 import {
@@ -63,7 +62,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const socials = await getSocials()
   return (
     <html lang='ru'>
       <body
