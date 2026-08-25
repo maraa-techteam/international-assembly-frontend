@@ -47,30 +47,32 @@ export default async function Page(page: PageProps) {
               {additionalLink.text}
             </Link>
           )}
-          <Grid as='nav' className='lg:flex lg:flex-row'>
-            {!!buttonLeft?.length && (
-              <Button
-                variant='outlined'
-                size='lg'
-                color='primary'
-                as='link'
-                href={buttonLeft[0].link}
-              >
-                {buttonLeft[0].label}
-              </Button>
-            )}
-            {!!buttonRight?.length && (
-              <Button
-                variant='contained'
-                size='lg'
-                color='primary'
-                as='link'
-                href={buttonRight[0].link}
-              >
-                {buttonRight[0].label}
-              </Button>
-            )}
-          </Grid>
+          {!!buttonLeft?.length && !!buttonRight?.length && (
+            <Grid as='nav' className='lg:flex lg:flex-row'>
+              {!!buttonLeft?.length && (
+                <Button
+                  variant='outlined'
+                  size='lg'
+                  color='primary'
+                  as='link'
+                  href={buttonLeft[0].link}
+                >
+                  {buttonLeft[0].label}
+                </Button>
+              )}
+              {!!buttonRight?.length && (
+                <Button
+                  variant='contained'
+                  size='lg'
+                  color='primary'
+                  as='link'
+                  href={buttonRight[0].link}
+                >
+                  {buttonRight[0].label}
+                </Button>
+              )}
+            </Grid>
+          )}
         </div>
         {page.image && (
           <div className='flex h-fit w-full justify-end'>
