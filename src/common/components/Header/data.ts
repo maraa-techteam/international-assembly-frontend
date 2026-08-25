@@ -86,9 +86,32 @@ const newcomersSubNav: SecondTierNavigationType[] = [
   },
 ]
 
+const groupsSubNav: SecondTierNavigationType[] = [
+  {
+    name: 'О группах',
+    href: '/about-groups',
+    description:
+      'Подробная информация о том, что такое группы и зачем они нужны.',
+    isFrequentlyVisited: true,
+  },
+  {
+    name: 'Найти группу',
+    href: '/groups',
+    description:
+      'Выберите страну, формат встречи — онлайн, офлайн или гибрид — и день недели, чтобы найти подходящую группу Анонимных Алкоголиков. Используйте фильтры, чтобы быстрее подобрать собрание в удобное для вас время и в нужном формате.',
+    isFrequentlyVisited: false,
+  },
+]
+
 export const headerNavigationData: NavigationType[] = [
   { name: 'О нас', href: '/', isActive: false, subNav: aboutSubNav },
   { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
+  {
+    name: 'Группы АА',
+    href: '/about-groups',
+    isActive: false,
+    subNav: groupsSubNav,
+  },
 ]
 
 /**
@@ -102,11 +125,18 @@ export const headerNavigationData: NavigationType[] = [
 export const frequentlyVisitedLinks: SecondTierNavigationType[] = [
   ...aboutSubNav,
   ...newcomersSubNav,
+  ...groupsSubNav,
 ].filter((link) => link.isFrequentlyVisited)
 
 export const footerNavigationData: NavigationType[] = [
   { name: 'О нас', href: '/', isActive: false, subNav: aboutSubNav },
   { name: 'Новичкам', href: '/', isActive: false, subNav: newcomersSubNav },
+  {
+    name: 'Группы АА',
+    href: '/about-groups',
+    isActive: false,
+    subNav: groupsSubNav,
+  },
   {
     name: 'Контакты',
     href: '/',

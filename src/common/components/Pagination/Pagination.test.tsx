@@ -22,13 +22,24 @@ describe('Pagination', () => {
     searchParamsMock.toString.mockReturnValue('')
   })
 
-  it('renders the load more button when fetchedCount equals the limit', () => {
+  it('renders the load more button when more results exist', () => {
     searchParamsMock.get.mockReturnValue('10')
-    render(<Pagination fetchedCount={10} totalCount={10} />)
+    render(<Pagination fetchedCount={10} totalCount={25} />)
 
     expect(
       screen.getByRole('button', { name: /показать ещё/i }),
     ).toBeInTheDocument()
+  })
+
+  it('does not render a load more button once every result is fetched', () => {
+    // Regression: two countries matched exactly 10 groups, a full batch, and
+    // the button appeared but had nothing left to load.
+    searchParamsMock.get.mockReturnValue('10')
+    const { container } = render(
+      <Pagination fetchedCount={10} totalCount={10} />,
+    )
+
+    expect(container.firstChild).toBeNull()
   })
 
   it('does not render when fetchedCount is less than the limit and totalCount is small', () => {
@@ -40,7 +51,7 @@ describe('Pagination', () => {
 
   it('uses a default limit of 10 when no limit search param is set', () => {
     searchParamsMock.get.mockReturnValue(null)
-    render(<Pagination fetchedCount={10} totalCount={10} />)
+    render(<Pagination fetchedCount={10} totalCount={25} />)
 
     expect(
       screen.getByRole('button', { name: /показать ещё/i }),
@@ -50,7 +61,7 @@ describe('Pagination', () => {
   it('pushes updated limit to router when load more is clicked', async () => {
     searchParamsMock.get.mockReturnValue('10')
     const user = userEvent.setup()
-    render(<Pagination fetchedCount={10} totalCount={10} />)
+    render(<Pagination fetchedCount={10} totalCount={25} />)
 
     await user.click(screen.getByRole('button', { name: /показать ещё/i }))
 
@@ -122,7 +133,7 @@ describe('Pagination', () => {
 
   it('does not render page buttons when totalCount is within PAGE_SIZE', () => {
     searchParamsMock.get.mockReturnValue('10')
-    render(<Pagination fetchedCount={10} totalCount={10} />)
+    render(<Pagination fetchedCount={8} totalCount={10} />)
 
     expect(screen.queryByRole('button', { name: '1' })).not.toBeInTheDocument()
     expect(

@@ -73,8 +73,10 @@ export function Pagination({
     })
   }
 
-  // Show "Load More" only if we got a "full batch" (likely more exists)
-  const hasMore = fetchedCount >= currentLimit
+  // `totalCount` is exact, so ask it directly. Inferring "more exists" from a
+  // full batch instead used to surface a dead button whenever the result count
+  // was an exact multiple of the page size.
+  const hasMore = fetchedCount < totalCount
 
   if (totalPages <= 1 && !hasMore) return null
 

@@ -7,9 +7,12 @@ import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { buildPageMetadata } from '@/config/seo'
+import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
+import { GroupSearchWidget } from '@/features/groups/components/GroupSearchWidget/GroupSearchWidget'
 import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 export async function generateMetadata(): Promise<Metadata> {
   const pageData = await fetchHomePage()
@@ -23,6 +26,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
+  const countries = await fetchGroupCountries()
+  const presence = ['Онлайн', 'Офлайн', 'Гибрид']
+
   return (
     <>
       <Section
@@ -127,6 +133,28 @@ export default async function Home() {
           />
         </div>
       </Section>
+      <div className='bg-primary'>
+        <Section className='mx-auto min-h-100 justify-center' color='primary'>
+          <div className='flex flex-col gap-4'>
+            <div className='flex flex-col gap-2'>
+              <Typography variant='h2'>Поиск русскоязычных групп</Typography>
+              <Typography variant='body'>
+                Найдите русскоязычные группы Анонимных Алкоголиков в вашем
+                городе или онлайн.
+              </Typography>
+            </div>
+            <Suspense>
+              <GroupSearchWidget
+                dropdownOptions={{
+                  country: countries,
+                  presence: presence,
+                }}
+                className='bg-primary max-w-200 p-0'
+              />
+            </Suspense>
+          </div>
+        </Section>
+      </div>
     </>
   )
 }

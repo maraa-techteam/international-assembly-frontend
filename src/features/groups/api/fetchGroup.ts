@@ -1,0 +1,49 @@
+import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
+import { readItems, withOptions } from '@directus/sdk'
+import { cache } from 'react'
+
+import directus from '../../../common/lib/directus'
+
+export const fetchGroup = cache(async function fetchGroup(slug: string) {
+  try {
+    const raw = await directus.request(
+      withOptions(
+        readItems('groups', {
+          filter: {
+            slug: {
+              _eq: slug,
+            },
+          },
+          fields: [
+            'name',
+            'description',
+            'country',
+            'presence',
+            'digital_address',
+            'address',
+            'website',
+            'youtube',
+            'telegram',
+            'whatsapp',
+            'contact',
+            'time_zone',
+            { schedule_slots: ['day', 'time'] },
+            { images: ['id', 'directus_files_id'] },
+          ],
+        }),
+        {
+          next: {
+            revalidate: CMS_REVALIDATE_SECONDS,
+            tags: ['cms', 'cms:groups', `cms:groups:${slug}`],
+          },
+        },
+      ),
+    )
+
+    return raw[0]
+  } catch (error) {
+    throw new Error(
+      `Failed to fetch group with slug "${slug}": ${error instanceof Error ? error.message : String(error)}`,
+    )
+  }
+})
