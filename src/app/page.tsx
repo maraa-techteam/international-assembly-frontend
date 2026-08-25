@@ -7,6 +7,8 @@ import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { buildPageMetadata } from '@/config/seo'
+import { fetchArticles } from '@/features/articles/api/fetchArticles'
+import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
 import { GroupSearchWidget } from '@/features/groups/components/GroupSearchWidget/GroupSearchWidget'
 import { Metadata } from 'next'
@@ -27,6 +29,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function Home() {
   const countries = await fetchGroupCountries()
+  const articles = await fetchArticles()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
 
   return (
@@ -155,6 +158,26 @@ export default async function Home() {
           </div>
         </Section>
       </div>
+      {articles.length > 0 && (
+        <Section className='mx-auto lg:py-12' alignment='center' color='white'>
+          <Typography variant='h2'>Новости и события</Typography>
+          <Grid isScrollable columns={2} gap={6}>
+            {articles.slice(0, 2).map((card) => {
+              return (
+                <ArticleCard
+                  key={card.id}
+                  slug={card.slug}
+                  title={card.title}
+                  perex={card.perex}
+                  image={card.image}
+                  date_created={card.date_created}
+                  id={card.id}
+                />
+              )
+            })}
+          </Grid>
+        </Section>
+      )}
     </>
   )
 }

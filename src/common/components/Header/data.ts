@@ -21,6 +21,13 @@ const aboutSubNav: SecondTierNavigationType[] = [
     isFrequentlyVisited: false,
   },
   {
+    name: 'Новости и события',
+    href: '/news-and-events',
+    description:
+      'На этой странице доступны новости и события из мира Международной Ассамблеи Общего Обслуживания Русскоязычных АА.',
+    isFrequentlyVisited: false,
+  },
+  {
     name: 'Полезные ссылки',
     href: '/useful-links',
     description:

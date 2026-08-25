@@ -1,13 +1,13 @@
 /**
  * Routes that are live in the initial launch scope.
  *
- * The remaining sections (literature, news, services) are removed from this
- * branch until their content is ready. CMS-driven link lists are filtered
- * against this list so that editors cannot surface a link to a page that does
- * not exist yet.
+ * The remaining sections (literature, services) are removed from this branch
+ * until their content is ready. CMS-driven link lists are filtered against this
+ * list so that editors cannot surface a link to a page that does not exist yet.
  *
- * Only static routes belong here. Group detail pages live under /groups/<slug>
- * and are covered by the /groups entry.
+ * Only static routes belong here. Detail pages live under a section's own
+ * prefix — /groups/<slug>, /news-and-events/<slug> — and are covered by the
+ * entry for that section.
  */
 export const LAUNCH_ROUTES = [
   '/',
@@ -23,6 +23,7 @@ export const LAUNCH_ROUTES = [
   '/contributions',
   '/groups',
   '/about-groups',
+  '/news-and-events',
 ] as const
 
 export function isLaunchRoute(href: string): boolean {

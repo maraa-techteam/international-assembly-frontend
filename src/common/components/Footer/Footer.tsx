@@ -64,12 +64,18 @@ export function Footer({ footerData }: FooterProps) {
           </ul>
         </nav>
       </div>
-
       <div className='h-[1px] w-full bg-white opacity-40' />
-
-      <Typography variant='body' className='text-contrast text-sm opacity-40'>
-        {`© ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков`}
-      </Typography>
+      <div className='flex flex-col gap-1'>
+        <Typography variant='body' className='text-contrast text-sm opacity-40'>
+          {`© ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков`}
+        </Typography>
+        <Typography variant='body' className='text-contrast text-sm opacity-40'>
+          Biedrība MAPAA, Charity ID: 50008348781
+        </Typography>
+        <Typography variant='body' className='text-contrast text-sm opacity-40'>
+          16 Rakstinu iela, Dreilini, Ropazu novads, LV-2130, Latvia
+        </Typography>
+      </div>
     </footer>
   )
 }

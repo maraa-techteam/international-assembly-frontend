@@ -31,7 +31,12 @@ export default async function Page(page: PageProps) {
   return (
     <>
       <Section
-        className='flex flex-col lg:grid lg:grid-cols-[minmax(0,800px)_minmax(300px,360px)]'
+        // The two columns cap out at 800px and 360px, which leaves slack on a
+        // wide viewport. `justify-between` hands that slack to the gutter
+        // between them so the illustration stays flush with the right margin
+        // instead of stopping short of it. Only from `lg` up: below that the
+        // section is a flex column, where it would spread the stack vertically.
+        className='flex flex-col lg:grid lg:grid-cols-[minmax(0,800px)_minmax(300px,360px)] lg:justify-between'
         alignment='start'
         color='white'
       >
@@ -74,15 +79,19 @@ export default async function Page(page: PageProps) {
             </Grid>
           )}
         </div>
-        {page.image && (
-          <div className='flex h-fit w-full justify-end'>
+        {/* Rendered at the file's own dimensions rather than a fixed box: the
+            illustrations range from 4:3 to 16:9, so any single box would either
+            letterbox or crop them. `h-auto` lets the height follow the width,
+            and the real ratio reserves the correct space up front. */}
+        {page.image?.width && page.image?.height && (
+          <div className='h-fit w-full'>
             <Image
-              src={getImageUrl(page.image, { width: 400, height: 250 })}
+              src={getImageUrl(page.image.id)}
               alt={page.title}
-              width={400}
-              height={250}
-              sizes='(max-width: 640px) 100vw, 600px'
-              className='w-full rounded-lg object-contain object-top'
+              width={page.image.width}
+              height={page.image.height}
+              sizes='(min-width: 1024px) 360px, 100vw'
+              className='h-auto w-full rounded-lg'
               priority={false}
             />
           </div>
