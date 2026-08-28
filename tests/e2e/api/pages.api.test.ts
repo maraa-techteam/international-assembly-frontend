@@ -17,7 +17,10 @@ test.describe('Pages API', () => {
 
     expect(response.ok()).toBeTruthy()
     const json = await response.json()
+    // quiz_page is a singleton: the item is returned directly.
     expect(json.data).toBeDefined()
-    expect(Array.isArray(json.data)).toBe(true)
+    expect(Array.isArray(json.data)).toBe(false)
+    expect(json.data).toHaveProperty('meta_title')
+    expect(json.data).toHaveProperty('title')
   })
 })

@@ -14,10 +14,9 @@ export async function GroupsListPage({
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const pageData = await fetchGroupsPage()
+  const page = await fetchGroupsPage()
   const params = await searchParams
   const { data: filteredGroups, totalCount } = await fetchGroups(params)
-  const page = pageData[0]
 
   const countries = await fetchGroupCountries()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']

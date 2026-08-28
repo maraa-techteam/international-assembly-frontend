@@ -1,13 +1,14 @@
 import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
-import { readItems, withOptions } from '@directus/sdk'
+import { readSingleton, withOptions } from '@directus/sdk'
 
 import directus from '../lib/directus'
+import { unwrapSingleton } from './unwrapSingleton'
 
 export async function fetchGroupsPage() {
   try {
     const raw = await directus.request(
       withOptions(
-        readItems('groups_page', {
+        readSingleton('groups_page', {
           fields: ['meta_title', 'meta_description', 'title'],
         }),
         {
@@ -18,13 +19,13 @@ export async function fetchGroupsPage() {
         },
       ),
     )
-    return raw.map((item) => {
-      return {
-        meta_title: item.meta_title,
-        meta_description: item.meta_description,
-        title: item.title,
-      }
-    })
+    const item = unwrapSingleton(raw)
+
+    return {
+      meta_title: item.meta_title,
+      meta_description: item.meta_description,
+      title: item.title,
+    }
   } catch (error) {
     throw new Error(
       `Failed to fetch groups page data: ${error instanceof Error ? error.message : String(error)}`,

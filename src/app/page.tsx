@@ -17,8 +17,7 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const pageData = await fetchHomePage()
-  const page = pageData[0]
+  const page = await fetchHomePage()
   return buildPageMetadata({
     title: page?.meta_title,
     description: page?.meta_description,

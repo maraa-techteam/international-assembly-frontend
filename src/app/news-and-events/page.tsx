@@ -4,7 +4,7 @@ import { ArticlesListPage } from '@/features/articles/pages/ArticlesListPage'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page] = await fetchNewsAndEventsPage()
+  const page = await fetchNewsAndEventsPage()
 
   return buildPageMetadata({
     title: page?.meta_title,

@@ -4,7 +4,7 @@ import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page] = await fetchPage('steps_and_traditions_page')
+  const page = await fetchPage('steps_and_traditions_page')
 
   return buildPageMetadata({
     title: page.meta_title,
@@ -15,7 +15,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TwelveStepsTwelveTraditions() {
-  const [page] = await fetchPage('steps_and_traditions_page')
+  const page = await fetchPage('steps_and_traditions_page')
 
   return (
     <>

@@ -37,13 +37,13 @@ export async function POST(request: NextRequest) {
     }
 
     const pageData = await fetchContactsPage()
-    if (!pageData.length || !pageData[0]?.secretary_email) {
+    if (!pageData?.secretary_email) {
       return NextResponse.json(
         { error: 'Recipient email not configured' },
         { status: 500 },
       )
     }
-    const secretaryEmail = pageData[0].secretary_email
+    const secretaryEmail = pageData.secretary_email
 
     const fromEmail = process.env.RESEND_FROM_EMAIL
 

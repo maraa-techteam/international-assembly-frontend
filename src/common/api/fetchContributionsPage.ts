@@ -1,7 +1,8 @@
 import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
-import { readItems, withOptions } from '@directus/sdk'
+import { readSingleton, withOptions } from '@directus/sdk'
 
 import directus from '../lib/directus'
+import { unwrapSingleton } from './unwrapSingleton'
 
 export type ContributionsProvider = {
   id: string
@@ -24,7 +25,7 @@ export async function fetchContributionsPage() {
   try {
     const raw = await directus.request(
       withOptions(
-        readItems('contributions_page', {
+        readSingleton('contributions_page', {
           fields: [
             'id',
             'meta_title',
@@ -42,16 +43,18 @@ export async function fetchContributionsPage() {
         },
       ),
     )
-    return raw.map((item): ContributionsPageData => {
-      return {
-        id: item.id as string,
-        meta_title: item.meta_title as string,
-        meta_description: item.meta_description as string,
-        title: item.title as string,
-        text: item.text as string,
-        provider: (item.provider as ContributionsProvider[]) ?? [],
-      }
-    })
+    const item = unwrapSingleton(raw)
+
+    const page: ContributionsPageData = {
+      id: item.id as string,
+      meta_title: item.meta_title as string,
+      meta_description: item.meta_description as string,
+      title: item.title as string,
+      text: item.text as string,
+      provider: (item.provider as ContributionsProvider[]) ?? [],
+    }
+
+    return page
   } catch (error) {
     throw new Error(
       `Failed to fetch contributions page data: ${error instanceof Error ? error.message : String(error)}`,

@@ -7,9 +7,8 @@ import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 
 export async function ArticlesListPage() {
-  const pageData = await fetchNewsAndEventsPage()
+  const page = await fetchNewsAndEventsPage()
   const articles = await fetchArticles()
-  const page = pageData[0]
 
   // Picking a highlighted post is optional in the CMS, so the field is often
   // null. When it is unset the page just lists every article in the grid.

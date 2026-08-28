@@ -5,7 +5,7 @@ import { GroupsListPage } from '@/features/groups/pages/GroupsListPage'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page] = await fetchGroupsPage()
+  const page = await fetchGroupsPage()
 
   return buildPageMetadata({
     title: page?.meta_title,

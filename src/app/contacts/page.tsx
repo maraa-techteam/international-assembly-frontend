@@ -7,7 +7,7 @@ import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [page] = await fetchContactsPage()
+  const page = await fetchContactsPage()
 
   return buildPageMetadata({
     title: page?.meta_title,
@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Contacts() {
-  const [page] = await fetchContactsPage()
+  const page = await fetchContactsPage()
 
   return (
     <>
