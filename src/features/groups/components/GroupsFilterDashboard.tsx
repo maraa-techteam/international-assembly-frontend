@@ -20,6 +20,21 @@ type FilterOptions = {
   searchValue: string
 }
 
+const hasFilters = (filters: FilterOptions) =>
+  filters.country.length > 0 ||
+  filters.presence.length > 0 ||
+  filters.schedule.length > 0 ||
+  !!filters.searchValue
+
+// Pushing the URL we are already on is a no-op: the search params never change,
+// so the effect below never runs and the loading flags stay stuck on. Compare
+// sorted queries so a different param order doesn't read as a change.
+const sortQuery = (query: string) => {
+  const params = new URLSearchParams(query)
+  params.sort()
+  return params.toString()
+}
+
 export function GroupsFilterDashboard({
   className,
   dropdownOptions,
@@ -51,50 +66,24 @@ export function GroupsFilterDashboard({
     setIsResetting(false)
   }, [searchParams, appliedFilters])
 
-  const isOptionsSelected =
-    draft.country.length > 0 ||
-    draft.presence.length > 0 ||
-    draft.schedule.length > 0 ||
-    !!draft.searchValue
+  const isOptionsSelected = hasFilters(draft)
+  // Reset clears both the draft and whatever is already applied, so it stays
+  // available while either of them holds something.
+  const canReset = isOptionsSelected || hasFilters(appliedFilters)
 
   const handleSelectChange = (
     field: 'country' | 'presence' | 'schedule',
     value: string[],
   ) => {
-    const nextState = {
-      ...draft,
-      [field]: value,
-    }
-
-    const isAllEmpty =
-      !nextState.country.length &&
-      !nextState.presence.length &&
-      !nextState.schedule.length &&
-      !nextState.searchValue
-
-    if (isAllEmpty) {
-      router.push(pathname)
-      return
-    }
-
-    setDraft(nextState)
+    setDraft((prev) => ({ ...prev, [field]: value }))
   }
 
   const handleSearchChange = (value: string) => {
-    if (
-      !value &&
-      !draft.country.length &&
-      !draft.presence.length &&
-      !draft.schedule.length
-    ) {
-      router.push(pathname)
-    }
     setDraft((prev) => ({ ...prev, searchValue: value }))
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSubmitting(true)
     const data = new FormData(e.currentTarget)
     const params = new URLSearchParams()
     for (const [key, rawValue] of data.entries()) {
@@ -103,7 +92,22 @@ export function GroupsFilterDashboard({
       }
     }
     const query = params.toString()
+    if (sortQuery(query) === sortQuery(searchParams.toString())) return
+
+    setIsSubmitting(true)
     router.push(query ? `${pathname}?${query}` : pathname)
+  }
+
+  const handleReset = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!canReset) return
+    setDraft({ country: [], presence: [], schedule: [], searchValue: '' })
+
+    // Nothing in the URL to clear — dropping the draft is the whole reset.
+    if (!searchParams.toString()) {
+      e.preventDefault()
+      return
+    }
+    setIsResetting(true)
   }
 
   return (
@@ -154,16 +158,14 @@ export function GroupsFilterDashboard({
       <div className='flex w-full flex-col items-end gap-4 lg:flex-row lg:items-center lg:justify-between'>
         <Link
           className={cn(
-            !isOptionsSelected && 'pointer-events-none text-gray-400',
+            !canReset && 'pointer-events-none text-gray-400',
             isResetting && 'pointer-events-none',
             'inline-flex h-fit items-center gap-1',
           )}
           href={pathname}
-          aria-disabled={!isOptionsSelected}
-          tabIndex={isOptionsSelected ? 0 : -1}
-          onClick={() => {
-            if (isOptionsSelected) setIsResetting(true)
-          }}
+          aria-disabled={!canReset}
+          tabIndex={canReset ? 0 : -1}
+          onClick={handleReset}
         >
           Сбросить фильтры
           {isResetting && <Loader className='ml-1 h-3 w-3' />}
