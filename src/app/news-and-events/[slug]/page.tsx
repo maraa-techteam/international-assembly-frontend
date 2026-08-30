@@ -16,7 +16,7 @@ export async function generateMetadata({
     title: article?.title as string | undefined,
     description: article?.perex as string | undefined,
     path: `/news-and-events/${slug}`,
-    fallbackTitle: 'Новости и события',
+    fallbackTitle: 'Новости и события АА',
     fallbackDescription:
       'Новости и события Международной Ассамблеи по Общему Обслуживанию русскоязычных Анонимных Алкоголиков.',
   })

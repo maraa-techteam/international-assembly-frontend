@@ -19,8 +19,9 @@ export async function generateMetadata({
     // before it can go in a meta tag.
     description: toMetaDescription(group?.description as string | undefined),
     path: `/groups/${slug}`,
-    fallbackTitle: 'Группа',
-    fallbackDescription: 'Узнайте больше о группе и её деятельности.',
+    fallbackTitle: 'Группа АА',
+    fallbackDescription:
+      'Расписание собраний, адрес и контакты русскоязычной группы Анонимных Алкоголиков.',
   })
 }
 

@@ -4,9 +4,16 @@ import {
   footerNavigationData,
   headerNavigationData,
 } from '@/common/components/Header/data'
+import { JsonLd } from '@/common/components/JsonLd/JsonLd'
 import { Layout } from '@/common/components/Layout/Layout'
 import { cn } from '@/common/utils/cn'
-import { OG_IMAGE, SITE_NAME_FULL, SITE_URL } from '@/config/site'
+import { siteSchema } from '@/config/schema'
+import {
+  OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_NAME_FULL,
+  SITE_URL,
+} from '@/config/site'
 import '@/globals.css'
 import type { Metadata } from 'next'
 import { Roboto, Roboto_Slab } from 'next/font/google'
@@ -22,26 +29,23 @@ const roboto = Roboto({
   subsets: ['latin', 'cyrillic'],
 })
 
-const siteDescription =
-  'Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков — самостоятельная структура обслуживания АА. В её состав входят представители отдельных групп АА, региональных комитетов и постоянно действующий комитет (ПКМА). Ассамблея руководствуется 12 Традициями АА и 12 Концепциями обслуживания, координирует деятельность с Офисом по Общему Обслуживанию АА США и Канады, а также сотрудничает без присоединения с заинтересованными организациями и региональными структурами. Заседания Ассамблеи проходят два раза в год.'
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_NAME_FULL,
-  description: siteDescription,
+  description: SITE_DESCRIPTION,
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
     siteName: SITE_NAME_FULL,
     title: SITE_NAME_FULL,
-    description: siteDescription,
+    description: SITE_DESCRIPTION,
     url: SITE_URL,
     images: [OG_IMAGE],
   },
   twitter: {
     card: 'summary',
     title: SITE_NAME_FULL,
-    description: siteDescription,
+    description: SITE_DESCRIPTION,
     images: [OG_IMAGE.url],
   },
 }
@@ -78,6 +82,7 @@ export default async function RootLayout({
           initialPosition={0.08}
           showSpinner={false}
         />
+        <JsonLd schema={siteSchema()} />
         <Header headerData={headerNavigationData} />
         <Layout>{children}</Layout>
         <Footer footerData={footerNavigationData} />

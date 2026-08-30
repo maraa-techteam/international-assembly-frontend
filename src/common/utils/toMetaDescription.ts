@@ -15,6 +15,77 @@ const ENTITIES: Record<string, string> = {
   '&lt;': '<',
   '&gt;': '>',
   '&amp;': '&',
+  // Latin-1 letters. Group addresses across Europe carry these, and an
+  // undecoded `&auml;` in a description reaches search results verbatim.
+  '&auml;': 'ä',
+  '&Auml;': 'Ä',
+  '&ouml;': 'ö',
+  '&Ouml;': 'Ö',
+  '&uuml;': 'ü',
+  '&Uuml;': 'Ü',
+  '&szlig;': 'ß',
+  '&aring;': 'å',
+  '&Aring;': 'Å',
+  '&aelig;': 'æ',
+  '&oslash;': 'ø',
+  '&Oslash;': 'Ø',
+  '&eacute;': 'é',
+  '&egrave;': 'è',
+  '&ecirc;': 'ê',
+  '&agrave;': 'à',
+  '&acirc;': 'â',
+  '&ccedil;': 'ç',
+  '&iacute;': 'í',
+  '&oacute;': 'ó',
+  '&uacute;': 'ú',
+  '&ntilde;': 'ñ',
+  '&atilde;': 'ã',
+  '&otilde;': 'õ',
+  '&middot;': '·',
+  '&bull;': '•',
+  '&deg;': '°',
+  '&euro;': '€',
+  '&rsquo;': '’',
+  '&lsquo;': '‘',
+}
+
+/** `&#233;` / `&#xE9;`, which editors' paste-ins produce as often as names. */
+function decodeNumericEntities(text: string): string {
+  return text.replace(/&#(x[0-9a-f]+|\d+);/gi, (match, code: string) => {
+    const point =
+      code[0] === 'x' || code[0] === 'X'
+        ? parseInt(code.slice(1), 16)
+        : parseInt(code, 10)
+
+    return Number.isFinite(point) && point > 0 && point <= 0x10ffff
+      ? String.fromCodePoint(point)
+      : match
+  })
+}
+
+/**
+ * Flattens a rich-text field from the CMS to plain text, without clipping it.
+ *
+ * Meta descriptions want the trimmed form below, but JSON-LD carries whole
+ * answers and abstracts, so the strip step is shared rather than duplicated.
+ */
+export function htmlToPlainText(html?: string | null): string | undefined {
+  if (!html) return undefined
+
+  let text = html.replace(/<[^>]*>/g, ' ')
+
+  // `&amp;` is decoded last so an encoded entity like `&amp;laquo;` survives as
+  // literal text instead of turning into `«`.
+  for (const [entity, char] of Object.entries(ENTITIES)) {
+    if (entity === '&amp;') continue
+    text = text.split(entity).join(char)
+  }
+  text = decodeNumericEntities(text)
+  text = text.split('&amp;').join('&')
+
+  text = text.replace(/\s+/g, ' ').trim()
+
+  return text || undefined
 }
 
 /**
@@ -29,19 +100,7 @@ export function toMetaDescription(
   html?: string | null,
   maxLength: number = MAX_LENGTH,
 ): string | undefined {
-  if (!html) return undefined
-
-  let text = html.replace(/<[^>]*>/g, ' ')
-
-  // `&amp;` is decoded last so an encoded entity like `&amp;laquo;` survives as
-  // literal text instead of turning into `«`.
-  for (const [entity, char] of Object.entries(ENTITIES)) {
-    if (entity === '&amp;') continue
-    text = text.split(entity).join(char)
-  }
-  text = text.split('&amp;').join('&')
-
-  text = text.replace(/\s+/g, ' ').trim()
+  const text = htmlToPlainText(html)
 
   if (!text) return undefined
   if (text.length <= maxLength) return text

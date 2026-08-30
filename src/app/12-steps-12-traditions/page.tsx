@@ -10,7 +10,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: page.meta_title,
     description: page.meta_description,
     path: '/12-steps-12-traditions',
-    fallbackTitle: '12 шагов и 12 традиций',
   })
 }
 

@@ -11,7 +11,6 @@ export async function generateMetadata(): Promise<Metadata> {
     title: page?.meta_title,
     description: page?.meta_description,
     path: '/groups',
-    fallbackTitle: 'Поиск группы',
   })
 }
 

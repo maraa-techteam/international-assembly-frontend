@@ -1,10 +1,12 @@
 import { Grid } from '@/common/components/Grid/Grid'
+import { JsonLd } from '@/common/components/JsonLd/JsonLd'
 import { Label } from '@/common/components/Label/Label'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { formatDate } from '@/common/utils/dateFormatter'
 import { getImageUrl } from '@/common/utils/getImageUrl'
+import { articleSchema, breadcrumbSchema } from '@/config/schema'
 import { fetchArticle } from '@/features/articles/api/fetchArticle'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 import { Article } from '@/features/articles/types/Article.type'
@@ -43,8 +45,28 @@ export async function ArticleDetailPage({
       (junction: RelatedArticleJunction) => junction.related_article_id,
     ) || []
 
+  const path = `/news-and-events/${slug}`
+
   return (
     <>
+      {article && (
+        <>
+          <JsonLd
+            schema={articleSchema(
+              article,
+              path,
+              article.image ? getImageUrl(article.image) : undefined,
+            )}
+          />
+          <JsonLd
+            schema={breadcrumbSchema([
+              { name: 'Главная', path: '/' },
+              { name: 'Новости и события', path: '/news-and-events' },
+              { name: article.title as string, path },
+            ])}
+          />
+        </>
+      )}
       <Section color='contrast' className='w-full lg:max-w-200'>
         <Typography variant='h1'>{article?.title}</Typography>
         <Label text={formatDate(article?.date_created)} />

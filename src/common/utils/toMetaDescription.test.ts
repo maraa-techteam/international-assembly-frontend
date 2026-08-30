@@ -53,3 +53,21 @@ describe('toMetaDescription', () => {
     expect(toMetaDescription('<p>one two three four</p>', 8)).toBe('one two…')
   })
 })
+
+describe('entity decoding', () => {
+  it('decodes Latin-1 letters that appear in European addresses', () => {
+    expect(toMetaDescription('<p>Metro "It&auml;keskus"</p>')).toBe(
+      'Metro "Itäkeskus"',
+    )
+  })
+
+  it('decodes decimal and hex numeric entities', () => {
+    expect(
+      toMetaDescription('<p>caf&#233; &#x43A;&#x43E;&#x444;&#x435;</p>'),
+    ).toBe('café кофе')
+  })
+
+  it('leaves a malformed numeric entity alone', () => {
+    expect(toMetaDescription('<p>&#x110000; &#0;</p>')).toBe('&#x110000; &#0;')
+  })
+})

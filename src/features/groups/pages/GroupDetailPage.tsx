@@ -1,14 +1,17 @@
 import { BackButton } from '@/common/components/BackButton/BackButton'
 import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
+import { JsonLd } from '@/common/components/JsonLd/JsonLd'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
+import { breadcrumbSchema, groupEventSchema } from '@/config/schema'
 import { fetchGroup } from '@/features/groups/api/fetchGroup'
 import { Gallery } from '@/features/groups/components/Gallery/Gallery'
 import { GroupSchedule } from '@/features/groups/components/GroupSchedule/GroupSchedule'
 import type { GroupContact } from '@/features/groups/types/Group.type'
+import { toIanaTimeZone } from '@/features/groups/utils/toIanaTimeZone'
 import Link from 'next/link'
 
 export async function GroupDetailPage({
@@ -18,9 +21,28 @@ export async function GroupDetailPage({
 }) {
   const { slug } = await params
   const group = await fetchGroup(slug)
+  const path = `/groups/${slug}`
 
   return (
     <Section color='white' className='w-full lg:max-w-200'>
+      {group && (
+        <>
+          <JsonLd
+            schema={groupEventSchema(
+              group,
+              path,
+              toIanaTimeZone(group.time_zone, group.country),
+            )}
+          />
+          <JsonLd
+            schema={breadcrumbSchema([
+              { name: 'Главная', path: '/' },
+              { name: 'Группы АА', path: '/groups' },
+              { name: group.name as string, path },
+            ])}
+          />
+        </>
+      )}
       <BackButton className='self-start' />
       <Typography variant='h1'>{group?.name}</Typography>
       <div className='border-primary flex flex-col gap-4 rounded-xl border-1 p-4'>
