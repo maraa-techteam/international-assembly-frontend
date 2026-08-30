@@ -55,6 +55,7 @@ describe('groupEventSchema', () => {
     presence: 'Офлайн',
     address: 'Kastelholmantie 1, 00900 Helsinki, Finland',
     digital_address: 'https://maps.app.goo.gl/x',
+    time_zone: 'Европа/Афины, Бухарест, Хельсинки (UTC+2/+3)',
     schedule_slots: [
       { day: 'Пятница', time: '18:30:00' },
       { day: 'Вторник', time: '18:30:00' },
@@ -62,31 +63,39 @@ describe('groupEventSchema', () => {
   }
 
   it('describes the weekly slots as Schedule nodes', () => {
-    const schema = groupEventSchema(
-      offlineGroup,
-      '/groups/kontakt',
-      'Europe/Helsinki',
-    )
+    const schema = groupEventSchema(offlineGroup, '/groups/kontakt')
     expect(schema.eventSchedule).toEqual([
       {
         '@type': 'Schedule',
         byDay: 'https://schema.org/Friday',
         startTime: '18:30',
-        scheduleTimezone: 'Europe/Helsinki',
+        scheduleTimezone: 'Европа/Афины, Бухарест, Хельсинки (UTC+2/+3)',
         repeatFrequency: 'P1W',
       },
       {
         '@type': 'Schedule',
         byDay: 'https://schema.org/Tuesday',
         startTime: '18:30',
-        scheduleTimezone: 'Europe/Helsinki',
+        scheduleTimezone: 'Европа/Афины, Бухарест, Хельсинки (UTC+2/+3)',
         repeatFrequency: 'P1W',
       },
     ])
   })
 
-  it('omits the timezone rather than guessing when it cannot be resolved', () => {
-    const schema = groupEventSchema(offlineGroup, '/groups/kontakt', undefined)
+  it('publishes the CMS time-zone label as stored', () => {
+    // The label is a city list with an offset range, not the IANA name
+    // schema.org asks for. It ships unprocessed so the markup agrees with what
+    // the page displays.
+    const schema = groupEventSchema(offlineGroup, '/groups/kontakt')
+    const [first] = schema.eventSchedule as Record<string, unknown>[]
+    expect(first.scheduleTimezone).toBe(offlineGroup.time_zone)
+  })
+
+  it('omits the timezone when the CMS field is empty', () => {
+    const schema = groupEventSchema(
+      { ...offlineGroup, time_zone: null },
+      '/groups/kontakt',
+    )
     const [first] = schema.eventSchedule as Record<string, unknown>[]
     expect(first).not.toHaveProperty('scheduleTimezone')
     expect(first.byDay).toBe('https://schema.org/Friday')

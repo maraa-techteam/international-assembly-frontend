@@ -1,35 +1,16 @@
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
-import { readSingleton, withOptions } from '@directus/sdk'
+import { cache } from 'react'
 
-import directus from '../lib/directus'
-import { unwrapSingleton } from './unwrapSingleton'
+import { META_FIELDS, PageMetaType, fetchSingleton } from './fetchSingleton'
 
-export async function fetchQuizPage() {
-  try {
-    const raw = await directus.request(
-      withOptions(
-        readSingleton('quiz_page', {
-          fields: ['meta_title', 'meta_description', 'title', 'text'],
-        }),
-        {
-          next: {
-            revalidate: CMS_REVALIDATE_SECONDS,
-            tags: ['cms', 'cms:quiz_page'],
-          },
-        },
-      ),
-    )
-    const item = unwrapSingleton(raw)
-
-    return {
-      meta_title: item.meta_title,
-      meta_description: item.meta_description,
-      title: item.title,
-      text: item.text,
-    }
-  } catch (error) {
-    throw new Error(
-      `Failed to fetch quiz page data: ${error instanceof Error ? error.message : String(error)}`,
-    )
-  }
+export type QuizPageType = PageMetaType & {
+  title: string
+  text: string
 }
+
+export const fetchQuizPage = cache(async function fetchQuizPage() {
+  return fetchSingleton<QuizPageType>('quiz_page', [
+    ...META_FIELDS,
+    'title',
+    'text',
+  ])
+})

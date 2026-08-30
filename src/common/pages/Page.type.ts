@@ -13,25 +13,35 @@ export type PageImageType = {
   height: number | null
 }
 
+/**
+ * A page singleton as the CMS returns it.
+ *
+ * The optional halves are `| null`, not `?`: Directus sends the key with a null
+ * value for a field an editor has left empty, and never omits it.
+ */
 export type PageType = {
   meta_title: string
   meta_description: string
   title: string
   text: string
   image: PageImageType | null
-  additional_link?: {
+  additional_link: {
     text: string
     href: string
     icon?: IconType
-  }
-  button_left?: {
-    label: string
-    link: string
-  }[]
-  button_right?: {
-    label: string
-    link: string
-  }[]
-  faq?: AccordionProps
-  rich_text?: string
+  } | null
+  button_left:
+    | {
+        label: string
+        link: string
+      }[]
+    | null
+  button_right:
+    | {
+        label: string
+        link: string
+      }[]
+    | null
+  faq: AccordionProps | null
+  rich_text: string | null
 }

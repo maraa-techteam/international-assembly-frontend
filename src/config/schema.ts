@@ -128,6 +128,12 @@ export type GroupSchemaInput = {
  * The CMS stores time as `HH:MM:SS`; schema.org wants `HH:MM`. A slot whose day
  * is not one of the seven names is dropped rather than published with a missing
  * `byDay`, which would describe a meeting that repeats on no particular day.
+ *
+ * `scheduleTimezone` carries the CMS time-zone label unprocessed — a region and
+ * city list with an offset range, e.g. `Европа/Афины, Бухарест, Хельсинки
+ * (UTC+2/+3)`. Schema.org asks for an IANA name such as `Europe/Helsinki` here,
+ * so a consumer parsing the field strictly will reject it. The label ships as
+ * stored because it is what the page itself displays.
  */
 function scheduleNodes(slots: ScheduleSlot[], timeZone?: string): JsonLdNode[] {
   return slots
@@ -190,10 +196,12 @@ function locationNodes(group: GroupSchemaInput): JsonLdNode[] {
 export function groupEventSchema(
   group: GroupSchemaInput,
   path: string,
-  timeZone?: string,
 ): JsonLdNode {
   const locations = locationNodes(group)
-  const schedules = scheduleNodes(group.schedule_slots ?? [], timeZone)
+  const schedules = scheduleNodes(
+    group.schedule_slots ?? [],
+    group.time_zone ?? undefined,
+  )
 
   return compact({
     '@context': 'https://schema.org',
