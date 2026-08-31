@@ -119,6 +119,8 @@ export const headerNavigationData: NavigationType[] = [
     isActive: false,
     subNav: groupsSubNav,
   },
+  { name: 'Литература', href: '/literature', isActive: false, subNav: [] },
+  { name: 'Служения', href: '/services', isActive: false, subNav: [] },
 ]
 
 /**

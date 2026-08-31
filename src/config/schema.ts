@@ -70,6 +70,17 @@ export function organizationSchema(): JsonLdNode {
   })
 }
 
+/**
+ * The site itself, with its internal search declared as a `SearchAction`.
+ *
+ * `query-input` names the placeholder in `urlTemplate`, which is what lets a
+ * consumer build a real query URL rather than just knowing that search exists.
+ * The parameter is `search`, matching what `SearchBar` pushes and what
+ * `/search` reads — if one of those is ever renamed, this has to move with it.
+ *
+ * Google dropped the sitelinks search box rich result in 2024, so this serves
+ * other structured-data consumers rather than the site's own SERP appearance.
+ */
 export function webSiteSchema(): JsonLdNode {
   return {
     '@type': 'WebSite',
@@ -80,6 +91,14 @@ export function webSiteSchema(): JsonLdNode {
     description: SITE_DESCRIPTION,
     inLanguage: 'ru',
     publisher: { '@id': ORGANIZATION_ID },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_URL}/search?search={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   }
 }
 
@@ -128,6 +147,12 @@ export type GroupSchemaInput = {
  * The CMS stores time as `HH:MM:SS`; schema.org wants `HH:MM`. A slot whose day
  * is not one of the seven names is dropped rather than published with a missing
  * `byDay`, which would describe a meeting that repeats on no particular day.
+ *
+ * `scheduleTimezone` carries the CMS time-zone label unprocessed — a region and
+ * city list with an offset range, e.g. `Европа/Афины, Бухарест, Хельсинки
+ * (UTC+2/+3)`. Schema.org asks for an IANA name such as `Europe/Helsinki` here,
+ * so a consumer parsing the field strictly will reject it. The label ships as
+ * stored because it is what the page itself displays.
  */
 function scheduleNodes(slots: ScheduleSlot[], timeZone?: string): JsonLdNode[] {
   return slots
@@ -190,10 +215,12 @@ function locationNodes(group: GroupSchemaInput): JsonLdNode[] {
 export function groupEventSchema(
   group: GroupSchemaInput,
   path: string,
-  timeZone?: string,
 ): JsonLdNode {
   const locations = locationNodes(group)
-  const schedules = scheduleNodes(group.schedule_slots ?? [], timeZone)
+  const schedules = scheduleNodes(
+    group.schedule_slots ?? [],
+    group.time_zone ?? undefined,
+  )
 
   return compact({
     '@context': 'https://schema.org',

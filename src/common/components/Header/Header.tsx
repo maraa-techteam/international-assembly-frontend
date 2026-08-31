@@ -1,10 +1,12 @@
 'use client'
 
+import { Button } from '@/common/components/Button/Button'
 import { DesktopSubMenu } from '@/common/components/Header/components/DesktopSubMenu'
 import { MobileSubMenu } from '@/common/components/Header/components/MobileSubMenu'
 import { NavItem } from '@/common/components/Header/components/NavItem'
 import { headerNavigationData } from '@/common/components/Header/data'
 import { Icon } from '@/common/components/Icon/Icon'
+import { SearchBar } from '@/common/components/SearchBar/SearchBar'
 import { useEscapeClose } from '@/common/hooks/useEscapeClose'
 import { useIsMobile } from '@/common/hooks/useMobile'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
@@ -17,6 +19,7 @@ import { useEffect, useRef, useState } from 'react'
 type HeaderProps = { headerData: typeof headerNavigationData }
 
 export function Header({ headerData }: HeaderProps) {
+  const [isSearchActive, setIsSearchActive] = useState<boolean>(false)
   const [isMobileMenuActive, setIsMobileMenuActive] = useState<boolean>(false)
   const [navigation, setNavigation] =
     useState<typeof headerNavigationData>(headerData)
@@ -28,10 +31,12 @@ export function Header({ headerData }: HeaderProps) {
   const headerRef = useRef<HTMLDivElement>(null)
 
   useOnClickOutside(headerRef, () => {
+    setIsSearchActive(false)
     resetSelect()
   })
 
   useEscapeClose(() => {
+    setIsSearchActive(false)
     if (navigation.some((item) => item.isActive)) {
       resetSelect()
       return
@@ -48,6 +53,15 @@ export function Header({ headerData }: HeaderProps) {
     })
   }
 
+  const toggleSearch = (active: boolean) => {
+    const scrollY = window.scrollY
+    setIsSearchActive(active)
+    // Restore scroll position after layout change
+    requestAnimationFrame(() => {
+      window.scrollTo(0, scrollY)
+    })
+  }
+
   const resetSelect = () => {
     setNavigation((prev) => {
       if (!prev.some((item) => item.isActive)) return prev
@@ -57,9 +71,10 @@ export function Header({ headerData }: HeaderProps) {
     })
   }
 
-  // Close the mobile menu on route change (e.g. browser back/forward)
+  // Close the mobile menu and search bar on route change (e.g. browser back/forward)
   useEffect(() => {
     setIsMobileMenuActive(false)
+    toggleSearch(false)
     resetSelect()
   }, [pathname])
 
@@ -89,7 +104,7 @@ export function Header({ headerData }: HeaderProps) {
         }
 
         if (currentScroll > lastScroll) {
-          if (!isMobileMenuActive) {
+          if (!isSearchActive && !isMobileMenuActive) {
             setHidden(true)
             resetSelect()
           }
@@ -105,7 +120,7 @@ export function Header({ headerData }: HeaderProps) {
     window.addEventListener('scroll', handleScroll, { passive: true })
 
     return () => window.removeEventListener('scroll', handleScroll)
-  }, [isMobileMenuActive])
+  }, [isMobileMenuActive, isSearchActive])
 
   const isMobile = useIsMobile()
 
@@ -114,6 +129,7 @@ export function Header({ headerData }: HeaderProps) {
       ref={headerRef}
       className={cn(
         'fixed top-0 z-50 flex w-full translate-y-0 flex-row items-center justify-between gap-4 bg-white p-4 transition-transform duration-300 lg:gap-8 lg:px-18',
+        isSearchActive && 'flex-col items-stretch lg:flex-row',
         hidden && !isMobileMenuActive && '-translate-y-full',
       )}
     >
@@ -127,35 +143,61 @@ export function Header({ headerData }: HeaderProps) {
             alt='Логотип АА'
           />
         </Link>
+        {isSearchActive && isMobile && (
+          <Button
+            onClick={() => toggleSearch(false)}
+            variant={'outlined'}
+            size={'sm'}
+            color={'white'}
+            className='p-0 text-black'
+          >
+            <Icon icon='close' />
+          </Button>
+        )}
       </div>
       {isMobile && (
-        <div className='flex w-fit flex-row items-center justify-end gap-2'>
-          {/* Hamburger menu toggle */}
-          {isMobileMenuActive ? (
-            <button
-              aria-expanded={isMobileMenuActive}
-              aria-controls='mobile-menu'
-              aria-haspopup
-              aria-label='Закрыть мобильное меню'
-              onClick={() => {
-                resetSelect()
-                setIsMobileMenuActive((prev) => !prev)
-              }}
-              className={cn('block lg:hidden')}
-            >
-              <Icon icon='close' className='text-contrast' size='md' />
-            </button>
-          ) : (
-            <button
-              aria-expanded={isMobileMenuActive}
-              aria-controls='mobile-menu'
-              aria-haspopup
-              aria-label='Открыть мобильное меню'
-              onClick={() => setIsMobileMenuActive((prev) => !prev)}
-              className={cn('block lg:hidden')}
-            >
-              <Icon icon='hamburger' className='text-contrast' size='md' />
-            </button>
+        <div className='flex gap-4'>
+          <SearchBar
+            className={cn(
+              'flex lg:hidden lg:rounded-xl',
+              isMobileMenuActive && 'hidden',
+              isSearchActive && 'lg:max-w-125',
+            )}
+            placeholder='Поиск на сайте'
+            isExpanded={isSearchActive}
+            onToggle={toggleSearch}
+            onSearch={() => toggleSearch(false)}
+          />
+          {!isSearchActive && (
+            <div className='flex w-fit flex-row items-center justify-end gap-2'>
+              {/* Hamburger menu toggle */}
+              {isMobileMenuActive ? (
+                <button
+                  aria-expanded={isMobileMenuActive}
+                  aria-controls='mobile-menu'
+                  aria-haspopup
+                  aria-label='Закрыть мобильное меню'
+                  onClick={() => {
+                    resetSelect()
+                    setIsMobileMenuActive((prev) => !prev)
+                  }}
+                  className={cn('block lg:hidden')}
+                >
+                  <Icon icon='close' className='text-contrast' size='md' />
+                </button>
+              ) : (
+                <button
+                  aria-expanded={isMobileMenuActive}
+                  aria-controls='mobile-menu'
+                  aria-haspopup
+                  aria-label='Открыть мобильное меню'
+                  onClick={() => setIsMobileMenuActive((prev) => !prev)}
+                  className={cn('block lg:hidden')}
+                >
+                  <Icon icon='hamburger' className='text-contrast' size='md' />
+                </button>
+              )}
+            </div>
           )}
         </div>
       )}
@@ -202,7 +244,7 @@ export function Header({ headerData }: HeaderProps) {
         </ul>
       </nav>
       {/* Desktop menu */}
-      {!isMobile && (
+      {!isSearchActive && !isMobile && (
         <div className='flex w-full items-center justify-center'>
           <nav aria-label='Основная навигация'>
             <ul className='hidden h-fit flex-row items-center justify-start gap-x-8 gap-y-2 bg-white lg:flex'>
@@ -230,6 +272,16 @@ export function Header({ headerData }: HeaderProps) {
           </nav>
         </div>
       )}
+      <SearchBar
+        className={cn(
+          isMobileMenuActive && 'hidden',
+          'hidden lg:flex lg:rounded-xl',
+          isSearchActive && 'lg:max-w-125',
+        )}
+        isExpanded={isSearchActive}
+        onToggle={toggleSearch}
+        onSearch={() => toggleSearch(false)}
+      />
     </header>
   )
 }

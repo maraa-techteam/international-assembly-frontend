@@ -11,7 +11,6 @@ import { fetchGroup } from '@/features/groups/api/fetchGroup'
 import { Gallery } from '@/features/groups/components/Gallery/Gallery'
 import { GroupSchedule } from '@/features/groups/components/GroupSchedule/GroupSchedule'
 import type { GroupContact } from '@/features/groups/types/Group.type'
-import { toIanaTimeZone } from '@/features/groups/utils/toIanaTimeZone'
 import Link from 'next/link'
 
 export async function GroupDetailPage({
@@ -27,13 +26,7 @@ export async function GroupDetailPage({
     <Section color='white' className='w-full lg:max-w-200'>
       {group && (
         <>
-          <JsonLd
-            schema={groupEventSchema(
-              group,
-              path,
-              toIanaTimeZone(group.time_zone, group.country),
-            )}
-          />
+          <JsonLd schema={groupEventSchema(group, path)} />
           <JsonLd
             schema={breadcrumbSchema([
               { name: 'Главная', path: '/' },

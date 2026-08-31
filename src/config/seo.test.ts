@@ -1,8 +1,8 @@
-import { LAUNCH_ROUTES } from './launchRoutes'
+import { STATIC_ROUTES } from './routes'
 import { PAGE_SEO, buildPageMetadata, routesMissingSeo } from './seo'
 
 describe('PAGE_SEO', () => {
-  it('covers every static launch route', () => {
+  it('covers every static route', () => {
     expect(routesMissingSeo()).toEqual([])
   })
 
@@ -21,7 +21,7 @@ describe('PAGE_SEO', () => {
   })
 
   it('keeps every rendered title inside the length search results show', () => {
-    const tooLong = LAUNCH_ROUTES.filter((path) => {
+    const tooLong = STATIC_ROUTES.filter((path) => {
       const title = buildPageMetadata({ path }).title as string
       return title.length > 60
     })

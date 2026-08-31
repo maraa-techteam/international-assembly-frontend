@@ -46,9 +46,9 @@ export default async function Home() {
             size='lg'
             color='primary'
             as='link'
-            href='/start-the-journey'
+            href='/groups'
           >
-            Начать путь
+            Найти группу
           </Button>
           <Button
             variant='contained'
