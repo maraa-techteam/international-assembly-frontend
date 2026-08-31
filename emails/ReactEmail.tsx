@@ -16,6 +16,15 @@ type ReactEmailProps = {
   subject: string
   message: string
   previewText?: string
+  /**
+   * Version of the privacy notice the sender agreed to.
+   *
+   * Art. 7(1) GDPR puts the burden of demonstrating consent on the controller,
+   * and the mailbox is the only place this correspondence is kept — so the
+   * record of what was consented to travels with the message rather than
+   * living in a system nobody would think to check.
+   */
+  consentNoticeVersion?: string
 }
 
 export const ReactEmail = ({
@@ -24,6 +33,7 @@ export const ReactEmail = ({
   subject,
   message,
   previewText,
+  consentNoticeVersion,
 }: ReactEmailProps) => {
   const date = new Date()
   return (
@@ -59,6 +69,13 @@ export const ReactEmail = ({
               <Text className='m-0 text-sm leading-relaxed whitespace-pre-wrap text-gray-600'>
                 {message}
               </Text>
+              {consentNoticeVersion && (
+                <Text className='m-0 mt-8 text-xs text-gray-400'>
+                  Отправитель дал явное согласие на обработку своих данных,
+                  включая сведения о здоровье, в редакции уведомления о
+                  конфиденциальности от {consentNoticeVersion}.
+                </Text>
+              )}
             </Section>
 
             {/* Footer Section */}

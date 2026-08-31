@@ -29,6 +29,7 @@ export const STATIC_ROUTES = [
   '/news-and-events',
   '/literature',
   '/services',
+  '/privacy',
 ] as const
 
 /**

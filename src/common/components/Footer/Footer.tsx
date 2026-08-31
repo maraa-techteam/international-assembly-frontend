@@ -1,5 +1,11 @@
 import { Icon } from '@/common/components/Icon/Icon'
 import { Typography } from '@/common/components/Typography/Typography'
+import {
+  LEGAL_ENTITY_NAME,
+  POSTAL_ADDRESS,
+  REGISTRATION,
+  SITE_NAME_FULL,
+} from '@/config/site'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -67,14 +73,27 @@ export function Footer({ footerData }: FooterProps) {
       <div className='h-[1px] w-full bg-white opacity-40' />
       <div className='flex flex-col gap-1'>
         <Typography variant='body' className='text-contrast text-sm opacity-40'>
-          {`© ${date.getFullYear()} Международная Ассамблея по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков`}
+          {`© ${date.getFullYear()} ${SITE_NAME_FULL}`}
         </Typography>
         <Typography variant='body' className='text-contrast text-sm opacity-40'>
-          Biedrība MAPAA, Charity ID: 50008348781
+          {`${LEGAL_ENTITY_NAME}, Charity ID: ${REGISTRATION.number}`}
         </Typography>
         <Typography variant='body' className='text-contrast text-sm opacity-40'>
-          16 Rakstinu iela, Dreilini, Ropazu novads, LV-2130, Latvia
+          {POSTAL_ADDRESS}
         </Typography>
+        {/*
+          Art. 13 GDPR is a duty to inform, which only works if the notice is
+          reachable from every page — hence here rather than only in the nav
+          column above, which collapses behind a summary on mobile.
+        */}
+        <Link href='/privacy' className='w-fit'>
+          <Typography
+            variant='body'
+            className='text-contrast text-sm underline opacity-60 transition-opacity hover:opacity-100'
+          >
+            Уведомление о конфиденциальности
+          </Typography>
+        </Link>
       </div>
     </footer>
   )

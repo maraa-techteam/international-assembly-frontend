@@ -114,11 +114,13 @@ export function IsAaForMePage({
               </button>
             </div>
           </div>
-
-          <Typography variant='h2'>{question.question}</Typography>
-
-          <Typography variant='body'>{question.description}</Typography>
-
+          <div
+            data-testid='quiz-question-block'
+            className='flex min-h-96 w-full flex-col gap-6 min-[360px]:min-h-77 min-[480px]:min-h-58 sm:min-h-45 md:min-h-39 lg:min-h-43'
+          >
+            <Typography variant='h2'>{question.question}</Typography>
+            <Typography variant='body'>{question.description}</Typography>
+          </div>
           <Grid as='div' className='lg:flex lg:flex-row' columns={2}>
             <Button
               variant={currentAnswer === true ? 'contained' : 'outlined'}

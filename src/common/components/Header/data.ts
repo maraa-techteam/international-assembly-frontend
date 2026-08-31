@@ -158,6 +158,13 @@ export const footerNavigationData: NavigationType[] = [
           'Здесь вы сможете оставить вопрос или предложение админу сайта.',
         isFrequentlyVisited: false,
       },
+      {
+        name: 'Конфиденциальность',
+        href: '/privacy',
+        description:
+          'Какие данные мы получаем через формы сайта, зачем они нужны, кому передаются и как их удалить.',
+        isFrequentlyVisited: false,
+      },
     ],
   },
 ]

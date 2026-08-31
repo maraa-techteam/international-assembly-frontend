@@ -3,6 +3,8 @@ type ContactPayload = {
   email: string
   subject: string
   message: string
+  /** Art. 9(2)(a) explicit consent. Both endpoints reject a submission without it. */
+  consent: boolean
 }
 
 type SubmitOptions = {
@@ -23,6 +25,7 @@ export async function submitContactForm({
     body.set('name', payload.name)
     body.set('email', payload.email)
     body.set('message', payload.message)
+    body.set('consent', String(payload.consent))
     if (payload.subject) body.set('subject', payload.subject)
     body.set('file', file)
 

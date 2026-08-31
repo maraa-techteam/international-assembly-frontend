@@ -9,7 +9,7 @@ const ENTITIES: Record<string, string> = {
   '&mdash;': '—',
   '&ndash;': '–',
   '&hellip;': '…',
-  //eslint-disable-next-line
+
   '&quot;': '"',
   //eslint-disable-next-line
   '&#39;': "'",

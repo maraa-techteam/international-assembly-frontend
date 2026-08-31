@@ -29,6 +29,46 @@ export const REGISTRATION = {
   number: '50008348781',
 }
 
+/** The association's registered name, as it appears in the register. */
+export const LEGAL_ENTITY_NAME = 'Biedrība MAPAA'
+
+/**
+ * Registered office.
+ *
+ * The footer and the privacy notice both publish this. A notice naming a
+ * different address than the page it is linked from is exactly the kind of
+ * discrepancy a supervisory authority picks up on, so the string lives here
+ * rather than inline in `Footer.tsx`, where it used to be.
+ */
+export const POSTAL_ADDRESS =
+  '16 Rakstinu iela, Dreilini, Ropazu novads, LV-2130, Latvia'
+
+/**
+ * Date the privacy notice in `PrivacyPolicyPage` last changed.
+ *
+ * It lives here rather than in the page because the two form endpoints need it
+ * too: it is stamped into every submission email, so the secretary's mailbox
+ * carries the Art. 7(1) record of which wording the sender actually agreed to.
+ *
+ * Bump it whenever the notice changes in a way that affects what a person is
+ * consenting to.
+ */
+export const PRIVACY_NOTICE_UPDATED_AT = '2026-08-31'
+
+/**
+ * The authority a visitor can complain to under Art. 77 GDPR.
+ *
+ * Latvia's, because that is where the association is registered — a data
+ * subject may also go to the authority where they themselves live, which the
+ * privacy notice says explicitly.
+ */
+export const SUPERVISORY_AUTHORITY = {
+  name: 'Datu valsts inspekcija',
+  address: 'Elijas iela 17, Rīga, LV-1050, Latvia',
+  email: 'pasts@dvi.gov.lv',
+  url: 'https://www.dvi.gov.lv',
+}
+
 /**
  * Profiles the organisation controls, for the `sameAs` claim in JSON-LD.
  *

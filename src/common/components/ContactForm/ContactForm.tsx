@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/common/components/Button/Button'
+import { ConsentField } from '@/common/components/ContactForm/components/ConsentField'
 import { Field } from '@/common/components/ContactForm/components/Field'
 import { FileField } from '@/common/components/ContactForm/components/FileField'
 import { submitContactForm } from '@/common/components/ContactForm/contactFormApi'
@@ -12,6 +13,7 @@ import {
   isPdfFile,
   maxUploadFileSizeInBytes,
 } from '@/common/utils/fileUploadValidation'
+import { TELEGRAM_HELP_URL } from '@/config/site'
 import { useId, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -20,6 +22,8 @@ type FormValues = {
   email: string
   subject: string
   message: string
+  /** Art. 9(2)(a) explicit consent. See `ConsentField` for why it is required. */
+  consent: boolean
 }
 
 type SubmitStatus = 'idle' | 'loading' | 'success' | 'error'
@@ -50,6 +54,7 @@ export function ContactForm({
   const subjectInputId = `${idPrefix}-subject`
   const messageInputId = `${idPrefix}-message`
   const fileInputId = `${idPrefix}-file`
+  const consentInputId = `${idPrefix}-consent`
 
   const {
     register,
@@ -62,6 +67,7 @@ export function ContactForm({
       email: '',
       subject: presetSubject ?? '',
       message: '',
+      consent: false,
     },
   })
 
@@ -101,6 +107,7 @@ export function ContactForm({
           email: '',
           subject: presetSubject ?? '',
           message: '',
+          consent: false,
         })
         setFile(null)
         setFileError(undefined)
@@ -127,7 +134,9 @@ export function ContactForm({
       <Field
         id={nameInputId}
         variant='name'
-        registration={register('name', { required: 'Введите ваше имя' })}
+        registration={register('name', {
+          required: 'Введите имя или псевдоним',
+        })}
         error={errors.name?.message}
       />
 
@@ -160,6 +169,21 @@ export function ContactForm({
         error={errors.message?.message}
       />
 
+      <Typography variant='body' className='text-sm'>
+        Пожалуйста, не описывайте здесь состояние здоровья или употребление
+        алкоголя — письмо попадает в обычный почтовый ящик. Если вам нужна
+        помощь, напишите в анонимный чат-бот{' '}
+        <a
+          href={TELEGRAM_HELP_URL}
+          target='_blank'
+          rel='noopener noreferrer'
+          className='text-primary hover:text-secondary underline'
+        >
+          @QSAAbot
+        </a>
+        .
+      </Typography>
+
       {includeFileUpload && (
         <FileField
           id={fileInputId}
@@ -171,6 +195,14 @@ export function ContactForm({
           error={fileError}
         />
       )}
+
+      <ConsentField
+        id={consentInputId}
+        registration={register('consent', {
+          required: 'Без согласия мы не можем обработать обращение',
+        })}
+        error={errors.consent?.message}
+      />
 
       {status === 'success' && (
         <Typography variant='body' className='text-green-700'>

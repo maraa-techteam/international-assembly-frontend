@@ -4,6 +4,7 @@ import {
   maxUploadFileSizeInBytes,
   sanitizePdfFilename,
 } from '@/common/utils/fileUploadValidation'
+import { PRIVACY_NOTICE_UPDATED_AT } from '@/config/site'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
@@ -22,6 +23,7 @@ export async function POST(request: NextRequest) {
     const message = formData.get('message')
     const subject = formData.get('subject')
     const file = formData.get('file')
+    const consent = formData.get('consent')
 
     if (
       typeof name !== 'string' ||
@@ -40,6 +42,19 @@ export async function POST(request: NextRequest) {
     if (!emailRegex.test(email)) {
       return NextResponse.json(
         { error: 'Неверный адрес электронной почты' },
+        { status: 400 },
+      )
+    }
+
+    /**
+     * Art. 9(2)(a) consent is checked here as well as in the form because the
+     * checkbox is a UI affordance, not a control — this endpoint accepts a direct
+     * POST from anywhere. A submission without it is refused rather than quietly
+     * processed, since the whole point of the basis is that it was actually given.
+     */
+    if (consent !== 'true') {
+      return NextResponse.json(
+        { error: 'Требуется согласие на обработку данных' },
         { status: 400 },
       )
     }
@@ -90,7 +105,13 @@ export async function POST(request: NextRequest) {
       to: [secretaryEmail],
       subject: normalizedSubject,
       replyTo: email.trim(),
-      react: ReactEmail({ name, email, subject: normalizedSubject, message }),
+      react: ReactEmail({
+        name,
+        email,
+        subject: normalizedSubject,
+        message,
+        consentNoticeVersion: PRIVACY_NOTICE_UPDATED_AT,
+      }),
       attachments: [
         {
           filename: safeFilename,

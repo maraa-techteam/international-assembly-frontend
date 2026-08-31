@@ -15,9 +15,12 @@ export const errorInputClasses =
   'border-red-500/20 focus:border-red-500/20 focus:ring-red-500/20'
 
 export function Field({ id, variant, registration, error }: Props) {
+  // Art. 5(1)(c) data minimisation and AA's own tradition of anonymity point
+  // the same way here: the Assembly has no use for a legal name, so the field
+  // asks for whatever the person wants to be called and never verifies it.
   const label =
     variant === 'name'
-      ? 'Ваше имя'
+      ? 'Ваше имя или псевдоним'
       : variant === 'email'
         ? 'Ваш e-mail'
         : variant === 'subject'

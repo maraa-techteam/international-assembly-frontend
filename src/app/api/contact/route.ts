@@ -1,4 +1,5 @@
 import { fetchContactsPage } from '@/common/api/fetchContactsPage'
+import { PRIVACY_NOTICE_UPDATED_AT } from '@/config/site'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
@@ -11,7 +12,10 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { name, email, subject, message } = body as Record<string, unknown>
+    const { name, email, subject, message, consent } = body as Record<
+      string,
+      unknown
+    >
 
     if (
       typeof name !== 'string' ||
@@ -36,6 +40,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    /**
+     * Art. 9(2)(a) consent is checked here as well as in the form because the
+     * checkbox is a UI affordance, not a control — this endpoint accepts a direct
+     * POST from anywhere. A submission without it is refused rather than quietly
+     * processed, since the whole point of the basis is that it was actually given.
+     */
+    if (consent !== true) {
+      return NextResponse.json(
+        { error: 'Consent is required' },
+        { status: 400 },
+      )
+    }
+
     const pageData = await fetchContactsPage()
     if (!pageData?.secretary_email) {
       return NextResponse.json(
@@ -52,7 +69,13 @@ export async function POST(request: NextRequest) {
       to: [secretaryEmail],
       subject: subject.trim(),
       replyTo: email.trim(),
-      react: ReactEmail({ name, email, subject, message }),
+      react: ReactEmail({
+        name,
+        email,
+        subject,
+        message,
+        consentNoticeVersion: PRIVACY_NOTICE_UPDATED_AT,
+      }),
     })
 
     return NextResponse.json({ success: true })
