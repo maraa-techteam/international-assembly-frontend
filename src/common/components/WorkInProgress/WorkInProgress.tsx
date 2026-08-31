@@ -2,7 +2,6 @@ import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
 import Image from 'next/image'
 
-/** Stands in for a section whose content is not ready to publish yet. */
 export function WorkInProgress() {
   return (
     <Section
