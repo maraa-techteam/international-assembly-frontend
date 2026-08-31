@@ -70,6 +70,17 @@ export function organizationSchema(): JsonLdNode {
   })
 }
 
+/**
+ * The site itself, with its internal search declared as a `SearchAction`.
+ *
+ * `query-input` names the placeholder in `urlTemplate`, which is what lets a
+ * consumer build a real query URL rather than just knowing that search exists.
+ * The parameter is `search`, matching what `SearchBar` pushes and what
+ * `/search` reads — if one of those is ever renamed, this has to move with it.
+ *
+ * Google dropped the sitelinks search box rich result in 2024, so this serves
+ * other structured-data consumers rather than the site's own SERP appearance.
+ */
 export function webSiteSchema(): JsonLdNode {
   return {
     '@type': 'WebSite',
@@ -80,6 +91,14 @@ export function webSiteSchema(): JsonLdNode {
     description: SITE_DESCRIPTION,
     inLanguage: 'ru',
     publisher: { '@id': ORGANIZATION_ID },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${SITE_URL}/search?search={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   }
 }
 

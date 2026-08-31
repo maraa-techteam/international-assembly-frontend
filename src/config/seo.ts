@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { LAUNCH_ROUTES } from './launchRoutes'
+import { STATIC_ROUTES } from './routes'
 import { OG_IMAGE, SITE_NAME, SITE_NAME_FULL, SITE_URL } from './site'
 
 type PageSeo = {
@@ -97,6 +97,16 @@ export const PAGE_SEO: Record<string, PageSeo> = {
     description:
       'Новости Международной Ассамблеи русскоязычных Анонимных Алкоголиков, анонсы собраний, конференций и событий сообщества.',
   },
+  '/literature': {
+    title: 'Литература АА на русском',
+    description:
+      'Книги, брошюры, буклеты и рабочие тетради Анонимных Алкоголиков на русском языке, включая издания, одобренные конференцией.',
+  },
+  '/services': {
+    title: 'Служения в сообществе АА',
+    description:
+      'Служения Международной Ассамблеи русскоязычных АА: чем можно помочь сообществу, какие условия есть у каждого служения и как подать заявку.',
+  },
 }
 
 type PageMetadataInput = {
@@ -166,5 +176,5 @@ export function buildPageMetadata({
 
 /** Static routes that ship without default copy. Exported for the test. */
 export function routesMissingSeo(): string[] {
-  return LAUNCH_ROUTES.filter((path) => !PAGE_SEO[path])
+  return STATIC_ROUTES.filter((path) => !PAGE_SEO[path])
 }

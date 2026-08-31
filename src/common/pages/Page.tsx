@@ -6,7 +6,6 @@ import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPre
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
-import { isLaunchRoute } from '@/config/launchRoutes'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -14,19 +13,11 @@ import { PageType } from './Page.type'
 
 type PageProps = PageType
 export default async function Page(page: PageProps) {
-  // CTAs and the additional link are authored in the CMS and still point at
-  // sections that are not part of the launch scope, so drop the ones that
-  // would lead to a 404.
-  const buttonLeft = page.button_left?.filter((button) =>
-    isLaunchRoute(button.link),
-  )
-  const buttonRight = page.button_right?.filter((button) =>
-    isLaunchRoute(button.link),
-  )
-  const additionalLink =
-    page.additional_link && isLaunchRoute(page.additional_link.href)
-      ? page.additional_link
-      : undefined
+  const {
+    button_left: buttonLeft,
+    button_right: buttonRight,
+    additional_link: additionalLink,
+  } = page
 
   return (
     <>

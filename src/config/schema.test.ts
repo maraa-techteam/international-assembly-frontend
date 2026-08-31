@@ -39,12 +39,33 @@ describe('organizationSchema', () => {
 })
 
 describe('siteSchema', () => {
+  const website = () => {
+    const graph = siteSchema() as { '@graph': Record<string, unknown>[] }
+    return graph['@graph'].find((n) => n['@type'] === 'WebSite')
+  }
+
   it('emits one graph whose website points at the organisation node', () => {
-    const graph = siteSchema() as {
-      '@graph': Record<string, unknown>[]
+    expect(website()?.publisher).toEqual({ '@id': ORGANIZATION_ID })
+  })
+
+  it('declares the internal search as a resolvable SearchAction', () => {
+    // The placeholder named by `query-input` has to be the one that actually
+    // appears in `urlTemplate`, or a consumer cannot build a query URL.
+    const action = website()?.potentialAction as {
+      'query-input': string
+      target: { urlTemplate: string }
     }
-    const website = graph['@graph'].find((n) => n['@type'] === 'WebSite')
-    expect(website?.publisher).toEqual({ '@id': ORGANIZATION_ID })
+    expect(action['query-input']).toBe('required name=search_term_string')
+    expect(action.target.urlTemplate).toContain('{search_term_string}')
+  })
+
+  it('points the search template at the param /search actually reads', () => {
+    const action = website()?.potentialAction as {
+      target: { urlTemplate: string }
+    }
+    expect(action.target.urlTemplate).toContain(
+      '/search?search={search_term_string}',
+    )
   })
 })
 
