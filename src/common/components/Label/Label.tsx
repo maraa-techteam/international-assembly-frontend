@@ -1,9 +1,12 @@
 import { Icon } from '@/common/components/Icon/Icon'
+import { IconType } from '@/common/components/Icon/Icon.type'
 import { cn } from '@/common/utils/cn'
 
-import { LabelType } from './Label.type'
-
-type LabelPropsType = LabelType & { className?: string }
+type LabelPropsType = {
+  text: string
+  icon?: IconType
+  className?: string
+}
 
 export function Label({ icon, text, className }: LabelPropsType) {
   return (

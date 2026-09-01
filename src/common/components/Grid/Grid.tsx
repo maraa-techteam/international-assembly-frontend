@@ -1,8 +1,6 @@
 import { cn } from '@/common/utils/cn'
 import { VariantProps, cva } from 'class-variance-authority'
 
-import { GridType } from './Grid.type'
-
 const gridVariants = cva('w-full grid', {
   variants: {
     columns: {
@@ -36,8 +34,11 @@ const gridVariants = cva('w-full grid', {
   },
 })
 
-type GridPropsType = VariantProps<typeof gridVariants> &
-  GridType & { className?: string }
+type GridPropsType = VariantProps<typeof gridVariants> & {
+  children: React.ReactNode
+  as?: 'div' | 'ul' | 'nav'
+  className?: string
+}
 
 export function Grid({
   children,

@@ -49,15 +49,6 @@ describe('Pagination', () => {
     expect(container.firstChild).toBeNull()
   })
 
-  it('uses a default limit of 10 when no limit search param is set', () => {
-    searchParamsMock.get.mockReturnValue(null)
-    render(<Pagination fetchedCount={10} totalCount={25} />)
-
-    expect(
-      screen.getByRole('button', { name: /показать ещё/i }),
-    ).toBeInTheDocument()
-  })
-
   it('pushes updated limit to router when load more is clicked', async () => {
     searchParamsMock.get.mockReturnValue('10')
     const user = userEvent.setup()

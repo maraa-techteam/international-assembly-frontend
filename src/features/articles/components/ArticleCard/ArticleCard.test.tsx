@@ -35,25 +35,15 @@ const mockProps: Article = {
 }
 
 describe('ArticleCard component', () => {
-  it('renders title', () => {
+  it('renders the title, perex and published date', () => {
     render(<ArticleCard {...mockProps} />)
 
     expect(screen.getByText('Заголовок статьи')).toBeInTheDocument()
-  })
-
-  it('renders text description', () => {
-    render(<ArticleCard {...mockProps} />)
-
     expect(
       screen.getByText(
         'Краткое описание статьи для предварительного просмотра',
       ),
     ).toBeInTheDocument()
-  })
-
-  it('renders published date', () => {
-    render(<ArticleCard {...mockProps} />)
-
     expect(screen.getByText(formatDate('15 января 2024'))).toBeInTheDocument()
   })
 

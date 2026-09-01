@@ -3,9 +3,11 @@ import { cn } from '@/common/utils/cn'
 import { ServiceLabels } from '@/features/services/components/ServiceLabels/ServiceLabels'
 import Link from 'next/link'
 
-import { SearchServiceResultCardType } from './SearchServiceResultCard.type'
+import { ServiceSearchResult } from '../../types/SearchResult.type'
 
-type SearchServiceResultCardProps = SearchServiceResultCardType
+type SearchServiceResultCardProps = ServiceSearchResult & {
+  className?: string
+}
 
 export function SearchServiceResultCard({
   name,

@@ -5,9 +5,11 @@ import { Typography } from '@/common/components/Typography/Typography'
 import { cn } from '@/common/utils/cn'
 import Link from 'next/link'
 
-import { SearchGroupResultCardType } from './SearchGroupResultCard.type'
+import { GroupSearchResult } from '../../types/SearchResult.type'
 
-type SearchGroupResultCardProps = SearchGroupResultCardType
+type SearchGroupResultCardProps = GroupSearchResult & {
+  className?: string
+}
 
 export function SearchGroupResultCard({
   name,

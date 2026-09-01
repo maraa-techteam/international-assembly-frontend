@@ -20,21 +20,11 @@ const mockGroup = {
 }
 
 describe('GroupsTableItem', () => {
-  it('renders the group name', () => {
+  it('renders the group name, country and presence', () => {
     render(<GroupsTableItem group={mockGroup} />)
 
     expect(screen.getByText('Тестовая группа')).toBeInTheDocument()
-  })
-
-  it('renders the group country', () => {
-    render(<GroupsTableItem group={mockGroup} />)
-
     expect(screen.getByText('Россия')).toBeInTheDocument()
-  })
-
-  it('renders the group presence', () => {
-    render(<GroupsTableItem group={mockGroup} />)
-
     expect(screen.getByText('Онлайн')).toBeInTheDocument()
   })
 

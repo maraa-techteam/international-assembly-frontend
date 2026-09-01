@@ -6,9 +6,17 @@ import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { ArticleCardType } from './ArticleCard.type'
-
-type ArticleCardProps = ArticleCardType
+type ArticleCardProps = {
+  id: string
+  title: string
+  perex: string
+  image: string | null
+  date_created: string
+  isHighlighted?: boolean
+  className?: string
+  slug: string
+  related_articles?: ArticleCardProps[]
+}
 
 export function ArticleCard({
   title,

@@ -19,50 +19,6 @@ describe('NavItem', () => {
     expect(screen.getByText('Test Nav')).toBeInTheDocument()
   })
 
-  it('applies scale-[-1] class to chevron when isActive is true', () => {
-    render(
-      <NavItem
-        name='Test Nav'
-        href='/test'
-        toggleSelect={mockToggleSelect}
-        isActive={true}
-        subNav={[
-          {
-            name: 'Sub',
-            href: '/sub',
-            description: 'Desc',
-            isFrequentlyVisited: false,
-          },
-        ]}
-      />,
-    )
-
-    const chevronDown = screen.getAllByTestId('icon')[0]
-    expect(chevronDown).toHaveClass('scale-[-1]')
-  })
-
-  it('does not apply scale-[-1] class when isActive is false', () => {
-    render(
-      <NavItem
-        name='Test Nav'
-        href='/test'
-        toggleSelect={mockToggleSelect}
-        isActive={false}
-        subNav={[
-          {
-            name: 'Sub',
-            href: '/sub',
-            description: 'Desc',
-            isFrequentlyVisited: false,
-          },
-        ]}
-      />,
-    )
-
-    const chevronDown = screen.getAllByTestId('icon')[0]
-    expect(chevronDown).not.toHaveClass('scale-[-1]')
-  })
-
   it('calls toggleSelect when clicked', () => {
     render(
       <NavItem

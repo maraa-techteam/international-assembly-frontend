@@ -1,10 +1,21 @@
 import { cn } from '@/common/utils/cn'
 import { type VariantProps, cva } from 'class-variance-authority'
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
-import { ButtonType } from './Button.type'
-
-type ButtonPropsType = ButtonType & { className?: string }
+type ButtonPropsType = {
+  variant: 'contained' | 'outlined'
+  type?: 'button' | 'submit'
+  size: 'sm' | 'lg'
+  as?: 'button' | 'link'
+  href?: string
+  color: 'primary' | 'white' | 'secondary'
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+  children?: ReactNode
+  label?: string
+  disabled?: boolean
+  className?: string
+}
 
 const buttonVariants = cva(
   [

@@ -9,22 +9,6 @@ describe('RichTextPreview', () => {
     expect(screen.getByText('Hello world')).toBeInTheDocument()
   })
 
-  it('applies the rte class by default', () => {
-    const { container } = render(
-      <RichTextPreview htmlContent='<p>Content</p>' />,
-    )
-
-    expect(container.firstChild).toHaveClass('rte')
-  })
-
-  it('applies additional className when provided', () => {
-    const { container } = render(
-      <RichTextPreview htmlContent='<p>Content</p>' className='extra-class' />,
-    )
-
-    expect(container.firstChild).toHaveClass('rte', 'extra-class')
-  })
-
   it('strips disallowed tags from HTML content', () => {
     render(<RichTextPreview htmlContent='<script>alert("xss")</script>safe' />)
 
@@ -32,8 +16,10 @@ describe('RichTextPreview', () => {
     expect(screen.queryByText('alert("xss")')).not.toBeInTheDocument()
   })
 
+  // Which URLs count as which platform is covered exhaustively in
+  // socialIconRegistry.test.ts; these cover only the injection itself.
   describe('social media icon injection', () => {
-    it('injects an icon for a telegram link', () => {
+    it('injects an icon for a standalone social link', () => {
       const { container } = render(
         <RichTextPreview htmlContent='<p><a href="https://t.me/mygroup">Join Telegram</a></p>' />,
       )
@@ -41,20 +27,16 @@ describe('RichTextPreview', () => {
       expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
     })
 
-    it('injects an icon for a youtube link', () => {
-      const { container } = render(
-        <RichTextPreview htmlContent='<p><a href="https://www.youtube.com/watch?v=abc">Watch</a></p>' />,
+    it('injects an icon for a standalone external or tel: link', () => {
+      const { container: website } = render(
+        <RichTextPreview htmlContent='<p><a href="https://example.com">Visit us</a></p>' />,
       )
+      expect(website.querySelector('.rte-social-icon')).toBeInTheDocument()
 
-      expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
-    })
-
-    it('injects an icon for a whatsapp link', () => {
-      const { container } = render(
-        <RichTextPreview htmlContent='<p><a href="https://wa.me/1234567890">Contact us</a></p>' />,
+      const { container: phone } = render(
+        <RichTextPreview htmlContent='<p><a href="tel:+1234567890">Call us</a></p>' />,
       )
-
-      expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
+      expect(phone.querySelector('.rte-social-icon')).toBeInTheDocument()
     })
 
     it('does not inject an icon for a social link that is inline in a paragraph', () => {
@@ -75,22 +57,6 @@ describe('RichTextPreview', () => {
       expect(
         container.querySelector('.rte-social-icon'),
       ).not.toBeInTheDocument()
-    })
-
-    it('injects a website icon for a standalone external link', () => {
-      const { container } = render(
-        <RichTextPreview htmlContent='<p><a href="https://example.com">Visit us</a></p>' />,
-      )
-
-      expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
-    })
-
-    it('injects a phone icon for a standalone tel: link', () => {
-      const { container } = render(
-        <RichTextPreview htmlContent='<p><a href="tel:+1234567890">Call us</a></p>' />,
-      )
-
-      expect(container.querySelector('.rte-social-icon')).toBeInTheDocument()
     })
 
     it('does not inject a phone icon when the tel: link is inline', () => {

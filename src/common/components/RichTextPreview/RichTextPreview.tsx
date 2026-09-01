@@ -2,9 +2,7 @@ import { cn } from '@/common/utils/cn'
 import { enrichLinksWithIcons } from '@/common/utils/enrichLinksWithIcons'
 import sanitizeHtml from 'sanitize-html'
 
-import { RichTextPreviewType } from './RichTextPreview.type'
-
-type RichTextPreviewPropsType = RichTextPreviewType & { className?: string }
+type RichTextPreviewPropsType = { htmlContent: string; className?: string }
 export function RichTextPreview({
   htmlContent,
   className,

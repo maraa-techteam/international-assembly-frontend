@@ -1,8 +1,6 @@
 import { cn } from '@/common/utils/cn'
 import { cva } from 'class-variance-authority'
 
-import { TypographyType } from './Typography.type'
-
 const typographyVariants = cva('text-contrast wrap-break-word', {
   variants: {
     variant: {
@@ -17,7 +15,17 @@ const typographyVariants = cva('text-contrast wrap-break-word', {
   },
 })
 
-type TypographyProps = TypographyType & { className?: string }
+type HeadingLevel = 'h1' | 'h2' | 'h3'
+
+type OtherTypographyVariant = 'body'
+
+type TypographyVariant = HeadingLevel | OtherTypographyVariant
+
+type TypographyProps = {
+  variant: TypographyVariant
+  children: React.ReactNode
+  className?: string
+}
 
 export function Typography({
   variant = 'body',

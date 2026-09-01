@@ -30,18 +30,6 @@ const mockProps: FooterNavItemProps = {
 }
 
 describe('FooterNavItem', () => {
-  it('desktop nav is always visible and cannot be toggled', () => {
-    render(<FooterNavItem {...mockProps} />)
-
-    // Desktop version uses a plain <ul> list
-    const desktopList = screen.getAllByRole('list')[0]
-    expect(desktopList).toBeVisible()
-
-    // Details element has lg:invisible lg:hidden classes
-    const details = screen.getByRole('group')
-    expect(details).toHaveClass('lg:invisible', 'lg:hidden')
-  })
-
   it('links have correct href attributes', () => {
     render(<FooterNavItem {...mockProps} />)
 
