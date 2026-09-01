@@ -34,23 +34,13 @@ const mockProps: SearchPostCardProps = {
 }
 
 describe('SearchPostCard component', () => {
-  it('renders title', () => {
+  it('renders the title, perex and published date', () => {
     render(<SearchPostCard {...mockProps} />)
 
     expect(screen.getByText('Заголовок результата поиска')).toBeInTheDocument()
-  })
-
-  it('renders perex text', () => {
-    render(<SearchPostCard {...mockProps} />)
-
     expect(
       screen.getByText('Краткое описание найденного материала'),
     ).toBeInTheDocument()
-  })
-
-  it('renders published date', () => {
-    render(<SearchPostCard {...mockProps} />)
-
     expect(
       screen.getByText(formatDate('2024-01-15T00:00:00.000Z')),
     ).toBeInTheDocument()

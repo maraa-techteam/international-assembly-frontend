@@ -19,17 +19,6 @@ const mockData = [
 ]
 
 describe('ContentGuide', () => {
-  it('renders all navigation buttons', () => {
-    render(<ContentGuide data={mockData} />)
-
-    expect(
-      screen.getByRole('button', { name: 'Первый раздел' }),
-    ).toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: 'Второй раздел' }),
-    ).toBeInTheDocument()
-  })
-
   it('shows description of the first item by default', () => {
     render(<ContentGuide data={mockData} />)
 

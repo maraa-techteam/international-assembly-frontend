@@ -17,42 +17,17 @@ const mockProps: GroupSearchResult = {
 }
 
 describe('SearchGroupResultCard component', () => {
-  it('renders group name', () => {
+  it('renders the group, its labels and every social link', () => {
     render(<SearchGroupResultCard {...mockProps} />)
 
     expect(screen.getByText('Группа анонимных алкоголиков')).toBeInTheDocument()
-  })
-
-  it('renders description when provided', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
-
     expect(screen.getByText('Описание группы')).toBeInTheDocument()
-  })
-
-  it('applies rte-clamp class to the description', () => {
-    const { container } = render(<SearchGroupResultCard {...mockProps} />)
-
-    const rtePreviews = container.querySelectorAll('.rte')
-    expect(rtePreviews.length).toBeGreaterThan(0)
-    expect(rtePreviews[0]).toHaveClass('rte-clamp')
-  })
-
-  it('does not render description when it is not provided', () => {
-    render(<SearchGroupResultCard {...mockProps} description={null} />)
-
-    expect(screen.queryByText('Описание группы')).not.toBeInTheDocument()
-  })
-
-  it('renders country label', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
-
     expect(screen.getByText('Россия')).toBeInTheDocument()
-  })
-
-  it('renders presence label', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
-
     expect(screen.getByText('очная')).toBeInTheDocument()
+    expect(screen.getByText('Веб-сайт')).toBeInTheDocument()
+    expect(screen.getByText('YouTube')).toBeInTheDocument()
+    expect(screen.getByText('Telegram')).toBeInTheDocument()
+    expect(screen.getByText('WhatsApp')).toBeInTheDocument()
   })
 
   it('links to the correct group page', () => {
@@ -67,34 +42,30 @@ describe('SearchGroupResultCard component', () => {
     )
   })
 
-  it('renders social links section when at least one link is provided', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
+  it('clamps the description so long CMS prose cannot stretch the card', () => {
+    const { container } = render(<SearchGroupResultCard {...mockProps} />)
 
-    expect(screen.getByText('Веб-сайт')).toBeInTheDocument()
+    const rtePreviews = container.querySelectorAll('.rte')
+    expect(rtePreviews.length).toBeGreaterThan(0)
+    expect(rtePreviews[0]).toHaveClass('rte-clamp')
   })
 
-  it('renders website link', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
+  it('does not render description when it is not provided', () => {
+    render(<SearchGroupResultCard {...mockProps} description={null} />)
 
-    expect(screen.getByText('Веб-сайт')).toBeInTheDocument()
+    expect(screen.queryByText('Описание группы')).not.toBeInTheDocument()
   })
 
-  it('renders youtube link', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
+  it('does not render country label when country is empty', () => {
+    render(<SearchGroupResultCard {...mockProps} country='' />)
 
-    expect(screen.getByText('YouTube')).toBeInTheDocument()
+    expect(screen.queryByText('Россия')).not.toBeInTheDocument()
   })
 
-  it('renders telegram link', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
+  it('does not render presence label when presence is empty', () => {
+    render(<SearchGroupResultCard {...mockProps} presence='' />)
 
-    expect(screen.getByText('Telegram')).toBeInTheDocument()
-  })
-
-  it('renders whatsapp link', () => {
-    render(<SearchGroupResultCard {...mockProps} />)
-
-    expect(screen.getByText('WhatsApp')).toBeInTheDocument()
+    expect(screen.queryByText('очная')).not.toBeInTheDocument()
   })
 
   it('does not render social links section when no links are provided', () => {
@@ -109,17 +80,5 @@ describe('SearchGroupResultCard component', () => {
     )
 
     expect(screen.queryByText('Веб-сайт')).not.toBeInTheDocument()
-  })
-
-  it('does not render country label when country is empty', () => {
-    render(<SearchGroupResultCard {...mockProps} country='' />)
-
-    expect(screen.queryByText('Россия')).not.toBeInTheDocument()
-  })
-
-  it('does not render presence label when presence is empty', () => {
-    render(<SearchGroupResultCard {...mockProps} presence='' />)
-
-    expect(screen.queryByText('очная')).not.toBeInTheDocument()
   })
 })

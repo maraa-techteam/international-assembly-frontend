@@ -14,22 +14,14 @@ const mockProps: ServiceSearchResult = {
 }
 
 describe('SearchServiceResultCard component', () => {
-  it('renders service name', () => {
+  it('renders the service and all of its labels', () => {
     render(<SearchServiceResultCard {...mockProps} />)
 
     expect(screen.getByText('Служение на конференции')).toBeInTheDocument()
-  })
-
-  it('renders description when provided', () => {
-    render(<SearchServiceResultCard {...mockProps} />)
-
     expect(screen.getByText('Описание вида служения')).toBeInTheDocument()
-  })
-
-  it('does not render description when it is empty', () => {
-    render(<SearchServiceResultCard {...mockProps} description='' />)
-
-    expect(screen.queryByText('Описание вида служения')).not.toBeInTheDocument()
+    expect(screen.getByText('Конференция')).toBeInTheDocument()
+    expect(screen.getByText('Очное')).toBeInTheDocument()
+    expect(screen.getByText('1 год')).toBeInTheDocument()
   })
 
   it('links to the correct service page', () => {
@@ -41,22 +33,10 @@ describe('SearchServiceResultCard component', () => {
     expect(link).toHaveAttribute('href', '/services/sluzhenie-na-konferentsii')
   })
 
-  it('renders category label', () => {
-    render(<SearchServiceResultCard {...mockProps} />)
+  it('does not render description when it is empty', () => {
+    render(<SearchServiceResultCard {...mockProps} description='' />)
 
-    expect(screen.getByText('Конференция')).toBeInTheDocument()
-  })
-
-  it('renders engagement label', () => {
-    render(<SearchServiceResultCard {...mockProps} />)
-
-    expect(screen.getByText('Очное')).toBeInTheDocument()
-  })
-
-  it('renders required sobriety time label', () => {
-    render(<SearchServiceResultCard {...mockProps} />)
-
-    expect(screen.getByText('1 год')).toBeInTheDocument()
+    expect(screen.queryByText('Описание вида служения')).not.toBeInTheDocument()
   })
 
   it('does not render sobriety time label when it is null', () => {

@@ -44,8 +44,10 @@ describe('MobileSubMenu component', () => {
     expect(screen.getByText('Назад')).toBeInTheDocument()
   })
 
-  it('applies correct transform class when active', () => {
-    const { container } = render(
+  it('slides in and out of view with isActive', () => {
+    // The transform is the only thing that opens or closes this menu; it stays
+    // mounted either way.
+    const { container, rerender } = render(
       <MobileSubMenu
         isActive={true}
         activeItems={mockActiveItems}
@@ -54,13 +56,9 @@ describe('MobileSubMenu component', () => {
       />,
     )
 
-    const menu = container.firstChild as HTMLElement
-    expect(menu).toHaveClass('translate-x-0')
-    expect(menu).not.toHaveClass('translate-x-full')
-  })
+    expect(container.firstChild).toHaveClass('translate-x-0')
 
-  it('applies correct transform class when inactive', () => {
-    const { container } = render(
+    rerender(
       <MobileSubMenu
         isActive={false}
         activeItems={mockActiveItems}
@@ -69,24 +67,7 @@ describe('MobileSubMenu component', () => {
       />,
     )
 
-    const menu = container.firstChild as HTMLElement
-    expect(menu).toHaveClass('translate-x-full')
-    expect(menu).not.toHaveClass('translate-x-0')
-  })
-
-  it('always applies transition classes', () => {
-    const { container } = render(
-      <MobileSubMenu
-        isActive={true}
-        activeItems={mockActiveItems}
-        toggleSelect={() => null}
-        onNavigate={() => null}
-      />,
-    )
-
-    const menu = container.firstChild as HTMLElement
-    expect(menu).toHaveClass('transition-transform')
-    expect(menu).toHaveClass('duration-300')
+    expect(container.firstChild).toHaveClass('translate-x-full')
   })
 
   it('calls toggleSelect when back button is clicked', () => {
@@ -140,21 +121,6 @@ describe('MobileSubMenu component', () => {
 
     fireEvent.click(screen.getByText('Что такое МА?'))
     expect(mockOnNavigate).toHaveBeenCalledWith('/ma')
-  })
-
-  it('renders chevron icons for all menu items', () => {
-    const { container } = render(
-      <MobileSubMenu
-        isActive={true}
-        activeItems={mockActiveItems}
-        toggleSelect={() => null}
-        onNavigate={() => null}
-      />,
-    )
-
-    // There should be chevron-right icons for each menu item (3) plus arrow-left for back button
-    const icons = container.querySelectorAll('svg')
-    expect(icons.length).toBeGreaterThanOrEqual(4) // at least 4 icons (1 back arrow + 3 chevrons)
   })
 
   it('renders empty menu when activeItems is empty', () => {

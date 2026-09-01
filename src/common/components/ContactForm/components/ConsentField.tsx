@@ -1,4 +1,4 @@
-import { cn } from '@/common/utils/cn'
+import { Checkbox } from '@/common/components/Checkbox/Checkbox'
 import Link from 'next/link'
 import type { UseFormRegisterReturn } from 'react-hook-form'
 
@@ -26,18 +26,14 @@ type Props = {
  */
 export function ConsentField({ id, registration, error }: Props) {
   return (
-    <div className='flex flex-col gap-1'>
-      <div className='flex flex-row items-start gap-3'>
-        <input
-          id={id}
-          type='checkbox'
-          className={cn(
-            'accent-primary border-primary/20 mt-0.5 size-5 shrink-0 cursor-pointer rounded border bg-white',
-            error && 'outline outline-red-400',
-          )}
-          {...registration}
-        />
-        <label htmlFor={id} className='text-foreground cursor-pointer text-sm'>
+    <Checkbox
+      id={id}
+      registration={registration}
+      error={error}
+      className='items-start'
+      labelClassName='text-foreground text-sm'
+      label={
+        <>
           Я соглашаюсь на обработку указанных мной данных — включая сведения о
           здоровье, если я решу их сообщить — для ответа на моё обращение.
           Подробнее в{' '}
@@ -48,9 +44,8 @@ export function ConsentField({ id, registration, error }: Props) {
             уведомлении о конфиденциальности
           </Link>
           .
-        </label>
-      </div>
-      {error && <span className='text-sm text-red-400'>{error}</span>}
-    </div>
+        </>
+      }
+    />
   )
 }

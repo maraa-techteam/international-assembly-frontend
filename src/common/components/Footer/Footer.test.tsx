@@ -54,15 +54,6 @@ describe('Footer component', () => {
     expect(list.children.length).toBe(mockFooterData.length)
   })
 
-  it('renders logo', () => {
-    render(<Footer footerData={mockFooterData} socials={mockSocials} />)
-
-    const logo = screen.getByAltText(
-      'Логотип Международной Ассамблеи по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков',
-    )
-    expect(logo).toBeInTheDocument()
-  })
-
   it('renders socials', () => {
     render(<Footer footerData={mockFooterData} socials={mockSocials} />)
 

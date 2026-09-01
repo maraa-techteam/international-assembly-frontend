@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { GroupSchedule } from './GroupSchedule'
 
 describe('GroupSchedule', () => {
-  it('renders all seven day abbreviations', () => {
+  it('renders all seven days and the time zone even with an empty schedule', () => {
     render(<GroupSchedule schedule={[]} time_zone='Европа/Лондон (UTC+0/+1)' />)
 
     expect(screen.getByText('Пн')).toBeInTheDocument()
@@ -13,20 +13,10 @@ describe('GroupSchedule', () => {
     expect(screen.getByText('Пт')).toBeInTheDocument()
     expect(screen.getByText('Сб')).toBeInTheDocument()
     expect(screen.getByText('Вс')).toBeInTheDocument()
+    expect(screen.getByText('Европа/Лондон (UTC+0/+1)')).toBeInTheDocument()
   })
 
-  it('renders time for scheduled days', () => {
-    render(
-      <GroupSchedule
-        schedule={[{ day: 'Понедельник', time: '19:00' }]}
-        time_zone='Европа/Лондон (UTC+0/+1)'
-      />,
-    )
-
-    expect(screen.getByText('19:00')).toBeInTheDocument()
-  })
-
-  it('renders multiple times for the same day', () => {
+  it('truncates seconds and renders multiple times for the same day', () => {
     render(
       <GroupSchedule
         schedule={[
@@ -39,11 +29,5 @@ describe('GroupSchedule', () => {
 
     expect(screen.getByText('09:36')).toBeInTheDocument()
     expect(screen.getByText('16:52')).toBeInTheDocument()
-  })
-
-  it('renders the time zone', () => {
-    render(<GroupSchedule schedule={[]} time_zone='Европа/Лондон (UTC+0/+1)' />)
-
-    expect(screen.getByText('Европа/Лондон (UTC+0/+1)')).toBeInTheDocument()
   })
 })

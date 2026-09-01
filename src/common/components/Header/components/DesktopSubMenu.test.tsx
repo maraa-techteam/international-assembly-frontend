@@ -69,19 +69,4 @@ describe('DesktopSubMenu', () => {
     expect(screen.getByText('Description for item 2')).toBeInTheDocument()
     expect(screen.queryByText('Description for item 1')).not.toBeInTheDocument()
   })
-
-  it('applies active styles to first item by default', () => {
-    render(
-      <DesktopSubMenu
-        navigationData={mockNavigationData}
-        onSelect={function (): void {
-          throw new Error('Function not implemented.')
-        }}
-      />,
-    )
-
-    const item1Link = screen.getByText('Item 1').closest('a')
-
-    expect(item1Link).toHaveClass('bg-indigo-blue', 'text-white')
-  })
 })

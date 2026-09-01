@@ -60,7 +60,7 @@ describe('Button', () => {
     expect(handleClick).toHaveBeenCalledTimes(0)
   })
 
-  it('should have label as passed in props', () => {
+  it('falls back to the label when no children are given', () => {
     render(
       <Button
         as='button'
@@ -71,11 +71,10 @@ describe('Button', () => {
         color={'primary'}
       />,
     )
-    const button = screen.getByRole('button')
-    expect(button).toHaveTextContent('Test label')
+    expect(screen.getByRole('button')).toHaveTextContent('Test label')
   })
 
-  it('should have children as passed in props', () => {
+  it('prefers children over the label when both are given', () => {
     render(
       <Button
         as='button'
@@ -85,11 +84,12 @@ describe('Button', () => {
         size={'sm'}
         color={'primary'}
       >
-        <Typography variant='body'>Test label</Typography>
+        <Typography variant='body'>From children</Typography>
         <Icon icon='arrow-right' size='sm' />
       </Button>,
     )
     const button = screen.getByRole('button')
-    expect(button).toHaveTextContent('Test label')
+    expect(button).toHaveTextContent('From children')
+    expect(button).not.toHaveTextContent('Test label')
   })
 })

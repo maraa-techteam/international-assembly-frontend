@@ -4,7 +4,12 @@ import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { SearchLiteratureCardProps } from './SearchLiteratureCard.type'
+import { LiteratureSearchResult } from '../../types/SearchResult.type'
+
+type SearchLiteratureCardProps = LiteratureSearchResult & {
+  url: string
+  className?: string
+}
 
 export function SearchLiteratureCard({
   title,

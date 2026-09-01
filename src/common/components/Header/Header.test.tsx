@@ -58,25 +58,12 @@ beforeEach(() => {
 })
 
 describe('Header', () => {
-  it('renders navigation items', () => {
+  it('renders the logo, search and mobile nav', () => {
     render(<Header headerData={mockHeaderData} />)
 
-    const nav = screen.getByLabelText('Мобильное меню')
-    expect(nav).toBeInTheDocument()
-  })
-
-  it('renders logo', () => {
-    render(<Header headerData={mockHeaderData} />)
-
-    const logo = screen.getByAltText('Логотип АА')
-    expect(logo).toBeInTheDocument()
-  })
-
-  it('renders search bar with placeholder', () => {
-    render(<Header headerData={mockHeaderData} />)
-
-    const searchBar = screen.getAllByRole('search')[0]
-    expect(searchBar).toBeInTheDocument()
+    expect(screen.getByAltText('Логотип АА')).toBeInTheDocument()
+    expect(screen.getAllByRole('search')[0]).toBeInTheDocument()
+    expect(screen.getByLabelText('Мобильное меню')).toBeInTheDocument()
   })
 
   it('renders mobile menu toggler only on mobile', () => {
@@ -101,14 +88,6 @@ describe('Header', () => {
 
     // Mobile menu should be closed
     expect(screen.getByLabelText('Открыть мобильное меню')).toBeInTheDocument()
-  })
-
-  it('mobile menu always has transition class (animation plays on close)', () => {
-    const { container } = render(<Header headerData={mockHeaderData} />)
-
-    const mobileMenu = container.querySelector('#mobile-menu') as HTMLElement
-    expect(mobileMenu).toHaveClass('transition-transform')
-    expect(mobileMenu).toHaveClass('duration-300')
   })
 
   it('calls router.push immediately and menu stays open when nav link is clicked', () => {

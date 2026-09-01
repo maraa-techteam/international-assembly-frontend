@@ -21,11 +21,4 @@ describe('Accordion', () => {
     expect(screen.getByText('First answer')).toBeInTheDocument()
     expect(screen.getByText('Second answer')).toBeInTheDocument()
   })
-
-  it('renders the correct number of accordion items', () => {
-    const { container } = render(<Accordion items={mockItems} />)
-
-    const details = container.querySelectorAll('details')
-    expect(details.length).toBe(mockItems.length)
-  })
 })

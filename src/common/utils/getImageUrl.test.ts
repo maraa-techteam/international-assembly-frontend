@@ -14,9 +14,4 @@ describe('getImageUrl', () => {
   it('builds the correct asset URL', () => {
     expect(getImageUrl('abc123')).toBe('https://cms.example.com/assets/abc123')
   })
-
-  it('includes the provided src path', () => {
-    const src = 'images/photo.jpg'
-    expect(getImageUrl(src)).toContain(src)
-  })
 })

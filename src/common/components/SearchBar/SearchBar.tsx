@@ -5,9 +5,14 @@ import { cn } from '@/common/utils/cn'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { SearchBarType } from './SearchBar.type'
-
-type SearchBarProps = SearchBarType & { className?: string }
+type SearchBarProps = {
+  onSearch?: () => void
+  onToggle?: (isActive: boolean) => void
+  isExpanded: boolean
+  placeholder?: string
+  isReseted?: boolean
+  className?: string
+}
 
 export function SearchBar({
   onToggle = () => {},

@@ -1,16 +1,21 @@
 'use client'
 
+import { Checkbox } from '@/common/components/Checkbox/Checkbox'
 import { Icon } from '@/common/components/Icon/Icon'
 import { Typography } from '@/common/components/Typography/Typography'
 import { useOnClickOutside } from '@/common/hooks/useOutsideClick'
 import { cn } from '@/common/utils/cn'
 import { useId, useRef, useState } from 'react'
 
-import { SelectType } from './Select.type'
-
 const SEARCH_THRESHOLD = 10
 
-type SelectProps = SelectType & {
+type SelectProps = {
+  label: string
+  displayLabel?: string
+  options: string[]
+  value: string[]
+  onChange: (value: string[]) => void
+  textColor?: string
   className?: string
 }
 
@@ -131,55 +136,23 @@ export function Select({
                 />
               </div>
             )}
-            {filteredOptions.map((option, i) => {
-              const isSelected = value.includes(option)
-
-              return (
-                <div key={option}>
-                  <input
-                    tabIndex={0}
-                    name={label}
-                    id={`${checkboxId}-${option}`}
-                    type='checkbox'
-                    checked={isSelected}
-                    value={option}
-                    onChange={() => handleSelect(option)}
-                    className='peer sr-only'
-                    aria-label={option}
-                  />
-                  <label
-                    htmlFor={`${checkboxId}-${option}`}
-                    role='option'
-                    aria-selected={isSelected}
-                    className={cn(
-                      'hover:bg-light-blue peer-focus-visible:bg-light-blue flex cursor-pointer items-center px-4 py-2 peer-focus-visible:outline-2',
-                      i === filteredOptions.length - 1 && 'rounded-b-3xl',
-                    )}
-                  >
-                    <span
-                      role='checkbox'
-                      aria-checked={isSelected}
-                      className={cn(
-                        'mr-3 flex h-4 w-4 items-center justify-center rounded-sm border transition-colors',
-                        isSelected
-                          ? 'bg-primary border-primary text-white'
-                          : 'border-gray-300 bg-white',
-                      )}
-                      aria-hidden='true'
-                    >
-                      {isSelected && (
-                        <Icon
-                          icon='check'
-                          size='sm'
-                          className='pointer-events-none'
-                        />
-                      )}
-                    </span>
-                    <span className='truncate'>{option}</span>
-                  </label>
-                </div>
-              )
-            })}
+            {filteredOptions.map((option, i) => (
+              <Checkbox
+                key={option}
+                id={`${checkboxId}-${option}`}
+                name={label}
+                value={option}
+                label={option}
+                checked={value.includes(option)}
+                onChange={() => handleSelect(option)}
+                size='sm'
+                className={cn(
+                  'hover:bg-light-blue has-[:focus-visible]:bg-light-blue px-4 py-2 has-[:focus-visible]:outline-2',
+                  i === filteredOptions.length - 1 && 'rounded-b-3xl',
+                )}
+                labelClassName='truncate'
+              />
+            ))}
           </div>
         </div>
       </div>
