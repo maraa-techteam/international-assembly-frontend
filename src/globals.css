@@ -67,7 +67,7 @@
     a {
       color: var(--color-primary);
       text-decoration: underline;
-      word-wrap: break-word;
+      overflow-wrap: anywhere;
     }
 
     a:hover {

@@ -33,7 +33,10 @@ export function SearchGroupResultCard({
         </Typography>
       </Link>
       {description && (
-        <RichTextPreview htmlContent={description} className='rte-clamp' />
+        <RichTextPreview
+          htmlContent={description}
+          className='rte-clamp w-full'
+        />
       )}
       {(website || youtube || telegram || whatsapp) && (
         <div className='flex flex-wrap items-start gap-4 rounded-xl'>
