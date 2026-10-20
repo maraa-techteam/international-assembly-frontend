@@ -20,7 +20,9 @@ export async function fetchGroupCountries(): Promise<string[]> {
       ),
     )
 
-    return [...new Set(raw.map((item) => item.country).filter(Boolean))]
+    return [...new Set(raw.map((item) => item.country).filter(Boolean))].sort(
+      (a, b) => a.localeCompare(b),
+    )
   } catch (error) {
     throw new Error(
       `Failed to fetch group countries: ${error instanceof Error ? error.message : String(error)}`,

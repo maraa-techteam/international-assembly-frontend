@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-10-20
+
+### Fixed
+
+- Countries in the **Groups directory** country filter are now listed
+  alphabetically instead of in CMS order.
+
 ## [1.0.0] - 2026-09-02
 
 First public release of the site at [ma-aa.org](https://ma-aa.org). Covers all
