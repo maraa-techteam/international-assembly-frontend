@@ -13,11 +13,9 @@ import { PageType } from './Page.type'
 
 type PageProps = PageType
 export default async function Page(page: PageProps) {
-  const {
-    button_left: buttonLeft,
-    button_right: buttonRight,
-    additional_link: additionalLink,
-  } = page
+  const { button_left: buttonLeft, button_right: buttonRight } = page
+  const additionalLink = page.additional_link?.[0]
+  const additionalLinkIcon = additionalLink?.icon?.[0]
 
   return (
     <>
@@ -34,12 +32,14 @@ export default async function Page(page: PageProps) {
         <div className='flex h-full w-full flex-col items-start justify-start gap-4 lg:gap-6'>
           <Typography variant='h1'>{page.title}</Typography>
           <RichTextPreview htmlContent={page.text} />
-          {additionalLink && (
+          {/* Guarded on `href`, not just presence: next/link throws during
+              prerender on an undefined href, failing the whole build. */}
+          {additionalLink?.href && (
             <Link
               href={additionalLink.href}
               className='text-primary flex flex-row items-center gap-4 underline'
             >
-              {additionalLink.icon && <Icon icon={additionalLink.icon} />}
+              {additionalLinkIcon && <Icon icon={additionalLinkIcon} />}
               {additionalLink.text}
             </Link>
           )}

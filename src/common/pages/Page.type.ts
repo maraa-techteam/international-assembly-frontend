@@ -25,11 +25,18 @@ export type PageType = {
   title: string
   text: string
   image: PageImageType | null
-  additional_link: {
-    text: string
-    href: string
-    icon?: IconType
-  } | null
+  /**
+   * A repeater in Directus, so it arrives as an array even though only the
+   * first entry is rendered. `icon` is a multi-select dropdown and is an array
+   * for the same reason.
+   */
+  additional_link:
+    | {
+        text: string
+        href: string
+        icon?: IconType[] | null
+      }[]
+    | null
   button_left:
     | {
         label: string
