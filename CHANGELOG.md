@@ -13,6 +13,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   instead of a work-in-progress placeholder, and the section is included in the
   sitemap.
 
+### Removed
+
+- The "Показать ещё" button in the **Literature** categories and the **Groups
+  directory**. Results are now browsed by page number only.
+
+### Fixed
+
+- Page numbers in the **Literature** categories and the **Groups directory** now
+  always match the results shown. Previously, "Показать ещё" left the page
+  count unchanged, and it appeared on the last page and jumped back to the first.
+- An invalid page number in the URL no longer causes a server error, and a page
+  past the end now redirects to the last page.
+
 ## [1.0.1] - 2026-10-20
 
 ### Fixed

@@ -1,4 +1,5 @@
 import type { SearchParams } from '@/common/types/SearchParams'
+import { PAGE_SIZE, parsePageParam } from '@/common/utils/pagination'
 import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { aggregate, readItems, withOptions } from '@directus/sdk'
 
@@ -12,14 +13,11 @@ import {
   toLiteratureItem,
 } from './literatureItemFields'
 
-const PAGE_SIZE = 10
-
 export async function fetchLiteratureItemsByType(
   type: LiteratureCategory,
   params?: SearchParams,
 ): Promise<{ data: LiteratureItem[]; totalCount: number }> {
-  const page = params?.page ? parseInt(params.page as string) : 1
-  const limit = params?.limit ? parseInt(params.limit as string) : PAGE_SIZE
+  const page = parsePageParam(params?.page)
 
   const filter = { category: { _eq: type } }
 
@@ -36,7 +34,7 @@ export async function fetchLiteratureItemsByType(
         withOptions(
           readItems('literature_items', {
             filter,
-            limit,
+            limit: PAGE_SIZE,
             page,
             fields: LITERATURE_ITEM_FIELDS,
           }),

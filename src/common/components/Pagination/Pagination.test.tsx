@@ -22,49 +22,64 @@ describe('Pagination', () => {
     searchParamsMock.toString.mockReturnValue('')
   })
 
-  it('renders the load more button when more results exist', () => {
-    searchParamsMock.get.mockReturnValue('10')
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+  it('does not render when the results fit on one page', () => {
+    const { container } = render(<Pagination totalCount={10} />)
+
+    expect(container.firstChild).toBeNull()
+  })
+
+  it('does not render when there are no results', () => {
+    const { container } = render(<Pagination totalCount={0} />)
+
+    expect(container.firstChild).toBeNull()
+  })
+
+  it('never offers a load more button', () => {
+    render(<Pagination totalCount={25} />)
 
     expect(
-      screen.getByRole('button', { name: /показать ещё/i }),
-    ).toBeInTheDocument()
+      screen.queryByRole('button', { name: /показать ещё/i }),
+    ).not.toBeInTheDocument()
   })
 
-  it('does not render a load more button once every result is fetched', () => {
-    // Regression: two countries matched exactly 10 groups, a full batch, and
-    // the button appeared but had nothing left to load.
-    searchParamsMock.get.mockReturnValue('10')
-    const { container } = render(
-      <Pagination fetchedCount={10} totalCount={10} />,
-    )
-
-    expect(container.firstChild).toBeNull()
-  })
-
-  it('does not render when fetchedCount is less than the limit and totalCount is small', () => {
-    searchParamsMock.get.mockReturnValue('10')
-    const { container } = render(<Pagination fetchedCount={5} totalCount={5} />)
-
-    expect(container.firstChild).toBeNull()
-  })
-
-  it('pushes updated limit to router when load more is clicked', async () => {
-    searchParamsMock.get.mockReturnValue('10')
+  it('drops a stale limit when changing page', async () => {
+    searchParamsMock.toString.mockReturnValue('limit=20&country=Germany')
     const user = userEvent.setup()
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+    render(<Pagination totalCount={25} />)
 
-    await user.click(screen.getByRole('button', { name: /показать ещё/i }))
+    await user.click(screen.getByRole('button', { name: '2' }))
 
     expect(pushMock).toHaveBeenCalledWith(
-      expect.stringContaining('limit=20'),
+      '/test?country=Germany&page=2',
       expect.anything(),
     )
   })
 
+  it('treats an invalid page param as the first page', () => {
+    searchParamsMock.get.mockReturnValue('abc')
+    render(<Pagination totalCount={25} />)
+
+    expect(screen.getByRole('button', { name: '1' })).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Предыдущая страница' }),
+    ).toBeDisabled()
+  })
+
+  it('disables next and last when the page is past the end', () => {
+    searchParamsMock.get.mockReturnValue('99')
+    render(<Pagination totalCount={25} />)
+
+    expect(
+      screen.getByRole('button', { name: 'Следующая страница' }),
+    ).toBeDisabled()
+    expect(
+      screen.getByRole('button', { name: 'Последняя страница' }),
+    ).toBeDisabled()
+  })
+
   it('renders page number buttons when totalCount exceeds PAGE_SIZE', () => {
     searchParamsMock.get.mockReturnValue(null)
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+    render(<Pagination totalCount={25} />)
 
     expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument()
     expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument()
@@ -73,7 +88,7 @@ describe('Pagination', () => {
 
   it('shows only 3 page numbers at a time when there are more total pages', () => {
     searchParamsMock.get.mockReturnValue(null)
-    render(<Pagination fetchedCount={10} totalCount={50} />)
+    render(<Pagination totalCount={50} />)
 
     // On page 1 with 5 total pages, only show pages 1–3
     expect(screen.getByRole('button', { name: '1' })).toBeInTheDocument()
@@ -88,7 +103,7 @@ describe('Pagination', () => {
       if (key === 'page') return '3'
       return null
     })
-    render(<Pagination fetchedCount={10} totalCount={50} />)
+    render(<Pagination totalCount={50} />)
 
     expect(screen.queryByRole('button', { name: '1' })).not.toBeInTheDocument()
     expect(screen.getByRole('button', { name: '2' })).toBeInTheDocument()
@@ -101,7 +116,7 @@ describe('Pagination', () => {
     searchParamsMock.get.mockReturnValue(null)
     searchParamsMock.toString.mockReturnValue('')
     const user = userEvent.setup()
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+    render(<Pagination totalCount={25} />)
 
     await user.click(screen.getByRole('button', { name: '2' }))
 
@@ -116,25 +131,15 @@ describe('Pagination', () => {
       if (key === 'page') return '2'
       return null
     })
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+    render(<Pagination totalCount={25} />)
 
     expect(screen.getByRole('button', { name: '2' })).toBeDisabled()
     expect(screen.getByRole('button', { name: '1' })).not.toBeDisabled()
   })
 
-  it('does not render page buttons when totalCount is within PAGE_SIZE', () => {
-    searchParamsMock.get.mockReturnValue('10')
-    render(<Pagination fetchedCount={8} totalCount={10} />)
-
-    expect(screen.queryByRole('button', { name: '1' })).not.toBeInTheDocument()
-    expect(
-      screen.getByRole('button', { name: /показать ещё/i }),
-    ).toBeInTheDocument()
-  })
-
   it('renders first, previous, next and last page nav buttons', () => {
     searchParamsMock.get.mockReturnValue(null)
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+    render(<Pagination totalCount={25} />)
 
     expect(
       screen.getByRole('button', { name: 'Первая страница' }),
@@ -152,7 +157,7 @@ describe('Pagination', () => {
 
   it('disables first and previous buttons on the first page', () => {
     searchParamsMock.get.mockReturnValue(null)
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+    render(<Pagination totalCount={25} />)
 
     expect(
       screen.getByRole('button', { name: 'Первая страница' }),
@@ -173,7 +178,7 @@ describe('Pagination', () => {
       if (key === 'page') return '3'
       return null
     })
-    render(<Pagination fetchedCount={10} totalCount={25} />)
+    render(<Pagination totalCount={25} />)
 
     expect(
       screen.getByRole('button', { name: 'Первая страница' }),
@@ -195,7 +200,7 @@ describe('Pagination', () => {
       return null
     })
     const user = userEvent.setup()
-    render(<Pagination fetchedCount={10} totalCount={50} />)
+    render(<Pagination totalCount={50} />)
 
     await user.click(screen.getByRole('button', { name: 'Следующая страница' }))
 
@@ -211,7 +216,7 @@ describe('Pagination', () => {
       return null
     })
     const user = userEvent.setup()
-    render(<Pagination fetchedCount={10} totalCount={50} />)
+    render(<Pagination totalCount={50} />)
 
     await user.click(
       screen.getByRole('button', { name: 'Предыдущая страница' }),
@@ -229,7 +234,7 @@ describe('Pagination', () => {
       return null
     })
     const user = userEvent.setup()
-    render(<Pagination fetchedCount={10} totalCount={50} />)
+    render(<Pagination totalCount={50} />)
 
     await user.click(screen.getByRole('button', { name: 'Первая страница' }))
 
@@ -242,7 +247,7 @@ describe('Pagination', () => {
   it('navigates to last page when last page button is clicked', async () => {
     searchParamsMock.get.mockReturnValue(null)
     const user = userEvent.setup()
-    render(<Pagination fetchedCount={10} totalCount={50} />)
+    render(<Pagination totalCount={50} />)
 
     await user.click(screen.getByRole('button', { name: 'Последняя страница' }))
 
