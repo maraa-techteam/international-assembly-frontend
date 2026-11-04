@@ -4,10 +4,15 @@ import { Pagination } from '@/common/components/Pagination/Pagination'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import type { SearchParams } from '@/common/types/SearchParams'
+import { getLastPageRedirect } from '@/common/utils/pagination'
 import { fetchLiteratureItemsByType } from '@/features/literature/api/fetchLiteratureItemsByType'
 import { LiteratureCard } from '@/features/literature/components/LiteratureCard/LiteratureCard'
 import { LiteratureCategory } from '@/features/literature/types/LiteratureItem.type'
-import { literatureCategoryLabels } from '@/features/literature/utils/literature.utils'
+import {
+  literatureCategoryLabels,
+  literatureCategorySlugs,
+} from '@/features/literature/utils/literature.utils'
+import { redirect } from 'next/navigation'
 
 type LiteratureCategoryPageProps = {
   type: LiteratureCategory
@@ -23,6 +28,14 @@ export async function LiteratureCategoryPage({
     type,
     params,
   )
+
+  const lastPage = getLastPageRedirect(
+    `/literature/${literatureCategorySlugs[type]}`,
+    params,
+    totalCount,
+  )
+  if (lastPage) redirect(lastPage)
+
   const label = literatureCategoryLabels[type]
 
   return (
@@ -40,11 +53,7 @@ export async function LiteratureCategoryPage({
               <LiteratureCard key={item.id} {...item} />
             ))}
           </Grid>
-          <Pagination
-            fetchedCount={items.length}
-            pageSize={10}
-            totalCount={totalCount}
-          />
+          <Pagination totalCount={totalCount} />
         </>
       )}
     </Section>

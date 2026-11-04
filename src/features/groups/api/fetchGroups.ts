@@ -1,4 +1,5 @@
 import type { SearchParams } from '@/common/types/SearchParams'
+import { PAGE_SIZE, parsePageParam } from '@/common/utils/pagination'
 import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { aggregate, readItems, withOptions } from '@directus/sdk'
 
@@ -13,9 +14,11 @@ export async function fetchGroups(params?: SearchParams) {
 
   const searchValue = params?.searchValue
 
-  const page = params?.page ? parseInt(params.page as string) : 1
+  const page = parsePageParam(params?.page)
 
-  const itemsPerPage = params?.limit ? parseInt(params.limit as string) : 10
+  const itemsPerPage = params?.limit
+    ? parseInt(params.limit as string)
+    : PAGE_SIZE
 
   const filter = {
     country: countries

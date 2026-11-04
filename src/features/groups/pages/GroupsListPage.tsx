@@ -3,10 +3,12 @@ import { Pagination } from '@/common/components/Pagination/Pagination'
 import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
 import type { SearchParams } from '@/common/types/SearchParams'
+import { getLastPageRedirect } from '@/common/utils/pagination'
 import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
 import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import { GroupsFilterDashboard } from '@/features/groups/components/GroupsFilterDashboard'
 import { GroupsTable } from '@/features/groups/components/GroupsTable'
+import { redirect } from 'next/navigation'
 import { Suspense } from 'react'
 
 export async function GroupsListPage({
@@ -16,7 +18,14 @@ export async function GroupsListPage({
 }) {
   const page = await fetchGroupsPage()
   const params = await searchParams
-  const { data: filteredGroups, totalCount } = await fetchGroups(params)
+  // `limit` is for internal callers fetching every group, not for the URL.
+  const { data: filteredGroups, totalCount } = await fetchGroups({
+    ...params,
+    limit: undefined,
+  })
+
+  const lastPage = getLastPageRedirect('/groups', params, totalCount)
+  if (lastPage) redirect(lastPage)
 
   const countries = await fetchGroupCountries()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
@@ -48,10 +57,7 @@ export async function GroupsListPage({
       </Section>
       <Section className='px-0 pt-0 lg:max-w-250 lg:pt-0 lg:pr-0' color='white'>
         <GroupsTable groups={filteredGroups} />
-        <Pagination
-          fetchedCount={filteredGroups.length}
-          totalCount={totalCount}
-        />
+        <Pagination totalCount={totalCount} />
       </Section>
     </>
   )
