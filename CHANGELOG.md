@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- The **Literature** page now shows the literature catalogue by category
+  instead of a work-in-progress placeholder, and the section is included in the
+  sitemap.
+
 ## [1.0.1] - 2026-10-20
 
 ### Fixed

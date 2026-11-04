@@ -1,6 +1,6 @@
 import { fetchLiteraturePage } from '@/common/api/fetchLiteraturePage'
-import { WorkInProgress } from '@/common/components/WorkInProgress/WorkInProgress'
 import { buildPageMetadata } from '@/config/seo'
+import { LiteraturePage } from '@/features/literature/pages/LiteraturePage'
 import type { Metadata } from 'next'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -14,5 +14,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Page() {
-  return <WorkInProgress />
+  return <LiteraturePage />
 }

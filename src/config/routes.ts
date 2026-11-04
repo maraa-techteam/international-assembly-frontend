@@ -35,13 +35,13 @@ export const STATIC_ROUTES = [
 /**
  * Section prefixes held back from the sitemap.
  *
- * `/literature` and `/services` render a work-in-progress placeholder, and
- * their detail pages, while still live and reachable by URL, hang off a
- * section a visitor cannot browse to. Listing either in the sitemap would
- * invite crawlers to index a placeholder and a set of orphaned pages.
+ * `/services` renders a work-in-progress placeholder, and its detail pages,
+ * while still live and reachable by URL, hang off a section a visitor cannot
+ * browse to. Listing it in the sitemap would invite crawlers to index a
+ * placeholder and a set of orphaned pages.
  *
  * A prefix covers the section page and everything under it. The routes stay in
  * `STATIC_ROUTES` because they do exist and do carry metadata — this withholds
  * them from the sitemap only. Empty this list to publish the sections.
  */
-export const SITEMAP_EXCLUDED_PREFIXES = ['/literature', '/services'] as const
+export const SITEMAP_EXCLUDED_PREFIXES = ['/services'] as const
