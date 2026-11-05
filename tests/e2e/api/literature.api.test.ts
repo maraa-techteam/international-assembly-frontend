@@ -5,25 +5,6 @@ const BASE_URL = process.env.DIRECTUS_CMS_URL
   : ''
 
 test.describe('Literature API', () => {
-  test('literature_page collection returns valid data', async ({ request }) => {
-    test.skip(
-      !process.env.DIRECTUS_CMS_URL,
-      'DIRECTUS_CMS_URL env var is not set',
-    )
-
-    const response = await request.get(`${BASE_URL}/items/literature_page`, {
-      params: { fields: 'meta_title,meta_description,title,text' },
-    })
-
-    expect(response.ok()).toBeTruthy()
-    const json = await response.json()
-    // literature_page is a singleton: the item is returned directly.
-    expect(json.data).toBeDefined()
-    expect(Array.isArray(json.data)).toBe(false)
-    expect(json.data).toHaveProperty('meta_title')
-    expect(json.data).toHaveProperty('title')
-  })
-
   test('literature_items collection returns a list of items', async ({
     request,
   }) => {

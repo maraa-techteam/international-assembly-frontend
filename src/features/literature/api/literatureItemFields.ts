@@ -30,7 +30,7 @@ export const LITERATURE_ITEM_FIELDS = [
  *
  * The row arrives untyped — the SDK client is built without a schema generic,
  * so `readItems` describes it only as a bag of keys. Naming the expected shape
- * here is an assertion, the same one `fetchSingleton` makes for page records.
+ * here is an assertion, not a check.
  */
 export function toLiteratureItem(row: Record<string, unknown>): LiteratureItem {
   const item = row as LiteratureItem
