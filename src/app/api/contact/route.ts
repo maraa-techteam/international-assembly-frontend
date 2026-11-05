@@ -1,5 +1,7 @@
-import { fetchContactsPage } from '@/common/api/fetchContactsPage'
-import { PRIVACY_NOTICE_UPDATED_AT } from '@/config/site'
+import {
+  CONTACT_RECIPIENT_EMAIL,
+  PRIVACY_NOTICE_UPDATED_AT,
+} from '@/config/site'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
@@ -53,20 +55,11 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const pageData = await fetchContactsPage()
-    if (!pageData?.secretary_email) {
-      return NextResponse.json(
-        { error: 'Recipient email not configured' },
-        { status: 500 },
-      )
-    }
-    const secretaryEmail = pageData.secretary_email
-
     const fromEmail = process.env.RESEND_FROM_EMAIL
 
     await resend.emails.send({
       from: `Международная Ассамблея <${fromEmail}>`,
-      to: [secretaryEmail],
+      to: [CONTACT_RECIPIENT_EMAIL],
       subject: subject.trim(),
       replyTo: email.trim(),
       react: ReactEmail({

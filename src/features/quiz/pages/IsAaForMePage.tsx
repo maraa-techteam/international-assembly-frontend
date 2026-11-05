@@ -3,7 +3,6 @@
 import { Button } from '@/common/components/Button/Button'
 import { Grid } from '@/common/components/Grid/Grid'
 import { Icon } from '@/common/components/Icon/Icon'
-import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { TELEGRAM_HELP_URL } from '@/config/site'
@@ -14,13 +13,7 @@ import { quizQuestions } from '../data/questions'
 
 type QuizState = 'intro' | 'quiz' | 'result'
 
-export function IsAaForMePage({
-  title,
-  text,
-}: {
-  title: string
-  text: string
-}) {
+export function IsAaForMePage() {
   const [quizState, setQuizState] = useState<QuizState>('intro')
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<(boolean | null)[]>(
@@ -67,9 +60,28 @@ export function IsAaForMePage({
     <Section color='white' className='max-w-300 items-start gap-6'>
       {quizState === 'intro' && (
         <>
-          <Typography variant='h1'>{title}</Typography>
+          <Typography variant='h1'>Подходит ли мне АА?</Typography>
           <div className='flex flex-col gap-4'>
-            <RichTextPreview htmlContent={text} />
+            <div className='rte'>
+              <p>
+                Только вы можете решить, стоит ли вам прийти в АА — может ли это
+                вам помочь.Мы же пришли в АА потому, что, в конце концов,
+                отказались от попыток контролировать свою выпивку.
+              </p>
+              <p>
+                Нам очень не хотелось признать тот факт, что мы никогда не
+                сможем пить «нормально».Но от других членов АА мы узнали, что мы
+                просто больные люди (да, мы и сами уже давно об этом
+                догадывались!).&nbsp;
+              </p>
+              <p>
+                Мы обнаружили, что очень много людей, так же как и мы, страдают
+                от чувства вины, одиночества и безнадежности. Мы узнали, что эти
+                чувства были вызваны болезнью — алкоголизмом. Для того, чтобы
+                получить ответ на ваш вопрос, вы должны ответить честно на
+                следующие 12 вопросов: ДА или НЕТ.
+              </p>
+            </div>
           </div>
           <Button
             variant='contained'

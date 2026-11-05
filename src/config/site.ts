@@ -14,6 +14,13 @@ export const SITE_DESCRIPTION =
 export const TELEGRAM_HELP_URL = 'https://t.me/QSAAbot'
 
 /**
+ * Where the contact and service-application forms deliver submissions: the
+ * secretary's mailbox, as `/contacts` publishes and the privacy notice describes.
+ * Pointing this anywhere else makes that notice wrong, so change them together.
+ */
+export const CONTACT_RECIPIENT_EMAIL = 'secretarymaraa@gmail.com'
+
+/**
  * Registration in the Latvian Register of Enterprises.
  *
  * This is the organisation's registry entry, not a schema.org category. It goes

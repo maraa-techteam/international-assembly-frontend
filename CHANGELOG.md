@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The **Literature** page now shows the literature catalogue by category
   instead of a work-in-progress placeholder, and the section is included in the
   sitemap.
+- Messages from the contact and service-application forms now go to the
+  secretary's mailbox shown on the **Contacts** page, as the privacy notice
+  describes. The address is set in the code rather than in the CMS.
 
 ### Removed
 
@@ -34,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   сообществом" instead of a leftover placeholder.
 - The Ninth Tradition on the **12 Steps and 12 Traditions** page now shows its own
   text. It was a copy of the Eighth.
+- The **Contributions** page no longer lists Revolut twice.
 
 ## [1.0.1] - 2026-10-20
 

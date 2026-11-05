@@ -1,10 +1,12 @@
-import { fetchContactsPage } from '@/common/api/fetchContactsPage'
 import {
   isPdfFile,
   maxUploadFileSizeInBytes,
   sanitizePdfFilename,
 } from '@/common/utils/fileUploadValidation'
-import { PRIVACY_NOTICE_UPDATED_AT } from '@/config/site'
+import {
+  CONTACT_RECIPIENT_EMAIL,
+  PRIVACY_NOTICE_UPDATED_AT,
+} from '@/config/site'
 import { NextRequest, NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
@@ -80,16 +82,6 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const pageData = await fetchContactsPage()
-    if (!pageData?.secretary_email) {
-      return NextResponse.json(
-        { error: 'Адрес электронной почты получателя не настроен' },
-        { status: 500 },
-      )
-    }
-
-    const secretaryEmail = pageData.secretary_email
-
     const normalizedSubject =
       typeof subject === 'string' && subject.trim()
         ? subject.trim()
@@ -102,7 +94,7 @@ export async function POST(request: NextRequest) {
 
     await resend.emails.send({
       from: `Международная Ассамблея <${fromEmail}>`,
-      to: [secretaryEmail],
+      to: [CONTACT_RECIPIENT_EMAIL],
       subject: normalizedSubject,
       replyTo: email.trim(),
       react: ReactEmail({
