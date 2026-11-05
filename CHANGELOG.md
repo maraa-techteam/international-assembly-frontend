@@ -30,6 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - An address that matches no group, article, service or literature item now shows
   the 404 page with a 404 status. Search engines could index the empty or
   "not found" pages these used to return with a success status.
+- The Telegram link on the **Start the journey** page now reads "Связаться с
+  сообществом" instead of a leftover placeholder.
 
 ## [1.0.1] - 2026-10-20
 
