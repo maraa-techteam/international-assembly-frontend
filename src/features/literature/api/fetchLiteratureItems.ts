@@ -1,4 +1,3 @@
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { readItems, withOptions } from '@directus/sdk'
 
 import directus from '../../../common/lib/directus'
@@ -15,12 +14,7 @@ export async function fetchLiteratureItems(): Promise<LiteratureItem[]> {
         readItems('literature_items', {
           fields: LITERATURE_ITEM_FIELDS,
         }),
-        {
-          next: {
-            revalidate: CMS_REVALIDATE_SECONDS,
-            tags: ['cms', 'cms:literature_items'],
-          },
-        },
+        { cache: 'no-store' },
       ),
     )
 

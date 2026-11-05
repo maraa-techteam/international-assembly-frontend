@@ -1,4 +1,3 @@
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { readItems, withOptions } from '@directus/sdk'
 
 import directus from '../../../common/lib/directus'
@@ -11,12 +10,7 @@ export async function fetchGroupCountries(): Promise<string[]> {
           limit: -1,
           fields: ['country'],
         }),
-        {
-          next: {
-            revalidate: CMS_REVALIDATE_SECONDS,
-            tags: ['cms', 'cms:groups'],
-          },
-        },
+        { cache: 'no-store' },
       ),
     )
 

@@ -1,11 +1,14 @@
 /**
- * Every static route the site publishes.
+ * Every route the site publishes at a fixed path.
+ *
+ * "Static" describes the path, not how the page renders: `/`, `/groups` and
+ * the other list pages are here even though they render on every request.
  *
  * This is the sitemap's static half and the list `PAGE_SEO` is checked against,
  * so a page added without default search copy fails the SEO test rather than
  * shipping untitled.
  *
- * Only static routes belong here. Detail pages live under a section's own
+ * Only fixed paths belong here. Detail pages live under a section's own
  * prefix — /groups/<slug>, /literature/<category>/<slug> — and reach the
  * sitemap through `detailRoutes` instead.
  *

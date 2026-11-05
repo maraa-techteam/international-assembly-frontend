@@ -9,15 +9,9 @@ import {
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
-// Only statically known categories are valid — anything else is a 404
-export const dynamicParams = false
+export const dynamic = 'force-dynamic'
 
-export async function generateStaticParams() {
-  return Object.values(literatureCategorySlugs).map((category) => ({
-    category,
-  }))
-}
-
+// Only known categories are valid — anything else is a 404.
 // Invert literatureCategorySlugs at module level: { books: 'books', ... }
 const slugToType = Object.fromEntries(
   Object.entries(literatureCategorySlugs).map(([type, slug]) => [slug, type]),

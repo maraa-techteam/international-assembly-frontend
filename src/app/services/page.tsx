@@ -3,6 +3,8 @@ import { WorkInProgress } from '@/common/components/WorkInProgress/WorkInProgres
 import { buildPageMetadata } from '@/config/seo'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await fetchServicesPage()
 

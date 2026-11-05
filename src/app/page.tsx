@@ -17,6 +17,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await fetchHomePage()
   return buildPageMetadata({

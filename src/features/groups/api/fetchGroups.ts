@@ -1,6 +1,5 @@
 import type { SearchParams } from '@/common/types/SearchParams'
 import { PAGE_SIZE, parsePageParam } from '@/common/utils/pagination'
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { aggregate, readItems, withOptions } from '@directus/sdk'
 
 import directus from '../../../common/lib/directus'
@@ -47,12 +46,7 @@ export async function fetchGroups(params?: SearchParams) {
       : undefined,
   }
 
-  const cacheOptions = {
-    next: {
-      revalidate: CMS_REVALIDATE_SECONDS,
-      tags: ['cms', 'cms:groups'],
-    },
-  }
+  const cacheOptions: RequestInit = { cache: 'no-store' }
 
   try {
     const [raw, countResult] = await Promise.all([

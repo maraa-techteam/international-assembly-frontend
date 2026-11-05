@@ -1,4 +1,3 @@
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { readItems, withOptions } from '@directus/sdk'
 import { cache } from 'react'
 
@@ -31,12 +30,7 @@ export const fetchGroup = cache(async function fetchGroup(slug: string) {
             { images: ['id', 'directus_files_id'] },
           ],
         }),
-        {
-          next: {
-            revalidate: CMS_REVALIDATE_SECONDS,
-            tags: ['cms', 'cms:groups', `cms:groups:${slug}`],
-          },
-        },
+        { cache: 'no-store' },
       ),
     )
 

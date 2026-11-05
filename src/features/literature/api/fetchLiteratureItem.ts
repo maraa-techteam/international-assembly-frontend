@@ -1,4 +1,3 @@
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { readItems, withOptions } from '@directus/sdk'
 import { cache } from 'react'
 
@@ -20,16 +19,7 @@ export const fetchLiteratureItem = cache(async function fetchLiteratureItem(
           fields: LITERATURE_ITEM_FIELDS,
           limit: 1,
         }),
-        {
-          next: {
-            revalidate: CMS_REVALIDATE_SECONDS,
-            tags: [
-              'cms',
-              'cms:literature_items',
-              `cms:literature_items:${slug}`,
-            ],
-          },
-        },
+        { cache: 'no-store' },
       ),
     )
 

@@ -4,6 +4,8 @@ import { buildPageMetadata } from '@/config/seo'
 import { GroupsListPage } from '@/features/groups/pages/GroupsListPage'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await fetchGroupsPage()
 
