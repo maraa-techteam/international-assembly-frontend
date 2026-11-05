@@ -9,15 +9,7 @@ import { Typography } from '@/common/components/Typography/Typography'
 import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await fetchContributionsPage()
-
-  return buildPageMetadata({
-    title: page?.meta_title,
-    description: page?.meta_description,
-    path: '/contributions',
-  })
-}
+export const metadata: Metadata = buildPageMetadata({ path: '/contributions' })
 
 export default async function Contributions() {
   const page = await fetchContributionsPage()

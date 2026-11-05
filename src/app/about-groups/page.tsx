@@ -3,15 +3,7 @@ import Page from '@/common/pages/Page'
 import { buildPageMetadata } from '@/config/seo'
 import { Metadata } from 'next'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await fetchPage('about_groups_page')
-
-  return buildPageMetadata({
-    title: page.meta_title,
-    description: page.meta_description,
-    path: '/about-groups',
-  })
-}
+export const metadata: Metadata = buildPageMetadata({ path: '/about-groups' })
 
 export default async function AboutGroups() {
   const page = await fetchPage('about_groups_page')

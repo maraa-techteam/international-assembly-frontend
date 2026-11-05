@@ -1,4 +1,3 @@
-import { fetchHomePage } from '@/common/api/fetchHomePage'
 import { Button } from '@/common/components/Button/Button'
 import { ContentGuide } from '@/common/components/ContentGuide/ContentGuide'
 import { Grid } from '@/common/components/Grid/Grid'
@@ -19,14 +18,7 @@ import { Suspense } from 'react'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await fetchHomePage()
-  return buildPageMetadata({
-    title: page?.meta_title,
-    description: page?.meta_description,
-    path: '/',
-  })
-}
+export const metadata: Metadata = buildPageMetadata({ path: '/' })
 
 export default async function Home() {
   const countries = await fetchGroupCountries()
