@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   "not found" pages these used to return with a success status.
 - The Telegram link on the **Start the journey** page now reads "Связаться с
   сообществом" instead of a leftover placeholder.
+- The Ninth Tradition on the **12 Steps and 12 Traditions** page now shows its own
+  text. It was a copy of the Eighth.
 
 ## [1.0.1] - 2026-10-20
 

@@ -1,4 +1,6 @@
+import { ReactNode } from 'react'
+
 export type AccordionType = {
   title: string
-  text: string
+  text: ReactNode
 }

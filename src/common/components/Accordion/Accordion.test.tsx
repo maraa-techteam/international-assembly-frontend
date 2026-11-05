@@ -1,10 +1,23 @@
 import { render, screen } from '@testing-library/react'
 
 import { Accordion } from './Accordion'
+import { AccordionType } from './Accordion.type'
 
-const mockItems = [
-  { title: 'First question', text: '<p>First answer</p>' },
-  { title: 'Second question', text: '<p>Second answer</p>' },
+const mockItems: AccordionType[] = [
+  { title: 'First question', text: <p>First answer</p> },
+  {
+    title: 'Second question',
+    text: (
+      <>
+        <p>
+          Second <a href='/faq'>answer</a>
+        </p>
+        <ul>
+          <li>List item</li>
+        </ul>
+      </>
+    ),
+  },
 ]
 
 describe('Accordion', () => {
@@ -15,10 +28,20 @@ describe('Accordion', () => {
     expect(screen.getByText('Second question')).toBeInTheDocument()
   })
 
-  it('renders the HTML content of each item', () => {
+  it('renders the rich content of each item', () => {
     render(<Accordion items={mockItems} />)
 
     expect(screen.getByText('First answer')).toBeInTheDocument()
-    expect(screen.getByText('Second answer')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'answer' })).toHaveAttribute(
+      'href',
+      '/faq',
+    )
+    expect(screen.getByText('List item')).toBeInTheDocument()
+  })
+
+  it('keeps each answer inside the rich-text styles', () => {
+    render(<Accordion items={mockItems} />)
+
+    expect(screen.getByText('First answer').parentElement).toHaveClass('rte')
   })
 })
