@@ -7,6 +7,8 @@ import { literatureCategorySlugs } from '@/features/literature/utils/literature.
 import { fetchServices } from '@/features/services/api/fetchServices'
 import type { MetadataRoute } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 const url = (path: string) => new URL(path, SITE_URL).toString()
 
 /**
@@ -20,8 +22,8 @@ const url = (path: string) => new URL(path, SITE_URL).toString()
  * Literature runs into the same wall: `/literature` links only the first four
  * items per category, and the rest sit behind a paginated category page.
  *
- * A CMS failure degrades to the static routes instead of failing the build: an
- * incomplete sitemap loses some crawl coverage, a missing one loses all of it.
+ * A CMS failure degrades to the static routes instead of failing the request:
+ * an incomplete sitemap loses some crawl coverage, a missing one loses all of it.
  */
 async function detailRoutes(): Promise<MetadataRoute.Sitemap> {
   const [groups, articles, literature, services] = await Promise.all([

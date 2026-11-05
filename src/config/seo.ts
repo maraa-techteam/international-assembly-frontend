@@ -14,16 +14,13 @@ type PageSeo = {
 }
 
 /**
- * Default title and description for every static route.
- *
- * These are fallbacks: the CMS value wins whenever an editor has set one, and
- * for most pages they have. Keeping the copy here anyway means a cleared or
- * newly added CMS record degrades to something written for search rather than
- * to a placeholder, and gives one place to review the wording against what is
- * actually published.
+ * Title and description of every fixed-path route, and the only place they are
+ * written: a route publishes them with `buildPageMetadata({ path })`. The CMS no
+ * longer holds this copy, so changing it means a deploy.
  *
  * Titles are budgeted against the ` | ${SITE_NAME}` suffix `buildPageMetadata`
- * appends — roughly 30 characters for the page's own half.
+ * appends — roughly 30 characters for the page's own half. `seo.test.ts` fails on
+ * anything search results would cut off, so these limits cover what is published.
  */
 export const PAGE_SEO: Record<string, PageSeo> = {
   '/': {
@@ -43,39 +40,39 @@ export const PAGE_SEO: Record<string, PageSeo> = {
       'Международная Ассамблея по Общему Обслуживанию русскоязычных АА: структура, задачи и обслуживание групп в странах, где русский язык не государственный.',
   },
   '/to-professionals': {
-    title: 'АА для специалистов',
+    title: 'Для профессионалов',
     description:
       'Информация для врачей, психологов, соцработников и духовенства о сотрудничестве с Анонимными Алкоголиками и о направлении людей с зависимостью.',
   },
   '/start-the-journey': {
-    title: 'Как начать путь к трезвости',
+    title: 'Начать путь',
     description:
-      'С чего начать в Анонимных Алкоголиках: первое собрание, наставник и программа 12 шагов. Первый шаг к трезвости можно сделать уже сегодня.',
+      'Начните путь к трезвости вместе с Анонимными Алкоголиками. Узнайте о программе, поддержке сообщества и анонимных встречах рядом с вами.',
   },
   '/faq': {
-    title: 'Вопросы и ответы об АА',
+    title: 'Ответы на вопросы',
     description:
-      'Ответы на частые вопросы о сообществе Анонимных Алкоголиков: как проходят собрания, нужно ли платить, что такое анонимность и с чего начать новичку.',
+      'Ответы на самые частые вопросы для тех, кто впервые обращается к Анонимным Алкоголикам (АА). Узнайте, как работает сообщество и чего ожидать новым участникам.',
   },
   '/is-aa-for-me': {
     title: 'Подходит ли мне АА?',
     description:
-      'Несколько вопросов, которые помогут понять, есть ли у вас проблема с алкоголем и может ли помочь сообщество Анонимных Алкоголиков.',
+      'Подходит ли мне АА? Узнайте, как понять, нужно ли вам сообщество Анонимных Алкоголиков, и какие признаки могут на это указывать.',
   },
   '/12-steps-12-traditions': {
-    title: '12 шагов и 12 традиций АА',
+    title: '12 шагов и традиций',
     description:
       'Двенадцать Шагов и Двенадцать Традиций Анонимных Алкоголиков — основа программы выздоровления от алкоголизма и единства сообщества.',
   },
   '/contacts': {
-    title: 'Контакты и обратная связь',
+    title: 'Контакты',
     description:
-      'Свяжитесь с Международной Ассамблеей русскоязычных АА: анонимный чат-бот в Telegram, контакты комитетов и форма обратной связи.',
+      'Свяжитесь с Международной Ассамблеей Общего Обслуживания Русскоязычных АА: обратная связь, вопросы, контакты комитетов и администратора.',
   },
   '/useful-links': {
-    title: 'Полезные ссылки и ресурсы АА',
+    title: 'Полезные ссылки',
     description:
-      'Сайты структур Анонимных Алкоголиков, литература и проекты партнёров Международной Ассамблеи русскоязычных АА.',
+      'Ссылки на проекты и партнеров Международной Ассамблеи по Общему Обслуживанию Русскоязычных Анонимных Алкоголиков (МА)',
   },
   '/contributions': {
     title: 'Добровольные пожертвования',
@@ -100,7 +97,7 @@ export const PAGE_SEO: Record<string, PageSeo> = {
   '/literature': {
     title: 'Литература АА на русском',
     description:
-      'Книги, брошюры, буклеты и рабочие тетради Анонимных Алкоголиков на русском языке, включая издания, одобренные конференцией.',
+      'Литература АА: список книг и материалов сообщества Анонимных Алкоголиков. Основные тексты, брошюры и руководство для участников.',
   },
   '/privacy': {
     title: 'Конфиденциальность данных',
@@ -110,12 +107,12 @@ export const PAGE_SEO: Record<string, PageSeo> = {
   '/services': {
     title: 'Служения в сообществе АА',
     description:
-      'Служения Международной Ассамблеи русскоязычных АА: чем можно помочь сообществу, какие условия есть у каждого служения и как подать заявку.',
+      'Узнайте о служениях в АА: полный список ролей, их описание и обязанности в Международной Ассамблее Анонимных Алкоголиков.',
   },
 }
 
 type PageMetadataInput = {
-  /** Title from the CMS. Falls back to the entry for `path`. */
+  /** A detail page's own title, e.g. a group's name. Defaults to `path`'s entry. */
   title?: string | null
   description?: string | null
   /** Root-relative path of the page, e.g. `/about-aa`. */

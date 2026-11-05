@@ -1,4 +1,3 @@
-import { fetchHomePage } from '@/common/api/fetchHomePage'
 import { Button } from '@/common/components/Button/Button'
 import { ContentGuide } from '@/common/components/ContentGuide/ContentGuide'
 import { Grid } from '@/common/components/Grid/Grid'
@@ -7,6 +6,7 @@ import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { buildPageMetadata } from '@/config/seo'
+import { TELEGRAM_HELP_URL } from '@/config/site'
 import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
@@ -16,18 +16,17 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
-export async function generateMetadata(): Promise<Metadata> {
-  const page = await fetchHomePage()
-  return buildPageMetadata({
-    title: page?.meta_title,
-    description: page?.meta_description,
-    path: '/',
-  })
-}
+export const dynamic = 'force-dynamic'
+
+export const metadata: Metadata = buildPageMetadata({ path: '/' })
 
 export default async function Home() {
-  const countries = await fetchGroupCountries()
-  const articles = await fetchArticles()
+  // The rest of this page is hardcoded, so a CMS outage should cost only the
+  // country filter and the news teaser, not the page someone in trouble lands on.
+  const [countries, articles] = await Promise.all([
+    fetchGroupCountries().catch(() => []),
+    fetchArticles().catch(() => []),
+  ])
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
 
   return (
@@ -95,7 +94,7 @@ export default async function Home() {
             </Typography>
           </div>
           <Link
-            href='https://t.me/@QSAAbot'
+            href={TELEGRAM_HELP_URL}
             className='text-primary flex flex-row items-center gap-4 underline'
           >
             <Icon icon='telegram' />

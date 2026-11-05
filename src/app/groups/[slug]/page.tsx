@@ -1,9 +1,10 @@
 import { toMetaDescription } from '@/common/utils/toMetaDescription'
 import { buildPageMetadata } from '@/config/seo'
 import { fetchGroup } from '@/features/groups/api/fetchGroup'
-import { fetchGroups } from '@/features/groups/api/fetchGroups'
 import { GroupDetailPage } from '@/features/groups/pages/GroupDetailPage'
 import type { Metadata } from 'next'
+
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,
@@ -23,13 +24,6 @@ export async function generateMetadata({
     fallbackDescription:
       'Расписание собраний, адрес и контакты русскоязычной группы Анонимных Алкоголиков.',
   })
-}
-
-export async function generateStaticParams() {
-  const { data: groups } = await fetchGroups({ limit: '-1' })
-  return groups.map((group) => ({
-    slug: group.slug,
-  }))
 }
 
 export default async function Page({

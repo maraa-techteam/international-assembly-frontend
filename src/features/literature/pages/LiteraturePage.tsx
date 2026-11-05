@@ -1,5 +1,3 @@
-import { fetchLiteraturePage } from '@/common/api/fetchLiteraturePage'
-import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
 
@@ -11,18 +9,22 @@ import {
 } from '../utils/literature.utils'
 
 export async function LiteraturePage() {
-  const [page, groups] = await Promise.all([
-    fetchLiteraturePage(),
-    Promise.all(
-      LiteratureCategorys.map((type) => fetchLiteratureItemsByType(type)),
-    ),
-  ])
+  const groups = await Promise.all(
+    LiteratureCategorys.map((type) => fetchLiteratureItemsByType(type)),
+  )
 
   return (
     <>
       <Section className='max-w-200' color='white'>
-        <Typography variant='h1'>{page?.title ?? 'Литература'}</Typography>
-        <RichTextPreview htmlContent={page?.text ?? ''} />
+        <Typography variant='h1'>Литература</Typography>
+        <div className='rte'>
+          <div>
+            <div>
+              Официальная литература Анонимных Алкоголиков: книги, брошюры и
+              другие&nbsp;материалы программы выздоровления.
+            </div>
+          </div>
+        </div>
       </Section>
       <Section color='white' className='gap-10 lg:pb-12'>
         {LiteratureCategorys.map((type, i) => {

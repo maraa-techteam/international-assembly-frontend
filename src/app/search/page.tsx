@@ -3,6 +3,8 @@ import { buildPageMetadata } from '@/config/seo'
 import { SearchResultsPage } from '@/features/search/pages/SearchResultsPage'
 import type { Metadata } from 'next'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata(): Promise<Metadata> {
   return buildPageMetadata({
     path: '/search',

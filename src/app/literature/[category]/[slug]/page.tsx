@@ -1,25 +1,18 @@
 import { toMetaDescription } from '@/common/utils/toMetaDescription'
 import { buildPageMetadata } from '@/config/seo'
 import { fetchLiteratureItem } from '@/features/literature/api/fetchLiteratureItem'
-import { fetchLiteratureItems } from '@/features/literature/api/fetchLiteratureItems'
 import { LiteratureDetailPage } from '@/features/literature/pages/LiteratureDetailPage'
 import { LiteratureCategory } from '@/features/literature/types/LiteratureItem.type'
 import { literatureCategorySlugs } from '@/features/literature/utils/literature.utils'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
+export const dynamic = 'force-dynamic'
+
 // Invert literatureCategorySlugs at module level: { books: 'books', ... }
 const slugToType = Object.fromEntries(
   Object.entries(literatureCategorySlugs).map(([type, slug]) => [slug, type]),
 ) as Record<string, LiteratureCategory>
-
-export async function generateStaticParams() {
-  const items = await fetchLiteratureItems()
-  return items.map((item) => ({
-    category: literatureCategorySlugs[item.category],
-    slug: item.slug,
-  }))
-}
 
 export async function generateMetadata({
   params,

@@ -1,6 +1,5 @@
 import type { SearchParams } from '@/common/types/SearchParams'
 import { PAGE_SIZE, parsePageParam } from '@/common/utils/pagination'
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { aggregate, readItems, withOptions } from '@directus/sdk'
 
 import directus from '../../../common/lib/directus'
@@ -21,12 +20,7 @@ export async function fetchLiteratureItemsByType(
 
   const filter = { category: { _eq: type } }
 
-  const cacheOptions = {
-    next: {
-      revalidate: CMS_REVALIDATE_SECONDS,
-      tags: ['cms', 'cms:literature_items'],
-    },
-  }
+  const cacheOptions: RequestInit = { cache: 'no-store' }
 
   try {
     const [raw, countResult] = await Promise.all([

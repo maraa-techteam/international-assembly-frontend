@@ -11,6 +11,7 @@ import { fetchArticle } from '@/features/articles/api/fetchArticle'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 import { Article } from '@/features/articles/types/Article.type'
 import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 type RelatedArticleJunction = {
   id: number
@@ -38,6 +39,7 @@ export async function ArticleDetailPage({
 }) {
   const { slug } = await params
   const article = await fetchArticle(slug)
+  if (!article) notFound()
 
   // Transform related articles from junction table format to flat article format
   const relatedArticles =

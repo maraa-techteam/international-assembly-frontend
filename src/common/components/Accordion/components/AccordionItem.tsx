@@ -1,4 +1,3 @@
-import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Typography } from '@/common/components/Typography/Typography'
 
 import { AccordionType } from '../Accordion.type'
@@ -15,7 +14,7 @@ export function AccordionItem({ title, text }: AccordionItemPoropsType) {
           <div className='absolute bottom-1/2 left-1/2 h-5 w-0.5 -translate-x-1/2 translate-y-1/2 transform rounded-xl bg-white group-open:hidden'></div>
         </div>
       </summary>
-      <RichTextPreview className='group-open:pb-6' htmlContent={text} />
+      <div className='rte group-open:pb-6'>{text}</div>
     </details>
   )
 }

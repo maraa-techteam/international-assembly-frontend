@@ -1,8 +1,9 @@
 import { buildPageMetadata } from '@/config/seo'
 import { fetchArticle } from '@/features/articles/api/fetchArticle'
-import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { ArticleDetailPage } from '@/features/articles/pages/ArticleDetailPage'
 import type { Metadata } from 'next'
+
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({
   params,
@@ -20,13 +21,6 @@ export async function generateMetadata({
     fallbackDescription:
       'Новости и события Международной Ассамблеи по Общему Обслуживанию русскоязычных Анонимных Алкоголиков.',
   })
-}
-
-export async function generateStaticParams() {
-  const articles = await fetchArticles()
-  return articles.map((article) => ({
-    slug: article.slug,
-  }))
 }
 
 export default async function Page({

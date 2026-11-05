@@ -7,11 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- An error page in Russian, with a retry button and the link to the anonymous
+  chat, for when a page cannot load.
+
 ### Changed
 
 - The **Literature** page now shows the literature catalogue by category
   instead of a work-in-progress placeholder, and the section is included in the
   sitemap.
+- **Rendering** — pages that show groups, articles, literature or services now
+  render on every request, so CMS edits appear immediately. All other pages are
+  prerendered from copy in the code, including page meta tags and the contacts
+  and contributions details, so changing them takes a deploy. This replaces the
+  site-wide 60-second ISR window.
+- Messages from the contact and service-application forms now go to the
+  secretary's mailbox shown on the **Contacts** page, as the privacy notice
+  describes. The address is set in the code rather than in the CMS.
+- The home page stays available when the CMS cannot be reached. It loses only the
+  news teaser and the options in the country filter.
 
 ### Removed
 
@@ -25,6 +40,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   count unchanged, and it appeared on the last page and jumped back to the first.
 - An invalid page number in the URL no longer causes a server error, and a page
   past the end now redirects to the last page.
+- The "Связаться с сообществом" link on the home page and the **quiz** result
+  now opens the anonymous Telegram chat-bot instead of Telegram's generic page.
+- An address that matches no group, article, service or literature item now shows
+  the 404 page with a 404 status. Search engines could index the empty or
+  "not found" pages these used to return with a success status.
+- The Telegram link on the **Start the journey** page now reads "Связаться с
+  сообществом" instead of a leftover placeholder.
+- The Ninth Tradition on the **12 Steps and 12 Traditions** page now shows its own
+  text. It was a copy of the Eighth.
+- The **Contributions** page no longer lists Revolut twice.
 
 ## [1.0.1] - 2026-10-20
 

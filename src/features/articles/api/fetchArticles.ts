@@ -1,4 +1,3 @@
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { readItems, withOptions } from '@directus/sdk'
 
 import directus from '../../../common/lib/directus'
@@ -35,12 +34,7 @@ export async function fetchArticles() {
             },
           ],
         }),
-        {
-          next: {
-            revalidate: CMS_REVALIDATE_SECONDS,
-            tags: ['cms', 'cms:article'],
-          },
-        },
+        { cache: 'no-store' },
       ),
     )
   } catch (error) {

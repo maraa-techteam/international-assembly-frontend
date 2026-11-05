@@ -5,12 +5,13 @@ Alcoholics Anonymous** (Международная Ассамблея по Об�
 Русскоязычных Анонимных Алкоголиков), published at
 [ma-aa.org](https://ma-aa.org).
 
-The site is a Russian-language, server-rendered Next.js application. Content is
-authored in a [Directus](https://directus.io) CMS and pulled at build time,
-then kept fresh through incremental static regeneration — editors publish
-without a redeploy. Visitors can find a meeting, browse news and literature,
-take the self-assessment quiz, and reach the fellowship through the contact and
-service-application forms.
+The site is a Russian-language Next.js application. Informational pages are
+written in the code and prerendered at build time, so changing their copy takes
+a deploy. Groups, articles, literature and services are authored in a
+[Directus](https://directus.io) CMS and rendered on every request, so editors
+publish those without one. Visitors can find a meeting, browse news and
+literature, take the self-assessment quiz, and reach the fellowship through the
+contact and service-application forms.
 
 ## Tech stack
 
@@ -48,8 +49,9 @@ pnpm dev
 
 The site runs at [http://localhost:3000](http://localhost:3000).
 
-Without `DIRECTUS_CMS_URL` the app throws on startup — every page reads its
-content from the CMS, so there is no offline mode.
+`DIRECTUS_CMS_URL` is required even though the build fetches nothing from the
+CMS: `src/common/lib/directus.ts` throws when a list route's module loads without
+it, and `next build` loads every route.
 
 ## Environment variables
 
@@ -96,30 +98,47 @@ src/
                 api/, components/, pages/ and types/ it actually needs
   common/       Shared across features:
                 components/  design-system pieces (Button, Select, Header…)
-                api/         page-level Directus fetchers
                 lib/         the Directus client
-                hooks/ utils/ types/ pages/
-  config/       Site constants, SEO defaults, JSON-LD, route list, ISR window
+                hooks/ utils/ types/
+  config/       Site constants, SEO copy, JSON-LD, route list
 emails/         React Email templates for form submissions
 tests/e2e/      Playwright specs
 public/         Static images and icons
 ```
 
-A route in `src/app` stays thin: it fetches through `common/api` or the
-feature's own `api/`, then renders the matching component from
-`features/<domain>/pages/`. Imports use the `@/*` alias for `./src/*`.
+A route that shows CMS data stays thin: it fetches through the feature's own
+`api/`, then renders the matching component from `features/<domain>/pages/`. A
+content page holds its copy in the route file, or in the feature page for
+`/contacts`, `/is-aa-for-me` and `/privacy`. Imports use the `@/*` alias for
+`./src/*`.
 
 ## Architecture notes
 
-**Incremental static regeneration.** `src/app/layout.tsx` exports
-`revalidate = 60`, so every route beneath it regenerates in the background at
-most once a minute. Next requires that to be a literal, so it cannot import
-`CMS_REVALIDATE_SECONDS` from `src/config/isr.ts` — the two are kept in sync by
-hand.
+**Rendering.** Every route is one of two kinds, and nothing uses ISR.
 
-**SEO and structured data.** `src/config/seo.ts` holds a default title and
-description for every static route; a CMS value wins whenever an editor has set
-one. `src/config/schema.ts` builds the JSON-LD graph — organisation, website, articles,
+- **Static**, prerendered at build with no CMS calls: `/about-aa`,
+  `/about-international-assembly`, `/about-groups`, `/to-professionals`,
+  `/start-the-journey`, `/faq`, `/is-aa-for-me`, `/12-steps-12-traditions`,
+  `/contacts`, `/useful-links`, `/contributions`, `/privacy`, the 404 page and
+  `robots.txt`. Their copy, links, images and meta tags are in the code, so
+  changing them takes a deploy. One-off copy is written directly in JSX, while a
+  component that repeats, such as an FAQ item or a provider card, maps over a typed
+  array in the same file. Rich text sits in a `.rte` wrapper, and images live in
+  `public/images`.
+- **Per request**, marked `force-dynamic`: `/`, `/groups`, `/news-and-events`,
+  `/literature`, `/services` (a placeholder for now), their detail pages, `/search`
+  and `sitemap.xml`. Only the lists and items come from the CMS, through fetchers
+  that set `cache: 'no-store'`, so an edit shows on the next request. The rest of
+  these pages is hardcoded too. `news_and_events_page.highlighted_post` is the only
+  `*_page` field the site still reads.
+
+If the CMS is down, static pages are unaffected, `/` falls back to empty lists, the
+other per-request pages show `src/app/error.tsx`, and the sitemap drops to its
+fixed routes.
+
+**SEO and structured data.** `src/config/seo.ts` holds the title and description
+of every route with a fixed path, published through `buildPageMetadata`; detail
+pages use their CMS item's own. `src/config/schema.ts` builds the JSON-LD graph — organisation, website, articles,
 breadcrumbs, FAQs and group events — around stable node ids so consumers
 resolve one entity across pages. Both are covered by tests that fail the build
 on a missing entry, a duplicate title, or an out-of-range description length,
@@ -128,15 +147,18 @@ the test suite by design.**
 
 **Sitemap and robots.** Generated natively by `src/app/sitemap.ts` and
 `src/app/robots.ts`. Detail pages are enumerated explicitly because paginated
-listings hide most of them from crawlers, and a CMS failure degrades to the
-static routes rather than failing the build. Sections listed in
-`SITEMAP_EXCLUDED_PREFIXES` are withheld while they render a placeholder.
+listings hide most of them from crawlers. The sitemap is generated per request, so
+new items appear straight away, and a CMS failure degrades to the fixed routes
+rather than failing. Sections listed in `SITEMAP_EXCLUDED_PREFIXES` are withheld
+while they render a placeholder.
 
 **Forms and consent.** `POST /api/contact` and `POST /api/service-application`
 validate input server-side and re-check the GDPR consent flag — the form
 checkbox is an affordance, not a control, since the endpoints accept direct
 requests. Each submission email is stamped with `PRIVACY_NOTICE_UPDATED_AT` so
-the recipient's mailbox holds a record of which wording the sender agreed to.
+the recipient's mailbox holds a record of which wording the sender agreed to. Mail
+goes to `CONTACT_RECIPIENT_EMAIL` in `src/config/site.ts`, the secretary's mailbox
+the privacy notice describes.
 
 ## Testing
 

@@ -83,4 +83,28 @@ test.describe('Articles API', () => {
     expect(Array.isArray(json.data)).toBe(true)
     expect(json.data.length).toBe(0)
   })
+
+  test('news_and_events_page exposes the highlighted article', async ({
+    request,
+  }) => {
+    test.skip(
+      !process.env.DIRECTUS_CMS_URL,
+      'DIRECTUS_CMS_URL env var is not set',
+    )
+
+    const response = await request.get(
+      `${BASE_URL}/items/news_and_events_page`,
+      {
+        params: { fields: 'highlighted_post.*' },
+      },
+    )
+
+    expect(response.ok()).toBeTruthy()
+    const json = await response.json()
+    // A singleton, so the item comes back on its own rather than in an array.
+    // The one page collection the site still reads, for this field alone.
+    expect(json.data).toBeDefined()
+    expect(Array.isArray(json.data)).toBe(false)
+    expect(json.data).toHaveProperty('highlighted_post')
+  })
 })

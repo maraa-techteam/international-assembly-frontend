@@ -1,4 +1,3 @@
-import { CMS_REVALIDATE_SECONDS } from '@/config/isr'
 import { readItems, withOptions } from '@directus/sdk'
 
 import directus from '../../../common/lib/directus'
@@ -9,19 +8,7 @@ import {
   ServiceSearchResult,
 } from '../types/SearchResult.type'
 
-/**
- * Results are cached per query for the usual CMS window.
- *
- * `/search` renders on demand because it reads `searchParams`, so this only
- * spares the CMS a repeat round trip when the same query is run again — it does
- * not prerender anything.
- */
-const cacheOptions = {
-  next: {
-    revalidate: CMS_REVALIDATE_SECONDS,
-    tags: ['cms', 'cms:search'],
-  },
-}
+const cacheOptions: RequestInit = { cache: 'no-store' }
 
 export async function fetchSearchResults(query: string): Promise<{
   articles: ArticleSearchResult[]

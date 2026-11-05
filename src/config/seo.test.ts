@@ -47,16 +47,14 @@ describe('PAGE_SEO', () => {
 })
 
 describe('buildPageMetadata', () => {
-  it('prefers the CMS title over the default', () => {
-    const meta = buildPageMetadata({ title: 'Из CMS', path: '/faq' })
-    expect(meta.title).toBe('Из CMS | Международная Ассамблея АА')
+  it('prefers a title it is given over the default', () => {
+    const meta = buildPageMetadata({ title: 'Своя', path: '/faq' })
+    expect(meta.title).toBe('Своя | Международная Ассамблея АА')
   })
 
-  it('falls back to the route default when the CMS field is empty', () => {
+  it('falls back to the route default when the title it is given is empty', () => {
     const meta = buildPageMetadata({ title: '   ', path: '/faq' })
-    expect(meta.title).toBe(
-      'Вопросы и ответы об АА | Международная Ассамблея АА',
-    )
+    expect(meta.title).toBe('Ответы на вопросы | Международная Ассамблея АА')
     expect(meta.description).toBe(PAGE_SEO['/faq'].description)
   })
 
