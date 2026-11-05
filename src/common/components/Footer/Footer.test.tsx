@@ -1,13 +1,11 @@
-import { TransformedNavigationType } from '@/common/types/Navigation'
-import { Socials } from '@/common/types/Socials'
 import { fireEvent, render, screen } from '@testing-library/react'
 
 import { Footer } from './Footer'
+import { FooterNavItemType } from './Footer.type'
 
-const mockFooterData: TransformedNavigationType[] = [
+const mockFooterData: FooterNavItemType[] = [
   {
     name: 'О нас',
-    href: '/about',
     subNav: [
       {
         name: 'Что такое АА?',
@@ -16,12 +14,10 @@ const mockFooterData: TransformedNavigationType[] = [
         isFrequentlyVisited: true,
       },
     ],
-    isActive: false,
   },
 
   {
     name: 'Ресурсы',
-    href: '/resources',
     subNav: [
       {
         name: 'Что такое МА?',
@@ -36,18 +32,12 @@ const mockFooterData: TransformedNavigationType[] = [
         isFrequentlyVisited: false,
       },
     ],
-    isActive: false,
   },
-]
-
-const mockSocials: Socials[] = [
-  { name: 'telegram', icon: 'telegram', href: 'https://facebook.com/test' },
-  { name: 'youtube', icon: 'youtube', href: 'https://twitter.com/test' },
 ]
 
 describe('Footer component', () => {
   it('renders correct number of navigation items', () => {
-    render(<Footer footerData={mockFooterData} socials={mockSocials} />)
+    render(<Footer footerData={mockFooterData} />)
 
     const nav = screen.getByRole('navigation', { name: 'Навигация' })
     const list = nav.querySelector('ul') as HTMLElement
@@ -55,14 +45,14 @@ describe('Footer component', () => {
   })
 
   it('renders socials', () => {
-    render(<Footer footerData={mockFooterData} socials={mockSocials} />)
+    render(<Footer footerData={mockFooterData} />)
 
-    const socials = screen.getAllByTestId('icon')
-    expect(socials.length).toBe(mockSocials.length * 2)
+    expect(screen.getByRole('link', { name: 'youtube' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'telegram' })).toBeInTheDocument()
   })
 
   it('renders copyright text with current year', () => {
-    render(<Footer footerData={mockFooterData} socials={mockSocials} />)
+    render(<Footer footerData={mockFooterData} />)
 
     const currentYear = new Date().getFullYear()
     expect(
@@ -71,7 +61,7 @@ describe('Footer component', () => {
   })
 
   it('toggles navigation item to active when clicked', () => {
-    render(<Footer footerData={mockFooterData} socials={mockSocials} />)
+    render(<Footer footerData={mockFooterData} />)
 
     const firstNavButton = screen.getAllByText('О нас')[0]
     fireEvent.click(firstNavButton)
