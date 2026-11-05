@@ -7,6 +7,7 @@ import { Icon } from '@/common/components/Icon/Icon'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { buildPageMetadata } from '@/config/seo'
+import { TELEGRAM_HELP_URL } from '@/config/site'
 import { fetchArticles } from '@/features/articles/api/fetchArticles'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 import { fetchGroupCountries } from '@/features/groups/api/fetchGroupCountries'
@@ -95,7 +96,7 @@ export default async function Home() {
             </Typography>
           </div>
           <Link
-            href='https://t.me/@QSAAbot'
+            href={TELEGRAM_HELP_URL}
             className='text-primary flex flex-row items-center gap-4 underline'
           >
             <Icon icon='telegram' />

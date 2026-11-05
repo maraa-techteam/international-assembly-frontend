@@ -6,6 +6,7 @@ import { Icon } from '@/common/components/Icon/Icon'
 import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
+import { TELEGRAM_HELP_URL } from '@/config/site'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -177,7 +178,7 @@ export function IsAaForMePage({
             </Typography>
           </div>
           <Link
-            href='https://t.me/@QSAAbot'
+            href={TELEGRAM_HELP_URL}
             className='text-primary flex flex-row items-center gap-4 underline'
           >
             <Icon icon='telegram' />

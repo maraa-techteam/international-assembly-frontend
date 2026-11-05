@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   count unchanged, and it appeared on the last page and jumped back to the first.
 - An invalid page number in the URL no longer causes a server error, and a page
   past the end now redirects to the last page.
+- The "Связаться с сообществом" link on the home page and the **quiz** result
+  now opens the anonymous Telegram chat-bot instead of Telegram's generic page.
 
 ## [1.0.1] - 2026-10-20
 
