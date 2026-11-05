@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - The **Literature** page now shows the literature catalogue by category
   instead of a work-in-progress placeholder, and the section is included in the
   sitemap.
+- **Rendering** — pages that show groups, articles, literature or services now
+  render on every request, so CMS edits appear immediately. All other pages are
+  prerendered from copy in the code, including page meta tags and the contacts
+  and contributions details, so changing them takes a deploy. This replaces the
+  site-wide 60-second ISR window.
 - Messages from the contact and service-application forms now go to the
   secretary's mailbox shown on the **Contacts** page, as the privacy notice
   describes. The address is set in the code rather than in the CMS.
