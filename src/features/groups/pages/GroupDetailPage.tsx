@@ -12,6 +12,7 @@ import { Gallery } from '@/features/groups/components/Gallery/Gallery'
 import { GroupSchedule } from '@/features/groups/components/GroupSchedule/GroupSchedule'
 import type { GroupContact } from '@/features/groups/types/Group.type'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 export async function GroupDetailPage({
   params,
@@ -20,6 +21,8 @@ export async function GroupDetailPage({
 }) {
   const { slug } = await params
   const group = await fetchGroup(slug)
+  if (!group) notFound()
+
   const path = `/groups/${slug}`
 
   return (

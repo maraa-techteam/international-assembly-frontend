@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   past the end now redirects to the last page.
 - The "Связаться с сообществом" link on the home page and the **quiz** result
   now opens the anonymous Telegram chat-bot instead of Telegram's generic page.
+- An address that matches no group, article, service or literature item now shows
+  the 404 page with a 404 status. Search engines could index the empty or
+  "not found" pages these used to return with a success status.
 
 ## [1.0.1] - 2026-10-20
 

@@ -5,6 +5,7 @@ import { Typography } from '@/common/components/Typography/Typography'
 import { getImageUrl } from '@/common/utils/getImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
 import { fetchLiteratureItem } from '../api/fetchLiteratureItem'
 
@@ -16,15 +17,7 @@ export async function LiteratureDetailPage({
   slug,
 }: LiteratureDetailPageProps) {
   const item = await fetchLiteratureItem(slug)
-
-  if (!item) {
-    return (
-      <Section color='white'>
-        <Typography variant='h1'>Материал не найден</Typography>
-        <BackButton className='self-start' />
-      </Section>
-    )
-  }
+  if (!item) notFound()
 
   return (
     <Section className='max-w-250' color='white'>
