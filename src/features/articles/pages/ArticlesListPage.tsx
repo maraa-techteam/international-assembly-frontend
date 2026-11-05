@@ -8,8 +8,10 @@ import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleC
 export async function ArticlesListPage() {
   // Picking a highlighted post is optional in the CMS, so the field is often
   // null. When it is unset the page just lists every article in the grid.
-  const highlightedPost = await fetchHighlightedArticle()
-  const articles = await fetchArticles()
+  const [highlightedPost, articles] = await Promise.all([
+    fetchHighlightedArticle(),
+    fetchArticles(),
+  ])
 
   return (
     <>

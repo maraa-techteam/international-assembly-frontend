@@ -17,15 +17,14 @@ export async function GroupsListPage({
 }) {
   const params = await searchParams
   // `limit` is for internal callers fetching every group, not for the URL.
-  const { data: filteredGroups, totalCount } = await fetchGroups({
-    ...params,
-    limit: undefined,
-  })
+  const [{ data: filteredGroups, totalCount }, countries] = await Promise.all([
+    fetchGroups({ ...params, limit: undefined }),
+    fetchGroupCountries(),
+  ])
 
   const lastPage = getLastPageRedirect('/groups', params, totalCount)
   if (lastPage) redirect(lastPage)
 
-  const countries = await fetchGroupCountries()
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
   const schedule = [
     'Понедельник',

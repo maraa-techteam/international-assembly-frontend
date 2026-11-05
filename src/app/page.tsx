@@ -21,8 +21,12 @@ export const dynamic = 'force-dynamic'
 export const metadata: Metadata = buildPageMetadata({ path: '/' })
 
 export default async function Home() {
-  const countries = await fetchGroupCountries()
-  const articles = await fetchArticles()
+  // The rest of this page is hardcoded, so a CMS outage should cost only the
+  // country filter and the news teaser, not the page someone in trouble lands on.
+  const [countries, articles] = await Promise.all([
+    fetchGroupCountries().catch(() => []),
+    fetchArticles().catch(() => []),
+  ])
   const presence = ['Онлайн', 'Офлайн', 'Гибрид']
 
   return (

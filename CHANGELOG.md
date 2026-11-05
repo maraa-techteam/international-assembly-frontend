@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- An error page in Russian, with a retry button and the link to the anonymous
+  chat, for when a page cannot load.
+
 ### Changed
 
 - The **Literature** page now shows the literature catalogue by category
@@ -15,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Messages from the contact and service-application forms now go to the
   secretary's mailbox shown on the **Contacts** page, as the privacy notice
   describes. The address is set in the code rather than in the CMS.
+- The home page stays available when the CMS cannot be reached. It loses only the
+  news teaser and the options in the country filter.
 
 ### Removed
 
