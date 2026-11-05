@@ -1,24 +1,32 @@
-import { fetchNewsAndEventsPage } from '@/common/api/fetchNewsAndEventsPage'
 import { Grid } from '@/common/components/Grid/Grid'
-import { RichTextPreview } from '@/common/components/RichTextPreview/RichTextPreview'
 import { Section } from '@/common/components/Section/Section'
 import Typography from '@/common/components/Typography/Typography'
 import { fetchArticles } from '@/features/articles/api/fetchArticles'
+import { fetchHighlightedArticle } from '@/features/articles/api/fetchHighlightedArticle'
 import { ArticleCard } from '@/features/articles/components/ArticleCard/ArticleCard'
 
 export async function ArticlesListPage() {
-  const page = await fetchNewsAndEventsPage()
-  const articles = await fetchArticles()
-
   // Picking a highlighted post is optional in the CMS, so the field is often
   // null. When it is unset the page just lists every article in the grid.
-  const highlightedPost = page?.highlighted_post ?? null
+  const highlightedPost = await fetchHighlightedArticle()
+  const articles = await fetchArticles()
 
   return (
     <>
       <Section color='white'>
-        <Typography variant='h1'>{page?.title}</Typography>
-        {page?.text && <RichTextPreview htmlContent={page.text} />}
+        <Typography variant='h1'>Новости и события</Typography>
+        <div className='rte'>
+          <p>
+            Все семинары можно посмотреть на нашем{' '}
+            <a
+              href='https://www.youtube.com/channel/UCRclYOjYZyY8_s21ZJwrI2Q'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              ютуб канале.
+            </a>
+          </p>
+        </div>
         {highlightedPost && (
           <ArticleCard
             isHighlighted

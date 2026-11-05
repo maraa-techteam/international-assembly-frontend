@@ -1,4 +1,3 @@
-import { fetchGroupsPage } from '@/common/api/fetchGroupsPage'
 import { Pagination } from '@/common/components/Pagination/Pagination'
 import { Section } from '@/common/components/Section/Section'
 import { Typography } from '@/common/components/Typography/Typography'
@@ -16,7 +15,6 @@ export async function GroupsListPage({
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const page = await fetchGroupsPage()
   const params = await searchParams
   // `limit` is for internal callers fetching every group, not for the URL.
   const { data: filteredGroups, totalCount } = await fetchGroups({
@@ -42,7 +40,7 @@ export async function GroupsListPage({
   return (
     <>
       <Section className='py-0' color='white'>
-        <Typography variant='h1'>{page.title}</Typography>
+        <Typography variant='h1'>Поиск группы</Typography>
       </Section>
       <Section className='px-0 lg:max-w-250 lg:pt-0 lg:pr-0' color='white'>
         <Suspense>
